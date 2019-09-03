@@ -1,25 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import TranslationsPage from './translations/TranslationsPage';
+import ThemePage from './theme/ThemePage';
+import SharingPage from './sharing/SharingPage';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <ul>
+          <li>
+            <Link to="/translations">Translations</Link>
+          </li>
+          <li>
+            <Link to="/theme">Theme Customization</Link>
+          </li>
+          <li>
+            <Link to="/sharing">Sharing Links</Link>
+          </li>
+        </ul>
+
+        <hr />
+
+        <Route exact path="/translations" component={TranslationsPage} />
+        <Route path="/theme" component={ThemePage} />
+        <Route path="/sharing" component={SharingPage} />
+      </div>
+    </Router>
   );
 }
 
