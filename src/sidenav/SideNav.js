@@ -1,9 +1,9 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
 import './SideNav.css';
-import { withRouter } from 'react-router-dom';
 import { ROUTES } from '../App';
 
 class SideNav extends React.Component {

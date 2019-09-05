@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { shallow } from 'enzyme';
 import { App } from './App';
 import Header from './header/Header';
 import SideNav from './sidenav/SideNav';
-import { shallow } from 'enzyme';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');

@@ -1,8 +1,8 @@
 import React from 'react';
-import './Header.css';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import InputBase from '@material-ui/core/InputBase';
+import Toolbar from '@material-ui/core/Toolbar';
+import './Header.css';
 
 class Header extends React.Component {
   render() {
