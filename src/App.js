@@ -1,11 +1,11 @@
 import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import './App.css';
 import TranslationsPage from './translations/TranslationsPage';
 import ThemePage from './theme/ThemePage';
 import SharingPage from './sharing/SharingPage';
 import Header from './header/Header';
 import SideNav from './sidenav/SideNav';
-import './App.css';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 const ROUTES = {
   TRANSLATIONS: '/',

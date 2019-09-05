@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SideNav from './SideNav';
-import MenuItem from '@material-ui/core/MenuItem';
-import Paper from '@material-ui/core/Paper';
-import { ROUTES } from '../App';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mount } from 'enzyme';
+import MenuItem from '@material-ui/core/MenuItem';
+import Paper from '@material-ui/core/Paper';
+import SideNav from './SideNav';
+import { ROUTES } from '../App';
 
 it('renders without crashing (inside of a Router)', () => {
   const div = document.createElement('div');
