@@ -2,32 +2,38 @@ import React from 'react';
 import TranslationsPage from './translations/TranslationsPage';
 import ThemePage from './theme/ThemePage';
 import SharingPage from './sharing/SharingPage';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import Header from './header/Header';
+import SideNav from './sidenav/SideNav';
+import './App.css';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-function App() {
-  return (
-    <Router>
-      <div>
-        <ul>
-          <li>
-            <Link to="/translations">Translations</Link>
-          </li>
-          <li>
-            <Link to="/theme">Theme Customization</Link>
-          </li>
-          <li>
-            <Link to="/sharing">Sharing Links</Link>
-          </li>
-        </ul>
+const ROUTES = {
+  TRANSLATIONS: '/',
+  THEME: '/theme',
+  SHARING: '/sharing',
+};
 
-        <hr />
-
-        <Route exact path="/translations" component={TranslationsPage} />
-        <Route path="/theme" component={ThemePage} />
-        <Route path="/sharing" component={SharingPage} />
-      </div>
-    </Router>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      <Router>
+        <div className="app-container">
+          <Header/>
+          <div className = "body-container">
+            <SideNav/>
+            <div className="page-container">
+              <Route exact path={ROUTES.TRANSLATIONS} component={TranslationsPage} />
+              <Route path={ROUTES.THEME} component={ThemePage} />
+              <Route path={ROUTES.SHARING} component={SharingPage} />
+            </div>
+          </div>
+        </div>
+      </Router>
+    );
+  }
 }
 
-export default App;
+export {
+  App,
+  ROUTES
+};
