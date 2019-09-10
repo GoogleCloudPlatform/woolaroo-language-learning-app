@@ -1,0 +1,9 @@
+.body-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 24px;
+}
+
+.page-container {
+  margin-left: 80px;
+}
