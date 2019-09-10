@@ -1,0 +1,22 @@
+.MuiAppBar-colorPrimary.header {
+  background: #fff;
+  color: #5f6368;
+}
+
+.header-title {
+  font-size: 24px;
+  font-weight: 300;
+}
+
+.header-search {
+  margin: auto;
+  background: #f1f3f4;
+  padding: 10px;
+  border-radius: 5px;
+  width: 640px;
+}
+
+.MuiInputBase-input.header-search-input {
+  font-size: 14px;
+  color: #5f6368;
+}
