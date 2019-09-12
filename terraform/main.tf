@@ -5,8 +5,12 @@ variable "bucket_location" {
   default = ""
 }
 
+output "app_url" {
+  value = "http://${google_compute_global_address.app-ip.address}/"
+}
+
 output "bucket_url" {
-  value = "http://${google_compute_global_address.app-ip.address}/index.html"
+  value = "gs://${var.bucket_name}"
 }
 
 provider "google" {
