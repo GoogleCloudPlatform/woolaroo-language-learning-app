@@ -31,7 +31,7 @@
 
 ### Terraform
 
-* In `./terraform` create the file `main.auto.tfvars` with your terraform variable values.
+* To avoid having to input your terraform values every time it is run, create the file `./terraform/main.auto.tfvars` with your terraform variable values.
 
 ## Development
 
@@ -53,3 +53,4 @@
 * Run `gsutil -m rsync -rd ./dist/google-barnard <BUCKET_URL>`.
   * To get the BUCKET_URL, run `terraform output bucket_url`.
 * Run `gsutil -m setmeta -h 'Content-Type:text/javascript' <BUCKET_URL>/**/*.js`.
+* Run `terraform output app_url` to get the URL of your app.
