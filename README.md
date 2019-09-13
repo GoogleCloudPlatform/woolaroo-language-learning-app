@@ -1,3 +1,13 @@
+## Running firebase functions locally (default port localhost:5000)
+
+First follow instructions [here](https://firebase.google.com/docs/functions/local-emulator#set_up_admin_credentials_optional) to set up admin credentionals.
+
+Then,
+`cd functions; npm install; cd ..`
+`(sudo) npm install -g firebase-tools`
+`firebase login`
+`npm run serve_functions`
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
