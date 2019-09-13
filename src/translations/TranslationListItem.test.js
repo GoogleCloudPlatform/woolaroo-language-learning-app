@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TranslationListItem from './TranslationListItem';
 
-it('renders without crashing when correct translation is passed in', () => {
+it('renders without crashing when translation of correct structure is passed in', () => {
   const div = document.createElement('div');
   const stubbedTranslation = {
     english_word: "dog",

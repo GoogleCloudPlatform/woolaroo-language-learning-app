@@ -4,7 +4,6 @@ const cors = require('cors')({origin: true});
 const admin = require('firebase-admin');
 admin.initializeApp();
 
-
 exports.addSuggestions = functions.https.onRequest(async (req, res) => {
   console.log('Add a suggestion');
 
@@ -39,6 +38,7 @@ exports.addTranslations = functions.https.onRequest(async (req, res) => {
 });
 
 exports.getTranslation = functions.https.onRequest(async (req, res) => {
+  console.log('getTranslation');
   var docRef = admin.firestore().collection("translations").doc(req.body);
   docRef.get().then(function(doc) {
     if (doc.exists) {
