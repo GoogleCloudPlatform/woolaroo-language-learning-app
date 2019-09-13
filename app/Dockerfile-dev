@@ -1,0 +1,13 @@
+FROM node:10.16.3
+
+RUN npm install -g @angular/cli
+
+RUN mkdir -p /var/www/app
+COPY ./ /var/www/app/
+
+WORKDIR /var/www/app
+RUN npm install
+
+EXPOSE 4200
+
+ENTRYPOINT ng serve --host=0.0.0.0
