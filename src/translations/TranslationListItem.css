@@ -1,0 +1,12 @@
+.translation-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.base-word {
+  color: #202124;
+  font-size: 36px;
+  margin-top: 20px;
+  min-width: 80px;
+}

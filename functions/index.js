@@ -1,7 +1,9 @@
 const functions = require('firebase-functions');
+const cors = require('cors')({origin: true});
 
 const admin = require('firebase-admin');
 admin.initializeApp();
+
 
 exports.addSuggestions = functions.https.onRequest(async (req, res) => {
   console.log('Add a suggestion');
@@ -9,7 +11,7 @@ exports.addSuggestions = functions.https.onRequest(async (req, res) => {
   //req content type should be application/json
   snapshot = await admin.firestore().collection('suggestions').add({
     english_word: req.body.english_word,
-    translation: req.body.translation, 
+    translation: req.body.translation,
     transliteration: req.body.transliteration,
     sound_link: req.body.sound_link,
     status: 'pending_review',
@@ -20,22 +22,23 @@ exports.addSuggestions = functions.https.onRequest(async (req, res) => {
 });
 
 exports.addTranslations = functions.https.onRequest(async (req, res) => {
-  console.log('Add a translation');
+  return cors(req, res, async () => {
+    console.log('Add a translation');
 
-  //req content type should be application/json
-  snapshot = await admin.firestore().collection('translations').doc(req.body.english_word).set({
-    english_word: req.body.english_word,
-    translation: req.body.translation, 
-    transliteration: req.body.transliteration,
-    sound_link: req.body.sound_link,
-    timestamp: admin.firestore.FieldValue.serverTimestamp(),
+    //req content type should be application/json
+    snapshot = await admin.firestore().collection('translations').doc(req.body.english_word).set({
+      english_word: req.body.english_word,
+      translation: req.body.translation,
+      transliteration: req.body.transliteration,
+      sound_link: req.body.sound_link,
+      timestamp: admin.firestore.FieldValue.serverTimestamp(),
+    });
+    console.log('Translation saved.');
+    res.status(200).send(JSON.stringify("Translation saved."));
   });
-  console.log('Translation saved.');
-  res.status(200).send("Translation saved.");
 });
 
 exports.getTranslation = functions.https.onRequest(async (req, res) => {
-  console.log('getTranslation');
   var docRef = admin.firestore().collection("translations").doc(req.body);
   docRef.get().then(function(doc) {
     if (doc.exists) {
@@ -54,6 +57,34 @@ exports.getTranslation = functions.https.onRequest(async (req, res) => {
 
 });
 
+// todo(parikhshiv) - made this method mainly for development, can be
+// replaced / expanded
+exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
+  return cors(req, res, () => {
+    const collection = admin.firestore().collection(req.query.collectionName);
+    collection.get().then(function(collectionDocs) {
+      if (collectionDocs.docs.length) {
+          const entireCollection = collectionDocs.docs.map((doc) => doc.data());
+          console.log("Collection:", entireCollection);
+          res.status(200).send(entireCollection);
+          return entireCollection;
+      } else {
+          console.log("No such collection");
+          res.status(404).send("404");
+          return "404";
+      }
+    }).catch(function(error) {
+        console.log("Error getting translations:", error);
+    });
+  });
+});
+
+// For testing purposes only
+exports.testEndpoint = functions.https.onRequest((req, res) => {
+  return cors(req, res, () => {
+    res.send({ 'a': 'hello from firebase'});
+  });
+});
 
 
 // exports.getBatchTranslations = functions.https.onRequest(async (req, res) => {
