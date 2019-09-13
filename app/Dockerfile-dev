@@ -10,4 +10,4 @@ RUN npm install
 
 EXPOSE 4200
 
-ENTRYPOINT ng serve --host=0.0.0.0 --poll=1000
+ENTRYPOINT ng serve --host=0.0.0.0 --poll=1000 --ssl true

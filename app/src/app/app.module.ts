@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LandingPageModule } from '../pages/landing/landing.module';
+import { CapturePageModule } from '../pages/capture/capture.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { LandingPageModule } from '../pages/landing/landing.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    LandingPageModule
+    LandingPageModule,
+    CapturePageModule
   ],
   providers: [],
   bootstrap: [AppComponent]
