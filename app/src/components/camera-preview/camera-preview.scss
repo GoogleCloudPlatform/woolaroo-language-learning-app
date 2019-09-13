@@ -11,3 +11,11 @@ video {
   height: 100%;
   background-color: black;
 }
+
+.captured-image {
+  position: absolute;
+  z-index: -100;
+  visibility: hidden; /* canvas must have dimensions to render image, but doesn't need to be visible */
+  top: 0;
+  left: 0;
+}

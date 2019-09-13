@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LandingPageModule } from '../pages/landing/landing.module';
 import { CapturePageModule } from '../pages/capture/capture.module';
+import { TranslatePageModule } from '../pages/translate/translate.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { CapturePageModule } from '../pages/capture/capture.module';
     BrowserModule,
     AppRoutingModule,
     LandingPageModule,
-    CapturePageModule
+    CapturePageModule,
+    TranslatePageModule
   ],
   providers: [],
   bootstrap: [AppComponent]

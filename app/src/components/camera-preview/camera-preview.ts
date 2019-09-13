@@ -8,6 +8,7 @@ import {
   OnDestroy, ElementRef
 } from '@angular/core';
 import {environment} from '../../environments/environment';
+import {canvasToBlob} from "../../util/image";
 
 enum CameraPreviewStatus {
   Stopped,
@@ -24,6 +25,8 @@ export class CameraPreviewComponent implements OnDestroy {
   private videoStream:MediaStream;
   @ViewChild('video', {static: false})
   private videoRef:ElementRef;
+  @ViewChild('capturedImage', {static: false})
+  private capturedImage:ElementRef;
   private lastResizeTime:number = -1;
   private sizeDirty:boolean = false;
   private status:CameraPreviewStatus;
@@ -53,11 +56,17 @@ export class CameraPreviewComponent implements OnDestroy {
     this.stop();
   }
 
-  capture(context, width, height) {
-    let scale = Math.max(width / this.video.videoWidth, height / this.video.videoHeight); // dimensions need to be relative to video, not the video element, so we need to scale
-    let dx = (width / scale - this.videoWidth) * 0.5;
-    let dy = (height / scale - this.videoHeight) * 0.5;
-    context.drawImage(this.video, dx, dy, this.videoWidth - 2 * dx, this.videoHeight - 2 * dy, 0, 0, width, height);
+  async capture():Promise<Blob> {
+    const canvas = this.capturedImage.nativeElement as HTMLCanvasElement;
+    const width = canvas.width = window.screen.width;
+    const height = canvas.height = window.screen.height;
+    const video = this.video;
+    const scale = Math.max(width / video.videoWidth, height / video.videoHeight); // dimensions need to be relative to video, not the video element, so we need to scale
+    const dx = (width / scale - this.videoWidth) * 0.5;
+    const dy = (height / scale - this.videoHeight) * 0.5;
+    const context = canvas.getContext('2d');
+    context.drawImage(video, dx, dy, this.videoWidth - 2 * dx, this.videoHeight - 2 * dy, 0, 0, width, height);
+    return await canvasToBlob(canvas);
   }
 
   async start():Promise<any> {
@@ -88,7 +97,7 @@ export class CameraPreviewComponent implements OnDestroy {
       this.videoStream = stream;
       video.srcObject = stream;
     }
-    await this.video.play();
+    await video.play();
     this.resizeVideo();
     console.log('Video stream started at ' + video.videoWidth + 'x' + video.videoHeight);
     this.status = CameraPreviewStatus.Started;
