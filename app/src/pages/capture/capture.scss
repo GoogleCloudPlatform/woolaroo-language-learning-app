@@ -9,3 +9,19 @@ camera-preview {
   height: 100%;
   display: block;
 }
+
+.capture {
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  padding: 0;
+  transform: translateX(-50%);
+  background-color: transparent;
+  border-style: none;
+  z-index: 1;
+
+  icon {
+    width: 100px;
+    height: 100px;
+  }
+}

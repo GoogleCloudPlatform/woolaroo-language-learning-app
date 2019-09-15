@@ -1,6 +1,5 @@
 import {
   Component,
-  Input,
   Output,
   ViewChild,
   HostListener,
@@ -10,7 +9,7 @@ import {
 import {environment} from '../../environments/environment';
 import {canvasToBlob} from "../../util/image";
 
-enum CameraPreviewStatus {
+export enum CameraPreviewStatus {
   Stopped,
   Started,
   Starting
@@ -22,34 +21,23 @@ enum CameraPreviewStatus {
   styleUrls: ['./camera-preview.scss']
 })
 export class CameraPreviewComponent implements OnDestroy {
-  private videoStream:MediaStream;
   @ViewChild('video', {static: false})
   private videoRef:ElementRef;
   @ViewChild('capturedImage', {static: false})
   private capturedImage:ElementRef;
-  private lastResizeTime:number = -1;
-  private sizeDirty:boolean = false;
-  private status:CameraPreviewStatus;
+  private videoStream:MediaStream;
+  private _status:CameraPreviewStatus;
+  public get status():CameraPreviewStatus { return this._status; }
   private videoResizeTimer:any;
-  private static get requestedVideoWidth():number { return window.innerWidth * window.devicePixelRatio; }
-  private static get requestedVideoHeight():number { return window.innerHeight * window.devicePixelRatio; }
   private get video():HTMLVideoElement { return this.videoRef.nativeElement as HTMLVideoElement; }
   private get videoWidth():number { return this.videoStream ? this.video.videoWidth : 0; }
   private get videoHeight():number { return this.videoStream ? this.video.videoHeight : 0; }
 
-  @Input()
-  autostart:boolean;
   @Output()
   videoError:EventEmitter<any> = new EventEmitter<any>();
 
   constructor() {
-    this.status = CameraPreviewStatus.Stopped;
-  }
-
-  ngAfterViewInit() {
-    if(this.autostart) {
-      this.start();
-    }
+    this._status = CameraPreviewStatus.Stopped;
   }
 
   ngOnDestroy() {
@@ -71,24 +59,26 @@ export class CameraPreviewComponent implements OnDestroy {
 
   async start():Promise<any> {
     if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      return Promise.reject('User media not supported');
+      throw new Error('User media not supported');
     } else if(this.status != CameraPreviewStatus.Stopped) {
-      return Promise.reject('Video stream already started');
+      throw new Error('Video stream already started');
     }
     console.log('Starting video stream');
-    this.status = CameraPreviewStatus.Starting;
-    // HACK: video element dimensions have not been initialized yet, so we need to just assume full size
-    let requestedWidth = CameraPreviewComponent.requestedVideoWidth;
-    let requestedHeight = CameraPreviewComponent.requestedVideoHeight;
-    if(requestedWidth < requestedHeight) {
+    this._status = CameraPreviewStatus.Starting;
+    // assume full window size
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    let desiredWidth = windowWidth * window.devicePixelRatio;
+    let desiredHeight = windowHeight * window.devicePixelRatio;
+    if(desiredWidth < desiredHeight) {
       // have to flip requested video dimensions when in portrait mode
-      const tmp = requestedWidth;
-      requestedWidth = requestedHeight;
-      requestedHeight = tmp;
+      const tmp = desiredWidth;
+      desiredWidth = desiredHeight;
+      desiredHeight = tmp;
     }
     const video = this.video;
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: { width: requestedWidth, height: requestedHeight, facingMode: 'environment' } });
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: { width: desiredWidth, height: desiredHeight, facingMode: 'environment' } });
       this.videoStream = stream;
       video.srcObject = stream;
     } catch(err) {
@@ -98,17 +88,21 @@ export class CameraPreviewComponent implements OnDestroy {
       video.srcObject = stream;
     }
     await video.play();
-    this.resizeVideo();
+    this.repositionVideo();
     console.log('Video stream started at ' + video.videoWidth + 'x' + video.videoHeight);
-    this.status = CameraPreviewStatus.Started;
+    this._status = CameraPreviewStatus.Started;
     for(let track of this.videoStream.getTracks()) {
       track.addEventListener('ended', this.onVideoStreamEnded);
     }
-    if(this.sizeDirty) {
-      this.sizeDirty = false;
-      this.stop();
-      this.start();
+    if(windowWidth != window.innerWidth || windowHeight != window.innerHeight) {
+      console.log('Window size has changed - restarting video');
+      await this.restart();
     }
+  }
+
+  async restart():Promise<any> {
+    this.stop();
+    await this.start();
   }
 
   stop() {
@@ -120,8 +114,9 @@ export class CameraPreviewComponent implements OnDestroy {
       }
       this.videoStream = null;
     }
+    this.stopVideoResizeTimer();
     this.video.srcObject = null;
-    this.status = CameraPreviewStatus.Stopped;
+    this._status = CameraPreviewStatus.Stopped;
   }
 
   private onVideoStreamEnded = () => {
@@ -130,7 +125,7 @@ export class CameraPreviewComponent implements OnDestroy {
     this.videoError.emit(new Error('Video ended'));
   };
 
-  private resizeVideo() {
+  private repositionVideo() {
     let desiredWidth = window.innerWidth;
     let desiredHeight = window.innerHeight;
     let videoWidth = this.video.videoWidth;
@@ -159,23 +154,23 @@ export class CameraPreviewComponent implements OnDestroy {
   }
 
   private onVideoResizeTimerElapsed() {
-    if(this.status != CameraPreviewStatus.Starting) {
-      this.sizeDirty = false;
-      this.stop();
-      this.start();
+    switch(this._status) {
+      case CameraPreviewStatus.Started:
+        this.restart().then(
+          () => console.log("Video restarted"),
+          err => {
+            console.log("Error restarting video: " + err);
+            this.videoError.emit(err);
+          }
+        );
+        break;
     }
   }
 
   @HostListener('window:resize', ['$event'])
   private onResize() {
-    switch(this.status) {
-      case CameraPreviewStatus.Starting:
-        this.lastResizeTime = Date.now();
-        this.sizeDirty = true;
-        this.stopVideoResizeTimer();
-        break;
+    switch(this._status) {
       case CameraPreviewStatus.Started:
-        this.lastResizeTime = Date.now();
         this.startVideoResizeTimer();
         break;
     }

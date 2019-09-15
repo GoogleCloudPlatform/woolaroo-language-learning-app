@@ -1,6 +1,6 @@
-import {Component, ViewChild} from '@angular/core';
-import {CameraPreviewComponent} from "../../components/camera-preview/camera-preview";
-import {Router} from "@angular/router";
+import { Component, ViewChild } from '@angular/core';
+import { CameraPreviewComponent, CameraPreviewStatus } from "../../components/camera-preview/camera-preview";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'page-capture',
@@ -15,18 +15,29 @@ export class CapturePage {
   constructor(private router:Router) {
   }
 
-  async onCaptureClick() {
-    this.captureInProgress = true;
-    try {
-      const image = await this.cameraPreview.capture();
-      console.log("Image captured");
-      this.router.navigate(['/translate'], {state: {capturedImage: image}});
-    } catch(err) {
-      console.warn('Failed to capture image', err);
-      alert(err);
-      this.captureInProgress = false;
-      this.onCaptureError(err);
+  ngAfterViewInit() {
+    this.cameraPreview.start().then(
+      () => console.log("Camera started"),
+      err => console.warn("Error starting camera: " + err)
+    );
+  }
+
+  onCaptureClick() {
+    if(this.cameraPreview.status !== CameraPreviewStatus.Started) {
+      return;
     }
+    this.captureInProgress = true;
+    this.cameraPreview.capture().then(
+      image => {
+        console.log("Image captured");
+        this.router.navigate(['/translate'], {state: {capturedImage: image}});
+      },
+      err => {
+        console.warn('Failed to capture image', err);
+        this.captureInProgress = false;
+        this.onCaptureError(err);
+      }
+    )
   }
 
   onCaptureError(err) {
