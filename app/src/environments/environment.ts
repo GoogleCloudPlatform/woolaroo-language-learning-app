@@ -1,24 +1,6 @@
-import { SafeSearchLikelihood } from "services/entities/safe-search";
+import { mergeConfigurations } from "util/config";
+import { environment as baseEnvironment } from './environment.base';
 
-export const environment = {
-  production: false,
-  capture: {
-    resizeDelay: 1000
-  },
-  google: {
-    vision: {
-      maxFileSize: 2 * 1024 * 1024,
-      validImageFormats: [ 'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/bmp', 'image/webp' ],
-      resizedImageDimension: 1000,
-      apiKey: '<GOOGLE_API_KEY>',
-      maxResults: 10,
-      singleWordDescriptionsOnly: true,
-      maxSafeSearchLikelihoods: {
-        "spoof": SafeSearchLikelihood.VERY_LIKELY,
-        "medical": SafeSearchLikelihood.POSSIBLE,
-        "adult": SafeSearchLikelihood.POSSIBLE,
-        "violence": SafeSearchLikelihood.POSSIBLE,
-      }
-    }
-  }
-};
+export const environment =  mergeConfigurations(baseEnvironment, {
+  production: false
+});
