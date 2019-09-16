@@ -10,7 +10,7 @@ export class LandingPage {
   constructor(private router:Router) {
   }
 
-  private onStartClick() {
+  onStartClick() {
     this.router.navigate(["/capture"]);
   }
 }

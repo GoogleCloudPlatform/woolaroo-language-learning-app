@@ -1,7 +1,7 @@
-<h2 mat-dialog-title>Error</h2>
+<h2 mat-dialog-title i18n="@@errorTitle">Error</h2>
 <mat-dialog-content>
   <p>{{data.message}}</p>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button color="warn" (click)="this.onCloseClick()">Close</button>
+  <button mat-button color="warn" (click)="this.onCloseClick()" i18n="@@close">Close</button>
 </mat-dialog-actions>

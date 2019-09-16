@@ -169,7 +169,7 @@ export class CameraPreviewComponent implements OnDestroy {
   }
 
   @HostListener('window:resize', ['$event'])
-  private onResize() {
+  onResize(ev:Event) {
     switch(this._status) {
       case CameraPreviewStatus.Started:
         this.startVideoResizeTimer();
