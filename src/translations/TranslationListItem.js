@@ -9,13 +9,9 @@ class TranslationListItem extends React.Component {
   constructor(props) {
     super(props);
 
-    this.handleTranslationChange_ = this.handleTranslationChange_.bind(this);
-    this.handleTransliterationChange_ = this.handleTransliterationChange_
-      .bind(this);
-    this.saveTranslation_ = this.saveTranslation_.bind(this);
-
     const { english_word, sound_link, translation,
       transliteration } = this.props.translation;
+
     this.state = {
       english_word,
       sound_link,
@@ -25,41 +21,40 @@ class TranslationListItem extends React.Component {
     };
   }
 
-  handleTranslationChange_(e) {
+  handleTranslationChange_ = (e) => {
     this.setState({ translation: e.target.value });
   }
 
-  handleTransliterationChange_(e) {
+  handleTransliterationChange_ = (e) => {
     this.setState({ transliteration: e.target.value });
   }
 
-  saveTranslation_(e) {
-    const { english_word, sound_link, translation,
-      transliteration } = this.state;
+  saveTranslation_ = async (e) => {
+    try {
+      const { english_word, sound_link, translation,
+        transliteration } = this.state;
 
-    fetch(`${ApiUtils.origin}${ApiUtils.path}addTranslations`, {
-      method: 'POST',
-      body: JSON.stringify({
-        english_word,
-        sound_link,
-        translation,
-        transliteration,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })
-    .then(resp => resp.json())
-    .then((resp) => {
+      await fetch(`${ApiUtils.origin}${ApiUtils.path}addTranslations`, {
+        method: 'POST',
+        body: JSON.stringify({
+          english_word,
+          sound_link,
+          translation,
+          transliteration,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
       this.setState({
         // todo(parikhshiv) - waiting on design to decide how to inform user
         // of this
         translation_saved: true,
-      })
-    })
-    .catch((err) => {
+      });
+    } catch(err) {
       console.error(err);
-    });
+    }
   }
 
   render() {
