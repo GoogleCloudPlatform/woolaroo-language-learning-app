@@ -1,19 +1,24 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
+import { SafeSearchLikelihood } from "services/entities/safe-search";
 
 export const environment = {
   production: false,
   capture: {
     resizeDelay: 1000
+  },
+  google: {
+    vision: {
+      maxFileSize: 2 * 1024 * 1024,
+      validImageFormats: [ 'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/bmp', 'image/webp' ],
+      resizedImageDimension: 1000,
+      apiKey: 'AIzaSyBrfr9K930Is8e5SvNPlAVMxa0UNdiegdY',
+      maxResults: 10,
+      singleWordDescriptionsOnly: true,
+      maxSafeSearchLikelihoods: {
+        "spoof": SafeSearchLikelihood.VERY_LIKELY,
+        "medical": SafeSearchLikelihood.POSSIBLE,
+        "adult": SafeSearchLikelihood.POSSIBLE,
+        "violence": SafeSearchLikelihood.POSSIBLE,
+      }
+    }
   }
 };
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.

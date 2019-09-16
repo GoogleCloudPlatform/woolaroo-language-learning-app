@@ -8,7 +8,7 @@ import {Router} from "@angular/router";
 })
 export class TranslatePage {
   @ViewChild('background', {static: false})
-  private background:ElementRef;
+  private background:ElementRef|null = null;
 
   constructor(private router:Router) {
   }
@@ -19,6 +19,6 @@ export class TranslatePage {
       this.router.navigate(['/capture']);
       return;
     }
-    this.background.nativeElement.style.background = 'url(' + URL.createObjectURL(image) + ')';
+    this.background!.nativeElement.style.background = 'url(' + URL.createObjectURL(image) + ')';
   }
 }

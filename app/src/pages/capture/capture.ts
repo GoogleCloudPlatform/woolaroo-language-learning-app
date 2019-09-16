@@ -9,25 +9,25 @@ import { Router } from "@angular/router";
 })
 export class CapturePage {
   @ViewChild(CameraPreviewComponent, {static: false})
-  private cameraPreview:CameraPreviewComponent;
+  private cameraPreview:CameraPreviewComponent|null = null;
   public captureInProgress:boolean = false;
 
   constructor(private router:Router) {
   }
 
   ngAfterViewInit() {
-    this.cameraPreview.start().then(
+    this.cameraPreview!.start().then(
       () => console.log("Camera started"),
       err => console.warn("Error starting camera: " + err)
     );
   }
 
   onCaptureClick() {
-    if(this.cameraPreview.status !== CameraPreviewStatus.Started) {
+    if(this.cameraPreview!.status !== CameraPreviewStatus.Started) {
       return;
     }
     this.captureInProgress = true;
-    this.cameraPreview.capture().then(
+    this.cameraPreview!.capture().then(
       image => {
         console.log("Image captured");
         this.router.navigate(['/translate'], {state: {capturedImage: image}});
@@ -40,7 +40,7 @@ export class CapturePage {
     )
   }
 
-  onCaptureError(err) {
+  onCaptureError(err:any) {
     // TODO
   }
 }

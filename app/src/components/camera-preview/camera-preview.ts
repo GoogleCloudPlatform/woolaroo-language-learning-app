@@ -22,16 +22,16 @@ export enum CameraPreviewStatus {
 })
 export class CameraPreviewComponent implements OnDestroy {
   @ViewChild('video', {static: false})
-  private videoRef:ElementRef;
+  private videoRef:ElementRef|null = null;
   @ViewChild('capturedImage', {static: false})
-  private capturedImage:ElementRef;
-  private videoStream:MediaStream;
+  private capturedImage:ElementRef|null = null;
+  private videoStream:MediaStream|null = null;
   private _status:CameraPreviewStatus;
   public get status():CameraPreviewStatus { return this._status; }
   private videoResizeTimer:any;
-  private get video():HTMLVideoElement { return this.videoRef.nativeElement as HTMLVideoElement; }
-  private get videoWidth():number { return this.videoStream ? this.video.videoWidth : 0; }
-  private get videoHeight():number { return this.videoStream ? this.video.videoHeight : 0; }
+  private get video():HTMLVideoElement|null { return this.videoRef ? this.videoRef.nativeElement as HTMLVideoElement : null; }
+  private get videoWidth():number { return this.video && this.videoStream ? this.video.videoWidth : 0; }
+  private get videoHeight():number { return this.video && this.videoStream ? this.video.videoHeight : 0; }
 
   @Output()
   videoError:EventEmitter<any> = new EventEmitter<any>();
@@ -45,15 +45,15 @@ export class CameraPreviewComponent implements OnDestroy {
   }
 
   async capture():Promise<Blob> {
-    const canvas = this.capturedImage.nativeElement as HTMLCanvasElement;
+    const canvas = this.capturedImage!.nativeElement as HTMLCanvasElement;
     const width = canvas.width = window.screen.width;
     const height = canvas.height = window.screen.height;
-    const video = this.video;
+    const video = this.video!;
     const scale = Math.max(width / video.videoWidth, height / video.videoHeight); // dimensions need to be relative to video, not the video element, so we need to scale
     const dx = (width / scale - this.videoWidth) * 0.5;
     const dy = (height / scale - this.videoHeight) * 0.5;
     const context = canvas.getContext('2d');
-    context.drawImage(video, dx, dy, this.videoWidth - 2 * dx, this.videoHeight - 2 * dy, 0, 0, width, height);
+    context!.drawImage(video, dx, dy, this.videoWidth - 2 * dx, this.videoHeight - 2 * dy, 0, 0, width, height);
     return await canvasToBlob(canvas);
   }
 
@@ -76,7 +76,7 @@ export class CameraPreviewComponent implements OnDestroy {
       desiredWidth = desiredHeight;
       desiredHeight = tmp;
     }
-    const video = this.video;
+    const video = this.video!;
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: { width: desiredWidth, height: desiredHeight, facingMode: 'environment' } });
       this.videoStream = stream;
@@ -115,7 +115,7 @@ export class CameraPreviewComponent implements OnDestroy {
       this.videoStream = null;
     }
     this.stopVideoResizeTimer();
-    this.video.srcObject = null;
+    this.video!.srcObject = null;
     this._status = CameraPreviewStatus.Stopped;
   }
 
@@ -128,15 +128,16 @@ export class CameraPreviewComponent implements OnDestroy {
   private repositionVideo() {
     let desiredWidth = window.innerWidth;
     let desiredHeight = window.innerHeight;
-    let videoWidth = this.video.videoWidth;
-    let videoHeight = this.video.videoHeight;
+    const video = this.video!;
+    let videoWidth = video.videoWidth;
+    let videoHeight = video.videoHeight;
     let scale = Math.max(desiredWidth / videoWidth, desiredHeight / videoHeight); // scale which will cover full screen
     let width = Math.round(scale * videoWidth);
     let height = Math.round(scale * videoHeight);
-    this.video.style.width = width + "px";
-    this.video.style.height = height + "px";
-    this.video.style.left = (desiredWidth - width) * 0.5 + "px";
-    this.video.style.top = (desiredHeight - height) * 0.5 + "px";
+    video.style.width = width + "px";
+    video.style.height = height + "px";
+    video.style.left = (desiredWidth - width) * 0.5 + "px";
+    video.style.top = (desiredHeight - height) * 0.5 + "px";
   }
 
   private startVideoResizeTimer() {

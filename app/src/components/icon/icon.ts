@@ -9,9 +9,9 @@ import {DomSanitizer} from "@angular/platform-browser";
 })
 export class IconComponent {
   @Input()
-  public color:string;
+  public color:'accent'|'primary'|'warn' = 'primary';
   @Input()
-  public icon:'capture_photo';
+  public icon:'capture_photo'|null = null;
 
   constructor(private iconRegistry:MatIconRegistry, private domSanitizer:DomSanitizer) {
     iconRegistry.addSvgIcon("capture_photo", domSanitizer.bypassSecurityTrustResourceUrl("/assets/icons/camera_alt.svg"));
