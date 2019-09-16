@@ -12,19 +12,21 @@ class TranslationsPage extends React.Component {
     };
   }
 
-  componentDidMount() {
-    const qs = '?collectionName=translations';
-    fetch(`${ApiUtils.origin}${ApiUtils.path}getEntireCollection${qs}`)
-    .then(resp => resp.json())
-    .then((resp) => {
+  async componentDidMount() {
+    try {
+      const qs = '?collectionName=translations';
+      const resp = await
+        fetch(`${ApiUtils.origin}${ApiUtils.path}getEntireCollection${qs}`);
+
+      const translations = await resp.json();
+
       this.setState({
-        translations: resp,
+        translations,
         loading: false,
-      })
-    })
-    .catch((err) => {
+      });
+    } catch(err) {
       console.error(err);
-    });
+    }
   }
 
   renderTranslations() {
