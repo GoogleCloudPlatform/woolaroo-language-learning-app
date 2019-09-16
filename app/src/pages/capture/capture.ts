@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { CameraPreviewComponent, CameraPreviewStatus } from "components/camera-preview/camera-preview";
+import { MatDialog } from '@angular/material';
 import { Router } from "@angular/router";
+import { CameraPreviewComponent, CameraPreviewStatus } from "components/camera-preview/camera-preview";
+import { ErrorPopUpComponent } from 'components/error-popup/error-popup';
 
 @Component({
   selector: 'page-capture',
@@ -12,13 +14,19 @@ export class CapturePage {
   private cameraPreview:CameraPreviewComponent|null = null;
   public captureInProgress:boolean = false;
 
-  constructor(private router:Router) {
+  constructor(private router:Router, private dialog:MatDialog) {
   }
 
   ngAfterViewInit() {
     this.cameraPreview!.start().then(
       () => console.log("Camera started"),
-      err => console.warn("Error starting camera: " + err)
+      err => {
+        console.warn("Error starting camera", err);
+        const errorDialog = this.dialog.open(ErrorPopUpComponent, { data: { message: 'Unable to start camera' } });
+        errorDialog.afterClosed().subscribe(() => {
+          this.router.navigate(["/"], { replaceUrl: true });
+        });
+      }
     );
   }
 
@@ -30,7 +38,7 @@ export class CapturePage {
     this.cameraPreview!.capture().then(
       image => {
         console.log("Image captured");
-        this.router.navigate(['/translate'], {state: {capturedImage: image}});
+        this.router.navigate(['/translate'], { state: {capturedImage: image} });
       },
       err => {
         console.warn('Failed to capture image', err);

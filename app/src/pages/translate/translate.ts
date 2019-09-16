@@ -16,7 +16,8 @@ export class TranslatePage {
   ngAfterViewInit() {
     const image:Blob = history.state.capturedImage;
     if(!image) {
-      this.router.navigate(['/capture']);
+      console.warn("Image not found in state - returning to previous screen");
+      this.router.navigate(['/capture'], { replaceUrl: true });
       return;
     }
     this.background!.nativeElement.style.background = 'url(' + URL.createObjectURL(image) + ')';
