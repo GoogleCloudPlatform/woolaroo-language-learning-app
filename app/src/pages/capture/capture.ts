@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { CameraPreviewComponent, CameraPreviewStatus } from "../../components/camera-preview/camera-preview";
+import { CameraPreviewComponent, CameraPreviewStatus } from "components/camera-preview/camera-preview";
 import { Router } from "@angular/router";
 
 @Component({
