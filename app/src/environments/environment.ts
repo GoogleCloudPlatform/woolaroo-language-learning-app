@@ -10,7 +10,7 @@ export const environment = {
       maxFileSize: 2 * 1024 * 1024,
       validImageFormats: [ 'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/bmp', 'image/webp' ],
       resizedImageDimension: 1000,
-      apiKey: 'AIzaSyBrfr9K930Is8e5SvNPlAVMxa0UNdiegdY',
+      apiKey: '<GOOGLE_API_KEY>',
       maxResults: 10,
       singleWordDescriptionsOnly: true,
       maxSafeSearchLikelihoods: {
