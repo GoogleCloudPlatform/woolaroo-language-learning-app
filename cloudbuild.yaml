@@ -15,4 +15,4 @@ steps:
     args: ["-m", "rsync", "-r", "-c", "-d", "./dist", "gs://${_BUCKET_NAME}"]
     dir: "./app"
   - name: gcr.io/cloud-builders/gsutil
-    args: ["-m", "setmeta", "-h", "'Content-Type:text/javascript'", "gs://${_BUCKET_NAME}/**/*.js"]
+    args: ["-m", "setmeta", "-h", "Content-Type:text/javascript", "gs://${_BUCKET_NAME}/**/*.js"]
