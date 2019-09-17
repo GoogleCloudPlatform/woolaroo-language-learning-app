@@ -5,14 +5,14 @@ steps:
     dir: "./app"
   - name: node:10.16.3
     entrypoint: "node"
-    args: ["./scripts/create_config.js", "${GOOGLE_API_KEY}"]
+    args: ["./scripts/create_config.js", "${_GOOGLE_API_KEY}"]
     dir: "./app"
   - name: node:10.16.3
     entrypoint: "npm"
-    args: ["run", "ng", "build", "-c", "production", "--output-path=./dist", "--i18n-file=/app/src/locale/messages.${LANGUAGE}.xlf", "--i18n-locale=${LANGUAGE}"]
+    args: ["run", "ng", "build", "-c", "production", "--output-path=./dist", "--i18n-file=/app/src/locale/messages.${_LANGUAGE}.xlf", "--i18n-locale=${_LANGUAGE}"]
     dir: "./app"
   - name: gcr.io/cloud-builders/gsutil
-    args: ["-m", "rsync", "-r", "-c", "-d", "./dist", "gs://${BUCKET_NAME}"]
+    args: ["-m", "rsync", "-r", "-c", "-d", "./dist", "gs://${_BUCKET_NAME}"]
     dir: "./app"
   - name: gcr.io/cloud-builders/gsutil
-    args: ["-m", "setmeta", "-h", "'Content-Type:text/javascript'", "gs://${BUCKET_NAME}/**/*.js"]
+    args: ["-m", "setmeta", "-h", "'Content-Type:text/javascript'", "gs://${_BUCKET_NAME}/**/*.js"]
