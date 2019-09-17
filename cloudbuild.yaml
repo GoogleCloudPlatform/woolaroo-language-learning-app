@@ -9,7 +9,7 @@ steps:
     dir: "./app"
   - name: node:10.16.3
     entrypoint: "npm"
-    args: ["run", "build", "--", "-c", "production", "--output-path=./dist", "--i18n-file=/app/src/locale/messages.${_LANGUAGE}.xlf", "--i18n-locale=${_LANGUAGE}"]
+    args: ["run", "build", "--", "-c", "production", "--output-path=./dist", "--i18n-file=./src/locale/messages.${_LANGUAGE}.xlf", "--i18n-locale=${_LANGUAGE}"]
     dir: "./app"
   - name: gcr.io/cloud-builders/gsutil
     args: ["-m", "rsync", "-r", "-c", "-d", "./dist", "gs://${_BUCKET_NAME}"]
