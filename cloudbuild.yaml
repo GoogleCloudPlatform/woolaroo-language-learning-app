@@ -4,8 +4,7 @@ steps:
            "-var", "google_project=$PROJECT_ID",
            "-var", "google_region=${_GOOGLE_REGION}",
            "-var", "bucket_name=${_BUCKET_NAME}",
-           "-var", "bucket_location=${_BUCKET_LOCATION}",
-           "./main.tf"]
+           "-var", "bucket_location=${_BUCKET_LOCATION}"]
     dir: "./terraform"
   - name: node:10.16.3
     entrypoint: "npm"
