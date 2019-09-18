@@ -1,4 +1,5 @@
 variable "google_project" {}
+variable "google_credentials" {}
 variable "google_region" {}
 variable "bucket_name" {}
 variable "bucket_location" {
@@ -14,6 +15,7 @@ output "bucket_url" {
 }
 
 provider "google" {
+  credentials = var.google_credentials
   project = var.google_project
   region = var.google_region
 }

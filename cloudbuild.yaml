@@ -6,6 +6,7 @@ steps:
     args: ["apply", "--auto-approve",
            "-var", "google_project=$PROJECT_ID",
            "-var", "google_region=${_GOOGLE_REGION}",
+           "-var", "google_credentials=${_GOOGLE_CREDENTIALS}",
            "-var", "bucket_name=${_BUCKET_NAME}",
            "-var", "bucket_location=${_BUCKET_LOCATION}"]
     dir: "./terraform"
