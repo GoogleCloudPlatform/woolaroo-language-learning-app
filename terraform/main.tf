@@ -3,9 +3,17 @@ variable "google_credentials" {
     default = ""
 }
 variable "google_region" {}
+variable "terraform_bucket_name" {}
 variable "bucket_name" {}
 variable "bucket_location" {
   default = ""
+}
+
+terraform {
+  backend "gcs" {
+    bucket  = "${var.bucket_name}-terraform"
+    prefix  = "state"
+  }
 }
 
 output "app_url" {

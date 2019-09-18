@@ -11,7 +11,7 @@
 ### Google Cloud Project
 
 * Create a new project in the Google Cloud Console.
-* Enable the `Compute Engine API` in the `APIs & Services` section.
+* Enable the `Compute Engine API` and `Cloud Build API` in the `APIs & Services` section.
 * Create a service account with `Storage Admin` and `Compute Admin` roles.
 * Generate and download a private key for the service account in JSON format.
 * Rename the private key to `./terraform/account.json`.
