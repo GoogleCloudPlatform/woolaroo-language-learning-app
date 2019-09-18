@@ -14,7 +14,6 @@ output "bucket_url" {
 }
 
 provider "google" {
-  credentials = "${file("account.json")}"
   project = var.google_project
   region = var.google_region
 }
