@@ -1,5 +1,8 @@
 steps:
   - name: hashicorp/terraform:light
+    args: ["init"]
+    dir: "./terraform"
+  - name: hashicorp/terraform:light
     args: ["apply", "--auto-approve",
            "-var", "google_project=$PROJECT_ID",
            "-var", "google_region=${_GOOGLE_REGION}",
