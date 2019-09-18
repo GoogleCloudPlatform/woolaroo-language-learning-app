@@ -1,5 +1,7 @@
 variable "google_project" {}
-variable "google_credentials" {}
+variable "google_credentials" {
+    default = ""
+}
 variable "google_region" {}
 variable "bucket_name" {}
 variable "bucket_location" {
