@@ -3,7 +3,6 @@ variable "google_credentials" {
     default = ""
 }
 variable "google_region" {}
-variable "terraform_bucket_name" {}
 variable "bucket_name" {}
 variable "bucket_location" {
   default = ""
