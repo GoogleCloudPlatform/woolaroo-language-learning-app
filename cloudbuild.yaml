@@ -9,7 +9,6 @@ steps:
            "-var", "bucket_name=${_BUCKET_NAME}",
            "-var", "bucket_location=${_BUCKET_LOCATION}"]
     dir: "./terraform"
-    secretEnv: ['TERRAFORM_CREDENTIALS']
   - name: node:10.16.3
     entrypoint: "npm"
     args: ["install"]
