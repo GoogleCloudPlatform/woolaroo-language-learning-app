@@ -1,5 +1,9 @@
 steps:
   - name: hashicorp/terraform:light
+    entrypoint: "echo"
+    args: ["terraform {\nbackend \"gcs\" {\nbucket  = \"${_TERRAFORM_BUCKET_NAME}\"\nprefix = \"state\"\n}\n}", ">>", "override.tf"]
+    dir: "./terraform"
+  - name: hashicorp/terraform:light
     args: ["init"]
     dir: "./terraform"
   - name: hashicorp/terraform:light
