@@ -9,13 +9,6 @@ variable "bucket_location" {
   default = ""
 }
 
-terraform {
-  backend "gcs" {
-    bucket  = "${var.bucket_name}-terraform"
-    prefix  = "state"
-  }
-}
-
 output "app_url" {
   value = "http://${google_compute_global_address.app-ip.address}/"
 }
