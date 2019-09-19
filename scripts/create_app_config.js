@@ -14,5 +14,5 @@ export const environment =  mergeConfigurations(baseEnvironment, {
   apiKey: '${GOOGLE_API_KEY}',
 });`;
 
-const configFilePath = path.join(__dirname, '../src/environments/environment.prod.ts');
+const configFilePath = path.join(__dirname, '../app/src/environments/environment.prod.ts');
 fs.writeFileSync(configFilePath, configContent);
