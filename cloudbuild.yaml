@@ -1,8 +1,8 @@
 steps:
-  - name: hashicorp/terraform:light
-    entrypoint: "echo"
-    args: ["\"terraform {\nbackend \\\"gcs\\\" {\nbucket = \\\"${_TERRAFORM_BUCKET_NAME}\\\"\nprefix = \\\"state\\\"\n}\n}\"", ">>", "./override.tf"]
-    dir: "./terraform"
+  - name: node:10.16.3
+    entrypoint: "node"
+    args: ["./create_terraform_config.js", "${_TERRAFORM_BUCKET_NAME}"]
+    dir: "./scripts"
   - name: hashicorp/terraform:light
     args: ["init"]
     dir: "./terraform"
@@ -19,8 +19,8 @@ steps:
     dir: "./app"
   - name: node:10.16.3
     entrypoint: "node"
-    args: ["./scripts/create_config.js", "${_GOOGLE_API_KEY}"]
-    dir: "./app"
+    args: ["./create_app_config.js", "${_GOOGLE_API_KEY}"]
+    dir: "./scripts"
   - name: node:10.16.3
     entrypoint: "npm"
     args: ["run", "build", "--", "-c", "production", "--output-path=./dist",
