@@ -1,6 +1,7 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Fab from '@material-ui/core/Fab';
+import Button from '@material-ui/core/Button';
 import PlayIcon from '@material-ui/icons/PlayArrowOutlined';
 import ApiUtils from '../utils/ApiUtils';
 import './TranslationListItem.css';
@@ -12,21 +13,35 @@ class TranslationListItem extends React.Component {
     const { english_word, sound_link, translation,
       transliteration } = this.props.translation;
 
+    this.saved_data = {
+      translation,
+      transliteration
+    };
+
     this.state = {
       english_word,
       sound_link,
       translation,
       transliteration,
+      disabled: true,
       translation_saved: false,
     };
   }
 
   handleTranslationChange_ = (e) => {
-    this.setState({ translation: e.target.value });
+    const newTranslation = e.target.value.trim();
+    this.setState({
+      translation: newTranslation,
+      disabled: newTranslation === this.saved_data.translation,
+    });
   }
 
   handleTransliterationChange_ = (e) => {
-    this.setState({ transliteration: e.target.value });
+    const newTransliteration = e.target.value.trim();
+    this.setState({
+      transliteration: newTransliteration,
+      disabled: newTransliteration === this.saved_data.transliteration,
+    });
   }
 
   saveTranslation_ = async (e) => {
@@ -47,10 +62,13 @@ class TranslationListItem extends React.Component {
         }
       });
 
+      this.saved_data = {
+        translation,
+        transliteration
+      };
+
       this.setState({
-        // todo(parikhshiv) - waiting on design to decide how to inform user
-        // of this
-        translation_saved: true,
+        disabled: true,
       });
     } catch(err) {
       console.error(err);
@@ -58,7 +76,7 @@ class TranslationListItem extends React.Component {
   }
 
   render() {
-    const {english_word, translation, transliteration} = this.state;
+    const {english_word, translation, transliteration, disabled} = this.state;
 
     return (
       <li className="translation-list-item">
@@ -71,7 +89,6 @@ class TranslationListItem extends React.Component {
           variant="outlined"
           margin="normal"
           onChange={this.handleTranslationChange_}
-          onBlur={this.saveTranslation_}
         />
         <TextField
           value={transliteration}
@@ -79,11 +96,18 @@ class TranslationListItem extends React.Component {
           variant="outlined"
           margin="normal"
           onChange={this.handleTransliterationChange_}
-          onBlur={this.saveTranslation_}
         />
-        <Fab color="primary" aria-label="record">
+        <Fab aria-label="record">
           <PlayIcon />
         </Fab>
+        <Button
+          variant="contained"
+          color="primary"
+          disabled={disabled}
+          onClick={this.saveTranslation_}
+        >
+          Save
+        </Button>
       </li>
     );
   }
