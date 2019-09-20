@@ -46,7 +46,6 @@ exports.getTranslation = functions.https.onRequest(async (req, res) => {
         res.status(200).send(doc.data());
         return doc.data()
     } else {
-        // doc.data() will be undefined in this case
         console.log("No such document!");
         res.status(404).send("404");
         return "404"
@@ -54,7 +53,31 @@ exports.getTranslation = functions.https.onRequest(async (req, res) => {
   }).catch(function(error) {
       console.log("Error getting document:", error);
   });
+});
 
+// For translation page, which will be used by admin & moderators.
+// https://us-central1-barnard-project.cloudfunctions.net/translations?limit=2&reverse=true
+exports.translations = functions.https.onRequest(async (req, res) => {
+  const start = +req.query.start || 1;
+  const limit = +req.query.limit || 20;
+  const reverse = req.query.reverse || "false";
+  //const array_contains = req.query.array_contains || "";
+
+  var reverse_order = (reverse === "true") ? "desc" : "asc";
+  var docRef = admin.firestore().collection("translations").orderBy("english_word", reverse_order).limit(limit);
+  docRef.get().then(querySnapshot => { 
+    if (querySnapshot.empty) {
+        res.status(404).send("NO translations");
+        return "404"
+    } else {
+        var docs = querySnapshot.docs.map(doc => doc.data());
+        translations_json = JSON.stringify({data: docs})
+        res.status(200).send(translations_json);
+        return translations_json
+    }
+  }).catch(function(error) {
+      console.log("Error getting document:", error);
+  });
 });
 
 // todo(parikhshiv) - made this method mainly for development, can be
