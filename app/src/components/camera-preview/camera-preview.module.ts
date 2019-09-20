@@ -9,4 +9,4 @@ import { CameraPreviewComponent } from './camera-preview';
     CameraPreviewComponent
   ]
 })
-export class CameraPreviewComponentModule {}
+export class CameraPreviewModule {}

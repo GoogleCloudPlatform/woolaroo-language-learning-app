@@ -17,4 +17,4 @@ import { ErrorPopUpComponent } from './error-popup';
     ErrorPopUpComponent
   ]
 })
-export class ErrorPopUpComponentModule {}
+export class ErrorPopUpModule {}

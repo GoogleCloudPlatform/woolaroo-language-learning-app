@@ -1,20 +1,23 @@
-import { Component } from '@angular/core';
+import {Component, NgZone} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from "@angular/router";
-import { ImageRecognitionService } from "services/image-recognition";
+import { ImageTranslationService } from "services/image-translation";
+import { WordTranslation } from "services/entities/translation";
 import { environment } from "environments/environment";
 
 @Component({
   selector: 'page-translate',
-  templateUrl: 'translate.html',
+  templateUrl: './translate.html',
   styleUrls: ['./translate.scss']
 })
 export class TranslatePage {
   public backgroundImageURL:string|null = null;
+  public translations:WordTranslation[]|null = null;
 
   constructor( private http:HttpClient,
                private router:Router,
-               private imageRecognitionService:ImageRecognitionService) {
+               private imageTranslationService:ImageTranslationService,
+               private zone:NgZone) {
   }
 
   ngAfterViewInit() {
@@ -40,13 +43,16 @@ export class TranslatePage {
 
   setImageData(image:Blob) {
     this.backgroundImageURL = URL.createObjectURL(image);
-    this.imageRecognitionService.loadDescriptions(image).then(
-      descriptions => {
-        console.log("Descriptions loaded", descriptions);
+    this.imageTranslationService.loadTranslatedDescriptions(image).then(
+      translations => {
+        console.log("Descriptions loaded", translations);
+        this.zone.run(() => {
+          this.translations = translations;
+        });
       },
       err => {
         console.warn("Error loading image descriptions", err);
-        //this.router.navigate(['/capture'], { replaceUrl: true });
+        this.router.navigate(['/capture'], { replaceUrl: true });
       }
     );
   }

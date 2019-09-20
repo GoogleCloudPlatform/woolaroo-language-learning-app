@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CapturePage } from './capture';
-import { CameraPreviewComponentModule } from 'components/camera-preview/camera-preview.module';
+import { CameraPreviewModule } from 'components/camera-preview/camera-preview.module';
 import { IconComponentModule } from 'components/icon/icon.module';
-import { ErrorPopUpComponentModule } from 'components/error-popup/error-popup.module';
+import { ErrorPopUpModule } from 'components/error-popup/error-popup.module';
 
 @NgModule({
   declarations: [
@@ -10,8 +10,8 @@ import { ErrorPopUpComponentModule } from 'components/error-popup/error-popup.mo
   ],
   imports: [
     IconComponentModule,
-    CameraPreviewComponentModule,
-    ErrorPopUpComponentModule
+    CameraPreviewModule,
+    ErrorPopUpModule
   ]
 })
 export class CapturePageModule {}
