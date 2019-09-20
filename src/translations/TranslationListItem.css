@@ -8,5 +8,7 @@
   color: #202124;
   font-size: 36px;
   margin-top: 20px;
-  min-width: 80px;
+  width: 160px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }

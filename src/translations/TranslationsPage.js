@@ -9,12 +9,13 @@ class TranslationsPage extends React.Component {
     this.state = {
       loading: true,
       translations: [],
+      pageNum: props.match.params.pageNum || 1,
     };
   }
 
   async componentDidMount() {
     try {
-      const qs = '?collectionName=translations';
+      const qs = `?collectionName=translations&pageNum=${this.state.pageNum}`;
       const resp = await
         fetch(`${ApiUtils.origin}${ApiUtils.path}getEntireCollection${qs}`);
 

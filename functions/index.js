@@ -60,8 +60,12 @@ exports.getTranslation = functions.https.onRequest(async (req, res) => {
 // todo(parikhshiv) - made this method mainly for development, can be
 // replaced / expanded
 exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
+  const pageSize = +req.query.pageSize || 25;
+  const pageNum = +req.query.pageNum || 1;
+
   return cors(req, res, () => {
-    const collection = admin.firestore().collection(req.query.collectionName);
+    const collection = admin.firestore().collection(req.query.collectionName)
+      .orderBy("english_word").startAt(25).limit(pageSize);
     collection.get().then(function(collectionDocs) {
       if (collectionDocs.docs.length) {
           const entireCollection = collectionDocs.docs.map((doc) => doc.data());

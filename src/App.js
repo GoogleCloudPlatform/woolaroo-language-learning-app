@@ -23,6 +23,7 @@ class App extends React.Component {
             <SideNav/>
             <div className="page-container">
               <Route exact path={ROUTES.TRANSLATIONS} component={TranslationsPage} />
+              <Route path="/translations/:pageNum(\d{0,3})" component={TranslationsPage} />
               <Route path={ROUTES.THEME} component={ThemePage} />
               <Route path={ROUTES.SHARING} component={SharingPage} />
             </div>
