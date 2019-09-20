@@ -2,11 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SafeSearchLikelihood } from './entities/safe-search';
 import { ImageDescription } from './entities/image-description';
-import { getImageMetadata, resizeImage } from 'util/image';
+import { resizeImage } from 'util/image';
 import { InvalidFormatError, InappropriateContentError } from './entities/errors';
 import { environment } from "environments/environment";
 import { retry } from 'rxjs/operators';
-import 'rxjs/add/operator/timeout';
 
 interface ImageRecognitionConfig {
   maxFileSize: number;
@@ -14,6 +13,7 @@ interface ImageRecognitionConfig {
   resizedImageDimension: number,
   apiKey: string,
   maxResults: number,
+  retryCount: number,
   singleWordDescriptionsOnly: boolean,
   maxSafeSearchLikelihoods:{[index:string]:SafeSearchLikelihood};
 }
@@ -49,12 +49,7 @@ export class ImageRecognitionService {
     }
     if(imageData.size > config.maxFileSize) {
       console.log('Image file size is too large - resizing: ' + imageData.size);
-      const metadata = await getImageMetadata(imageData);
-      const maxDimension = config.resizedImageDimension;
-      const scale = Math.min(maxDimension / metadata.width, maxDimension / metadata.height);
-      const newWidth:number = Math.floor(metadata.width * scale);
-      const newHeight:number = Math.floor(metadata.height * scale);
-      imageData = await resizeImage(imageData, newWidth, newHeight);
+      imageData = await resizeImage(imageData, config.resizedImageDimension, config.resizedImageDimension);
     }
     return new Promise<ImageDescription[]>((resolve, reject) => {
       const reader = new FileReader();
@@ -64,6 +59,7 @@ export class ImageRecognitionService {
         this.loadImageDescriptions(imageDataBase64).then(resolve, reject);
       };
       reader.onerror = err => {
+        console.warn('Error reading image data', err);
         reject(err);
       };
       reader.readAsDataURL(imageData);
@@ -82,7 +78,7 @@ export class ImageRecognitionService {
         } ]
       } )
       //.timeout(10000)
-      .pipe( retry(3) )
+      .pipe( retry(config.retryCount) )
       .subscribe(response => {
         if(!response.responses) {
           console.warn("Empty response from Cloud Vision");

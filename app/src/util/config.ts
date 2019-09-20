@@ -23,7 +23,7 @@ function deepCopy(src:ConfigObject):ConfigObject {
 function deepCopyInto(src:ConfigObject, dest:ConfigObject):void {
   for(const k in src) {
     const val = src[k];
-    if(typeof(val) === "object" && !val.hasOwnProperty('length')) {
+    if(typeof(val) === "object" && val && !val.hasOwnProperty('length')) {
       dest[k] = deepMerge(dest[k], val);
     } else {
       dest[k] = val;

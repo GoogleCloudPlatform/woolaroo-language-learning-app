@@ -5,6 +5,9 @@ export const environment = {
   capture: {
     resizeDelay: 1000
   },
+  translate: {
+    debugImageUrl: null
+  },
   google: {
     vision: {
       maxFileSize: 2 * 1024 * 1024,
@@ -12,6 +15,7 @@ export const environment = {
       resizedImageDimension: 1000,
       apiKey: '',
       maxResults: 10,
+      retryCount: 3,
       singleWordDescriptionsOnly: true,
       maxSafeSearchLikelihoods: {
         "spoof": SafeSearchLikelihood.VERY_LIKELY,

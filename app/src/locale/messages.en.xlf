@@ -3,19 +3,15 @@
   <file source-language="en" datatype="plaintext" original="ng2.template">
     <body>
       <trans-unit id="landingTitle" datatype="html">
-        <source>Landing page</source>
-        <target>Landing page</target>
+        <target>Landing page adawd</target>
       </trans-unit>
       <trans-unit id="start" datatype="html">
-        <source>Start</source>
         <target>Start</target>
       </trans-unit>
       <trans-unit id="errorTitle" datatype="html">
-        <source>Error</source>
         <target>Error</target>
       </trans-unit>
       <trans-unit id="close" datatype="html">
-        <source>Close</source>
         <target>Close</target>
       </trans-unit>
     </body>
