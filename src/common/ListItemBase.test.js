@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TranslationListItem from './TranslationListItem';
+import ListItemBase from './ListItemBase';
 
 it('renders without crashing when translation of correct structure is passed in', () => {
   const div = document.createElement('div');
@@ -11,6 +11,6 @@ it('renders without crashing when translation of correct structure is passed in'
     transliteration: "gau",
     id: "dog",
   };
-  ReactDOM.render(<TranslationListItem item={stubbedTranslation}/>, div);
+  ReactDOM.render(<ListItemBase item={stubbedTranslation}/>, div);
   ReactDOM.unmountComponentAtNode(div);
 });
