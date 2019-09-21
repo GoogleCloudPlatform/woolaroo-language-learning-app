@@ -64,7 +64,9 @@ exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
     const collection = admin.firestore().collection(req.query.collectionName);
     collection.get().then(function(collectionDocs) {
       if (collectionDocs.docs.length) {
-          const entireCollection = collectionDocs.docs.map((doc) => doc.data());
+          const entireCollection = collectionDocs.docs.map((doc) => {
+            return {...doc.data(), id: doc.id};
+          });
           console.log("Collection:", entireCollection);
           res.status(200).send(entireCollection);
           return entireCollection;
@@ -73,6 +75,19 @@ exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
           res.status(404).send("404");
           return "404";
       }
+    }).catch(function(error) {
+        console.log("Error getting translations:", error);
+    });
+  });
+});
+
+exports.deleteRow = functions.https.onRequest(async (req, res) => {
+  return cors(req, res, () => {
+    const doc = admin.firestore().collection(req.body.collectionName)
+      .doc(req.body.id);
+    doc.delete().then(function() {
+      console.log("successful deletion!");
+      res.status(200).send(JSON.stringify("Row deleted."));
     }).catch(function(error) {
         console.log("Error getting translations:", error);
     });
