@@ -45,7 +45,7 @@ export class TranslatePage {
     this.backgroundImageURL = URL.createObjectURL(image);
     this.imageTranslationService.loadTranslatedDescriptions(image).then(
       translations => {
-        console.log("Descriptions loaded", translations);
+        console.log("Translations loaded");
         this.zone.run(() => {
           this.translations = translations;
         });

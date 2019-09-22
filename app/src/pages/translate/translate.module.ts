@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { TranslatePage } from './translate';
-import { ImageTranslationService } from "services/image-translation";
-import { ImageRecognitionService } from "services/image-recognition";
-import { TranslationService } from "services/translation";
+import { ServicesModule } from "services/services.module";
 import { TranslationSelectorModule } from "components/translation-selector/translation-selector.module";
 import { PipesModule } from "pipes/pipes.module";
 
@@ -12,12 +10,8 @@ import { PipesModule } from "pipes/pipes.module";
   ],
   imports: [
     PipesModule,
-    TranslationSelectorModule
-  ],
-  providers: [
-    ImageTranslationService,
-    ImageRecognitionService,
-    TranslationService
+    TranslationSelectorModule,
+    ServicesModule
   ]
 })
 export class TranslatePageModule {}

@@ -6,13 +6,8 @@ if(!GOOGLE_API_KEY) {
     throw new Error('Google API key not set');
 }
 
-const configContent =
-`import { mergeConfigurations } from 'util/config';
-import { environment as baseEnvironment } from './environment.base';
-export const environment =  mergeConfigurations(baseEnvironment, {
-  production: true,
-  apiKey: '${GOOGLE_API_KEY}',
-});`;
-
 const configFilePath = path.join(__dirname, '../app/src/environments/environment.prod.ts');
+let configContent = fs.readFileSync(configFilePath);
+configContent.replace('<GOOGLE_API_KEY>', GOOGLE_API_KEY);
+
 fs.writeFileSync(configFilePath, configContent);
