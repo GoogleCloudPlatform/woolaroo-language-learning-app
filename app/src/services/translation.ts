@@ -6,4 +6,4 @@ export interface ITranslationService {
 }
 
 export const TRANSLATION_SERVICE = new InjectionToken<ITranslationService>("Translation service");
-export const TRANSLATION_SERVICE_CONFIG = new InjectionToken<any>("Translation service config");
+export const TRANSLATION_CONFIG = new InjectionToken<any>("Translation service config");

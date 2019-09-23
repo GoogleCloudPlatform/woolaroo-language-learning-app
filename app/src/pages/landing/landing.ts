@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import { Router } from "@angular/router";
+import {ANALYTICS_SERVICE, IAnalyticsService} from "services/analytics";
 
 @Component({
   selector: 'page-landing',
@@ -7,7 +8,12 @@ import { Router } from "@angular/router";
   styleUrls: ['./landing.scss']
 })
 export class LandingPage {
-  constructor(private router:Router) {
+  constructor( private router:Router,
+               @Inject(ANALYTICS_SERVICE) private analyticsService:IAnalyticsService ) {
+  }
+
+  ngAfterViewInit() {
+    this.analyticsService.logPageView(this.router.url, 'Capture');
   }
 
   onStartClick() {
