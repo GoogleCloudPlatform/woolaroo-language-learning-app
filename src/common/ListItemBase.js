@@ -48,6 +48,7 @@ class ListItemBase extends React.Component {
         variant="outlined"
         margin="normal"
         onChange={this.handleTranslationChange}
+        className="translation-text-field"
       />
     );
   }
@@ -60,6 +61,7 @@ class ListItemBase extends React.Component {
         variant="outlined"
         margin="normal"
         onChange={this.handleTransliterationChange}
+        className="transliteration-text-field"
       />
     );
   }

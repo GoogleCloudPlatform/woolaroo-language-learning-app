@@ -20,6 +20,7 @@ class TranslationListItem extends ListItemBase {
     this.state = {
       ...this.state,
       disabled: true,
+      error: false,
     };
   }
 
@@ -43,6 +44,15 @@ class TranslationListItem extends ListItemBase {
     try {
       const { english_word, sound_link, translation,
         transliteration } = this.state;
+
+      if (!translation) {
+        this.setState({
+          // todo(parikshiv) - add visible error state, also
+          // figure out if any of these can be empty?
+          error: true,
+        })
+        return;
+      }
 
       await fetch(`${ApiUtils.origin}${ApiUtils.path}addTranslations`, {
         method: 'POST',
