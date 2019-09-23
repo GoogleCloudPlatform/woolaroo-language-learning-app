@@ -1,5 +1,11 @@
-<ul>
-  <li *ngFor="let word of translations">
-    {{word.original}} - {{word.translation}}
+<div class="translation" *ngIf="selectedTranslation">
+  {{selectedTranslation.translation}}
+  <button *ngIf="selectedTranslation.soundURL" (click)="onPlayAudioClick($event)">{{!audioPlaying ? 'Play' : 'Stop'}}</button>
+  <audio #audioPlayer [src]="selectedTranslation.soundURL" preload="none"
+         (play)="onAudioPlaying()" (ended)="onAudioStopped()" (pause)="onAudioStopped()"></audio>
+</div>
+<ul class="words">
+  <li *ngFor="let word of translations; index as i">
+    <button [class.selected]="i === selectedWordIndex" (click)="onWordSelected(i)">{{word.original}}</button>
   </li>
 </ul>
