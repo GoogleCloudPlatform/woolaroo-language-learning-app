@@ -6,8 +6,8 @@ import {
   EventEmitter,
   OnDestroy, ElementRef
 } from '@angular/core';
-import {environment} from 'environments/environment';
-import {canvasToBlob} from 'util/image';
+import { environment } from 'environments/environment';
+import { canvasToBlob } from 'util/image';
 
 export enum CameraPreviewStatus {
   Stopped,
