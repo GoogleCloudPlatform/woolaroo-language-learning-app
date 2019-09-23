@@ -1,0 +1,8 @@
+<form #frm="ngForm" (ngSubmit)="onFormSubmit($event, frm)">
+  <mat-form-field>
+    <textarea matInput name="content" ngModel required placeholder="Feedback"></textarea>
+  </mat-form-field>
+  <div class="actions">
+    <button mat-raised-button color="accent" type="submit" [disabled]="!frm.valid || submittingForm">Submit</button>
+  </div>
+</form>

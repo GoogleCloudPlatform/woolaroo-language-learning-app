@@ -7,6 +7,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { LandingPageModule } from 'pages/landing/landing.module';
 import { CapturePageModule } from 'pages/capture/capture.module';
 import { TranslatePageModule } from 'pages/translate/translate.module';
+import { FeedbackPageModule } from 'pages/feedback/feedback.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { TranslatePageModule } from 'pages/translate/translate.module';
     LandingPageModule,
     CapturePageModule,
     TranslatePageModule,
+    FeedbackPageModule,
     HttpClientModule,
     BrowserAnimationsModule
   ],

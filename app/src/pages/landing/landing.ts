@@ -1,6 +1,6 @@
-import {Component, Inject} from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Router } from "@angular/router";
-import {ANALYTICS_SERVICE, IAnalyticsService} from "services/analytics";
+import { IAnalyticsService, ANALYTICS_SERVICE } from "services/analytics";
 
 @Component({
   selector: 'page-landing',
