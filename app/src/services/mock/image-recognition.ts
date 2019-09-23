@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ImageDescription } from '../entities/image-description';
-import { IImageRecognitionService } from "../image-recognition";
+import { IImageRecognitionService, ImageDescription } from "../image-recognition";
 
 @Injectable()
 export class MockImageRecognitionService implements IImageRecognitionService {

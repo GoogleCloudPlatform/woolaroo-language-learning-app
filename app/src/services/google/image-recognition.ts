@@ -1,11 +1,24 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { SafeSearchLikelihood } from '../entities/safe-search';
-import { ImageDescription } from '../entities/image-description';
-import { InvalidFormatError, InappropriateContentError } from '../entities/errors';
-import { IImageRecognitionService, IMAGE_RECOGNITION_CONFIG } from "../image-recognition";
-import { resizeImage } from 'util/image';
 import { retry } from 'rxjs/operators';
+import { InvalidFormatError, InappropriateContentError } from '../entities/errors';
+import { IImageRecognitionService, IMAGE_RECOGNITION_CONFIG, ImageDescription } from "../image-recognition";
+import { resizeImage } from 'util/image';
+
+export enum SafeSearchLikelihood {
+  VERY_UNLIKELY = "VERY_UNLIKELY",
+  UNLIKELY = "UNLIKELY",
+  POSSIBLE = "POSSIBLE",
+  LIKELY = "LIKELY",
+  VERY_LIKELY = "VERY_LIKELY"
+}
+
+export enum SafeSearchCategory {
+  SPOOF = "spoof",
+  MEDICAL = "medical",
+  ADULT = "adult",
+  VIOLENCE = "violence"
+}
 
 interface ImageRecognitionConfig {
   maxFileSize: number;

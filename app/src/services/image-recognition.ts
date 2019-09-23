@@ -1,5 +1,9 @@
 import { InjectionToken } from "@angular/core";
-import {ImageDescription} from "./entities/image-description";
+
+export interface ImageDescription {
+  description:string
+  score:number
+}
 
 export interface IImageRecognitionService {
   loadDescriptions(imageData:Blob):Promise<ImageDescription[]>;
