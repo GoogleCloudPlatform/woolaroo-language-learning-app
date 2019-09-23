@@ -19,7 +19,7 @@ steps:
     dir: "./app"
   - name: node:10.16.3
     entrypoint: "node"
-    args: ["./create_app_config.js", "${_GOOGLE_API_KEY}"]
+    args: ["./create_app_config.js", "${_GOOGLE_API_KEY}", "${_THEME}"]
     dir: "./scripts"
   - name: node:10.16.3
     entrypoint: "npm"
