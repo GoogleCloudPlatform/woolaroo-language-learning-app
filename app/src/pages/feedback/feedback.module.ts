@@ -3,6 +3,7 @@ import { FeedbackPage } from './feedback';
 import { FormsModule }   from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { LoadingPopUpModule } from "components/loading-popup/loading-popup.module";
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import { MatInputModule } from '@angular/material/input';
   imports: [
     MatButtonModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    LoadingPopUpModule
   ]
 })
 export class FeedbackPageModule {}

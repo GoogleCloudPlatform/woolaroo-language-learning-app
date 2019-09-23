@@ -28,7 +28,7 @@ export class TranslatePage {
     if(!image) {
       if(!environment.translate.debugImageUrl) {
         console.warn("Image not found in state - returning to previous screen");
-        this.router.navigate(['/capture'], { replaceUrl: true });
+        this.router.navigateByUrl('/capture', { replaceUrl: true });
       } else {
         this.loadImage(environment.translate.debugImageUrl);
       }
@@ -40,7 +40,7 @@ export class TranslatePage {
   loadImage(url:string) {
     this.http.get(url, { responseType: "blob" }).subscribe({
       next: response => this.setImageData(response),
-      error: () => this.router.navigate(['/capture'], { replaceUrl: true })
+      error: () => this.router.navigateByUrl('/capture', { replaceUrl: true })
     });
   }
 
@@ -55,8 +55,12 @@ export class TranslatePage {
       },
       err => {
         console.warn("Error loading image descriptions", err);
-        this.router.navigate(['/capture'], { replaceUrl: true });
+        this.router.navigateByUrl('/capture', { replaceUrl: true });
       }
     );
+  }
+
+  onSubmitFeedbackClick() {
+    this.router.navigateByUrl('/feedback');
   }
 }
