@@ -1,9 +1,10 @@
-import {Component, NgZone} from '@angular/core';
+import { Component, Inject, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from "@angular/router";
 import { ImageTranslationService } from "services/image-translation";
 import { WordTranslation } from "services/entities/translation";
 import { environment } from "environments/environment";
+import { IAnalyticsService, ANALYTICS_SERVICE } from "../../services/analytics";
 
 @Component({
   selector: 'page-translate',
@@ -16,11 +17,13 @@ export class TranslatePage {
 
   constructor( private http:HttpClient,
                private router:Router,
+               private zone:NgZone,
                private imageTranslationService:ImageTranslationService,
-               private zone:NgZone) {
+               @Inject(ANALYTICS_SERVICE) private analyticsService:IAnalyticsService ) {
   }
 
   ngAfterViewInit() {
+    this.analyticsService.logPageView(this.router.url, 'Translate');
     const image:Blob = history.state.capturedImage;
     if(!image) {
       if(!environment.translate.debugImageUrl) {

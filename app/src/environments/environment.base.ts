@@ -27,9 +27,6 @@ export const environment = {
           "violence": SafeSearchLikelihood.POSSIBLE,
         }
       }
-    },
-    translation: {
-      type: null
     }
   }
 };

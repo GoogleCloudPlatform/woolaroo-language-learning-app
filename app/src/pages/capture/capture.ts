@@ -1,8 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import {Component, Inject, ViewChild} from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from "@angular/router";
 import { CameraPreviewComponent, CameraPreviewStatus } from "components/camera-preview/camera-preview";
 import { ErrorPopUpComponent } from 'components/error-popup/error-popup';
+import { ANALYTICS_SERVICE, IAnalyticsService } from "services/analytics";
 
 @Component({
   selector: 'page-capture',
@@ -14,10 +15,13 @@ export class CapturePage {
   private cameraPreview:CameraPreviewComponent|null = null;
   public captureInProgress:boolean = false;
 
-  constructor(private router:Router, private dialog:MatDialog) {
+  constructor( private router:Router,
+               private dialog:MatDialog,
+               @Inject(ANALYTICS_SERVICE) private analyticsService:IAnalyticsService ) {
   }
 
   ngAfterViewInit() {
+    this.analyticsService.logPageView(this.router.url, 'Capture');
     this.cameraPreview!.start().then(
       () => console.log("Camera started"),
       err => {
