@@ -1,5 +1,4 @@
-import { SafeSearchLikelihood } from "services/entities/safe-search";
-import { GoogleImageRecognitionService } from "services/google/image-recognition";
+import { GoogleImageRecognitionService, SafeSearchLikelihood } from "services/google/image-recognition";
 
 export const environment = {
   production: false,
