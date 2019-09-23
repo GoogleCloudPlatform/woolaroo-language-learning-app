@@ -16,3 +16,5 @@ TERRAFORM_BUCKET_NAME=${BUCKET_NAME}-terraform
 TERRAFORM_BUCKET_LOCATION=''
 # Google project ID - default to current project ID
 PROJECT_ID=`gcloud config get-value project`
+# Color theme for the app - "pink" or "blue"
+THEME='pink'
