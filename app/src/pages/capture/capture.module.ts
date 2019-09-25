@@ -1,17 +1,21 @@
 import { NgModule } from '@angular/core';
-import { CapturePage } from './capture';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { CapturePageComponent } from './capture';
 import { CameraPreviewModule } from 'components/camera-preview/camera-preview.module';
 import { IconComponentModule } from 'components/icon/icon.module';
 import { ErrorPopUpModule } from 'components/error-popup/error-popup.module';
+import { SidenavModule } from 'components/sidenav/sidenav.module';
 
 @NgModule({
   declarations: [
-    CapturePage,
+    CapturePageComponent,
   ],
   imports: [
+    MatSidenavModule,
     IconComponentModule,
     CameraPreviewModule,
-    ErrorPopUpModule
+    ErrorPopUpModule,
+    SidenavModule
   ]
 })
 export class CapturePageModule {}
