@@ -1,4 +1,4 @@
-import { Component, Inject, NgZone } from '@angular/core';
+import { AfterViewInit, Component, Inject, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from "@angular/router";
 import { ImageTranslationService } from "services/image-translation";
@@ -11,23 +11,23 @@ import { IAnalyticsService, ANALYTICS_SERVICE } from "../../services/analytics";
   templateUrl: './translate.html',
   styleUrls: ['./translate.scss']
 })
-export class TranslatePage {
-  public backgroundImageURL:string|null = null;
-  public translations:WordTranslation[]|null = null;
+export class TranslatePage implements AfterViewInit {
+  public backgroundImageURL: string|null = null;
+  public translations: WordTranslation[]|null = null;
 
-  constructor( private http:HttpClient,
-               private router:Router,
-               private zone:NgZone,
-               private imageTranslationService:ImageTranslationService,
-               @Inject(ANALYTICS_SERVICE) private analyticsService:IAnalyticsService ) {
+  constructor( private http: HttpClient,
+               private router: Router,
+               private zone: NgZone,
+               private imageTranslationService: ImageTranslationService,
+               @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {
   }
 
   ngAfterViewInit() {
     this.analyticsService.logPageView(this.router.url, 'Translate');
-    const image:Blob = history.state.capturedImage;
+    const image: Blob = history.state.capturedImage;
     if(!image) {
       if(!environment.translate.debugImageUrl) {
-        console.warn("Image not found in state - returning to previous screen");
+        console.warn('Image not found in state - returning to previous screen');
         this.router.navigateByUrl('/capture', { replaceUrl: true });
       } else {
         this.loadImage(environment.translate.debugImageUrl);
@@ -37,8 +37,8 @@ export class TranslatePage {
     }
   }
 
-  loadImage(url:string) {
-    this.http.get(url, { responseType: "blob" }).subscribe({
+  loadImage(url: string) {
+    this.http.get(url, { responseType: 'blob' }).subscribe({
       next: response => this.setImageData(response),
       error: () => this.router.navigateByUrl('/capture', { replaceUrl: true })
     });
