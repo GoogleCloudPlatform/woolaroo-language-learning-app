@@ -1,19 +1,38 @@
-import { mergeConfigurations } from "util/config";
-import { environment as baseEnvironment } from './environment.base';
-import { MockTranslationService } from "services/mock/translation";
-import { MockFeedbackService } from "services/mock/feedback";
-import { GoogleAnalyticsService } from "services/google/analytics";
+import { MockTranslationService } from 'services/mock/translation';
+import { MockFeedbackService } from 'services/mock/feedback';
+import { GoogleAnalyticsService } from 'services/google/analytics';
+import { GoogleImageRecognitionService, SafeSearchLikelihood } from 'services/google/image-recognition';
 
-export const environment =  mergeConfigurations(baseEnvironment, {
+export const environment = {
   production: true,
+  capture: {
+    resizeDelay: 1000
+  },
+  translate: {
+    debugImageUrl: null
+  },
   services: {
     imageRecognition: {
+      type: GoogleImageRecognitionService,
       config: {
-        apiKey: '<GOOGLE_API_KEY>'
+        apiKey: '<GOOGLE_API_KEY>',
+        maxFileSize: 2 * 1024 * 1024,
+        validImageFormats: [ 'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/bmp', 'image/webp' ],
+        resizedImageDimension: 1000,
+        maxResults: 10,
+        retryCount: 3,
+        singleWordDescriptionsOnly: true,
+        maxSafeSearchLikelihoods: {
+          spoof: SafeSearchLikelihood.VERY_LIKELY,
+          medical: SafeSearchLikelihood.POSSIBLE,
+          adult: SafeSearchLikelihood.POSSIBLE,
+          violence: SafeSearchLikelihood.POSSIBLE,
+        }
       }
     },
     translation: {
-      type: MockTranslationService
+      type: MockTranslationService,
+      config: null
     },
     analytics: {
       type: GoogleAnalyticsService,
@@ -22,7 +41,8 @@ export const environment =  mergeConfigurations(baseEnvironment, {
       }
     },
     feedback: {
-      type: MockFeedbackService
+      type: MockFeedbackService,
+      config: null
     }
   }
-});
+};
