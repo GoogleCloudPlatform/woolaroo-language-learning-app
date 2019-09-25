@@ -1,6 +1,23 @@
 <form #frm="ngForm" (ngSubmit)="onFormSubmit($event, frm)">
+  <p>Help us improve Project Barnard's translation by sharing your feedback with us</p>
+  <div>
+    <mat-checkbox (change)="onFeedbackTypeChange($event, FeedbackType.IncorrectTranslation)"
+                  [checked]="feedbackTypes.indexOf(FeedbackType.IncorrectTranslation) >= 0">Incorrect Translation</mat-checkbox>
+  </div>
+  <div>
+    <mat-checkbox (change)="onFeedbackTypeChange($event, FeedbackType.OffensiveTranslation)"
+                  [checked]="feedbackTypes.indexOf(FeedbackType.OffensiveTranslation) >= 0">Offensive Translation</mat-checkbox>
+  </div>
+  <div>
+    <mat-checkbox (change)="onFeedbackTypeChange($event, FeedbackType.AlternateTranslation)"
+                  [checked]="feedbackTypes.indexOf(FeedbackType.AlternateTranslation) >= 0">Alternate Translation</mat-checkbox>
+  </div>
+  <div>
+    <mat-checkbox (change)="onFeedbackTypeChange($event, FeedbackType.Other)"
+                  [checked]="feedbackTypes.indexOf(FeedbackType.Other) >= 0">Other</mat-checkbox>
+  </div>
   <mat-form-field>
-    <textarea matInput name="content" ngModel required placeholder="Feedback"></textarea>
+    <textarea matInput name="content" ngModel required placeholder="Enter feedback"></textarea>
   </mat-form-field>
   <div class="actions">
     <button mat-raised-button color="accent" type="submit" [disabled]="!frm.valid || submittingForm">Submit</button>
