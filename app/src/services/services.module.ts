@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { ImageTranslationService } from "./image-translation";
-import { IMAGE_RECOGNITION_SERVICE, IMAGE_RECOGNITION_CONFIG } from "./image-recognition";
-import { TRANSLATION_SERVICE, TRANSLATION_CONFIG } from "./translation";
-import { ANALYTICS_SERVICE, ANALYTICS_CONFIG} from "./analytics";
-import { FEEDBACK_SERVICE, FEEDBACK_CONFIG} from "./feedback";
-import { environment } from "environments/environment";
+import { ImageTranslationService } from './image-translation';
+import { IMAGE_RECOGNITION_SERVICE, IMAGE_RECOGNITION_CONFIG } from './image-recognition';
+import { TRANSLATION_SERVICE, TRANSLATION_CONFIG } from './translation';
+import { ANALYTICS_SERVICE, ANALYTICS_CONFIG} from './analytics';
+import { FEEDBACK_SERVICE, FEEDBACK_CONFIG} from './feedback';
+import { environment } from 'environments/environment';
 
 @NgModule({
   declarations: [
