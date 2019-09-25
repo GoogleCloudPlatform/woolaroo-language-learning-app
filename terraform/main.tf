@@ -41,28 +41,28 @@ resource "google_storage_bucket_iam_member" "app-store-acl" {
 }
 
 resource "google_compute_backend_bucket" "app-backend" {
-  name = "${var.bucket_name}-backend"
+  name = "barnard-backend"
   bucket_name = "${google_storage_bucket.app-store.name}"
   enable_cdn = true
 }
 
 resource "google_compute_global_address" "app-ip" {
-  name = "${var.bucket_name}-ip"
+  name = "barnard-ip"
 }
 
 resource "google_compute_global_forwarding_rule" "app-forwarding-rule" {
-  name = "${var.bucket_name}-forwarding-rule"
+  name = "barnard-forwarding-rule"
   port_range = "80"
   ip_address = "${google_compute_global_address.app-ip.address}"
   target = "${google_compute_target_http_proxy.app-http-proxy.self_link}"
 }
 
 resource "google_compute_target_http_proxy" "app-http-proxy" {
-  name = "${var.bucket_name}-http-proxy"
+  name = "barnard-http-proxy"
   url_map = "${google_compute_url_map.app-url-map.self_link}"
 }
 
 resource "google_compute_url_map" "app-url-map" {
-  name = "${var.bucket_name}-url-map"
+  name = "barnard-url-map"
   default_service = "${google_compute_backend_bucket.app-backend.self_link}"
 }
