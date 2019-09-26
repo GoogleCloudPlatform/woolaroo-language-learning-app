@@ -126,19 +126,6 @@ exports.deleteRow = functions.https.onRequest(async (req, res) => {
   });
 });
 
-exports.deleteRow = functions.https.onRequest(async (req, res) => {
-  return cors(req, res, () => {
-    const doc = admin.firestore().collection(req.body.collectionName)
-      .doc(req.body.id);
-    doc.delete().then(function() {
-      console.log("successful deletion!");
-      res.status(200).send(JSON.stringify("Row deleted."));
-    }).catch(function(error) {
-        console.log("Error getting translations:", error);
-    });
-  });
-});
-
 // For testing purposes only
 exports.testEndpoint = functions.https.onRequest((req, res) => {
   return cors(req, res, () => {
