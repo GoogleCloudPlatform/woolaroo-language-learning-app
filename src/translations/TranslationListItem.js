@@ -93,6 +93,7 @@ class TranslationListItem extends ListItemBase {
       <Button
         variant="contained"
         color="primary"
+        disabled={this.state.disabled}
         onClick={() => this.saveTranslation_()}
         key={1}
       >
