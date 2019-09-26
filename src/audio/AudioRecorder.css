@@ -1,0 +1,7 @@
+.audio-buttons {
+  width: 150px;
+}
+
+button.recording, button.playing {
+  border: solid 1px black;
+}

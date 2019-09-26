@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TranslationsPage from './TranslationsPage';
-import TranslationListItem from './TranslationListItem';
+import ContributionsPage from './ContributionsPage';
+import ContributionListItem from './ContributionListItem';
 import ApiUtils from '../utils/ApiUtils';
 import { shallow } from 'enzyme';
 
 let fetchSpy;
 
-beforeEach(() => {
+beforeAll(() => {
   fetchSpy = jest.spyOn(window, 'fetch');
 });
 
@@ -17,20 +17,20 @@ afterEach(() => {
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<TranslationsPage />, div);
+  ReactDOM.render(<ContributionsPage />, div);
   ReactDOM.unmountComponentAtNode(div);
 });
 
-it('makes the correct call to fetch translations', () => {
-  const wrapper = shallow(<TranslationsPage />);
+it('makes the correct call to fetch contributions/suggestions', () => {
+  const wrapper = shallow(<ContributionsPage />);
 
   expect(fetchSpy).toHaveBeenCalledTimes(1);
   expect(fetchSpy).toHaveBeenCalledWith(ApiUtils.origin + ApiUtils.path +
-    "getEntireCollection?collectionName=translations");
+    "getEntireCollection?collectionName=suggestions");
 });
 
-it('renders correct number of TranslationListItem elements', () => {
-  const wrapper = shallow(<TranslationsPage />);
+it('renders correct number of ContributionListItem elements', () => {
+  const wrapper = shallow(<ContributionsPage />);
   wrapper.setState({
     items: [
       {
@@ -46,5 +46,5 @@ it('renders correct number of TranslationListItem elements', () => {
     loading: false,
   });
 
-  expect(wrapper.find(TranslationListItem).length).toEqual(3);
+  expect(wrapper.find(ContributionListItem).length).toEqual(3);
 });
