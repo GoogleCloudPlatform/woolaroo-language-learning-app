@@ -12,7 +12,7 @@ class TranslationListItem extends ListItemBase {
 
     const { translation, transliteration } = this.props.item;
 
-    this.saved_data = {
+    this.savedData = {
       translation,
       transliteration
     };
@@ -28,7 +28,7 @@ class TranslationListItem extends ListItemBase {
     const newTranslation = e.target.value.trim();
     this.setState({
       translation: newTranslation,
-      disabled: newTranslation === this.saved_data.translation,
+      disabled: newTranslation === this.savedData.translation,
     });
   }
 
@@ -36,7 +36,7 @@ class TranslationListItem extends ListItemBase {
     const newTransliteration = e.target.value.trim();
     this.setState({
       transliteration: newTransliteration,
-      disabled: newTransliteration === this.saved_data.transliteration,
+      disabled: newTransliteration === this.savedData.transliteration,
     });
   }
 
@@ -67,7 +67,7 @@ class TranslationListItem extends ListItemBase {
         }
       });
 
-      this.saved_data = {
+      this.savedData = {
         translation,
         transliteration
       };
