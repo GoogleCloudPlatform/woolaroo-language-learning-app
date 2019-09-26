@@ -7,7 +7,7 @@ class TranslationsPage extends ListPageBase {
     super(props);
     this.state = {
       ...this.state,
-      list_item_tag: TranslationListItem,
+      listItemTag: TranslationListItem,
       collectionName: 'translations',
     };
   }

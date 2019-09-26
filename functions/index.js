@@ -40,7 +40,9 @@ exports.addTranslations = functions.https.onRequest(async (req, res) => {
 exports.getTranslation = functions.https.onRequest(async (req, res) => {
   console.log('getTranslation');
   var docRef = admin.firestore().collection("translations").doc(req.body);
-  docRef.get().then(function(doc) {
+
+  try {
+    const doc = await docRef.get();
     if (doc.exists) {
         console.log("Document data:", doc.data());
         res.status(200).send(doc.data());
@@ -50,9 +52,9 @@ exports.getTranslation = functions.https.onRequest(async (req, res) => {
         res.status(404).send("404");
         return "404"
     }
-  }).catch(function(error) {
-      console.log("Error getting document:", error);
-  });
+  } catch(err) {
+    console.log("Error getting document:", err);
+  }
 });
 
 // For translation page, which will be used by admin & moderators.
@@ -64,8 +66,11 @@ exports.translations = functions.https.onRequest(async (req, res) => {
   //const array_contains = req.query.array_contains || "";
 
   var reverse_order = (reverse === "true") ? "desc" : "asc";
-  var docRef = admin.firestore().collection("translations").orderBy("english_word", reverse_order).limit(limit);
-  docRef.get().then(querySnapshot => { 
+  var docRef = admin.firestore().collection("translations")
+    .orderBy("english_word", reverse_order).limit(limit);
+
+  try {
+    const querySnapshot = await docRef.get();
     if (querySnapshot.empty) {
         res.status(404).send("NO translations");
         return "404"
@@ -75,17 +80,19 @@ exports.translations = functions.https.onRequest(async (req, res) => {
         res.status(200).send(translations_json);
         return translations_json
     }
-  }).catch(function(error) {
-      console.log("Error getting document:", error);
-  });
+  } catch(err) {
+    console.log("Error getting document:", err);
+  }
 });
 
 // todo(parikhshiv) - made this method mainly for development, can be
 // replaced / expanded
 exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
-  return cors(req, res, () => {
+  return cors(req, res, async () => {
     const collection = admin.firestore().collection(req.query.collectionName);
-    collection.get().then(function(collectionDocs) {
+
+    try {
+      const collectionDocs = await collection.get();
       if (collectionDocs.docs.length) {
           const entireCollection = collectionDocs.docs.map((doc) => {
             return {...doc.data(), id: doc.id};
@@ -98,22 +105,24 @@ exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
           res.status(404).send("404");
           return "404";
       }
-    }).catch(function(error) {
-        console.log("Error getting translations:", error);
-    });
+    } catch(err) {
+      console.log("Error getting translations:", err);
+    }
   });
 });
 
 exports.deleteRow = functions.https.onRequest(async (req, res) => {
-  return cors(req, res, () => {
+  return cors(req, res, async () => {
     const doc = admin.firestore().collection(req.body.collectionName)
       .doc(req.body.id);
-    doc.delete().then(function() {
+
+    try {
+      await doc.delete();
       console.log("successful deletion!");
       res.status(200).send(JSON.stringify("Row deleted."));
-    }).catch(function(error) {
-        console.log("Error getting translations:", error);
-    });
+    } catch(err) {
+      console.log("Error getting translations:", err);
+    }
   });
 });
 
