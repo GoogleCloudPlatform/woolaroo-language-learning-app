@@ -1,32 +1,42 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
-import Fab from '@material-ui/core/Fab';
-import PlayIcon from '@material-ui/icons/PlayArrowOutlined';
+import Button from '@material-ui/core/Button';
+import ListItemBase from '../common/ListItemBase'
 import ApiUtils from '../utils/ApiUtils';
 import './TranslationListItem.css';
+import AudioRecorder from '../audio/AudioRecorder';
 
-class TranslationListItem extends React.Component {
+class TranslationListItem extends ListItemBase {
   constructor(props) {
     super(props);
 
-    const { english_word, sound_link, translation,
-      transliteration } = this.props.translation;
+    const { translation, transliteration } = this.props.item;
+
+    this.saved_data = {
+      translation,
+      transliteration
+    };
 
     this.state = {
-      english_word,
-      sound_link,
-      translation,
-      transliteration,
-      translation_saved: false,
+      ...this.state,
+      disabled: true,
+      error: false,
     };
   }
 
-  handleTranslationChange_ = (e) => {
-    this.setState({ translation: e.target.value });
+  handleTranslationChange = (e) => {
+    const newTranslation = e.target.value.trim();
+    this.setState({
+      translation: newTranslation,
+      disabled: newTranslation === this.saved_data.translation,
+    });
   }
 
-  handleTransliterationChange_ = (e) => {
-    this.setState({ transliteration: e.target.value });
+  handleTransliterationChange = (e) => {
+    const newTransliteration = e.target.value.trim();
+    this.setState({
+      transliteration: newTransliteration,
+      disabled: newTransliteration === this.saved_data.transliteration,
+    });
   }
 
   saveTranslation_ = async (e) => {
@@ -34,6 +44,17 @@ class TranslationListItem extends React.Component {
       const { english_word, sound_link, translation,
         transliteration } = this.state;
 
+      if (!translation) {
+        this.setState({
+          // todo(parikshiv) - add visible error state, also
+          // figure out if any of these can be empty?
+          error: true,
+        })
+        return;
+      }
+
+      // TODO(smus): Upload this blob of audio to a Cloud storage and get the
+      // uploaded file's URL.
       await fetch(`${ApiUtils.origin}${ApiUtils.path}addTranslations`, {
         method: 'POST',
         body: JSON.stringify({
@@ -47,45 +68,37 @@ class TranslationListItem extends React.Component {
         }
       });
 
+      this.saved_data = {
+        translation,
+        transliteration
+      };
+
       this.setState({
-        // todo(parikhshiv) - waiting on design to decide how to inform user
-        // of this
-        translation_saved: true,
+        disabled: true,
       });
     } catch(err) {
       console.error(err);
     }
   }
 
-  render() {
-    const {english_word, translation, transliteration} = this.state;
+  onSavedAudio_(blob) {
+    console.log('onSavedAudio_', blob);
+    this.setState({sound_blob: blob});
+  }
 
-    return (
-      <li className="translation-list-item">
-        <div className="base-word">
-          {english_word}
-        </div>
-        <TextField
-          value={translation}
-          label="Translation"
-          variant="outlined"
-          margin="normal"
-          onChange={this.handleTranslationChange_}
-          onBlur={this.saveTranslation_}
-        />
-        <TextField
-          value={transliteration}
-          label="Transliteration"
-          variant="outlined"
-          margin="normal"
-          onChange={this.handleTransliterationChange_}
-          onBlur={this.saveTranslation_}
-        />
-        <Fab color="primary" aria-label="record">
-          <PlayIcon />
-        </Fab>
-      </li>
-    );
+  renderEndOfRow() {
+    return [<AudioRecorder audioUrl={this.state.sound_link}
+      onSavedAudio={(blob) => this.onSavedAudio_(blob)}
+      key={0} />,
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => this.saveTranslation_()}
+        key={1}
+      >
+        Save
+      </Button>
+    ];
   }
 }
 
