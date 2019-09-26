@@ -1,38 +1,58 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
+import ListItemBase from '../common/ListItemBase'
 import Fab from '@material-ui/core/Fab';
+import Button from '@material-ui/core/Button';
 import PlayIcon from '@material-ui/icons/PlayArrowOutlined';
 import ApiUtils from '../utils/ApiUtils';
 import './TranslationListItem.css';
 
-class TranslationListItem extends React.Component {
+class TranslationListItem extends ListItemBase {
   constructor(props) {
     super(props);
 
-    const { english_word, sound_link, translation,
-      transliteration } = this.props.translation;
+    const { translation, transliteration } = this.props.item;
+
+    this.savedData = {
+      translation,
+      transliteration
+    };
 
     this.state = {
-      english_word,
-      sound_link,
-      translation,
-      transliteration,
-      translation_saved: false,
+      ...this.state,
+      disabled: true,
+      error: false,
     };
   }
 
-  handleTranslationChange_ = (e) => {
-    this.setState({ translation: e.target.value });
+  handleTranslationChange = (e) => {
+    const newTranslation = e.target.value.trim();
+    this.setState({
+      translation: newTranslation,
+      disabled: newTranslation === this.savedData.translation,
+    });
   }
 
-  handleTransliterationChange_ = (e) => {
-    this.setState({ transliteration: e.target.value });
+  handleTransliterationChange = (e) => {
+    const newTransliteration = e.target.value.trim();
+    this.setState({
+      transliteration: newTransliteration,
+      disabled: newTransliteration === this.savedData.transliteration,
+    });
   }
 
   saveTranslation_ = async (e) => {
     try {
       const { english_word, sound_link, translation,
         transliteration } = this.state;
+
+      if (!translation) {
+        this.setState({
+          // todo(parikshiv) - add visible error state, also
+          // figure out if any of these can be empty?
+          error: true,
+        })
+        return;
+      }
 
       await fetch(`${ApiUtils.origin}${ApiUtils.path}addTranslations`, {
         method: 'POST',
@@ -47,45 +67,34 @@ class TranslationListItem extends React.Component {
         }
       });
 
+      this.savedData = {
+        translation,
+        transliteration
+      };
+
       this.setState({
-        // todo(parikhshiv) - waiting on design to decide how to inform user
-        // of this
-        translation_saved: true,
+        disabled: true,
       });
     } catch(err) {
       console.error(err);
     }
   }
 
-  render() {
-    const {english_word, translation, transliteration} = this.state;
-
-    return (
-      <li className="translation-list-item">
-        <div className="base-word">
-          {english_word}
-        </div>
-        <TextField
-          value={translation}
-          label="Translation"
-          variant="outlined"
-          margin="normal"
-          onChange={this.handleTranslationChange_}
-          onBlur={this.saveTranslation_}
-        />
-        <TextField
-          value={transliteration}
-          label="Transliteration"
-          variant="outlined"
-          margin="normal"
-          onChange={this.handleTransliterationChange_}
-          onBlur={this.saveTranslation_}
-        />
-        <Fab color="primary" aria-label="record">
-          <PlayIcon />
-        </Fab>
-      </li>
-    );
+  renderEndOfRow() {
+    return [
+      <Fab aria-label="record" key={0}>
+        <PlayIcon />
+      </Fab>,
+      <Button
+        variant="contained"
+        color="primary"
+        disabled={this.state.disabled}
+        onClick={this.saveTranslation_}
+        key={1}
+      >
+        Save
+      </Button>
+    ];
   }
 }
 
