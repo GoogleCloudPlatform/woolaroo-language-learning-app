@@ -18,7 +18,6 @@ class AudioRecorder extends React.Component {
   }
 
   render() {
-    const playStyle = {border: this.isPlaying ? '1px solid black' : ''};
     const record = <Fab aria-label="record">
         <MicIcon onClick={() => this.startRecording_()}/>
       </Fab>;

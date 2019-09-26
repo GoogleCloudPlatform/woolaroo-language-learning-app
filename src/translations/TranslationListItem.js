@@ -81,7 +81,6 @@ class TranslationListItem extends ListItemBase {
     }
   }
 
-<<<<<<< HEAD
   onSavedAudio_(blob) {
     console.log('onSavedAudio_', blob);
     this.setState({sound_blob: blob});
