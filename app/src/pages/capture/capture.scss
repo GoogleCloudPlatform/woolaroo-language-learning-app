@@ -1,13 +1,29 @@
-:host {
-  width: 100vw;
+.mat-drawer-container {
+  background-color: black;
   height: 100vh;
-  display: block;
+
+  .mat-sidenav {
+    width: 300px;
+  }
 }
 
 camera-preview {
   width: 100%;
   height: 100%;
   display: block;
+}
+
+.open-menu {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  padding: 10px;
+  background: transparent;
+  border-style: none;
+
+  app-icon ::ng-deep .mat-icon {
+    color: white;
+  }
 }
 
 .capture {
@@ -20,7 +36,7 @@ camera-preview {
   border-style: none;
   z-index: 1;
 
-  icon {
+  app-icon {
     width: 100px;
     height: 100px;
   }
