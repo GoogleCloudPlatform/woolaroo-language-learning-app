@@ -83,7 +83,7 @@ class TranslationListItem extends ListItemBase {
 
   onSavedAudio_(blob) {
     console.log('onSavedAudio_', blob);
-    this.setState({sound_blob: blob});
+    this.setState({sound_blob: blob, disabled: false});
   }
 
   renderEndOfRow() {
