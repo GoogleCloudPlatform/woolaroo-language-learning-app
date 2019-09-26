@@ -9,7 +9,7 @@ class ListPageBase extends React.Component {
       loading: true,
       items: [],
       // These values must be overridden by children.
-      list_item_tag: '',
+      listItemTag: '',
       collectionName: '',
     };
   }
@@ -32,7 +32,7 @@ class ListPageBase extends React.Component {
   }
 
   renderItems() {
-    const ListItemTag = this.state.list_item_tag;
+    const ListItemTag = this.state.listItemTag;
     return (
       <ul className="items-list">
         {

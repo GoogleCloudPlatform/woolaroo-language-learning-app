@@ -7,7 +7,7 @@ class ContributionsPage extends ListPageBase {
     super(props);
     this.state = {
       ...this.state,
-      list_item_tag: ContributionListItem,
+      listItemTag: ContributionListItem,
       collectionName: 'suggestions',
     };
   }
