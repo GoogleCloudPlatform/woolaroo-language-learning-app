@@ -21,6 +21,6 @@ export class IntroAboutPageComponent implements AfterViewInit {
   }
 
   onSkipClick() {
-    this.router.navigateByUrl('/capture');
+    this.router.navigateByUrl('/photo-option');
   }
 }

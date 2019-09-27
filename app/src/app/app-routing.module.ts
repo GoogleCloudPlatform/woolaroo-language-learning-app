@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'intro/about', component: IntroAboutPageComponent },
   { path: 'intro/feedback', component: IntroFeedbackPageComponent },
   { path: 'intro/terms', component: IntroTermsPageComponent },
+  { path: 'photo-option', redirectTo: 'capture', pathMatch: 'full' },
   { path: 'capture', component: CapturePageComponent },
   { path: 'translate', component: TranslatePage },
   { path: 'feedback', component: FeedbackPageComponent },
