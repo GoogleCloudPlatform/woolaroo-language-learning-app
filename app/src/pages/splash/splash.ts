@@ -1,6 +1,6 @@
-import {AfterViewInit, Component, Inject} from '@angular/core';
-import {Router} from '@angular/router';
-import {IAnalyticsService, ANALYTICS_SERVICE} from 'services/analytics';
+import { AfterViewInit, Component, Inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
 
 @Component({
   selector: 'app-page-splash',

@@ -5,6 +5,9 @@ import { GoogleImageRecognitionService, SafeSearchLikelihood } from 'services/go
 
 export const environment = {
   production: true,
+  splash: {
+    duration: 3000,
+  },
   capture: {
     resizeDelay: 1000
   },
