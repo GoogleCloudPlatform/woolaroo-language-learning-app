@@ -1,9 +1,9 @@
-import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
-import {SplashPageComponent} from 'pages/splash/splash';
-import {CapturePageComponent} from 'pages/capture/capture';
-import {TranslatePage} from 'pages/translate/translate';
-import {FeedbackPageComponent} from 'pages/feedback/feedback';
+import { NgModule} from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { SplashPageComponent } from 'pages/splash/splash';
+import { CapturePageComponent } from 'pages/capture/capture';
+import { TranslatePage } from 'pages/translate/translate';
+import { FeedbackPageComponent } from 'pages/feedback/feedback';
 
 
 const routes: Routes = [

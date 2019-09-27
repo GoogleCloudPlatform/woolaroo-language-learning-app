@@ -5,6 +5,9 @@ import { MockFeedbackService } from 'services/mock/feedback';
 
 export const environment = {
   production: false,
+  splash: {
+    duration: 3000,
+  },
   capture: {
     resizeDelay: 1000
   },

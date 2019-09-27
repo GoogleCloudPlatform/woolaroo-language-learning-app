@@ -1,13 +1,13 @@
-import {NgModule} from '@angular/core';
-import {SplashPageComponent} from './splash';
-import {MatButtonModule} from '@angular/material/button';
+import { NgModule } from '@angular/core';
+import { SplashPageComponent } from './splash';
+import { LogoModule } from 'components/logo/logo.module';
 
 @NgModule({
   declarations: [
     SplashPageComponent,
   ],
   imports: [
-    MatButtonModule
+    LogoModule
   ]
 })
 export class SplashPageModule {}

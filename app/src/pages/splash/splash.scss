@@ -1,0 +1,31 @@
+/* DEBUG */
+:host {
+  background: url(/assets/debug/screens/splash.png) no-repeat center center;
+  background-size: contain;
+}
+
+:host {
+  height: 100vh;
+  display: block;
+}
+
+app-logo {
+  width: 75%;
+  position: absolute;
+  left: 50%;
+  top: 33%;
+  transform: translate(-50%, -50%);
+}
+
+.sponsor-logo {
+  width: 65%;
+  position: absolute;
+  left: 50%;
+  top: 69%;
+  transform: translate(-50%, -50%);
+
+  img {
+    display: block;
+    width: 100%;
+  }
+}
