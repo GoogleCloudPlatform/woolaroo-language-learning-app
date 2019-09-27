@@ -1,0 +1,26 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  padding-top: 40vh;
+  box-sizing: border-box;
+}
+
+p {
+  text-align: center;
+  font-size: 1.32rem;
+  line-height: 2.14rem;
+  margin: 0 45px 67px 45px;
+}
+
+app-pagination-indicator {
+  margin-bottom: 47px;
+}
+
+button {
+  display: block;
+  margin: 0 auto 27px auto;
+
+  &.skip {
+    font-size: 1.4rem;
+  }
+}

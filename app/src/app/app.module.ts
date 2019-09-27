@@ -8,6 +8,7 @@ import { SplashPageModule } from 'pages/splash/splash.module';
 import { CapturePageModule } from 'pages/capture/capture.module';
 import { TranslatePageModule } from 'pages/translate/translate.module';
 import { FeedbackPageModule } from 'pages/feedback/feedback.module';
+import { IntroPageModule } from 'pages/intro/intro.module';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { FeedbackPageModule } from 'pages/feedback/feedback.module';
     BrowserModule,
     AppRoutingModule,
     SplashPageModule,
+    IntroPageModule,
     CapturePageModule,
     TranslatePageModule,
     FeedbackPageModule,
