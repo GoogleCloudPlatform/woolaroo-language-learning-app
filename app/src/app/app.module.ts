@@ -9,6 +9,7 @@ import { CapturePageModule } from 'pages/capture/capture.module';
 import { TranslatePageModule } from 'pages/translate/translate.module';
 import { FeedbackPageModule } from 'pages/feedback/feedback.module';
 import { IntroPageModule } from 'pages/intro/intro.module';
+import { TermsPageModule } from 'pages/terms/terms.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { IntroPageModule } from 'pages/intro/intro.module';
     AppRoutingModule,
     SplashPageModule,
     IntroPageModule,
+    TermsPageModule,
     CapturePageModule,
     TranslatePageModule,
     FeedbackPageModule,

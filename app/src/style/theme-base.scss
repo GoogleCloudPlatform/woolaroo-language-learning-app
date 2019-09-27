@@ -1,5 +1,7 @@
+$foreground-color: #303438;
+
 body {
-  color: #303438;
+  color: $foreground-color;
 }
 
 .mat-typography h1 {
@@ -16,5 +18,18 @@ button.mat-button-base {
 }
 
 a {
-  color: #303438;
+  color: $foreground-color;
+}
+
+p {
+  font-size: 1.32rem;
+  line-height: 2.14rem;
+}
+
+mat-toolbar.mat-toolbar-single-row {
+  height: 70px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  font-size: 1.4rem;
+  color: $foreground-color;
 }
