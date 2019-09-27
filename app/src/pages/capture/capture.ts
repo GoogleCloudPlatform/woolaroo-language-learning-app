@@ -32,7 +32,6 @@ export class CapturePageComponent implements AfterViewInit {
       () => console.log('Camera started'),
       err => {
         console.warn('Error starting camera', err);
-        return;
         const errorDialog = this.dialog.open(ErrorPopUpComponent, { data: { message: 'Unable to start camera' } });
         errorDialog.afterClosed().subscribe(() => {
           this.router.navigateByUrl('/', { replaceUrl: true });
