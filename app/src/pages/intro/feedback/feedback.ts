@@ -3,24 +3,20 @@ import { Router } from '@angular/router';
 import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
 
 @Component({
-  selector: 'app-page-intro-about',
-  templateUrl: './about.html',
-  styleUrls: ['./about.scss']
+  selector: 'app-page-intro-feedback',
+  templateUrl: './feedback.html',
+  styleUrls: ['./feedback.scss']
 })
-export class IntroAboutPageComponent implements AfterViewInit {
+export class IntroFeedbackPageComponent implements AfterViewInit {
   constructor( private router: Router,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {
   }
 
   ngAfterViewInit() {
-    this.analyticsService.logPageView(this.router.url, 'Intro - About');
+    this.analyticsService.logPageView(this.router.url, 'Intro - Feedback');
   }
 
   onNextClick() {
-    this.router.navigateByUrl('/intro/feedback');
-  }
-
-  onSkipClick() {
-    this.router.navigateByUrl('/capture');
+    this.router.navigateByUrl('/intro/terms');
   }
 }

@@ -4,28 +4,23 @@
   @include intro-page;
 
   &:before {
-    flex-basis: 270px;
+    flex-basis: 300px;
   }
 
   &:after {
-    flex-basis: 30px;
+    flex-basis: 120px;
   }
 }
 
 p {
-  margin-bottom: 67px;
+  margin-bottom: 82px;
 }
 
 app-pagination-indicator {
   margin-bottom: 47px;
 }
 
-button {
-  &.next {
-    margin-bottom: 27px;
-  }
-
-  &.skip {
-    font-size: 1.4rem;
-  }
+button.mat-button-base {
+  padding-left: 30px;
+  padding-right: 30px;
 }

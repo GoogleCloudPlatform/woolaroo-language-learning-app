@@ -1,0 +1,25 @@
+@mixin intro-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &:before {
+    content: "";
+    display: block;
+    flex: 0.5 1 300px;
+  }
+
+  &:after {
+    content: "";
+    display: block;
+    flex: 1 1 120px;
+  }
+
+  p {
+    text-align: center;
+    font-size: 1.32rem;
+    line-height: 2.14rem;
+    margin: 0 45px 82px 45px;
+  }
+}
