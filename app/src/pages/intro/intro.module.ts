@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material';
 import { PaginationIndicatorModule } from 'components/pagination-indicator/pagination-indicator.module';
 import { IntroAboutPageComponent } from './about/about';
@@ -12,6 +13,7 @@ import { IntroTermsPageComponent } from './terms/terms';
     IntroTermsPageComponent
   ],
   imports: [
+    RouterModule,
     MatButtonModule,
     PaginationIndicatorModule
   ]

@@ -4,6 +4,7 @@ import { SplashPageComponent } from 'pages/splash/splash';
 import { IntroAboutPageComponent } from 'pages/intro/about/about';
 import { IntroFeedbackPageComponent } from 'pages/intro/feedback/feedback';
 import { IntroTermsPageComponent } from 'pages/intro/terms/terms';
+import { TermsPageComponent } from 'pages/terms/terms';
 import { CapturePageComponent } from 'pages/capture/capture';
 import { TranslatePage } from 'pages/translate/translate';
 import { FeedbackPageComponent } from 'pages/feedback/feedback';
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'intro/about', component: IntroAboutPageComponent },
   { path: 'intro/feedback', component: IntroFeedbackPageComponent },
   { path: 'intro/terms', component: IntroTermsPageComponent },
+  { path: 'terms', component: TermsPageComponent },
   { path: 'photo-option', redirectTo: 'capture', pathMatch: 'full' },
   { path: 'capture', component: CapturePageComponent },
   { path: 'translate', component: TranslatePage },
