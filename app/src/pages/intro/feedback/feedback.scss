@@ -10,17 +10,17 @@
   &:after {
     flex-basis: 120px;
   }
-}
 
-p {
-  margin-bottom: 82px;
-}
+  p {
+    margin-bottom: 82px;
+  }
 
-app-pagination-indicator {
-  margin-bottom: 47px;
-}
+  app-pagination-indicator {
+    margin-bottom: 47px;
+  }
 
-button.mat-button-base {
-  padding-left: 30px;
-  padding-right: 30px;
+  button.mat-button-base {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
 }

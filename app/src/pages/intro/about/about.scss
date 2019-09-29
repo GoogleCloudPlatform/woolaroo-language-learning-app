@@ -10,22 +10,22 @@
   &:after {
     flex-basis: 30px;
   }
-}
 
-p {
-  margin-bottom: 67px;
-}
-
-app-pagination-indicator {
-  margin-bottom: 47px;
-}
-
-button {
-  &.next {
-    margin-bottom: 27px;
+  p {
+    margin-bottom: 67px;
   }
 
-  &.skip {
-    font-size: 1.4rem;
+  app-pagination-indicator {
+    margin-bottom: 47px;
+  }
+
+  button {
+    &.next {
+      margin-bottom: 27px;
+    }
+
+    &.skip {
+      font-size: 1.4rem;
+    }
   }
 }
