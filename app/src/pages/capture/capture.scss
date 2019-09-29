@@ -13,31 +13,65 @@ camera-preview {
   display: block;
 }
 
+.camera-frame {
+  position: absolute;
+  width: 46vw;
+  height: 46vw;
+  max-width: 205px;
+  max-height: 205px;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  background: url(/assets/img/camera-frame.svg) no-repeat center center;
+  background-size: contain;
+}
+
 .open-menu {
   position: absolute;
-  top: 15px;
-  left: 15px;
-  padding: 10px;
-  background: transparent;
-  border-style: none;
+  top: 5px;
+  left: 8px;
+  width: 40px;
+  height: 40px;
 
-  app-icon ::ng-deep .mat-icon {
-    color: white;
+  ::ng-deep {
+    .mat-icon {
+      color: white;
+      width: 30px;
+      height: 30px;
+    }
   }
 }
 
 .capture {
   position: absolute;
-  left: 50%;
-  top: 70%;
-  padding: 0;
+  left: 52%;
+  bottom: 15px;
+  width: 100px;
+  height: 100px;
   transform: translateX(-50%);
-  background-color: transparent;
-  border-style: none;
   z-index: 1;
 
-  app-icon {
-    width: 100px;
-    height: 100px;
+  ::ng-deep {
+    .mat-icon {
+      color: white;
+      width: 80px;
+      height: 80px;
+    }
+  }
+}
+
+.load-photo {
+  position: absolute;
+  left: 35px;
+  bottom: 10px;
+  width: 60px;
+  height: 60px;
+
+  ::ng-deep {
+    .mat-icon {
+      color: white;
+      width: 50px;
+      height: 50px;
+    }
   }
 }

@@ -69,6 +69,10 @@ export class CapturePageComponent implements AfterViewInit {
     this.sidenavOpen = !this.sidenavOpen;
   }
 
+  onLoadPhotoClick() {
+    // TODO
+  }
+
   onSidenavClosed() {
     this.sidenavOpen = false;
   }
