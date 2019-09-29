@@ -21,7 +21,7 @@ a {
   color: $foreground-color;
 }
 
-p {
+.mat-body-1 {
   font-size: 1.32rem;
   line-height: 2.14rem;
 }
@@ -32,4 +32,10 @@ mat-toolbar.mat-toolbar-single-row {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
   font-size: 1.4rem;
   color: $foreground-color;
+}
+/* DEBUG */
+body {
+  background: url(/assets/debug/screens/intro-terms-conditions.png) no-repeat center center;
+  background-size: contain;
+  height: 100vh;
 }
