@@ -2,8 +2,10 @@
   <mat-sidenav mode="over" [opened]="sidenavOpen" (closed)="onSidenavClosed()"><app-sidenav></app-sidenav></mat-sidenav>
   <mat-sidenav-content>
     <camera-preview></camera-preview>
-    <button (click)="onOpenMenuClick()" class="open-menu" aria-label="Open Menu"><app-icon icon="menu"></app-icon></button>
-    <button (click)="onCaptureClick()" class="capture" aria-label="Capture Photo"><app-icon icon="capture_photo"></app-icon></button>
+    <div class="camera-frame"></div>
+    <app-icon-button icon="menu" (click)="onOpenMenuClick()" class="open-menu" aria-label="Open Menu"></app-icon-button>
+    <app-icon-button icon="capture_photo" (click)="onCaptureClick()" class="capture" aria-label="Capture Photo"></app-icon-button>
+    <app-icon-button icon="photo_library" (click)="onLoadPhotoClick()" class="load-photo" aria-label="Load Photo"></app-icon-button>
   </mat-sidenav-content>
 </mat-sidenav-container>
 
