@@ -1,0 +1,7 @@
+<p class="mat-body-1" i18n="@@photoSource">You can use a photo from your phone or take a photo of something around you</p>
+<div class="actions">
+  <app-upload-image-button class="load-photo" (imageUploaded)="this.onImageUploaded($event)" i18n="@@pickPhoto">
+    Pick Photo
+  </app-upload-image-button>
+  <button mat-flat-button color="accent" (click)="onCaptureClick()" class="capture" i18n="@@takePhoto">Take Photo</button>
+</div>

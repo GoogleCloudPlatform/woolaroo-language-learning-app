@@ -5,8 +5,9 @@ import { IntroAboutPageComponent } from 'pages/intro/about/about';
 import { IntroFeedbackPageComponent } from 'pages/intro/feedback/feedback';
 import { IntroTermsPageComponent } from 'pages/intro/terms/terms';
 import { TermsPageComponent } from 'pages/terms/terms';
+import { PhotoSourcePageComponent } from 'pages/photo-source/photo-source';
 import { CapturePageComponent } from 'pages/capture/capture';
-import { TranslatePage } from 'pages/translate/translate';
+import { TranslatePageComponent } from 'pages/translate/translate';
 import { FeedbackPageComponent } from 'pages/feedback/feedback';
 
 const routes: Routes = [
@@ -16,9 +17,9 @@ const routes: Routes = [
   { path: 'intro/feedback', component: IntroFeedbackPageComponent },
   { path: 'intro/terms', component: IntroTermsPageComponent },
   { path: 'terms', component: TermsPageComponent },
-  { path: 'photo-option', redirectTo: 'capture', pathMatch: 'full' },
+  { path: 'photo-source', component: PhotoSourcePageComponent },
   { path: 'capture', component: CapturePageComponent },
-  { path: 'translate', component: TranslatePage },
+  { path: 'translate', component: TranslatePageComponent },
   { path: 'feedback', component: FeedbackPageComponent },
   { path: '**', component: SplashPageComponent } // TODO: not found page
 ];
