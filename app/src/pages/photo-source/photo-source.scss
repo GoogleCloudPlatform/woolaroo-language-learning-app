@@ -1,0 +1,33 @@
+@import 'components';
+
+:host {
+  @include centered-page;
+
+  &:before {
+    flex-basis: 255px;
+  }
+
+  &:after {
+    flex-basis: 223px;
+  }
+
+  p {
+    margin: 0 60px 110px 60px;
+    text-align: center;
+  }
+
+  .actions {
+    button {
+      min-width: 155px;
+    }
+
+    .load-photo {
+      margin-right: 10px;
+    }
+  }
+
+  /* DEBUG */
+  /*background: url(/assets/debug/screens/photo-option.png) no-repeat center center;
+  background-size: contain;
+  height: 100vh;*/
+}

@@ -25,16 +25,16 @@ export class CapturePageComponent implements AfterViewInit {
     this.analyticsService.logPageView(this.router.url, 'Capture');
     if (!this.cameraPreview) {
       console.error('Camera preview not found');
-      this.router.navigateByUrl('/', { replaceUrl: true });
+      history.back();
       return;
     }
     this.cameraPreview.start().then(
       () => console.log('Camera started'),
       err => {
         console.warn('Error starting camera', err);
-        const errorDialog = this.dialog.open(ErrorPopUpComponent, { data: { message: 'Unable to start camera' } });
+        const errorDialog = this.dialog.open(ErrorPopUpComponent, { data: { message: 'Unable to start camera' } }); // TODO: localize
         errorDialog.afterClosed().subscribe(() => {
-          this.router.navigateByUrl('/', { replaceUrl: true });
+          history.back();
         });
       }
     );
@@ -51,18 +51,14 @@ export class CapturePageComponent implements AfterViewInit {
     this.cameraPreview.capture().then(
       image => {
         console.log('Image captured');
-        this.router.navigate(['/translate'], { state: {capturedImage: image} });
+        this.router.navigateByUrl('/translate', { state: { image } });
       },
       err => {
         console.warn('Failed to capture image', err);
         this.captureInProgress = false;
-        this.onCaptureError(err);
+        this.dialog.open(ErrorPopUpComponent, { data: { message: 'Unable to capture image' } }); // TODO: localize
       }
     );
-  }
-
-  onCaptureError(err: any) {
-    // TODO
   }
 
   onOpenMenuClick() {

@@ -1,0 +1,26 @@
+:host {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: top;
+
+  input[type=file] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+
+  // Move padding from button to label - so clicking anywhere on button (not just the text) triggers a file select
+  label {
+    padding: 4px 20px;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .mat-button {
+    padding: 0;
+  }
+}

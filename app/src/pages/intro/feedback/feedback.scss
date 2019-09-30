@@ -1,7 +1,7 @@
-@import '../intro';
+@import 'components';
 
 :host {
-  @include intro-page;
+  @include centered-page;
 
   &:before {
     flex-basis: 300px;
@@ -12,7 +12,8 @@
   }
 
   p {
-    margin-bottom: 82px;
+    text-align: center;
+    margin: 0 45px 82px 45px;
   }
 
   app-pagination-indicator {

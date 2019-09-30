@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, NgZone } from '@angular/core';
+import { OnInit, Component, Inject, NgZone, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ImageTranslationService } from 'services/image-translation';
@@ -11,7 +11,7 @@ import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
   templateUrl: './translate.html',
   styleUrls: ['./translate.scss']
 })
-export class TranslatePage implements AfterViewInit {
+export class TranslatePageComponent implements OnInit, OnDestroy {
   public backgroundImageURL: string|null = null;
   public translations: WordTranslation[]|null = null;
 
@@ -22,19 +22,26 @@ export class TranslatePage implements AfterViewInit {
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {
   }
 
-  ngAfterViewInit() {
+  ngOnInit() {
     this.analyticsService.logPageView(this.router.url, 'Translate');
-    const image: Blob = history.state.capturedImage;
+    const image: Blob = history.state.image;
     if (!image) {
       const debugImageUrl: string|null = environment.translate.debugImageUrl;
       if (!debugImageUrl) {
         console.warn('Image not found in state - returning to previous screen');
-        this.router.navigateByUrl('/capture', { replaceUrl: true });
+        history.back();
       } else {
         this.loadImage(debugImageUrl);
       }
     } else {
       this.setImageData(image);
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.backgroundImageURL) {
+      URL.revokeObjectURL(this.backgroundImageURL);
+      this.backgroundImageURL = null;
     }
   }
 
@@ -47,6 +54,7 @@ export class TranslatePage implements AfterViewInit {
 
   setImageData(image: Blob) {
     this.backgroundImageURL = URL.createObjectURL(image);
+    console.log(this.backgroundImageURL);
     this.imageTranslationService.loadTranslatedDescriptions(image).then(
       translations => {
         console.log('Translations loaded');
@@ -56,7 +64,7 @@ export class TranslatePage implements AfterViewInit {
       },
       err => {
         console.warn('Error loading image descriptions', err);
-        this.router.navigateByUrl('/capture', { replaceUrl: true });
+        history.back();
       }
     );
   }

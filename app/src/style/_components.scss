@@ -1,4 +1,4 @@
-@mixin intro-page {
+@mixin centered-page {
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -14,10 +14,5 @@
     content: "";
     display: block;
     flex: 1 1 120px;
-  }
-
-  p {
-    text-align: center;
-    margin: 0 45px 82px 45px;
   }
 }

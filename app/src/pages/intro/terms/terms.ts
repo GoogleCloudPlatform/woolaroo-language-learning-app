@@ -17,6 +17,6 @@ export class IntroTermsPageComponent implements AfterViewInit {
   }
 
   onAcceptClick() {
-    this.router.navigateByUrl('/photo-option');
+    this.router.navigateByUrl('/photo-source');
   }
 }
