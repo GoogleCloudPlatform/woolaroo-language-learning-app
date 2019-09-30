@@ -20,24 +20,15 @@ export class APITranslationService implements ITranslationService {
   }
 
   public translate(words: string[], maxTranslations: number = 0): Promise<WordTranslation[]> {
-    const promises: Promise<WordTranslation>[] = words.map(w => this.translateWord(w));
-    return Promise.all(promises);
-  }
-
-  private translateWord(word: string): Promise<WordTranslation> {
+    console.log(words);
     return new Promise((resolve, reject) => {
-      return this.http.post<TranslationResponse>(this.config.endpointURL, word).subscribe({
+      return this.http.post<TranslationResponse[]>(this.config.endpointURL, { english_words: words }).subscribe({
         next: (response) => {
-          resolve({ original: response.english_word, translation: response.translation, soundURL: response.sound_link });
+          const translations = response.filter(tr => tr.translation).map(tr => ({
+            original: tr.english_word, translation: tr.translation, soundURL: tr.sound_link }));
+          resolve(translations);
         },
-        error: (err) => {
-          if (err.name === 'HttpErrorResponse') {
-            // TODO: better way of detecting translation unavailable
-            resolve({ original: word, translation: '', soundURL: '' });
-          } else {
-            reject(err);
-          }
-        }
+        error: reject
       });
     });
   }

@@ -54,7 +54,6 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 
   setImageData(image: Blob) {
     this.backgroundImageURL = URL.createObjectURL(image);
-    console.log(this.backgroundImageURL);
     this.imageTranslationService.loadTranslatedDescriptions(image).then(
       translations => {
         console.log('Translations loaded');
