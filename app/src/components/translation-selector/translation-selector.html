@@ -1,6 +1,6 @@
 <div class="translation" *ngIf="selectedTranslation">
   {{selectedTranslation.translation}}
-  <button *ngIf="selectedTranslation.soundURL" (click)="onPlayAudioClick($event)">{{!audioPlaying ? 'Play' : 'Stop'}}</button>
+  <button *ngIf="selectedTranslation.soundURL" (click)="onPlayAudioClick()">{{!audioPlaying ? 'Play' : 'Stop'}}</button>
   <audio #audioPlayer [src]="selectedTranslation.soundURL" preload="none"
          (play)="onAudioPlaying()" (ended)="onAudioStopped()" (pause)="onAudioStopped()"></audio>
 </div>
