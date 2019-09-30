@@ -1,3 +1,5 @@
+@import 'components';
+
 .mat-drawer-container {
   background-color: black;
   height: 100vh;
@@ -27,6 +29,7 @@ camera-preview {
 }
 
 .open-menu {
+  @include icon-button;
   position: absolute;
   top: 5px;
   left: 8px;
@@ -34,15 +37,19 @@ camera-preview {
   height: 40px;
 
   ::ng-deep {
-    .mat-icon {
-      color: white;
+    app-icon {
       width: 30px;
       height: 30px;
+    }
+
+    .mat-icon {
+      color: white;
     }
   }
 }
 
 .capture {
+  @include icon-button;
   position: absolute;
   left: 52%;
   bottom: 15px;
@@ -52,15 +59,19 @@ camera-preview {
   z-index: 1;
 
   ::ng-deep {
-    .mat-icon {
-      color: white;
+    app-icon {
       width: 80px;
       height: 80px;
+    }
+
+    .mat-icon {
+      color: white;
     }
   }
 }
 
 .load-photo {
+  @include icon-button;
   position: absolute;
   left: 35px;
   bottom: 10px;
@@ -68,10 +79,13 @@ camera-preview {
   height: 60px;
 
   ::ng-deep {
-    .mat-icon {
-      color: white;
+    app-icon {
       width: 50px;
       height: 50px;
+    }
+
+    .mat-icon {
+      color: white;
     }
   }
 }

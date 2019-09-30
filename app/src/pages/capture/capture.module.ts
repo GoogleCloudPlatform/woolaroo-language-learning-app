@@ -5,6 +5,7 @@ import { CameraPreviewModule } from 'components/camera-preview/camera-preview.mo
 import { IconComponentModule } from 'components/icon/icon.module';
 import { ErrorPopUpModule } from 'components/error-popup/error-popup.module';
 import { SidenavModule } from 'components/sidenav/sidenav.module';
+import { FileUploadButtonModule } from 'components/file-upload-button/file-upload-button.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { SidenavModule } from 'components/sidenav/sidenav.module';
     IconComponentModule,
     CameraPreviewModule,
     ErrorPopUpModule,
-    SidenavModule
+    SidenavModule,
+    FileUploadButtonModule
   ]
 })
 export class CapturePageModule {}

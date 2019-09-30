@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { UploadImageButtonComponent } from './upload-image-button';
+import { FileUploadButtonComponent } from './file-upload-button';
 
 @NgModule({
   declarations: [
-    UploadImageButtonComponent
+    FileUploadButtonComponent
   ],
   exports: [
-    UploadImageButtonComponent
+    FileUploadButtonComponent
   ],
   imports: [
     CommonModule,
     MatButtonModule
   ]
 })
-export class UploadImageButtonModule {}
+export class FileUploadButtonModule {}
