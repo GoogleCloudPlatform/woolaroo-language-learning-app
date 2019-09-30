@@ -1,9 +1,13 @@
-<h1>Barnard</h1>
+<app-icon icon="brand" class="brand-icon"></app-icon>
+<app-logo class="brand-logo"></app-logo>
 <mat-list>
-  <mat-list-item><a [routerLink]="['/about']">About this app</a></mat-list-item>
-  <mat-list-item><a [routerLink]="['/technology']">The technology</a></mat-list-item>
-  <mat-list-item><a [routerLink]="['/feedback']">Translation feedback</a></mat-list-item>
-  <mat-list-item><a [routerLink]="['/add-word']">Add word</a></mat-list-item>
-  <mat-list-item><a [routerLink]="['/terms-privacy']">Terms &amp; Privacy</a></mat-list-item>
-  <mat-list-item><button mat-button>Add to home screen</button></mat-list-item>
+  <mat-list-item><a [routerLink]="['/about']" i18n="@@aboutTitle">About the app</a></mat-list-item>
+  <mat-list-item><a [routerLink]="['/technology']" i18n="@@technologyTitle">The technology</a></mat-list-item>
+  <mat-list-item><a [routerLink]="['/feedback']" i18n="@@feedbackLongTitle">Translation feedback</a></mat-list-item>
+  <mat-list-item><a [routerLink]="['/add-word']" i18n="@@addWordTitle">Add word</a></mat-list-item>
+  <mat-list-item><a [routerLink]="['/terms-privacy']" i18n="@@termsAndPrivacyTitle">Terms &amp; Privacy</a></mat-list-item>
 </mat-list>
+<button *ngIf="canAddToHomeScreen" class="home-screen" mat-button i18n="@@addToHomeScreen" (click)="onAddToHomeScreenClick()">
+  <app-icon icon="add_to_home"></app-icon>
+  Add to home screen
+</button>

@@ -5,12 +5,14 @@ import { TRANSLATION_SERVICE, TRANSLATION_CONFIG } from './translation';
 import { ANALYTICS_SERVICE, ANALYTICS_CONFIG} from './analytics';
 import { FEEDBACK_SERVICE, FEEDBACK_CONFIG} from './feedback';
 import { environment } from 'environments/environment';
+import { SessionService } from 'services/session';
 
 @NgModule({
   declarations: [
   ],
   providers: [
     ImageTranslationService,
+    SessionService,
     { provide: IMAGE_RECOGNITION_SERVICE, useClass: environment.services.imageRecognition.type },
     { provide: IMAGE_RECOGNITION_CONFIG, useValue: environment.services.imageRecognition.config },
     { provide: TRANSLATION_SERVICE, useClass: environment.services.translation.type },

@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { WordTranslation } from './entities/translation';
 import { IImageRecognitionService, IMAGE_RECOGNITION_SERVICE } from './image-recognition';
 import { ITranslationService, TRANSLATION_SERVICE } from './translation';
