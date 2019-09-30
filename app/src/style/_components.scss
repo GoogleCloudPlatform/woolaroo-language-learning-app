@@ -16,3 +16,18 @@
     flex: 1 1 120px;
   }
 }
+
+@mixin icon-button {
+  padding: 0;
+  background: transparent;
+  border-style: none;
+  width: 24px;
+  height: 24px;
+  outline: none;
+  cursor: pointer;
+
+  mat-icon {
+    width: 100%;
+    height: 100%;
+  }
+}

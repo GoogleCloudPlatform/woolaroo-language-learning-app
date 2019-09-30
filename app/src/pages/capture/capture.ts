@@ -65,8 +65,8 @@ export class CapturePageComponent implements AfterViewInit {
     this.sidenavOpen = !this.sidenavOpen;
   }
 
-  onLoadPhotoClick() {
-    // TODO
+  onImageUploaded(image: Blob) {
+    this.router.navigateByUrl('/translate', { state: { image } });
   }
 
   onSidenavClosed() {
