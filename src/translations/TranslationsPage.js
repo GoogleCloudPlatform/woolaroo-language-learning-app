@@ -1,11 +1,16 @@
-import React from 'react';
+import ListPageBase from '../common/ListPageBase'
+import TranslationListItem from './TranslationListItem';
+import './TranslationsPage.css';
 
-function TranslationsPage() {
-  return (
-    <div>
-      <h2>Translations</h2>
-    </div>
-  );
+class TranslationsPage extends ListPageBase {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ...this.state,
+      listItemTag: TranslationListItem,
+      collectionName: 'translations',
+    };
+  }
 }
 
 export default TranslationsPage;
