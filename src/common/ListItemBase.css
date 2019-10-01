@@ -1,0 +1,14 @@
+.translation-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.base-word {
+  color: #202124;
+  font-size: 30px;
+  margin-top: 20px;
+  width: 160px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
