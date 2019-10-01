@@ -1,5 +1,6 @@
-## Project Barnard - Exploring Indigenous language through photos.
+![alt text](https://storage.googleapis.com/barnard-public-assets/Barnard%20lock%20up%202.1.png)
 
+## Project Barnard - Exploring Indigenous language through photos.
 
 > ###  “A picture is worth a thousand words.”
 > ### - Old english adage, commonly attributed to copywriter Fred R. Barnard
