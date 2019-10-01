@@ -1,22 +1,27 @@
+@import 'components';
+
 :host {
-  height: 100vh;
-  display: block;
+  @include centered-page;
+  max-width: 75vh;
+  margin-left: auto;
+  margin-right: auto;
+
+  &:before {
+    flex-basis: 190px;
+  }
+
+  &:after {
+    flex-basis: 175px;
+  }
 }
 
 app-logo {
   width: 75%;
-  position: absolute;
-  left: 50%;
-  top: 33%;
-  transform: translate(-50%, -50%);
+  margin-bottom: 180px;
 }
 
 .sponsor-logo {
   width: 65%;
-  position: absolute;
-  left: 50%;
-  top: 69%;
-  transform: translate(-50%, -50%);
 
   img {
     display: block;
