@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import {WordTranslation} from 'services/entities/translation';
 
 @Component({
@@ -9,6 +9,10 @@ import {WordTranslation} from 'services/entities/translation';
 export class TranslationSelectorComponent {
   @Input()
   public translations: WordTranslation[]|null = null;
+  @Output()
+  public wordShared: EventEmitter<WordTranslation> = new EventEmitter<WordTranslation>();
+  @Output()
+  public addRecording: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('audioPlayer', {static: false})
   public audioPlayer: ElementRef|null = null;
   public selectedWordIndex = 0;
@@ -42,5 +46,15 @@ export class TranslationSelectorComponent {
 
   onAudioStopped() {
     this.audioPlaying = false;
+  }
+
+  onAddRecordingClick() {
+    this.addRecording.emit();
+  }
+
+  onShareClick() {
+    if (this.selectedTranslation) {
+      this.wordShared.emit(this.selectedTranslation);
+    }
   }
 }

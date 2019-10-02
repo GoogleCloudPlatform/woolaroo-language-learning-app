@@ -1,13 +1,13 @@
-import { Injectable } from "@angular/core";
-import { IImageRecognitionService, ImageDescription } from "../image-recognition";
+import { Injectable } from '@angular/core';
+import { IImageRecognitionService, ImageDescription } from '../image-recognition';
 
 @Injectable()
 export class MockImageRecognitionService implements IImageRecognitionService {
-  public async loadDescriptions(imageData:Blob):Promise<ImageDescription[]> {
+  public async loadDescriptions(imageData: Blob): Promise<ImageDescription[]> {
     return [
-      { "description": "Computer", "score": 0.9 },
-      { "description": "Office", "score": 0.8 },
-      { "description": "Chair", "score": 0.8 }
+      { description: 'blue', score: 0.9 },
+      { description: 'daytime', score: 0.8 },
+      { description: 'cloud', score: 0.8 }
     ];
   }
 }

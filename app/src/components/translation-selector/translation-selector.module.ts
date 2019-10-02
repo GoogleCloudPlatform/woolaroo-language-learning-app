@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { IconComponentModule } from 'components/icon/icon.module';
 import { TranslationSelectorComponent } from './translation-selector';
 
 @NgModule({
@@ -10,7 +11,8 @@ import { TranslationSelectorComponent } from './translation-selector';
     TranslationSelectorComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    IconComponentModule
   ]
 })
 export class TranslationSelectorModule {}

@@ -1,3 +1,5 @@
+@import 'components';
+
 :host {
   width: 100vw;
   height: 100vh;
@@ -14,14 +16,46 @@
   background-size: cover;
 }
 
-translation-selector {
+.back {
+  @include icon-button;
+  color: white;
   position: absolute;
-  bottom: 80px;
+  left: 0;
+  top: 0;
+  width: 70px;
+  height: 50px;
+
+  app-icon {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+app-translation-selector {
+  position: absolute;
+  bottom: 18%;
 }
 
 .submit-feedback {
   position: absolute;
-  bottom: 20px;
-  width: 100%;
-  text-align: center;
+  bottom: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  padding-left: 7px;
+  letter-spacing: 0.09rem;
+
+  app-icon {
+    margin-right: 10px;
+  }
+}
+
+/* DEBUG */
+:host {
+  background: url(/assets/debug/screens/translate.png) no-repeat center center;
+  background-size: contain;
+}
+
+.background {
+  visibility: hidden;
 }

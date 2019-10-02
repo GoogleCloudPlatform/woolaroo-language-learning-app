@@ -12,7 +12,7 @@ export const environment = {
     resizeDelay: 1000
   },
   translate: {
-    debugImageUrl: null
+    debugImageUrl: '/assets/debug/IMG_20190920_141505.jpg'
   },
   services: {
     imageRecognition: {

@@ -71,4 +71,21 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
   onSubmitFeedbackClick() {
     this.router.navigateByUrl('/feedback');
   }
+
+  onBackClick() {
+    history.back();
+  }
+
+  onWordShared(word: WordTranslation) {
+    const nav: any = window.navigator;
+    if (nav.share) {
+      nav.share({ url: document.location.href, text: word.original, title: 'Barnard' });
+    } else {
+      // TODO
+    }
+  }
+
+  onAddRecording() {
+    // TODO
+  }
 }
