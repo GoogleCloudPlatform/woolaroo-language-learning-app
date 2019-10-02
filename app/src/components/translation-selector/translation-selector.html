@@ -1,7 +1,7 @@
 <div class="translation-container" *ngIf="selectedTranslation">
   <div class="translation">
     {{ selectedTranslation.translation }}
-    <button class="share" (click)="onShareClick()"><app-icon icon="share"></app-icon></button>
+    <button *ngIf="shareAvailable" class="share" (click)="onShareClick()"><app-icon icon="share"></app-icon></button>
   </div>
   <div class="transliteration">{{ selectedTranslation.transliteration }}</div>
   <button *ngIf="selectedTranslation.soundURL" class="play-audio" (click)="onPlayAudioClick()"><app-icon icon="play_audio"></app-icon></button>
@@ -9,9 +9,6 @@
   <audio #audioPlayer [src]="selectedTranslation.soundURL" preload="none"
          (play)="onAudioPlaying()" (ended)="onAudioStopped()" (pause)="onAudioStopped()"></audio>
 </div>
-<hr />
-<ul class="words">
-  <li *ngFor="let word of translations; index as i">
-    <button [class.selected]="i === selectedWordIndex" (click)="onWordSelected(i)">{{word.original}}</button>
-  </li>
-</ul>
+<app-selection-line [targetPosition]="lineTargetPosition"></app-selection-line>
+<app-word-scroll-list [translations]="translations" (selectedWordChanged)="onSelectedWordChanged($event)"
+  (targetPositionChanged)="onTargetPositionChanged($event)"></app-word-scroll-list>

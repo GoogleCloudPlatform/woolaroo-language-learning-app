@@ -1,0 +1,5 @@
+<ul #scrollContent>
+  <li *ngFor="let word of translations; index as i" [class.selected]="i === selectedWordIndex">
+    {{word.original}}
+  </li>
+</ul>
