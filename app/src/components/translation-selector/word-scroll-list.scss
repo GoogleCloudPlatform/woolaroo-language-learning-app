@@ -1,0 +1,36 @@
+:host {
+  display: block;
+  height: 32px;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-end;
+  position: relative;
+  bottom: 0;
+  list-style-type: none;
+
+  li {
+    margin: 0 20px;
+    padding: 0;
+    color: white;
+    font-size: 1.2rem;
+    text-transform: lowercase;
+    line-height: 100%;
+
+    &.selected {
+      font-size: 1.9rem;
+      letter-spacing: 0.1rem;
+    }
+  }
+}

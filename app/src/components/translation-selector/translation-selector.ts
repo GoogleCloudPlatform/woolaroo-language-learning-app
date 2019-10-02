@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import {WordTranslation} from 'services/entities/translation';
+import { WordTranslation } from 'services/entities/translation';
+import { Point } from 'util/geometry';
 
 @Component({
   selector: 'app-translation-selector',
@@ -15,16 +16,14 @@ export class TranslationSelectorComponent {
   public addRecording: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('audioPlayer', {static: false})
   public audioPlayer: ElementRef|null = null;
-  public selectedWordIndex = 0;
   public audioPlaying = false;
+  public lineTargetPosition: Point|null = null;
 
-  public get selectedTranslation(): WordTranslation|null {
-    return this.translations && this.selectedWordIndex >= 0 ? this.translations[this.selectedWordIndex] : null;
+  public get shareAvailable(): boolean {
+    return !!(window.navigator as any).share;
   }
 
-  onWordSelected(index: number) {
-    this.selectedWordIndex = index;
-  }
+  public selectedTranslation: WordTranslation|null = null;
 
   onPlayAudioClick() {
     if (!this.audioPlayer || !this.audioPlayer.nativeElement) {
@@ -46,6 +45,16 @@ export class TranslationSelectorComponent {
 
   onAudioStopped() {
     this.audioPlaying = false;
+  }
+
+  onSelectedWordChanged(translation: WordTranslation) {
+    // will be fired immediately after "translations" is set, so need to delay changing
+    // state again by a frame to avoid "expression changed after it was checked" error
+    setTimeout(() => this.selectedTranslation = translation, 1);
+  }
+
+  onTargetPositionChanged(position: Point) {
+    this.lineTargetPosition = position;
   }
 
   onAddRecordingClick() {

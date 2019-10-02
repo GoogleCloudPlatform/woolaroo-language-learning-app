@@ -14,6 +14,23 @@ export const environment = {
   translate: {
     debugImageUrl: null
   },
+  components: {
+    translationSelector: {
+      scrollList: {
+        animationInterval: 25,
+        snapAcceleration: 10,
+        snapMaxSpeed: 2,
+        snapMinSpeed: 0.01,
+        snapDecelerationDistance: 200,
+        snapStickyDistance: 30,
+        targetPositionRatio: 0.2
+      },
+      selectionLine: {
+        animationInterval: 25,
+        rotateSpeed: Math.PI * 2.0 * 0.7
+      }
+    }
+  },
   services: {
     imageRecognition: {
       type: GoogleImageRecognitionService,
