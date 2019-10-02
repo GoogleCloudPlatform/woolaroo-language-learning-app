@@ -1,3 +1,8 @@
 <div class="background" [style.backgroundImage]="backgroundImageURL | styleUrl"></div>
-<app-translation-selector [translations]="translations"></app-translation-selector>
-<p class="submit-feedback"><button (click)="onSubmitFeedbackClick()">Submit feedback</button></p>
+<button class="back" (click)="onBackClick()"><app-icon icon="back"></app-icon></button>
+<app-translation-selector [translations]="translations" (addRecording)="onAddRecording()"
+                          (wordShared)="onWordShared($event)"></app-translation-selector>
+<button mat-button (click)="onSubmitFeedbackClick()" class="submit-feedback">
+  <app-icon icon="add_feedback"></app-icon>
+  <span i18n="@@translationFeedback">Translation Feedback</span>
+</button>

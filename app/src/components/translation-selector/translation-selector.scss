@@ -1,15 +1,74 @@
+@import 'components';
+
 :host {
+  display: block;
   width: 100%;
 }
 
+.translation-container {
+  color: white;
+  text-align: center;
+  margin-bottom: 15px;
+  width: 100%;
+
+  .translation {
+    font-size: 3.8rem;
+    line-height: 3.8rem;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 2px;
+    font-weight: 500;
+    letter-spacing: 0.2rem;
+    max-width: 75%;
+  }
+
+  .share {
+    @include icon-button;
+    color: white;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    right: -46px;
+    top: 58%;
+    transform: translateY(-50%);
+  }
+
+  .transliteration {
+    font-size: 2rem;
+    line-height: 2rem;
+    margin-bottom: 12px;
+  }
+
+  .play-audio,
+  .record-audio {
+    @include icon-button;
+    color: white;
+    width: 45px;
+    height: 45px;
+  }
+}
+
+hr {
+  background-color: white;
+  width: 1px;
+  height: 125px;
+  border-style: none;
+}
+
 ul.words {
-  margin: 0;
+  margin: 15px 0 0 0;
   padding: 0;
   text-align: center;
   width: 100%;
+  height: 32px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-end;
 
   li {
-    margin: 0;
+    margin: 0 10px;
     padding: 0;
     display: inline-block;
 
@@ -17,17 +76,14 @@ ul.words {
       border-style: none;
       background-color: transparent;
       color: white;
+      font-size: 1.2rem;
+      text-transform: lowercase;
+      line-height: 100%;
 
       &.selected {
-        font-weight: bold;
+        font-size: 1.9rem;
+        letter-spacing: 0.1rem;
       }
     }
   }
-}
-
-.translation {
-  color: white;
-  text-align: center;
-  margin-bottom: 20px;
-  width: 100%;
 }

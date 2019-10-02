@@ -25,7 +25,11 @@ export class APITranslationService implements ITranslationService {
       return this.http.post<TranslationResponse[]>(this.config.endpointURL, { english_words: words }).subscribe({
         next: (response) => {
           const translations = response.filter(tr => tr.translation).map(tr => ({
-            original: tr.english_word, translation: tr.translation, soundURL: tr.sound_link }));
+            original: tr.english_word,
+            translation: tr.translation,
+            transliteration: tr.transliteration,
+            soundURL: tr.sound_link
+          }));
           resolve(translations);
         },
         error: reject
