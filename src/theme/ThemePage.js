@@ -44,9 +44,7 @@ function ThemePage() {
       </div>
       <div>
         <h2>App information</h2>
-      </div>
-      <div>
-        <h2>Logo</h2>
+        <h3>Logo</h3>
       </div>
     </div>
   );
