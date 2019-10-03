@@ -5,6 +5,7 @@ import TranslationsPage from './translations/TranslationsPage';
 import ContributionsPage from './contributions/ContributionsPage';
 import ThemePage from './theme/ThemePage';
 import SharingPage from './sharing/SharingPage';
+import ManagementPage from './management/ManagementPage';
 import Header from './header/Header';
 import SideNav from './sidenav/SideNav';
 
@@ -14,6 +15,7 @@ const ROUTES = {
   SETTINGS: '/settings',
   THEME: '/theme',
   SHARING: '/sharing',
+  MANAGEMENT: '/management',
 };
 
 class App extends React.Component {
@@ -29,6 +31,7 @@ class App extends React.Component {
               <Route path={ROUTES.CONTRIBUTIONS} component={ContributionsPage} />
               <Route path={ROUTES.THEME} component={ThemePage} />
               <Route path={ROUTES.SHARING} component={SharingPage} />
+              <Route path={ROUTES.MANAGEMENT} component={ManagementPage} />
             </div>
           </div>
         </div>

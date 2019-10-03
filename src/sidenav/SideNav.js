@@ -32,6 +32,7 @@ class SideNav extends React.Component {
             {this.renderMenuItem("Translations", ROUTES.TRANSLATIONS)}
             {this.renderMenuItem("Theme Customization", ROUTES.THEME)}
             {this.renderMenuItem("Sharing Links", ROUTES.SHARING)}
+            {this.renderMenuItem("User Management", ROUTES.MANAGEMENT)}
           </MenuList>
         </Paper>
       </div>
