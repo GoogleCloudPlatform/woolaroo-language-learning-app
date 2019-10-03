@@ -6,13 +6,17 @@
 > ### - Old english adage, commonly attributed to copywriter Fred R. Barnard
 
 
-Of the 7,000 languages spoken around the globe, 2,680 Indigenous languages - more than one third - are in danger of disappearing. 
+Of the 7,000 languages spoken around the globe, 2,680 Indigenous languages - more than one third - are in danger of disappearing.
 
-To help raise awareness and encourage people to explore indigenous languages, we developed Project Barnard - an open source photo-translation platform that’s powered by machine learning and image recognition. 
+To help raise awareness and encourage people to explore indigenous languages, we developed Project Barnard - an open source photo-translation platform that’s powered by machine learning and image recognition.
 
 Originally launched in New Zealand, as ‘Kupu’, in collaboration with Spark and the te aka Maori dictionary, this technology is now openly available for linguists and indigenous language organisations to create their own translation apps.
- 
-Our hope is that by enabling more people to share their language, users will be able to explore the indigenous languages around them, and ultimately be inspired to engage with them on a deeper level. 
+
+Our hope is that by enabling more people to share their language, users will be able to explore the indigenous languages around them, and ultimately be inspired to engage with them on a deeper level.
+
+## To deploy
+- `npm run build`
+- `firebase deploy` (`-m "release message"`)
 
 ## Running firebase functions locally
 
@@ -21,7 +25,7 @@ First follow instructions [here](https://firebase.google.com/docs/functions/loca
 Then,
 - `cd functions; npm install; cd ..`
 - `(sudo) npm install -g firebase-tools`
-- `firebase login`
+- `firebase login` OR `firebase login --reauth` (if your auth credentials have expired)
 - `npm run serve_functions`
 
 (hint: if you see "Error getting translations: Error: Getting metadata from plugin failed with error: invalid_grant", you may have to `gcloud auth application-default login`, then `gcloud components update`)
