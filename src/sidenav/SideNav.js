@@ -30,7 +30,6 @@ class SideNav extends React.Component {
         <Paper className="side-nav-paper">
           <MenuList className="side-nav-list">
             {this.renderMenuItem("Translations", ROUTES.TRANSLATIONS)}
-            {this.renderMenuItem("Settings", ROUTES.SETTINGS)}
             {this.renderMenuItem("Theme Customization", ROUTES.THEME)}
             {this.renderMenuItem("Sharing Links", ROUTES.SHARING)}
           </MenuList>
