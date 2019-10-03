@@ -1,10 +1,9 @@
 import React from 'react';
-import ListItemBase from '../common/ListItemBase'
-import Fab from '@material-ui/core/Fab';
 import Button from '@material-ui/core/Button';
-import PlayIcon from '@material-ui/icons/PlayArrowOutlined';
+import ListItemBase from '../common/ListItemBase'
 import ApiUtils from '../utils/ApiUtils';
 import './TranslationListItem.css';
+import AudioRecorder from '../audio/AudioRecorder';
 
 class TranslationListItem extends ListItemBase {
   constructor(props) {
@@ -54,6 +53,8 @@ class TranslationListItem extends ListItemBase {
         return;
       }
 
+      // TODO(smus): Upload this blob of audio to a Cloud storage and get the
+      // uploaded file's URL.
       await fetch(`${ApiUtils.origin}${ApiUtils.path}addTranslations`, {
         method: 'POST',
         body: JSON.stringify({
@@ -80,16 +81,20 @@ class TranslationListItem extends ListItemBase {
     }
   }
 
+  onSavedAudio_(blob) {
+    console.log('onSavedAudio_', blob);
+    this.setState({sound_blob: blob, disabled: false});
+  }
+
   renderEndOfRow() {
-    return [
-      <Fab aria-label="record" key={0}>
-        <PlayIcon />
-      </Fab>,
+    return [<AudioRecorder audioUrl={this.state.sound_link}
+      onSavedAudio={(blob) => this.onSavedAudio_(blob)}
+      key={0} />,
       <Button
         variant="contained"
         color="primary"
         disabled={this.state.disabled}
-        onClick={this.saveTranslation_}
+        onClick={() => this.saveTranslation_()}
         key={1}
       >
         Save
