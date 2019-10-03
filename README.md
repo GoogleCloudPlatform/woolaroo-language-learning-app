@@ -8,6 +8,8 @@ Then,
 - `firebase login`
 - `npm run serve_functions`
 
+(hint: if you see "Error getting translations: Error: Getting metadata from plugin failed with error: invalid_grant", you may have to `gcloud auth application-default login`, then `gcloud components update`)
+
 ## Available Scripts
 
 In the project directory, you can run:
