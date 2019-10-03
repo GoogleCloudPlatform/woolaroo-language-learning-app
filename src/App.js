@@ -12,7 +12,6 @@ import SideNav from './sidenav/SideNav';
 const ROUTES = {
   TRANSLATIONS: '/',
   CONTRIBUTIONS: '/user-contributions',
-  SETTINGS: '/settings',
   THEME: '/theme',
   SHARING: '/sharing',
   MANAGEMENT: '/management',
