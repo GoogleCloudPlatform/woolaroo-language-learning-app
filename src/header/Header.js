@@ -11,7 +11,7 @@ class Header extends React.Component {
         <AppBar position="static" className="header">
           <Toolbar>
             <h1 className="header-title">
-              Google Barnard
+              Barnard
             </h1>
             <div className="header-search">
               <InputBase
