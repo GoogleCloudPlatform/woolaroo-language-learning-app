@@ -9,6 +9,7 @@ import { PhotoSourcePageComponent } from 'pages/photo-source/photo-source';
 import { CapturePageComponent } from 'pages/capture/capture';
 import { TranslatePageComponent } from 'pages/translate/translate';
 import { FeedbackPageComponent } from 'pages/feedback/feedback';
+import { AddWordPageComponent } from 'pages/add-word/add-word';
 import { AboutPageComponent } from 'pages/about/about';
 import { TechnologyPageComponent } from 'pages/technology/technology';
 
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'feedback', component: FeedbackPageComponent },
   { path: 'about', component: AboutPageComponent },
   { path: 'technology', component: TechnologyPageComponent },
+  { path: 'add-word', component: AddWordPageComponent },
   { path: '**', component: SplashPageComponent } // TODO: not found page
 ];
 

@@ -19,20 +19,12 @@ mat-toolbar.mat-toolbar-single-row {
     padding-bottom: 4px;
   }
 
-  .close {
-    @include icon-button;
+  .mat-button-base {
     flex: 0 0 auto;
-    width: 30px;
-    height: 30px;
-    margin-right: 20px;
   }
 
-  .submit {
+  .close {
     flex: 0 0 auto;
-    height: 100%;
-    border-radius: 0;
-    padding-right: 24px;
-    padding-left: 24px;
   }
 }
 

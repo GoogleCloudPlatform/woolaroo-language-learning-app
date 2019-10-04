@@ -13,6 +13,7 @@ import { IntroPageModule } from 'pages/intro/intro.module';
 import { TermsPageModule } from 'pages/terms/terms.module';
 import { AboutPageModule } from 'pages/about/about.module';
 import { TechnologyPageModule } from 'pages/technology/technology.module';
+import { AddWordPageModule } from 'pages/add-word/add-word.module';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { TechnologyPageModule } from 'pages/technology/technology.module';
     AboutPageModule,
     TechnologyPageModule,
     FeedbackPageModule,
+    AddWordPageModule,
     HttpClientModule,
     BrowserAnimationsModule
   ],
