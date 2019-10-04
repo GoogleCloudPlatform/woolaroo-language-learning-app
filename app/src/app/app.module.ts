@@ -12,6 +12,7 @@ import { FeedbackPageModule } from 'pages/feedback/feedback.module';
 import { IntroPageModule } from 'pages/intro/intro.module';
 import { TermsPageModule } from 'pages/terms/terms.module';
 import { AboutPageModule } from 'pages/about/about.module';
+import { TechnologyPageModule } from 'pages/technology/technology.module';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { AboutPageModule } from 'pages/about/about.module';
     CapturePageModule,
     TranslatePageModule,
     AboutPageModule,
+    TechnologyPageModule,
     FeedbackPageModule,
     HttpClientModule,
     BrowserAnimationsModule
