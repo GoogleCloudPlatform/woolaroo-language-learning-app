@@ -24,16 +24,24 @@ a {
 
 .mat-body-1 {
   font-size: 1.32rem;
-  line-height: 2.14rem;
+  line-height: 2.5rem;
+}
+
+.mat-body-2 {
+  font-size: 1.92rem;
+  line-height: 2.48rem;
 }
 
 mat-toolbar.mat-toolbar-single-row {
-  height: 70px;
+  height: 80px;
+  padding: 0 0 0 30px;
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-  font-size: 1.4rem;
+  font-size: 1.7rem;
   color: $foreground-color;
+  font-weight: 400;
 }
+
 
 mat-checkbox {
   .mat-checkbox-inner-container {
