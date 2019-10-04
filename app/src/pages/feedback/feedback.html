@@ -12,22 +12,22 @@
       <ul>
         <li>
           <mat-checkbox (change)="onFeedbackTypeChange($event, FeedbackType.IncorrectTranslation)"
-                        [checked]="feedback.types.indexOf(FeedbackType.IncorrectTranslation) >= 0"
+                        [checked]="typeIsSelected(FeedbackType.IncorrectTranslation)"
                         i18n="@@incorrectTranslation">Incorrect translation</mat-checkbox>
         </li>
         <li>
           <mat-checkbox (change)="onFeedbackTypeChange($event, FeedbackType.OffensiveTranslation)"
-                        [checked]="feedback.types.indexOf(FeedbackType.OffensiveTranslation) >= 0"
+                        [checked]="typeIsSelected(FeedbackType.OffensiveTranslation)"
                         i18n="@@offensiveTranslation">Offensive translation</mat-checkbox>
         </li>
         <li>
           <mat-checkbox (change)="onFeedbackTypeChange($event, FeedbackType.AlternateTranslation)"
-                        [checked]="feedback.types.indexOf(FeedbackType.AlternateTranslation) >= 0"
+                        [checked]="typeIsSelected(FeedbackType.AlternateTranslation)"
                         i18n="@@alternateTranslation">Alternate translation</mat-checkbox>
         </li>
         <li>
           <mat-checkbox (change)="onFeedbackTypeChange($event, FeedbackType.Other)"
-                        [checked]="feedback.types.indexOf(FeedbackType.Other) >= 0"
+                        [checked]="typeIsSelected(FeedbackType.Other)"
                         i18n="@@other">Other</mat-checkbox>
         </li>
       </ul>
