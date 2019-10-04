@@ -1,9 +1,5 @@
 @import 'components';
 
-mat-toolbar.mat-toolbar-single-row {
-  padding-left: 20px;
-}
-
 .close {
   @include icon-button;
   width: 30px;

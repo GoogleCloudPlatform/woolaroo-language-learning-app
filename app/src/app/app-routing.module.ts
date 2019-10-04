@@ -10,6 +10,7 @@ import { CapturePageComponent } from 'pages/capture/capture';
 import { TranslatePageComponent } from 'pages/translate/translate';
 import { FeedbackPageComponent } from 'pages/feedback/feedback';
 import { AboutPageComponent } from 'pages/about/about';
+import { TechnologyPageComponent } from 'pages/technology/technology';
 
 const routes: Routes = [
   { path: '', component: SplashPageComponent },
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'translate', component: TranslatePageComponent },
   { path: 'feedback', component: FeedbackPageComponent },
   { path: 'about', component: AboutPageComponent },
+  { path: 'technology', component: TechnologyPageComponent },
   { path: '**', component: SplashPageComponent } // TODO: not found page
 ];
 
