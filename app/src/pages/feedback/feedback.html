@@ -1,25 +1,42 @@
-<form #frm="ngForm" (ngSubmit)="onFormSubmit($event, frm)">
-  <p>Help us improve Project Barnard's translation by sharing your feedback with us</p>
-  <div>
-    <mat-checkbox (change)="onFeedbackTypeChange($event, FeedbackType.IncorrectTranslation)"
-                  [checked]="feedbackTypes.indexOf(FeedbackType.IncorrectTranslation) >= 0">Incorrect Translation</mat-checkbox>
-  </div>
-  <div>
-    <mat-checkbox (change)="onFeedbackTypeChange($event, FeedbackType.OffensiveTranslation)"
-                  [checked]="feedbackTypes.indexOf(FeedbackType.OffensiveTranslation) >= 0">Offensive Translation</mat-checkbox>
-  </div>
-  <div>
-    <mat-checkbox (change)="onFeedbackTypeChange($event, FeedbackType.AlternateTranslation)"
-                  [checked]="feedbackTypes.indexOf(FeedbackType.AlternateTranslation) >= 0">Alternate Translation</mat-checkbox>
-  </div>
-  <div>
-    <mat-checkbox (change)="onFeedbackTypeChange($event, FeedbackType.Other)"
-                  [checked]="feedbackTypes.indexOf(FeedbackType.Other) >= 0">Other</mat-checkbox>
-  </div>
-  <mat-form-field>
-    <textarea matInput name="content" ngModel required placeholder="Enter feedback"></textarea>
-  </mat-form-field>
-  <div class="actions">
-    <button mat-raised-button color="accent" type="submit" [disabled]="!frm.valid || submittingForm">Submit</button>
+<form [formGroup]="feedbackForm" (ngSubmit)="onFormSubmit($event)">
+  <mat-toolbar>
+    <button class="close" (click)="onCloseClick()"><app-icon icon="close"></app-icon></button>
+    <span i18n="@@feedbackTitle">Feedback</span>
+    <button mat-button color="primary" class="submit" type="submit" i18n="@@submit">Submit</button>
+  </mat-toolbar>
+  <div class="content">
+    <p class="mat-body-1 instructions" i18n="@@feedbackInstructions">
+      Help us improve Project Barnard's translations by sharing your feedback with us
+    </p>
+    <div class="feedback-types">
+      <ul>
+        <li>
+          <mat-checkbox (change)="onFeedbackTypeChange($event, FeedbackType.IncorrectTranslation)"
+                        [checked]="feedback.types.indexOf(FeedbackType.IncorrectTranslation) >= 0"
+                        i18n="@@incorrectTranslation">Incorrect translation</mat-checkbox>
+        </li>
+        <li>
+          <mat-checkbox (change)="onFeedbackTypeChange($event, FeedbackType.OffensiveTranslation)"
+                        [checked]="feedback.types.indexOf(FeedbackType.OffensiveTranslation) >= 0"
+                        i18n="@@offensiveTranslation">Offensive translation</mat-checkbox>
+        </li>
+        <li>
+          <mat-checkbox (change)="onFeedbackTypeChange($event, FeedbackType.AlternateTranslation)"
+                        [checked]="feedback.types.indexOf(FeedbackType.AlternateTranslation) >= 0"
+                        i18n="@@alternateTranslation">Alternate translation</mat-checkbox>
+        </li>
+        <li>
+          <mat-checkbox (change)="onFeedbackTypeChange($event, FeedbackType.Other)"
+                        [checked]="feedback.types.indexOf(FeedbackType.Other) >= 0"
+                        i18n="@@other">Other</mat-checkbox>
+        </li>
+      </ul>
+      <mat-error *ngIf="feedbackForm.controls['types'].hasError('required')" i18n="@@feedbackTypeRequired">No feedback type selected</mat-error>
+    </div>
+    <mat-form-field class="textarea" appearance="outline">
+      <mat-label i18n="@@enterFeedback">Enter feedback</mat-label>
+      <textarea matInput name="content" required formControlName="content"></textarea>
+      <mat-error *ngIf="feedbackForm.controls['content'].hasError('required')" i18n="@@feedbackRequired">Feedback required</mat-error>
+    </mat-form-field>
   </div>
 </form>
