@@ -1,0 +1,31 @@
+<form [formGroup]="form" (ngSubmit)="onFormSubmit($event)">
+  <mat-toolbar>
+    <button class="close" (click)="onCloseClick()"><app-icon icon="close"></app-icon></button>
+    <span i18n="@@addWordTitle">Add word</span>
+    <button mat-button color="primary" class="submit" type="submit" i18n="@@add">Add</button>
+  </mat-toolbar>
+  <div class="content">
+    <p class="mat-body-1 instructions" i18n="@@addWordInstructions">
+      Contribute to the app by adding new words in the endangered language and their translations
+    </p>
+    <mat-form-field class="text" appearance="outline" [hideRequiredMarker]="true"
+      hintLabel="e.g. هتاف للترحيب" i18n-hintLabel="@@nativeScriptHint">
+      <mat-label i18n="@@wordInNativeScript">Word in native script</mat-label>
+      <input type="text" matInput name="nativeWord" required formControlName="nativeWord" />
+      <mat-error *ngIf="form.controls['nativeWord'].hasError('required')" i18n="@@nativeWordRequired"
+        >Word in native script is required</mat-error>
+    </mat-form-field>
+    <mat-form-field class="text" appearance="outline" [hideRequiredMarker]="true"
+                    hintLabel="e.g. 'hello'" i18n-hintLabel="@@englishWordHint">
+      <mat-label i18n="@@wordInEnglish">Word in English</mat-label>
+      <input type="text" matInput name="englishWord" required formControlName="englishWord" />
+      <mat-error *ngIf="form.controls['englishWord'].hasError('required')" i18n="@@englishWordRequired"
+        >English word is required</mat-error>
+    </mat-form-field>
+    <mat-form-field class="text" appearance="outline" [hideRequiredMarker]="true"
+                    hintLabel="Word in Latin alphabet (e.g. 'marhaba')" i18n-hintLabel="@@transliterationHint">
+      <mat-label i18n="@@transliteration">Transliteration (optional)</mat-label>
+      <input type="text" matInput name="transliteration" formControlName="transliteration" />
+    </mat-form-field>
+  </div>
+</form>

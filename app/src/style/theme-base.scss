@@ -1,3 +1,5 @@
+@import 'components';
+
 $foreground-color: #303438;
 
 body {
@@ -40,6 +42,20 @@ mat-toolbar.mat-toolbar-single-row {
   font-size: 1.7rem;
   color: $foreground-color;
   font-weight: 400;
+
+  .mat-button-base {
+    height: 100%;
+    border-radius: 0;
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+
+  .close {
+    @include icon-button;
+    width: 30px;
+    height: 30px;
+    margin-right: 20px;
+  }
 }
 
 
@@ -55,10 +71,12 @@ mat-checkbox {
   }
 }
 
-.mat-form-field.textarea {
+.mat-form-field.textarea,
+.mat-form-field.text {
   width: 100%;
   display: block;
 
+  input,
   textarea {
     font-size: 1.2rem;
     letter-spacing: 0.03rem;
@@ -72,19 +90,28 @@ mat-checkbox {
     border-width: 2px;
   }
 
-  .mat-form-field-label-wrapper label {
-    font-size: 1.2rem;
-    letter-spacing: 0.03rem;
-    margin-left: 10px;
-
-    .mat-placeholder-required {
-      visibility: hidden;
+  .mat-form-field-label-wrapper {
+    overflow: visible;
+    
+    label {
+      font-size: 1.2rem;
+      letter-spacing: 0.03rem;
+      margin-top: -8px;
+      margin-left: 10px;
     }
   }
 
-  .mat-form-field-subscript-wrapper[ng-reflect-ng-switch=error] {
+  .mat-form-field-subscript-wrapper {
     font-size: inherit;
-    padding-top: 10px;
+    padding-top: 5px;
+  }
+}
+
+.mat-form-field.textarea {
+  .mat-form-field-label-wrapper label {
+    .mat-placeholder-required {
+      visibility: hidden;
+    }
   }
 
   &.ng-touched,
@@ -92,6 +119,12 @@ mat-checkbox {
     .mat-form-field-label-wrapper label .mat-placeholder-required {
       visibility: visible;
     }
+  }
+}
+
+.mat-form-field.text {
+  .mat-form-field-infix {
+    padding-bottom: 22px;
   }
 }
 

@@ -1,0 +1,49 @@
+@import 'components';
+
+:host {
+  display: block;
+
+  > form > .content {
+    padding: 28px;
+    box-sizing: border-box;
+  }
+}
+
+mat-toolbar.mat-toolbar-single-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  span {
+    flex: 1 1 auto;
+  }
+
+  .mat-button-base {
+    flex: 0 0 auto;
+  }
+
+  .close {
+    flex: 0 0 auto;
+  }
+}
+
+.instructions {
+  margin-bottom: 30px;
+}
+
+mat-form-field.text {
+  margin-bottom: 30px;
+}
+
+/* DEBUG */
+/*:host {
+  background: url(/assets/debug/screens/add-word.png) no-repeat center center;
+  background-size: contain;
+  display: block;
+  height: 100vh;
+}
+
+mat-toolbar.mat-toolbar-single-row {
+  background-color: transparent;
+}
+*/
