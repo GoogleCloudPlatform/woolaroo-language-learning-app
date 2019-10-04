@@ -11,6 +11,7 @@ import { TranslatePageModule } from 'pages/translate/translate.module';
 import { FeedbackPageModule } from 'pages/feedback/feedback.module';
 import { IntroPageModule } from 'pages/intro/intro.module';
 import { TermsPageModule } from 'pages/terms/terms.module';
+import { AboutPageModule } from 'pages/about/about.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { TermsPageModule } from 'pages/terms/terms.module';
     PhotoSourcePageModule,
     CapturePageModule,
     TranslatePageModule,
+    AboutPageModule,
     FeedbackPageModule,
     HttpClientModule,
     BrowserAnimationsModule

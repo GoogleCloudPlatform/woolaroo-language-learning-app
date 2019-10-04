@@ -9,6 +9,7 @@ import { PhotoSourcePageComponent } from 'pages/photo-source/photo-source';
 import { CapturePageComponent } from 'pages/capture/capture';
 import { TranslatePageComponent } from 'pages/translate/translate';
 import { FeedbackPageComponent } from 'pages/feedback/feedback';
+import { AboutPageComponent } from 'pages/about/about';
 
 const routes: Routes = [
   { path: '', component: SplashPageComponent },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'capture', component: CapturePageComponent },
   { path: 'translate', component: TranslatePageComponent },
   { path: 'feedback', component: FeedbackPageComponent },
+  { path: 'about', component: AboutPageComponent },
   { path: '**', component: SplashPageComponent } // TODO: not found page
 ];
 
