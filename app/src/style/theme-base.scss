@@ -34,3 +34,63 @@ mat-toolbar.mat-toolbar-single-row {
   font-size: 1.4rem;
   color: $foreground-color;
 }
+
+mat-checkbox {
+  .mat-checkbox-inner-container {
+    width: 22px;
+    height: 22px;
+    margin-right: 20px;
+  }
+
+  .mat-checkbox-label {
+    font-size: 1.1rem;
+  }
+}
+
+.mat-form-field.textarea {
+  width: 100%;
+  display: block;
+
+  textarea {
+    font-size: 1.2rem;
+    letter-spacing: 0.03rem;
+  }
+
+  .mat-form-field-infix {
+    padding: 18px 10px;
+  }
+
+  .mat-form-field-outline > * {
+    border-width: 2px;
+  }
+
+  .mat-form-field-label-wrapper label {
+    font-size: 1.2rem;
+    letter-spacing: 0.03rem;
+    margin-left: 10px;
+
+    .mat-placeholder-required {
+      visibility: hidden;
+    }
+  }
+
+  .mat-form-field-subscript-wrapper[ng-reflect-ng-switch=error] {
+    font-size: inherit;
+    padding-top: 10px;
+  }
+
+  &.ng-touched,
+  &.mat-focused {
+    .mat-form-field-label-wrapper label .mat-placeholder-required {
+      visibility: visible;
+    }
+  }
+}
+
+
+form {
+  .mat-body-1 {
+    font-size: 1.1rem;
+    line-height: 1.75rem;
+  }
+}
