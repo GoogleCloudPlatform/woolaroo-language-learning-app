@@ -7,6 +7,7 @@ import { ANALYTICS_SERVICE, IAnalyticsService } from 'services/analytics';
 import { FEEDBACK_SERVICE, IFeedbackService } from 'services/feedback';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
 import { startRecording, playBuffer, AudioStream } from 'util/audio';
+import { OperatingSystem, getOperatingSystem } from 'util/platform';
 
 enum RecordingState {
   Idle,
@@ -18,6 +19,9 @@ enum RecordingState {
 interface AddWordConfig {
   maxRecordingDuration: number;
   recordingBufferSize: number;
+  androidGBoardUrl: string;
+  iosGBoardUrl: string;
+  keymanUrl: string;
 }
 
 export const ADD_WORD_CONFIG = new InjectionToken<AddWordConfig>('Add Word config');
@@ -29,11 +33,15 @@ export const ADD_WORD_CONFIG = new InjectionToken<AddWordConfig>('Add Word confi
 })
 export class AddWordPageComponent implements AfterViewInit {
   private readonly form: FormGroup;
-  public submittingForm = false;
-  public currentRecordingState = RecordingState.Idle;
-  public RecordingState = RecordingState;
   private audioStream: AudioStream|null = null;
   private recording: { buffer: Float32Array, duration: number}|null = null;
+  public submittingForm = false;
+  public recordingState = RecordingState.Idle;
+  public recordingStateValues = RecordingState;
+  public operatingSystem: OperatingSystem;
+  public operatingSystemValues = OperatingSystem;
+  public gboardUrl: string;
+  public keymanUrl: string;
 
   constructor( @Inject(ADD_WORD_CONFIG) private config: AddWordConfig,
                private router: Router,
@@ -54,6 +62,10 @@ export class AddWordPageComponent implements AfterViewInit {
       pronunciation: new FormControl(null, [
       ]),
     });
+    this.operatingSystem = getOperatingSystem();
+    this.keymanUrl = this.config.keymanUrl;
+    this.gboardUrl = this.operatingSystem === OperatingSystem.Android ?
+      this.config.androidGBoardUrl : this.config.iosGBoardUrl;
   }
 
   ngAfterViewInit() {
@@ -88,7 +100,7 @@ export class AddWordPageComponent implements AfterViewInit {
 
   onStartRecordingClick() {
     console.log('Starting recording');
-    this.currentRecordingState = RecordingState.Recording;
+    this.recordingState = RecordingState.Recording;
     startRecording(this.config.recordingBufferSize).then(
       (stream) => {
         console.log('Recording started');
@@ -102,14 +114,14 @@ export class AddWordPageComponent implements AfterViewInit {
           this.recording = { buffer, duration };
           this.audioStream = null;
           this.zone.run(() => {
-            this.currentRecordingState = RecordingState.Finished;
+            this.recordingState = RecordingState.Finished;
           });
         });
       },
       (err) => {
         console.warn('Error starting recording', err);
         this.zone.run(() => {
-          this.currentRecordingState = RecordingState.Idle;
+          this.recordingState = RecordingState.Idle;
         });
       }
     );
@@ -120,7 +132,7 @@ export class AddWordPageComponent implements AfterViewInit {
     if (this.audioStream) {
       this.audioStream.stop();
     }
-    this.currentRecordingState = RecordingState.Finished;
+    this.recordingState = RecordingState.Finished;
   }
 
   onPlayRecordingClick() {
@@ -129,21 +141,21 @@ export class AddWordPageComponent implements AfterViewInit {
       console.warn('No audio recorded');
       return;
     }
-    this.currentRecordingState = RecordingState.Playing;
+    this.recordingState = RecordingState.Playing;
     playBuffer(this.recording.buffer, this.recording.duration).then(
       (stream) => {
         this.audioStream = stream;
         stream.setEndedListener(() => {
           console.log('Playback ended');
           this.zone.run(() => {
-            this.currentRecordingState = RecordingState.Finished;
+            this.recordingState = RecordingState.Finished;
           });
         });
       },
       (err) => {
         console.warn('Error playing recording', err);
         this.zone.run(() => {
-          this.currentRecordingState = RecordingState.Finished;
+          this.recordingState = RecordingState.Finished;
         });
       }
     );

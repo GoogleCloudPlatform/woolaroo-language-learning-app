@@ -39,6 +39,7 @@ mat-form-field.text {
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-bottom: 40px;
 
   > * {
     flex: 0 0 auto;
@@ -74,6 +75,10 @@ mat-form-field.text {
       text-align: center;
     }
   }
+}
+
+.special-chars {
+  font-size: 0.97rem;
 }
 
 /* DEBUG */
