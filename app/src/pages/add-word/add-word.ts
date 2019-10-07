@@ -13,7 +13,7 @@ import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
   styleUrls: ['./add-word.scss']
 })
 export class AddWordPageComponent implements AfterViewInit {
-  private readonly form: FormGroup;
+  public readonly form: FormGroup;
   public submittingForm = false;
 
   constructor( private router: Router,

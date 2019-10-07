@@ -84,7 +84,7 @@ export class WordScrollListComponent {
     this.dragInterval = setInterval(() => this.updateScrollVelocity(properties), this.config.animationInterval);
   }
 
-  @HostListener('touchend', ['$event'])
+  @HostListener('touchend')
   onTouchEnd() {
     window.document.body.removeEventListener('touchmove', this.onTouchMove);
     clearInterval(this.dragInterval);
@@ -104,7 +104,7 @@ export class WordScrollListComponent {
     this.setScrollPosition(scrollPosition);
     this.selectedWordIndex = this.getWordIndexFromScrollPosition(scrollPosition, this.selectedWordIndex);
     this.updateTargetPosition();
-  }
+  };
 
   // predict where snap position will be after decelerating
   private getEndingSnapWordIndex(position: number, velocity: number): number {
