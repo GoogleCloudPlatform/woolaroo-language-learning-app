@@ -1,8 +1,6 @@
 import React from 'react';
 import ListItemBase from '../common/ListItemBase'
-import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
-import PlayIcon from '@material-ui/icons/PlayArrowOutlined';
 import DeleteIcon from '@material-ui/icons/NotInterested';
 import SaveIcon from '@material-ui/icons/Done';
 import ApiUtils from '../utils/ApiUtils';
@@ -77,13 +75,10 @@ class ContributionListItem extends ListItemBase {
 
   renderEndOfRow() {
     return [
-      <Fab aria-label="record" key={0}>
-        <PlayIcon />
-      </Fab>,
       <IconButton
         aria-label="save"
         className="save-contribution"
-        key={1}
+        key={0}
         onClick={this.saveContribution_}
       >
         <SaveIcon />
@@ -91,7 +86,7 @@ class ContributionListItem extends ListItemBase {
       <IconButton
         aria-label="delete"
         className="delete-contribution"
-        key={2}
+        key={1}
         onClick={this.deleteContribution_}
       >
         <DeleteIcon />

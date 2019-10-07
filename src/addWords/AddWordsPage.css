@@ -1,0 +1,9 @@
+.title-row {
+  position: relative;
+}
+
+.save-all-button.MuiButton-contained {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
