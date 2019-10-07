@@ -52,7 +52,7 @@ export function startRecording(bufferSize: number): Promise<RecordingStream> {
             streamNode.disconnect();
             processorNode.disconnect();
             if (endedListener) {
-              endedListener(buffer, buffer.length / context.sampleRate);
+              endedListener(buffer, 1000 * buffer.length / context.sampleRate);
             }
             context.close();
           },
@@ -81,7 +81,7 @@ export function playBuffer(buffer: Float32Array, duration: number): Promise<Play
         endedListener();
       }
     });
-    source.buffer = context.createBuffer(1, buffer.length, Math.round(buffer.length / duration));
+    source.buffer = context.createBuffer(1, buffer.length, Math.round(buffer.length / (duration * 0.001)));
     source.buffer.copyToChannel(buffer, 0);
     source.connect(context.destination);
     source.start();

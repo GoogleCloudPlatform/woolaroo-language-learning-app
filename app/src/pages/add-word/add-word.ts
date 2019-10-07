@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material';
 import { ANALYTICS_SERVICE, IAnalyticsService } from 'services/analytics';
 import { FEEDBACK_SERVICE, IFeedbackService } from 'services/feedback';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
-import { startRecording, playBuffer, AudioStream } from 'util/audio';
+import { startRecording, playBuffer, AudioStream, RecordingStream } from 'util/audio';
 import { OperatingSystem, getOperatingSystem } from 'util/platform';
 
 enum RecordingState {
@@ -22,6 +22,7 @@ interface AddWordConfig {
   androidGBoardUrl: string;
   iosGBoardUrl: string;
   keymanUrl: string;
+  progressAnimationInterval: number;
 }
 
 export const ADD_WORD_CONFIG = new InjectionToken<AddWordConfig>('Add Word config');
@@ -35,6 +36,7 @@ export class AddWordPageComponent implements AfterViewInit {
   private readonly form: FormGroup;
   private audioStream: AudioStream|null = null;
   private recording: { buffer: Float32Array, duration: number}|null = null;
+  public audioStreamProgress = 0;
   public submittingForm = false;
   public recordingState = RecordingState.Idle;
   public recordingStateValues = RecordingState;
@@ -100,24 +102,10 @@ export class AddWordPageComponent implements AfterViewInit {
 
   onStartRecordingClick() {
     console.log('Starting recording');
+    this.audioStreamProgress = 0;
     this.recordingState = RecordingState.Recording;
     startRecording(this.config.recordingBufferSize).then(
-      (stream) => {
-        console.log('Recording started');
-        const recordingTimeout = setTimeout(() => {
-          stream.stop();
-        }, this.config.maxRecordingDuration);
-        this.audioStream = stream;
-        stream.setEndedListener((buffer, duration) => {
-          console.log('Recording complete: ' + duration);
-          clearTimeout(recordingTimeout);
-          this.recording = { buffer, duration };
-          this.audioStream = null;
-          this.zone.run(() => {
-            this.recordingState = RecordingState.Finished;
-          });
-        });
-      },
+      this.onRecordingStarted,
       (err) => {
         console.warn('Error starting recording', err);
         this.zone.run(() => {
@@ -126,6 +114,30 @@ export class AddWordPageComponent implements AfterViewInit {
       }
     );
   }
+
+  onRecordingStarted = (stream: RecordingStream) => {
+    console.log('Recording started');
+    this.audioStream = stream;
+    const recordingTimeout = setTimeout(() => {
+      stream.stop();
+    }, this.config.maxRecordingDuration);
+    const startTime = Date.now();
+    const progressInterval = setInterval(() => {
+      this.zone.run(() => {
+        this.audioStreamProgress = (Date.now() - startTime) / this.config.maxRecordingDuration;
+      });
+    }, this.config.progressAnimationInterval);
+    stream.setEndedListener((buffer, duration) => {
+      console.log('Recording complete: ' + duration);
+      clearTimeout(recordingTimeout);
+      clearInterval(progressInterval);
+      this.recording = { buffer, duration };
+      this.audioStream = null;
+      this.zone.run(() => {
+        this.recordingState = RecordingState.Finished;
+      });
+    });
+  };
 
   onStopRecordingClick() {
     console.log('Stopping audio');
@@ -141,12 +153,21 @@ export class AddWordPageComponent implements AfterViewInit {
       console.warn('No audio recorded');
       return;
     }
+    this.audioStreamProgress = 0;
     this.recordingState = RecordingState.Playing;
-    playBuffer(this.recording.buffer, this.recording.duration).then(
+    const duration = this.recording.duration;
+    playBuffer(this.recording.buffer, duration).then(
       (stream) => {
         this.audioStream = stream;
+        const startTime = Date.now();
+        const progressInterval = setInterval(() => {
+          this.zone.run(() => {
+            this.audioStreamProgress = (Date.now() - startTime) / duration;
+          });
+        }, this.config.progressAnimationInterval);
         stream.setEndedListener(() => {
           console.log('Playback ended');
+          clearInterval(progressInterval);
           this.zone.run(() => {
             this.recordingState = RecordingState.Finished;
           });

@@ -20,7 +20,8 @@ export const environment = {
       recordingBufferSize: 4096,
       androidGBoardUrl: 'https://play.google.com/store/apps/details?id=com.google.android.inputmethod.latin',
       iosGBoardUrl: 'https://apps.apple.com/us/app/gboard-the-google-keyboard/id1091700242',
-      keymanUrl: 'https://keyman.com/'
+      keymanUrl: 'https://keyman.com/',
+      progressAnimationInterval: 25
     }
   },
   components: {

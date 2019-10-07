@@ -9,3 +9,10 @@ export interface Feedback {
   types: FeedbackType[];
   content: string;
 }
+
+export interface AddedWord {
+  nativeWord: string;
+  englishWord: string;
+  transliteration: string;
+  recording: Blob;
+}
