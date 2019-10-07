@@ -29,6 +29,7 @@ class SideNav extends React.Component {
       <div className="side-nav-container">
         <Paper className="side-nav-paper">
           <MenuList className="side-nav-list">
+            {this.renderMenuItem("Add Words", ROUTES.ADD_WORDS)}
             {this.renderMenuItem("Translations", ROUTES.TRANSLATIONS)}
             {this.renderMenuItem("User Contributions", ROUTES.CONTRIBUTIONS)}
             {this.renderMenuItem("Theme Customization", ROUTES.THEME)}

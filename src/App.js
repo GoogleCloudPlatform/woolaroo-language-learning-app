@@ -10,6 +10,7 @@ import Header from './header/Header';
 import SideNav from './sidenav/SideNav';
 
 const ROUTES = {
+  ADD_WORDS: '/add-words',
   TRANSLATIONS: '/',
   CONTRIBUTIONS: '/user-contributions',
   THEME: '/theme',
@@ -26,6 +27,7 @@ class App extends React.Component {
           <div className = "body-container">
             <SideNav/>
             <div className="page-container">
+              <Route path={ROUTES.ADD_WORDS} component={TranslationsPage} />
               <Route exact path={ROUTES.TRANSLATIONS} component={TranslationsPage} />
               <Route path={ROUTES.CONTRIBUTIONS} component={ContributionsPage} />
               <Route path={ROUTES.THEME} component={ThemePage} />
