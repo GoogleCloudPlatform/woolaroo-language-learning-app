@@ -35,6 +35,47 @@ mat-form-field.text {
   margin-bottom: 30px;
 }
 
+.record {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  > * {
+    flex: 0 0 auto;
+    margin-right: 20px;
+  }
+
+  button {
+    @include icon-button;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+
+    app-icon {
+      width: 36px;
+      height: 36px;
+    }
+
+    &.start app-icon {
+      transform: translateY(2px);
+    }
+  }
+
+  .play-container {
+    position: relative;
+
+    // use absolute positioning on "save" caption to avoid effecting vertical centering.
+    span {
+      margin-top: 10px;
+      display: block;
+      position: absolute;
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
+
 /* DEBUG */
 /*:host {
   background: url(/assets/debug/screens/add-word.png) no-repeat center center;
