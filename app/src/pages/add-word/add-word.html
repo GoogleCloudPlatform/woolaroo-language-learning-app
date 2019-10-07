@@ -35,6 +35,7 @@
       <button class="stop" *ngIf="recordingState === recordingStateValues.Recording
         || recordingState === recordingStateValues.Playing" (click)="onStopRecordingClick()">
         <app-icon icon="stop_audio" color="accent"></app-icon>
+        <app-progress-border [borderWidth]="2.5" [progress]="audioStreamProgress"></app-progress-border>
       </button>
       <span class="play-container" *ngIf="recordingState === recordingStateValues.Finished">
         <button class="play" (click)="onPlayRecordingClick()">

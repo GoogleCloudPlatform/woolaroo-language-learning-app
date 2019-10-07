@@ -52,13 +52,23 @@ mat-form-field.text {
     width: 60px;
     height: 60px;
     box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+    position: relative;
 
     app-icon {
       width: 36px;
       height: 36px;
     }
 
-    &.start app-icon {
+    app-progress-border {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      fill: #ad1457; // TODO: get from theme
+    }
+
+    app-icon {
       transform: translateY(2px);
     }
   }
@@ -80,16 +90,3 @@ mat-form-field.text {
 .special-chars {
   font-size: 0.97rem;
 }
-
-/* DEBUG */
-/*:host {
-  background: url(/assets/debug/screens/add-word.png) no-repeat center center;
-  background-size: contain;
-  display: block;
-  height: 100vh;
-}
-
-mat-toolbar.mat-toolbar-single-row {
-  background-color: transparent;
-}
-*/

@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { LoadingPopUpModule } from 'components/loading-popup/loading-popup.module';
 import { AddWordPageComponent, ADD_WORD_CONFIG } from './add-word';
 import { IconComponentModule } from 'components/icon/icon.module';
+import { ProgressBorderModule } from 'components/progress-border/progress-border.module';
 import { environment } from 'environments/environment';
 
 @NgModule({
@@ -28,7 +29,8 @@ import { environment } from 'environments/environment';
     FormsModule,
     ReactiveFormsModule,
     LoadingPopUpModule,
-    IconComponentModule
+    IconComponentModule,
+    ProgressBorderModule
   ]
 })
 export class AddWordPageModule {}
