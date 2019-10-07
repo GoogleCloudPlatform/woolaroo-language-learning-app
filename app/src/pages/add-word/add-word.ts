@@ -34,7 +34,7 @@ export const ADD_WORD_CONFIG = new InjectionToken<AddWordConfig>('Add Word confi
   styleUrls: ['./add-word.scss']
 })
 export class AddWordPageComponent implements AfterViewInit {
-  private readonly form: FormGroup;
+  public readonly form: FormGroup;
   private audioStream: AudioStream|null = null;
   private recording: Blob|null = null;
   public audioStreamProgress = 0;
