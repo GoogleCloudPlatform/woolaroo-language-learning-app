@@ -1,8 +1,35 @@
 const functions = require('firebase-functions');
-const cors = require('cors')({origin: true});
-
+const cors = require('cors')();
+const uuidv1 = require('uuid/v1');
 const admin = require('firebase-admin');
+const path = require('path');
+
 admin.initializeApp();
+
+exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
+  BUCKET_NAME = 'barnard-project-audio'
+  var fileName = uuidv1();
+  FILE_NAME = `suggestions/${fileName}.webm`
+  const options = {
+    metadata: {
+      contentType: 'audio/webm',
+    }
+  };
+  var bucket = admin.storage().bucket(BUCKET_NAME);
+  var file = admin.storage().bucket(BUCKET_NAME).file(FILE_NAME);
+  await file.save(req.body, options)
+    .then(stuff => {
+        console.log('Audio saved successfully.');
+        var url = `gs://${BUCKET_NAME}/${FILE_NAME}`;
+        res.status(200).send(JSON.stringify(url));
+        return url;
+    })  
+    .catch(err => {
+        console.log(`Unable to upload audio ${err}`)
+    });
+
+});
+
 
 exports.addSuggestions = functions.https.onRequest(async (req, res) => {
   console.log('Add a suggestion');
@@ -13,7 +40,6 @@ exports.addSuggestions = functions.https.onRequest(async (req, res) => {
     translation: req.body.translation,
     transliteration: req.body.transliteration,
     sound_link: req.body.sound_link,
-    status: 'pending_review',
     timestamp: admin.firestore.FieldValue.serverTimestamp(),
   });
   console.log('Translation suggestions saved.');
@@ -37,8 +63,8 @@ exports.addTranslations = functions.https.onRequest(async (req, res) => {
   });
 });
 
+
 exports.getTranslation = functions.https.onRequest(async (req, res) => {
-  console.log('getTranslation');
   var docRef = admin.firestore().collection("translations").doc(req.body);
 
   try {
@@ -57,6 +83,36 @@ exports.getTranslation = functions.https.onRequest(async (req, res) => {
   }
 });
 
+// For App, which will be used by app users
+// https://us-central1-barnard-project.cloudfunctions.net/getTranslations
+exports.getTranslations = functions.https.onRequest(async (req, res) => {
+  const english_words = req.body.english_words || [];
+  console.log(english_words);
+  const collectionRef = admin.firestore().collection("translations");
+  const createResponse = (res) => {
+    var data = {
+        english_word: (res === undefined) ? '' : res.english_word ,
+        translation: (res === undefined) ? '' : res.translation ,
+        transliteration: (res === undefined) ? '' : res.transliteration,
+        sound_link: (res === undefined) ? '' : res.sound_link
+    }
+    return data;
+  }
+  const promises = english_words.map(async english_word => {
+    return collectionRef.doc(english_word).get()
+  })
+  Promise.all(promises).then(docs => {
+    translations = docs.map(x => createResponse(x.data()))
+    console.log(translations)
+    res.set('Access-Control-Allow-Origin', "*")
+    res.set('Access-Control-Allow-Methods', 'GET, POST')
+    res.status(200).send(translations)
+  }).catch(function(error) {
+      console.log("Internal server error", error);
+      res.status(500).send(error)
+  });
+});
+
 // For translation page, which will be used by admin & moderators.
 // https://us-central1-barnard-project.cloudfunctions.net/translations?limit=2&reverse=true
 exports.translations = functions.https.onRequest(async (req, res) => {
@@ -73,12 +129,10 @@ exports.translations = functions.https.onRequest(async (req, res) => {
     const querySnapshot = await docRef.get();
     if (querySnapshot.empty) {
         res.status(404).send("NO translations");
-        return "404"
     } else {
-        var docs = querySnapshot.docs.map(doc => doc.data());
+        var docs = querySnapshot.docs.map(doc => doc.data())
         translations_json = JSON.stringify({data: docs})
-        res.status(200).send(translations_json);
-        return translations_json
+        res.status(200).send(translations_json)
     }
   } catch(err) {
     console.log("Error getting document:", err);
