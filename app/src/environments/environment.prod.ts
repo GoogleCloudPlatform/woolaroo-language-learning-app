@@ -14,6 +14,11 @@ export const environment = {
   translate: {
     debugImageUrl: null
   },
+  pages: {
+    addWord: {
+      maxRecordingDuration: 5
+    }
+  },
   components: {
     translationSelector: {
       scrollList: {

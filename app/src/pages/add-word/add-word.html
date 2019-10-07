@@ -27,5 +27,21 @@
       <mat-label i18n="@@transliteration">Transliteration (optional)</mat-label>
       <input type="text" matInput name="transliteration" formControlName="transliteration" />
     </mat-form-field>
+    <div class="record">
+      <label class="mat-body-1" i18n="@@recordPronunciation">Record pronunciation</label>
+      <button class="start" *ngIf="currentRecordingState === RecordingState.Idle
+        || currentRecordingState === RecordingState.Finished" (click)="onStartRecordingClick()">
+        <app-icon icon="record_audio" color="accent"></app-icon></button>
+      <button class="stop" *ngIf="currentRecordingState===RecordingState.Recording
+        || currentRecordingState === RecordingState.Playing" (click)="onStopRecordingClick()">
+        <app-icon icon="stop_audio" color="accent"></app-icon>
+      </button>
+      <span class="play-container" *ngIf="currentRecordingState===RecordingState.Finished">
+        <button class="play" (click)="onPlayRecordingClick()">
+          <app-icon icon="play_recording" color="accent"></app-icon>
+        </button>
+        <span i18n="@@saved">Saved</span>
+      </span>
+    </div>
   </div>
 </form>

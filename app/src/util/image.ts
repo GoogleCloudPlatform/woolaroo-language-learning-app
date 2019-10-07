@@ -1,6 +1,6 @@
-import {default as loadImage, MetaData} from 'blueimp-load-image';
+import { default as loadImage } from 'blueimp-load-image';
 
-export async function canvasToBlob(canvas:HTMLCanvasElement):Promise<Blob> {
+export async function canvasToBlob(canvas: HTMLCanvasElement): Promise<Blob> {
   return new Promise<Blob>((resolve, reject) => {
     try {
       if (canvas.toBlob) {
@@ -11,13 +11,13 @@ export async function canvasToBlob(canvas:HTMLCanvasElement):Promise<Blob> {
         resolve(dataURItoBlob(dataUrl));
       }
     } catch (err) {
-      console.warn("Converting canvas to blob failed", err);
+      console.warn('Converting canvas to blob failed', err);
       reject(err);
     }
   });
 }
 
-function dataURItoBlob(dataURI:string):Blob {
+function dataURItoBlob(dataURI: string): Blob {
   const byteString = atob(dataURI.split(',')[1]);
   const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
   const ab = new ArrayBuffer(byteString.length);
@@ -29,10 +29,10 @@ function dataURItoBlob(dataURI:string):Blob {
 }
 
 
-export async function resizeImage(imageData:Blob, maxWidth:number, maxHeight:number):Promise<Blob> {
+export async function resizeImage(imageData: Blob, maxWidth: number, maxHeight: number): Promise<Blob> {
   return new Promise<Blob>((resolve, reject) => {
     loadImage(imageData, canvas => {
       canvasToBlob(canvas as HTMLCanvasElement).then(resolve, reject);
-    }, { maxWidth: maxWidth, maxHeight: maxHeight, canvas: true });
+    }, { maxWidth, maxHeight, canvas: true });
   });
 }
