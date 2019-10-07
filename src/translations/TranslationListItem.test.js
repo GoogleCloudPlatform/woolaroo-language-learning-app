@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TranslationListItem from './TranslationListItem';
-import Fab from '@material-ui/core/Fab';
 import Button from '@material-ui/core/Button';
-import PlayIcon from '@material-ui/icons/PlayArrowOutlined';
 import ApiUtils from '../utils/ApiUtils';
 import TextField from '@material-ui/core/TextField';
 import { shallow } from 'enzyme';
@@ -39,8 +37,6 @@ it('renders without crashing when translation of correct structure is passed in'
 it('renders correct elements for translation list item', () => {
   const wrapper = shallow(<TranslationListItem item={stubbedTranslation} />);
 
-  expect(wrapper.find(Fab).length).toEqual(1);
-  expect(wrapper.find(PlayIcon).length).toEqual(1);
   expect(wrapper.find(Button).length).toEqual(1);
 });
 
