@@ -1,4 +1,4 @@
-import ListPageBase from '../common/ListPageBase'
+import ListPageBase from '../common/ListPageBase';
 import TranslationListItem from './TranslationListItem';
 import './TranslationsPage.css';
 

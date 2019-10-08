@@ -1,5 +1,6 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
+import AudioRecorder from '../audio/AudioRecorder';
 import './ListItemBase.css';
 
 class ListItemBase extends React.Component {
@@ -66,6 +67,21 @@ class ListItemBase extends React.Component {
     );
   }
 
+  onSavedAudio(blob) {
+    console.log('onSavedAudio_', blob);
+    this.setState({sound_blob: blob, disabled: false});
+  }
+
+  renderAudioRecorder() {
+    return (
+      <AudioRecorder
+        audioUrl={this.state.sound_link}
+        onSavedAudio={(blob) => this.onSavedAudio(blob)}
+        key={0}
+      />
+    );
+  }
+
   renderEndOfRow() {
     // To be overridden.
     return null;
@@ -77,6 +93,7 @@ class ListItemBase extends React.Component {
         {this.renderBaseWord()}
         {this.renderTranslation()}
         {this.renderTransliteration()}
+        {this.renderAudioRecorder()}
         {this.renderEndOfRow()}
       </li>
     );
