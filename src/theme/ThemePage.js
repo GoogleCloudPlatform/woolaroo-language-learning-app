@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: 260
+    width: 350
   },
   dense: {
     marginTop: 19
@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 260
+    minWidth: 350
   },
   selectEmpty: {
     marginTop: theme.spacing(2)
