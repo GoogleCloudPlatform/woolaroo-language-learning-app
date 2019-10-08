@@ -21,6 +21,7 @@
     "@angular/platform-browser": "~8.2.4",
     "@angular/platform-browser-dynamic": "~8.2.4",
     "@angular/router": "~8.2.4",
+    "@types/dom-mediacapture-record": "^1.0.1",
     "blueimp-load-image": "^2.24.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",

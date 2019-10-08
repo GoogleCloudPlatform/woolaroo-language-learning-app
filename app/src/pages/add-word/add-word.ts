@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material';
 import { ANALYTICS_SERVICE, IAnalyticsService } from 'services/analytics';
 import { FEEDBACK_SERVICE, IFeedbackService } from 'services/feedback';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
-import { startRecording, playBuffer, AudioStream, RecordingStream } from 'util/audio';
+import { startRecording, play, AudioStream, RecordingStream } from 'util/audio';
 import { OperatingSystem, getOperatingSystem } from 'util/platform';
 
 enum RecordingState {
@@ -19,6 +19,7 @@ enum RecordingState {
 interface AddWordConfig {
   maxRecordingDuration: number;
   recordingBufferSize: number;
+  recordingMimeTypes: string[];
   androidGBoardUrl: string;
   iosGBoardUrl: string;
   keymanUrl: string;
@@ -35,7 +36,7 @@ export const ADD_WORD_CONFIG = new InjectionToken<AddWordConfig>('Add Word confi
 export class AddWordPageComponent implements AfterViewInit {
   private readonly form: FormGroup;
   private audioStream: AudioStream|null = null;
-  private recording: { buffer: Float32Array, duration: number}|null = null;
+  private recording: Blob|null = null;
   public audioStreamProgress = 0;
   public submittingForm = false;
   public recordingState = RecordingState.Idle;
@@ -104,7 +105,7 @@ export class AddWordPageComponent implements AfterViewInit {
     console.log('Starting recording');
     this.audioStreamProgress = 0;
     this.recordingState = RecordingState.Recording;
-    startRecording(this.config.recordingBufferSize).then(
+    startRecording(this.config.recordingBufferSize, this.config.recordingMimeTypes).then(
       this.onRecordingStarted,
       (err) => {
         console.warn('Error starting recording', err);
@@ -127,16 +128,17 @@ export class AddWordPageComponent implements AfterViewInit {
         this.audioStreamProgress = (Date.now() - startTime) / this.config.maxRecordingDuration;
       });
     }, this.config.progressAnimationInterval);
-    stream.setEndedListener((buffer, duration) => {
-      console.log('Recording complete: ' + duration);
+    stream.onended = (buffer) => {
+      console.log('Recording complete');
       clearTimeout(recordingTimeout);
       clearInterval(progressInterval);
-      this.recording = { buffer, duration };
+      this.recording = buffer;
       this.audioStream = null;
+      this.form.controls.pronunciation.setValue(buffer);
       this.zone.run(() => {
         this.recordingState = RecordingState.Finished;
       });
-    });
+    };
   };
 
   onStopRecordingClick() {
@@ -155,23 +157,21 @@ export class AddWordPageComponent implements AfterViewInit {
     }
     this.audioStreamProgress = 0;
     this.recordingState = RecordingState.Playing;
-    const duration = this.recording.duration;
-    playBuffer(this.recording.buffer, duration).then(
+    play(this.recording).then(
       (stream) => {
         this.audioStream = stream;
-        const startTime = Date.now();
         const progressInterval = setInterval(() => {
           this.zone.run(() => {
-            this.audioStreamProgress = (Date.now() - startTime) / duration;
+            this.audioStreamProgress = stream.getCurrentTime() / stream.getDuration();
           });
         }, this.config.progressAnimationInterval);
-        stream.setEndedListener(() => {
+        stream.onended = () => {
           console.log('Playback ended');
           clearInterval(progressInterval);
           this.zone.run(() => {
             this.recordingState = RecordingState.Finished;
           });
-        });
+        };
       },
       (err) => {
         console.warn('Error playing recording', err);

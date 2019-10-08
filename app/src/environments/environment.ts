@@ -18,6 +18,7 @@ export const environment = {
     addWord: {
       maxRecordingDuration: 5000,
       recordingBufferSize: 4096,
+      recordingMimeTypes: [ 'audio/webm', 'audio/mpeg', 'audio/wav' ],
       androidGBoardUrl: 'https://play.google.com/store/apps/details?id=com.google.android.inputmethod.latin',
       iosGBoardUrl: 'https://apps.apple.com/us/app/gboard-the-google-keyboard/id1091700242',
       keymanUrl: 'https://keyman.com/',
