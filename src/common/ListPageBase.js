@@ -15,6 +15,10 @@ class ListPageBase extends React.Component {
   }
 
   async componentDidMount() {
+    if (!this.state.collectionName) {
+      return;
+    }
+
     try {
       const qs = `?collectionName=${this.state.collectionName}`;
       const resp = await

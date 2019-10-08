@@ -3,7 +3,6 @@ import Button from '@material-ui/core/Button';
 import ListItemBase from '../common/ListItemBase'
 import ApiUtils from '../utils/ApiUtils';
 import './TranslationListItem.css';
-import AudioRecorder from '../audio/AudioRecorder';
 
 class TranslationListItem extends ListItemBase {
   constructor(props) {
@@ -81,21 +80,14 @@ class TranslationListItem extends ListItemBase {
     }
   }
 
-  onSavedAudio_(blob) {
-    console.log('onSavedAudio_', blob);
-    this.setState({sound_blob: blob, disabled: false});
-  }
-
   renderEndOfRow() {
-    return [<AudioRecorder audioUrl={this.state.sound_link}
-      onSavedAudio={(blob) => this.onSavedAudio_(blob)}
-      key={0} />,
+    return [
       <Button
         variant="contained"
         color="primary"
         disabled={this.state.disabled}
         onClick={() => this.saveTranslation_()}
-        key={1}
+        key={0}
       >
         Save
       </Button>
