@@ -6,8 +6,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
+import Card from "@material-ui/core/Card";
+import CardMedia from "@material-ui/core/CardMedia";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,12 +37,12 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(2)
   },
   card: {
-    maxWidth: 345,
+    maxWidth: 345
   },
   media: {
     height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
+    paddingTop: "56.25%" // 16:9
+  }
 }));
 
 function ThemePage() {
@@ -66,10 +66,9 @@ function ThemePage() {
         <h2> Organization information </h2>
         <TextField
           required
-          id="standard-required"
+          id="organization-name"
           label="Organization name"
           defaultValue=""
-          placeholder="Organization name"
           className={classes.textField}
           margin="normal"
         />
@@ -87,7 +86,8 @@ function ThemePage() {
               inputProps={{
                 name: "endangeredLanguage",
                 id: "endangered-language-helper"
-              }}>
+              }}
+            >
               <MenuItem value="">
                 <em> None </em>
               </MenuItem>
@@ -105,7 +105,7 @@ function ThemePage() {
         <h2> App information </h2>
         <TextField
           required
-          id="standard-required"
+          id="app-name"
           label="App name"
           defaultValue=""
           className={classes.textField}
@@ -122,7 +122,8 @@ function ThemePage() {
               inputProps={{
                 name: "primaryLanguage",
                 id: "primary-language-helper"
-              }}>
+              }}
+            >
               <MenuItem value="">
                 <em> None </em>
               </MenuItem>
@@ -132,16 +133,15 @@ function ThemePage() {
             </Select>
           </FormControl>
         </form>
-
-         <h3> Logo </h3>
-         <Card className={classes.card}>
-      <CardMedia
-        className={classes.media}
-        image="https://storage.googleapis.com/barnard-public-assets/Barnard%20lock%20up%202.1.png"
-        title="Paella dish"
-      />
-    </Card>
-    Upload new logo: <input type="file" name="myFile"/>
+        <h3> Logo </h3>
+        <Card className={classes.card}>
+          <CardMedia
+            className={classes.media}
+            image="https://storage.googleapis.com/barnard-public-assets/Barnard%20lock%20up%202.1.png"
+            title="Paella dish"
+          />
+        </Card>
+        Upload new logo: <input type="file" name="myFile" />
       </div>
     </div>
   );
