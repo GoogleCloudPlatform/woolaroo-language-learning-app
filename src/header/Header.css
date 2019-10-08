@@ -16,6 +16,10 @@
   width: 640px;
 }
 
+.header-search.hidden {
+  background: none;
+}
+
 .MuiInputBase-input.header-search-input {
   font-size: 14px;
   color: #5f6368;
