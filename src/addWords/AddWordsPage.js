@@ -40,7 +40,7 @@ class AddWordsPage extends ListPageBase {
     });
   }
 
-  renderBulkUpload() {
+  renderBulkUpload_() {
     return (
       <div>
         <span>
@@ -57,7 +57,7 @@ class AddWordsPage extends ListPageBase {
     );
   }
 
-  renderIndividualWords() {
+  renderIndividualWords_() {
     return (
       <div>
         <div className="title-row">
@@ -88,9 +88,9 @@ class AddWordsPage extends ListPageBase {
   render() {
     return (
       <div>
-        {this.renderBulkUpload()}
+        {this.renderBulkUpload_()}
         <hr/>
-        {this.renderIndividualWords()}
+        {this.renderIndividualWords_()}
       </div>
     );
   }
