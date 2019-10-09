@@ -1,7 +1,9 @@
-import { MockTranslationService } from 'services/mock/translation';
 import { MockAnalyticsService } from 'services/mock/analytics';
 import { MockImageRecognitionService } from 'services/mock/image-recognition';
-import { MockFeedbackService } from 'services/mock/feedback';
+import { APITranslationService } from 'services/api/translation';
+import { APIFeedbackService } from 'services/api/feedback';
+
+const baseEndpointUrl = 'https://us-central1-barnard-project.cloudfunctions.net';
 
 export const environment = {
   production: false,
@@ -48,16 +50,21 @@ export const environment = {
       config: null
     },
     translation: {
-      type: MockTranslationService,
-      config: null
+      type: APITranslationService,
+      config: {
+        endpointURL: `${baseEndpointUrl}/getTranslations`
+      }
     },
     analytics: {
       type: MockAnalyticsService,
       config: null
     },
     feedback: {
-      type: MockFeedbackService,
-      config: null
+      type: APIFeedbackService,
+      config: {
+        addWordAudioEndpointURL: `${baseEndpointUrl}/saveAudioSuggestions`,
+        addWordEndpointURL: `${baseEndpointUrl}/addSuggestions`
+      }
     }
   }
 };

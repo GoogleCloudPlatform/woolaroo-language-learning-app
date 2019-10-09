@@ -5,9 +5,9 @@ import { IImageRecognitionService, ImageDescription } from '../image-recognition
 export class MockImageRecognitionService implements IImageRecognitionService {
   public async loadDescriptions(imageData: Blob): Promise<ImageDescription[]> {
     return [
-      { description: 'blue', score: 0.9 },
-      { description: 'daytime', score: 0.8 },
-      { description: 'cloud', score: 0.8 }
+      { description: 'ankle', score: 0.9 },
+      { description: 'bed', score: 0.8 },
+      { description: 'book', score: 0.8 }
     ];
   }
 }
