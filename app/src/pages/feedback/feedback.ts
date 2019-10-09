@@ -14,7 +14,7 @@ import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
   styleUrls: ['./feedback.scss']
 })
 export class FeedbackPageComponent implements AfterViewInit {
-  private readonly feedbackForm: FormGroup;
+  public readonly feedbackForm: FormGroup;
   public submittingForm = false;
   public FeedbackType = FeedbackType;
 
