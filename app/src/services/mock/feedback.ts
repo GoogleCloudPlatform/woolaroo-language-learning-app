@@ -4,7 +4,7 @@ import { Feedback, AddedWord } from '../entities/feedback';
 
 @Injectable()
 export class MockFeedbackService implements IFeedbackService {
-  public async sendFeedback(feedback: Feedback): Promise<any> {
+  public sendFeedback(feedback: Feedback): Promise<any> {
     return new Promise((resolve) => {
       setTimeout(() => {
         console.log('Submitted feedback: ' + feedback.content);
@@ -13,7 +13,7 @@ export class MockFeedbackService implements IFeedbackService {
     });
   }
 
-  public async addWord(word: AddedWord): Promise<any> {
+  public addWord(word: AddedWord): Promise<any> {
     return new Promise((resolve) => {
       setTimeout(() => {
         console.log('Added word: ' + word.englishWord);

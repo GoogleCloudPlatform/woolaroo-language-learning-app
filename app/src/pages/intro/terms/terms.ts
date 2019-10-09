@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
+import { IProfileService, PROFILE_SERVICE } from 'services/profile';
 
 @Component({
   selector: 'app-page-intro-terms',
@@ -9,7 +10,8 @@ import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
 })
 export class IntroTermsPageComponent implements AfterViewInit {
   constructor( private router: Router,
-               @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {
+               @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
+               @Inject(PROFILE_SERVICE) private profileService: IProfileService ) {
   }
 
   ngAfterViewInit() {
@@ -17,6 +19,12 @@ export class IntroTermsPageComponent implements AfterViewInit {
   }
 
   onAcceptClick() {
-    this.router.navigateByUrl('/photo-source');
+    this.profileService.loadProfile().then(
+      (profile) => {
+        profile.termsAgreed = true;
+        this.profileService.saveProfile(profile).finally(() => this.router.navigateByUrl('/photo-source'));
+      },
+      () => this.router.navigateByUrl('/photo-source')
+    );
   }
 }
