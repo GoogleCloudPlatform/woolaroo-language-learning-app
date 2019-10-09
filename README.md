@@ -43,7 +43,7 @@
 ## Localization
 
 * To create a version of the app in a specific language:
-  * Generate the language template file by running `ng xi18n --output-path=src/locale` from the `./app` directory.
+  * Generate the language template file by running `npm run build-i18n` from the `./app` directory.
   * Copy the template file and rename it to `src/locale/messages.<LANGUAGE>.xlf`.
   * Add language translations (https://angular.io/guide/i18n#translate-the-source-text).
   * Rebuild the app with the `i18n-file` and `i18n-locale` arguments (see below).

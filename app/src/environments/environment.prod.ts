@@ -2,6 +2,7 @@ import { MockFeedbackService } from 'services/mock/feedback';
 import { GoogleAnalyticsService } from 'services/google/analytics';
 import { GoogleImageRecognitionService, SafeSearchLikelihood } from 'services/google/image-recognition';
 import { APITranslationService } from 'services/api/translation';
+import { LocalProfileService } from 'services/local-profile';
 
 export const environment = {
   production: true,
@@ -43,6 +44,10 @@ export const environment = {
     }
   },
   services: {
+    profile: {
+      type: LocalProfileService,
+      config: null
+    },
     imageRecognition: {
       type: GoogleImageRecognitionService,
       config: {

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, TRANSLATIONS, TRANSLATIONS_FORMAT, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -14,6 +14,9 @@ import { TermsPageModule } from 'pages/terms/terms.module';
 import { AboutPageModule } from 'pages/about/about.module';
 import { TechnologyPageModule } from 'pages/technology/technology.module';
 import { AddWordPageModule } from 'pages/add-word/add-word.module';
+import { I18n } from '@ngx-translate/i18n-polyfill';
+
+declare const require: any; // Use the require method provided by webpack
 
 @NgModule({
   declarations: [
@@ -35,7 +38,18 @@ import { AddWordPageModule } from 'pages/add-word/add-word.module';
     HttpClientModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: TRANSLATIONS,
+      useFactory: (locale: string) => {
+        locale = (locale || 'en').split('-')[0];
+        return require(`raw-loader!../locale/messages.${locale}.xlf`).default;
+      },
+      deps: [LOCALE_ID]
+    },
+    { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
+    I18n
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

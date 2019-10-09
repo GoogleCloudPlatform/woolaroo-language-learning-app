@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { CameraPreviewComponent, CameraPreviewStatus } from 'components/camera-preview/camera-preview';
 import { ErrorPopUpComponent } from 'components/error-popup/error-popup';
 import { ANALYTICS_SERVICE, IAnalyticsService } from 'services/analytics';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'app-page-capture',
@@ -18,7 +19,8 @@ export class CapturePageComponent implements AfterViewInit {
 
   constructor( private router: Router,
                private dialog: MatDialog,
-               @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {
+               @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
+               private i18n: I18n) {
   }
 
   ngAfterViewInit() {
@@ -32,7 +34,8 @@ export class CapturePageComponent implements AfterViewInit {
       () => console.log('Camera started'),
       err => {
         console.warn('Error starting camera', err);
-        const errorDialog = this.dialog.open(ErrorPopUpComponent, { data: { message: 'Unable to start camera' } }); // TODO: localize
+        const errorMessage = this.i18n({ id: 'startCameraError', value: 'Unable to start camera' });
+        const errorDialog = this.dialog.open(ErrorPopUpComponent, { data: { message: errorMessage } });
         errorDialog.afterClosed().subscribe(() => {
           history.back();
         });
@@ -56,7 +59,8 @@ export class CapturePageComponent implements AfterViewInit {
       err => {
         console.warn('Failed to capture image', err);
         this.captureInProgress = false;
-        this.dialog.open(ErrorPopUpComponent, { data: { message: 'Unable to capture image' } }); // TODO: localize
+        const errorMessage = this.i18n({ id: 'captureImageError', value: 'Unable to capture image' });
+        this.dialog.open(ErrorPopUpComponent, { data: { message: errorMessage } });
       }
     );
   }
