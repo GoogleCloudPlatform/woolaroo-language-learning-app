@@ -2,14 +2,12 @@ import { MockAnalyticsService } from 'services/mock/analytics';
 import { MockImageRecognitionService } from 'services/mock/image-recognition';
 import { APITranslationService } from 'services/api/translation';
 import { APIFeedbackService } from 'services/api/feedback';
+import { LocalProfileService } from 'services/local-profile';
 
 const baseEndpointUrl = 'https://us-central1-barnard-project.cloudfunctions.net';
 
 export const environment = {
   production: false,
-  splash: {
-    duration: 3000,
-  },
   capture: {
     resizeDelay: 1000
   },
@@ -17,6 +15,9 @@ export const environment = {
     debugImageUrl: '/assets/debug/IMG_20190920_141505.jpg'
   },
   pages: {
+    splash: {
+      duration: 3000
+    },
     addWord: {
       maxRecordingDuration: 5000,
       recordingBufferSize: 4096,
@@ -45,6 +46,10 @@ export const environment = {
     }
   },
   services: {
+    profile: {
+      type: LocalProfileService,
+      config: null
+    },
     imageRecognition: {
       type: MockImageRecognitionService,
       config: null

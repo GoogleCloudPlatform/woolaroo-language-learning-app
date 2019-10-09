@@ -5,9 +5,6 @@ import { APITranslationService } from 'services/api/translation';
 
 export const environment = {
   production: true,
-  splash: {
-    duration: 3000,
-  },
   capture: {
     resizeDelay: 1000
   },
@@ -15,6 +12,9 @@ export const environment = {
     debugImageUrl: null
   },
   pages: {
+    splash: {
+      duration: 3000
+    },
     addWord: {
       maxRecordingDuration: 5000,
       recordingBufferSize: 4096,
