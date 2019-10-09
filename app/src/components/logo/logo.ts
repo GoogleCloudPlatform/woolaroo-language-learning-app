@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-logo',
-  templateUrl: './logo.html',
+  template: '<img src="/assets/img/logo.svg" alt="Logo" />',
   styleUrls: ['./logo.scss']
 })
 export class LogoComponent {
