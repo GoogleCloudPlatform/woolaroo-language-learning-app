@@ -75,13 +75,13 @@ export class AddWordPageComponent implements AfterViewInit {
     this.analyticsService.logPageView(this.router.url, 'Add word');
   }
 
-  onFormSubmit() {
+  onFormSubmit(ev: Event) {
     if (!this.form.valid) {
       return;
     }
     this.submittingForm = true;
     const loadingPopup = this.dialog.open(LoadingPopUpComponent);
-    this.feedbackService.sendFeedback(this.form.value).then(
+    this.feedbackService.addWord(this.form.value).then(
       () => {
         console.log('Added word submitted');
         this.location.back();
