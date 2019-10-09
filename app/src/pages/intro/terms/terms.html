@@ -1,4 +1,4 @@
-<h1 i18n="@@termsAndPrivacy">Terms &amp; Privacy</h1>
-<p class="mat-body-1" i18n="@@introTermsAndPrivacy">By using the Project Barnard you are accepting the
-  <a [routerLink]="['/terms']">Terms and Conditions</a> and <a [routerLink]="['/terms']">Privacy Policy</a>.</p>
+<h1 i18n="@@termsAndPrivacyTitle">Terms &amp; Privacy</h1>
+<p #agreement class="mat-body-1" i18n="@@introTermsAndPrivacy">By using the Project Barnard you are accepting the
+  <a href="{{termsUrl}}">Terms and Conditions</a> and <a href="{{termsUrl}}">Privacy Policy</a>.</p>
 <button mat-flat-button color="accent" (click)="onAcceptClick()" class="accept" i18n="@@accept">Accept</button>

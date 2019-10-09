@@ -75,7 +75,7 @@ export class AddWordPageComponent implements AfterViewInit {
     this.analyticsService.logPageView(this.router.url, 'Add word');
   }
 
-  onFormSubmit(ev: Event) {
+  onFormSubmit() {
     if (!this.form.valid) {
       return;
     }

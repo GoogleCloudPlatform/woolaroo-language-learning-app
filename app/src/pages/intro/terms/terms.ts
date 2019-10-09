@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
 import { IProfileService, PROFILE_SERVICE } from 'services/profile';
@@ -9,6 +9,10 @@ import { IProfileService, PROFILE_SERVICE } from 'services/profile';
   styleUrls: ['./terms.scss']
 })
 export class IntroTermsPageComponent implements AfterViewInit {
+  @ViewChild('agreement', { static: true })
+  private agreement: ElementRef|null = null;
+  public termsUrl = '/terms';
+
   constructor( private router: Router,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
                @Inject(PROFILE_SERVICE) private profileService: IProfileService ) {
@@ -16,6 +20,17 @@ export class IntroTermsPageComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.analyticsService.logPageView(this.router.url, 'Intro - Terms & Privacy');
+    if (this.agreement && this.agreement.nativeElement) {
+      const agreement = this.agreement.nativeElement as HTMLElement;
+      const links = agreement.getElementsByTagName('a');
+      for (let k = 0; k < links.length; k++) {
+        const link = links[k] as HTMLAnchorElement;
+        link.addEventListener('click', (ev) => {
+          ev.preventDefault();
+          this.router.navigateByUrl(link.pathname);
+        });
+      }
+    }
   }
 
   onAcceptClick() {
