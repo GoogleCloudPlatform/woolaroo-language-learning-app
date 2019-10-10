@@ -88,4 +88,8 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
   onAddRecording(word: WordTranslation) {
     this.router.navigateByUrl('/add-word', { state: { word }});
   }
+
+  onAddTranslation(word: WordTranslation) {
+    this.router.navigateByUrl('/add-word', { state: { word }});
+  }
 }
