@@ -8,6 +8,7 @@ import { FEEDBACK_SERVICE, IFeedbackService } from 'services/feedback';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
 import { startRecording, play, AudioStream, RecordingStream } from 'util/audio';
 import { OperatingSystem, getOperatingSystem } from 'util/platform';
+import { WordTranslation } from 'services/entities/translation';
 
 enum RecordingState {
   Idle,
@@ -53,14 +54,15 @@ export class AddWordPageComponent implements AfterViewInit {
                private zone: NgZone,
                @Inject(FEEDBACK_SERVICE) private feedbackService: IFeedbackService,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {
+    const word: WordTranslation = history.state.word;
     this.form = new FormGroup({
-      nativeWord: new FormControl('', [
+      nativeWord: new FormControl(word ? word.translation : '', [
         Validators.required
       ]),
-      englishWord: new FormControl('', [
+      englishWord: new FormControl(word ? word.original : '', [
         Validators.required
       ]),
-      transliteration: new FormControl('', [
+      transliteration: new FormControl(word ? word.transliteration : '', [
       ]),
       pronunciation: new FormControl(null, [
       ]),
