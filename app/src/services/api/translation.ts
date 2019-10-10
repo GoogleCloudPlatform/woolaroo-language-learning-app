@@ -20,12 +20,19 @@ export class APITranslationService implements ITranslationService {
   }
 
   public async translate(words: string[], maxTranslations: number = 0): Promise<WordTranslation[]> {
-    const response = await this.http.post<TranslationResponse[]>(this.config.endpointURL, { english_words: words }).toPromise();
-    return response.filter(tr => tr.translation).map(tr => ({
+    const lowercaseWords = words.map((w) => w.toLowerCase());
+    const response = await this.http.post<TranslationResponse[]>(this.config.endpointURL, { english_words: lowercaseWords }).toPromise();
+    const translations = response.filter(tr => tr.translation).map(tr => ({
       original: tr.english_word,
       translation: tr.translation,
       transliteration: tr.transliteration,
       soundURL: tr.sound_link
     }));
+    words.forEach((w) => {
+      if (!translations.find((tr) => tr.original === w)) {
+        translations.push({ original: w, translation: '', transliteration: '', soundURL: '' });
+      }
+    });
+    return translations;
   }
 }
