@@ -13,7 +13,9 @@ export class TranslationSelectorComponent {
   @Output()
   public wordShared: EventEmitter<WordTranslation> = new EventEmitter<WordTranslation>();
   @Output()
-  public addRecording: EventEmitter<any> = new EventEmitter<any>();
+  public addRecording: EventEmitter<WordTranslation> = new EventEmitter<WordTranslation>();
+  @Output()
+  public addTranslation: EventEmitter<WordTranslation> = new EventEmitter<WordTranslation>();
   @ViewChild('audioPlayer', {static: false})
   public audioPlayer: ElementRef|null = null;
   public audioPlaying = false;
@@ -58,7 +60,15 @@ export class TranslationSelectorComponent {
   }
 
   onAddRecordingClick() {
-    this.addRecording.emit();
+    if (this.selectedTranslation) {
+      this.addRecording.emit(this.selectedTranslation);
+    }
+  }
+
+  onAddTranslationClick() {
+    if (this.selectedTranslation) {
+      this.addTranslation.emit(this.selectedTranslation);
+    }
   }
 
   onShareClick() {

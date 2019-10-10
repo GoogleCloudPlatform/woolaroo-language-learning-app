@@ -85,7 +85,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
     }
   }
 
-  onAddRecording() {
-    // TODO
+  onAddRecording(word: WordTranslation) {
+    this.router.navigateByUrl('/add-word', { state: { word }});
   }
 }

@@ -48,6 +48,26 @@
   }
 }
 
+.translation-not-found {
+  color: white;
+  text-align: center;
+  margin-bottom: 15px;
+  width: 100%;
+  font-size: 2rem;
+  line-height: 2rem;
+
+  div {
+    margin-bottom: 12px;
+  }
+
+  .add-translation {
+    @include icon-button;
+    color: white;
+    width: 45px;
+    height: 45px;
+  }
+}
+
 app-selection-line {
   height: 125px;
 }

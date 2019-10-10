@@ -1,13 +1,23 @@
-<div class="translation-container" *ngIf="selectedTranslation">
+<div class="translation-container" *ngIf="selectedTranslation && selectedTranslation.translation">
   <div class="translation">
     {{ selectedTranslation.translation }}
     <button *ngIf="shareAvailable" class="share" (click)="onShareClick()"><app-icon icon="share"></app-icon></button>
   </div>
   <div class="transliteration">{{ selectedTranslation.transliteration }}</div>
-  <button *ngIf="selectedTranslation.soundURL" class="play-audio" (click)="onPlayAudioClick()"><app-icon icon="play_audio"></app-icon></button>
-  <button *ngIf="!selectedTranslation.soundURL" class="record-audio" (click)="onAddRecordingClick()"><app-icon icon="record_audio"></app-icon></button>
+  <button *ngIf="selectedTranslation.soundURL" class="play-audio" (click)="onPlayAudioClick()">
+    <app-icon icon="play_audio"></app-icon>
+  </button>
+  <button *ngIf="!selectedTranslation.soundURL" class="record-audio" (click)="onAddRecordingClick()">
+    <app-icon icon="record_audio"></app-icon>
+  </button>
   <audio #audioPlayer [src]="selectedTranslation.soundURL" preload="none"
          (play)="onAudioPlaying()" (ended)="onAudioStopped()" (pause)="onAudioStopped()"></audio>
+</div>
+<div class="translation-not-found" *ngIf="selectedTranslation && !selectedTranslation.translation">
+  <div>Translation not found</div>
+  <button *ngIf="!selectedTranslation.soundURL" class="add-translation" (click)="onAddTranslationClick()">
+    <app-icon icon="record_audio"></app-icon>
+  </button>
 </div>
 <app-selection-line [targetPosition]="lineTargetPosition"></app-selection-line>
 <app-word-scroll-list [translations]="translations" (selectedWordChanged)="onSelectedWordChanged($event)"
