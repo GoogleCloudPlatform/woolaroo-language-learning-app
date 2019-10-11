@@ -7,6 +7,7 @@ import { ErrorPopUpComponent } from 'components/error-popup/error-popup';
 import { ANALYTICS_SERVICE, IAnalyticsService } from 'services/analytics';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { IImageRecognitionService, IMAGE_RECOGNITION_SERVICE } from 'services/image-recognition';
+import { AppRoutes } from 'app/routes';
 
 @Component({
   selector: 'app-page-capture',
@@ -57,7 +58,7 @@ export class CapturePageComponent implements AfterViewInit {
     this.cameraPreview.capture().then(
       image => {
         console.log('Image captured');
-        this.onImageCaptured(image, loadingPopup);
+        this.loadImageDescriptions(image, loadingPopup);
       },
       err => {
         console.warn('Failed to capture image', err);
@@ -69,15 +70,15 @@ export class CapturePageComponent implements AfterViewInit {
     );
   }
 
-  onImageCaptured(image: Blob, loadingPopUp: MatDialogRef<CapturePopUpComponent>) {
+  loadImageDescriptions(image: Blob, loadingPopUp: MatDialogRef<CapturePopUpComponent>) {
     this.imageRecognitionService.loadDescriptions(image).then(
       (descriptions) => {
         if (descriptions.length > 0) {
-          this.router.navigateByUrl('/translate', { state: { image, words: descriptions.map(d => d.description) } }).finally(
+          this.router.navigateByUrl(AppRoutes.Feedback, { state: { image, words: descriptions.map(d => d.description) } }).finally(
             () => loadingPopUp.close()
           );
         } else {
-          this.router.navigateByUrl('/translate/caption', { state: { image } }).finally(
+          this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image } }).finally(
             () => loadingPopUp.close()
           );
         }
@@ -85,7 +86,7 @@ export class CapturePageComponent implements AfterViewInit {
       (err) => {
         console.warn('Error loading image descriptions', err);
         loadingPopUp.close();
-        this.router.navigateByUrl('/translate/caption', { state: { image } }).finally(
+        this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image } }).finally(
           () => loadingPopUp.close()
         );
       }
@@ -97,7 +98,8 @@ export class CapturePageComponent implements AfterViewInit {
   }
 
   onImageUploaded(image: Blob) {
-    this.router.navigateByUrl('/translate', { state: { image } });
+    const loadingPopup = this.dialog.open(CapturePopUpComponent);
+    this.loadImageDescriptions(image, loadingPopup);
   }
 
   onSidenavClosed() {

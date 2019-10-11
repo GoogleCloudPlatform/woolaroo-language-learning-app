@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, Inject, ViewChild } from '@angula
 import { Router } from '@angular/router';
 import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
 import { IProfileService, PROFILE_SERVICE } from 'services/profile';
+import { AppRoutes } from 'app/routes';
 
 @Component({
   selector: 'app-page-intro-terms',
@@ -11,7 +12,7 @@ import { IProfileService, PROFILE_SERVICE } from 'services/profile';
 export class IntroTermsPageComponent implements AfterViewInit {
   @ViewChild('agreement', { static: true })
   private agreement: ElementRef|null = null;
-  public termsUrl = '/terms';
+  public termsUrl = AppRoutes.TermsAndConditions;
 
   constructor( private router: Router,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
@@ -37,9 +38,9 @@ export class IntroTermsPageComponent implements AfterViewInit {
     this.profileService.loadProfile().then(
       (profile) => {
         profile.termsAgreed = true;
-        this.profileService.saveProfile(profile).finally(() => this.router.navigateByUrl('/photo-source'));
+        this.profileService.saveProfile(profile).finally(() => this.router.navigateByUrl(AppRoutes.ImageSource));
       },
-      () => this.router.navigateByUrl('/photo-source')
+      () => this.router.navigateByUrl(AppRoutes.ImageSource)
     );
   }
 }

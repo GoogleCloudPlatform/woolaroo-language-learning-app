@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppRoutes } from 'app/routes';
 import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
 
 @Component({
@@ -17,10 +18,10 @@ export class IntroAboutPageComponent implements AfterViewInit {
   }
 
   onNextClick() {
-    this.router.navigateByUrl('/intro/feedback');
+    this.router.navigateByUrl(AppRoutes.IntroFeedback);
   }
 
   onSkipClick() {
-    this.router.navigateByUrl('/intro/terms');
+    this.router.navigateByUrl(AppRoutes.IntroTermsAndConditions);
   }
 }
