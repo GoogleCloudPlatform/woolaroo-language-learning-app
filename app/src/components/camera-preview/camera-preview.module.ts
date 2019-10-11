@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { CameraPreviewComponent } from './camera-preview';
+import { CAMERA_PREVIEW_CONFIG, CameraPreviewComponent } from './camera-preview';
+import { environment } from 'environments/environment';
 
 @NgModule({
   declarations: [
@@ -7,6 +8,9 @@ import { CameraPreviewComponent } from './camera-preview';
   ],
   exports: [
     CameraPreviewComponent
+  ],
+  providers: [
+    { provide: CAMERA_PREVIEW_CONFIG, useValue: environment.components.cameraPreview }
   ]
 })
 export class CameraPreviewModule {}

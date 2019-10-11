@@ -1,9 +1,9 @@
 import { OnInit, Component, Inject, NgZone, OnDestroy, InjectionToken } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { MatDialogRef } from '@angular/material';
 import { WordTranslation } from 'services/entities/translation';
 import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
-import { MatDialogRef } from '@angular/material';
 import { ITranslationService, TRANSLATION_SERVICE } from 'services/translation';
 import { AppRoutes } from 'app/routes';
 
@@ -84,7 +84,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
   }
 
   loadTranslations(words: string[], loadingPopUp?: MatDialogRef<any>) {
-    this.translationService.translate(words, 10).then( // TODO: config max words
+    this.translationService.translate(words, 1).then(
       translations => {
         console.log('Translations loaded');
         if (loadingPopUp) {

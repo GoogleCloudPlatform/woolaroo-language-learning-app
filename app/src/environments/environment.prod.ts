@@ -6,15 +6,13 @@ import { LocalProfileService } from 'services/local-profile';
 
 export const environment = {
   production: true,
-  capture: {
-    resizeDelay: 1000
-  },
-  translate: {
-    debugImageUrl: null
-  },
   pages: {
     splash: {
       duration: 3000
+    },
+    translate: {
+    },
+    captionImage: {
     },
     addWord: {
       maxRecordingDuration: 5000,
@@ -27,6 +25,9 @@ export const environment = {
     }
   },
   components: {
+    cameraPreview: {
+      resizeDelay: 1000
+    },
     translationSelector: {
       scrollList: {
         animationInterval: 25,
