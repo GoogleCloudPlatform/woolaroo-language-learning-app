@@ -99,7 +99,8 @@ export class AddWordPageComponent implements AfterViewInit {
     );
   }
 
-  onCloseClick() {
+  onCloseClick(ev: Event) {
+    ev.preventDefault();
     history.back();
   }
 
