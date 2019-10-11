@@ -9,12 +9,6 @@ const debugImageUrl = '/assets/debug/IMG_20190920_141505.jpg';
 
 export const environment = {
   production: false,
-  capture: {
-    resizeDelay: 1000
-  },
-  translate: {
-    debugImageUrl
-  },
   pages: {
     splash: {
       duration: 3000
@@ -22,6 +16,9 @@ export const environment = {
     translate: {
       debugImageUrl,
       debugWords: ['technology', 'ankle', 'book']
+    },
+    captionImage: {
+      debugImageUrl
     },
     addWord: {
       maxRecordingDuration: 5000,
@@ -34,6 +31,9 @@ export const environment = {
     }
   },
   components: {
+    cameraPreview: {
+      resizeDelay: 1000
+    },
     translationSelector: {
       scrollList: {
         animationInterval: 25,

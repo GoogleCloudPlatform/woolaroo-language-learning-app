@@ -20,6 +20,6 @@ import { environment } from 'environments/environment';
   ],
   providers: [
     { provide: TRANSLATE_PAGE_CONFIG, useValue: environment.pages.translate }
-  ],
+  ]
 })
 export class TranslatePageModule {}

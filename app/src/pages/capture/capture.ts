@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, Inject, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 import { CameraPreviewComponent, CameraPreviewStatus } from 'components/camera-preview/camera-preview';

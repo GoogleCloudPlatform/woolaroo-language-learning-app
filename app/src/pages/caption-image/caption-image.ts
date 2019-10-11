@@ -1,10 +1,15 @@
-import { OnInit, Component, Inject, NgZone, OnDestroy } from '@angular/core';
+import { OnInit, Component, Inject, NgZone, OnDestroy, InjectionToken } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { environment } from 'environments/environment';
 import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AppRoutes } from 'app/routes';
+
+interface CaptionImagePageConfig {
+  debugImageUrl?: string;
+}
+
+export const CAPTION_IMAGE_PAGE_CONFIG = new InjectionToken<CaptionImagePageConfig>('Caption image page config');
 
 @Component({
   selector: 'app-page-caption-image',
@@ -16,7 +21,8 @@ export class CaptionImagePageComponent implements OnInit, OnDestroy {
   public backgroundImageURL: string|null = null;
   public image: Blob|null = null;
 
-  constructor( private http: HttpClient,
+  constructor( @Inject(CAPTION_IMAGE_PAGE_CONFIG) private config: CaptionImagePageConfig,
+               private http: HttpClient,
                private router: Router,
                private zone: NgZone,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {
@@ -31,7 +37,7 @@ export class CaptionImagePageComponent implements OnInit, OnDestroy {
     this.analyticsService.logPageView(this.router.url, 'Caption Image');
     const image: Blob = history.state.image;
     if (!image) {
-      const debugImageUrl: string|null = environment.translate.debugImageUrl;
+      const debugImageUrl = this.config.debugImageUrl;
       if (!debugImageUrl) {
         console.warn('Image not found in state - returning to previous screen');
         history.back();

@@ -4,10 +4,15 @@ import {
   ViewChild,
   HostListener,
   EventEmitter,
-  OnDestroy, ElementRef
+  OnDestroy, ElementRef, InjectionToken, Inject
 } from '@angular/core';
-import { environment } from 'environments/environment';
 import { canvasToBlob } from 'util/image';
+
+interface CameraPreviewConfig {
+  resizeDelay: number;
+}
+
+export const CAMERA_PREVIEW_CONFIG = new InjectionToken<CameraPreviewConfig>('Capture image page config');
 
 export enum CameraPreviewStatus {
   Stopped,
@@ -34,7 +39,7 @@ export class CameraPreviewComponent implements OnDestroy {
   @Output()
   videoError: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor() {
+  constructor(@Inject(CAMERA_PREVIEW_CONFIG) private config: CameraPreviewConfig) {
     this._status = CameraPreviewStatus.Stopped;
   }
 
@@ -160,7 +165,7 @@ export class CameraPreviewComponent implements OnDestroy {
     if (this.videoResizeTimer) {
       clearTimeout(this.videoResizeTimer);
     }
-    this.videoResizeTimer = setTimeout(() => this.onVideoResizeTimerElapsed(), environment.capture.resizeDelay);
+    this.videoResizeTimer = setTimeout(() => this.onVideoResizeTimerElapsed(), this.config.resizeDelay);
   }
 
   private stopVideoResizeTimer() {
