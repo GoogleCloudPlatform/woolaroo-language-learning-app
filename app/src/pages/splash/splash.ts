@@ -2,6 +2,7 @@ import { AfterViewInit, Component, Inject, InjectionToken, OnDestroy } from '@an
 import { Router } from '@angular/router';
 import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
 import { IProfileService, PROFILE_SERVICE } from 'services/profile';
+import { AppRoutes } from 'app/routes';
 
 interface SplashPageConfig {
   duration: number;
@@ -27,8 +28,8 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
     this.analyticsService.logPageView(this.router.url, 'Splash');
     this.timeout = setTimeout(() => {
       this.profileService.loadProfile().then(
-        (profile) => this.router.navigateByUrl(!profile.termsAgreed ? '/intro' : '/photo-source'),
-        () => this.router.navigateByUrl('/intro')
+        (profile) => this.router.navigateByUrl(!profile.termsAgreed ? AppRoutes.Intro : AppRoutes.ImageSource),
+        () => this.router.navigateByUrl(AppRoutes.Intro)
       );
     }, this.config.duration);
   }

@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material';
 import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
 import { IImageRecognitionService, IMAGE_RECOGNITION_SERVICE } from 'services/image-recognition';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
+import { AppRoutes } from 'app/routes';
 
 @Component({
   selector: 'app-page-photo-source',
@@ -26,11 +27,11 @@ export class PhotoSourcePageComponent implements AfterViewInit {
     this.imageRecognitionService.loadDescriptions(image).then(
       (descriptions) => {
         if (descriptions.length > 0) {
-          this.router.navigateByUrl('/translate', { state: { image, words: descriptions.map(d => d.description) } }).finally(
+          this.router.navigateByUrl(AppRoutes.Translate, { state: { image, words: descriptions.map(d => d.description) } }).finally(
             () => loadingPopUp.close()
           );
         } else {
-          this.router.navigateByUrl('/translate/caption', { state: { image } }).finally(
+          this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image } }).finally(
             () => loadingPopUp.close()
           );
         }
@@ -38,7 +39,7 @@ export class PhotoSourcePageComponent implements AfterViewInit {
       (err) => {
         console.warn('Error loading image descriptions', err);
         loadingPopUp.close();
-        this.router.navigateByUrl('/translate/caption', { state: { image } }).finally(
+        this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image } }).finally(
           () => loadingPopUp.close()
         );
       }
@@ -46,6 +47,6 @@ export class PhotoSourcePageComponent implements AfterViewInit {
   }
 
   onCaptureClick() {
-    this.router.navigateByUrl('/capture');
+    this.router.navigateByUrl(AppRoutes.CaptureImage);
   }
 }

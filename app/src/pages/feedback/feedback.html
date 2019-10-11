@@ -1,6 +1,6 @@
 <form [formGroup]="feedbackForm" (ngSubmit)="onFormSubmit()">
   <mat-toolbar>
-    <button class="close" (click)="onCloseClick()"><app-icon icon="close"></app-icon></button>
+    <button class="close" (click)="onCloseClick($event)"><app-icon icon="close"></app-icon></button>
     <span i18n="@@feedbackTitle">Feedback</span>
     <button mat-button color="primary" class="submit" type="submit" i18n="@@submit">Submit</button>
   </mat-toolbar>

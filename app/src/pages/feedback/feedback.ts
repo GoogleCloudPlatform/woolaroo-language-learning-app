@@ -83,7 +83,8 @@ export class FeedbackPageComponent implements AfterViewInit {
     ctl.setValue(types);
   }
 
-  onCloseClick() {
+  onCloseClick(ev: Event) {
+    ev.preventDefault();
     history.back();
   }
 }
