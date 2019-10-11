@@ -1,12 +1,18 @@
-import { OnInit, Component, Inject, NgZone, OnDestroy } from '@angular/core';
+import { OnInit, Component, Inject, NgZone, OnDestroy, InjectionToken } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { WordTranslation } from 'services/entities/translation';
-import { environment } from 'environments/environment';
 import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
 import { MatDialogRef } from '@angular/material';
 import { ITranslationService, TRANSLATION_SERVICE } from 'services/translation';
 import { AppRoutes } from 'app/routes';
+
+interface TranslatePageConfig {
+  debugImageUrl?: string;
+  debugWords?: string[];
+}
+
+export const TRANSLATE_PAGE_CONFIG = new InjectionToken<TranslatePageConfig>('Translate page config');
 
 @Component({
   selector: 'app-page-translate',
@@ -17,7 +23,8 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
   public backgroundImageURL: string|null = null;
   public translations: WordTranslation[]|null = null;
 
-  constructor( private http: HttpClient,
+  constructor( @Inject(TRANSLATE_PAGE_CONFIG) private config: TranslatePageConfig,
+               private http: HttpClient,
                private router: Router,
                private zone: NgZone,
                @Inject(TRANSLATION_SERVICE) private translationService: ITranslationService,
@@ -26,11 +33,11 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.analyticsService.logPageView(this.router.url, 'Translate');
-    const image: Blob = history.state.image;
-    const words: string[] = history.state.words;
+    const image: Blob|undefined = history.state.image;
+    const words: string[]|undefined = history.state.words || this.config.debugWords;
     const loadingPopUp: MatDialogRef<any>|undefined = history.state.loadingPopUp;
     if (!image) {
-      const debugImageUrl: string | null = environment.translate.debugImageUrl;
+      const debugImageUrl = this.config.debugImageUrl;
       if (!debugImageUrl) {
         console.warn('Image not found in state - returning to previous screen');
         if (loadingPopUp) {
@@ -84,7 +91,6 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
           loadingPopUp.close();
         }
         this.zone.run(() => {
-          console.log(translations);
           this.translations = translations;
         });
       },

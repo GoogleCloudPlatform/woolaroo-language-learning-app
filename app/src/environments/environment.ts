@@ -5,6 +5,7 @@ import { APIFeedbackService } from 'services/api/feedback';
 import { LocalProfileService } from 'services/local-profile';
 
 const baseEndpointUrl = 'https://us-central1-barnard-project.cloudfunctions.net';
+const debugImageUrl = '/assets/debug/IMG_20190920_141505.jpg';
 
 export const environment = {
   production: false,
@@ -12,11 +13,15 @@ export const environment = {
     resizeDelay: 1000
   },
   translate: {
-    debugImageUrl: '/assets/debug/IMG_20190920_141505.jpg'
+    debugImageUrl
   },
   pages: {
     splash: {
       duration: 3000
+    },
+    translate: {
+      debugImageUrl,
+      debugWords: ['technology', 'ankle', 'book']
     },
     addWord: {
       maxRecordingDuration: 5000,
