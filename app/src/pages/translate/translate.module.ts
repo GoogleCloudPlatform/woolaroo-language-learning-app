@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { MatButtonModule } from "@angular/material";
+import { MatButtonModule } from '@angular/material';
 import { TranslatePageComponent } from './translate';
 import { ServicesModule } from 'services/services.module';
 import { IconComponentModule } from 'components/icon/icon.module';

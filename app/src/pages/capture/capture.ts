@@ -1,10 +1,12 @@
 import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 import { CameraPreviewComponent, CameraPreviewStatus } from 'components/camera-preview/camera-preview';
+import { CapturePopUpComponent } from 'components/capture-popup/capture-popup';
 import { ErrorPopUpComponent } from 'components/error-popup/error-popup';
 import { ANALYTICS_SERVICE, IAnalyticsService } from 'services/analytics';
 import { I18n } from '@ngx-translate/i18n-polyfill';
+import { IImageRecognitionService, IMAGE_RECOGNITION_SERVICE } from 'services/image-recognition';
 
 @Component({
   selector: 'app-page-capture',
@@ -19,8 +21,9 @@ export class CapturePageComponent implements AfterViewInit {
 
   constructor( private router: Router,
                private dialog: MatDialog,
+               private i18n: I18n,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
-               private i18n: I18n) {
+               @Inject(IMAGE_RECOGNITION_SERVICE) private imageRecognitionService: IImageRecognitionService) {
   }
 
   ngAfterViewInit() {
@@ -46,21 +49,45 @@ export class CapturePageComponent implements AfterViewInit {
   onCaptureClick() {
     if (!this.cameraPreview) {
       return;
-    }
-    if (this.cameraPreview.status !== CameraPreviewStatus.Started) {
+    } else if (this.cameraPreview.status !== CameraPreviewStatus.Started) {
       return;
     }
     this.captureInProgress = true;
+    const loadingPopup = this.dialog.open(CapturePopUpComponent);
     this.cameraPreview.capture().then(
       image => {
         console.log('Image captured');
-        this.router.navigateByUrl('/translate', { state: { image } });
+        this.onImageCaptured(image, loadingPopup);
       },
       err => {
         console.warn('Failed to capture image', err);
         this.captureInProgress = false;
+        loadingPopup.close();
         const errorMessage = this.i18n({ id: 'captureImageError', value: 'Unable to capture image' });
         this.dialog.open(ErrorPopUpComponent, { data: { message: errorMessage } });
+      }
+    );
+  }
+
+  onImageCaptured(image: Blob, loadingPopUp: MatDialogRef<CapturePopUpComponent>) {
+    this.imageRecognitionService.loadDescriptions(image).then(
+      (descriptions) => {
+        if (descriptions.length > 0) {
+          this.router.navigateByUrl('/translate', { state: { image, words: descriptions.map(d => d.description) } }).finally(
+            () => loadingPopUp.close()
+          );
+        } else {
+          this.router.navigateByUrl('/translate/caption', { state: { image } }).finally(
+            () => loadingPopUp.close()
+          );
+        }
+      },
+      (err) => {
+        console.warn('Error loading image descriptions', err);
+        loadingPopUp.close();
+        this.router.navigateByUrl('/translate/caption', { state: { image } }).finally(
+          () => loadingPopUp.close()
+        );
       }
     );
   }

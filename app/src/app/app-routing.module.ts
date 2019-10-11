@@ -7,26 +7,31 @@ import { IntroTermsPageComponent } from 'pages/intro/terms/terms';
 import { TermsPageComponent } from 'pages/terms/terms';
 import { PhotoSourcePageComponent } from 'pages/photo-source/photo-source';
 import { CapturePageComponent } from 'pages/capture/capture';
+import { CaptionImagePageComponent } from 'pages/caption-image/caption-image';
 import { TranslatePageComponent } from 'pages/translate/translate';
 import { FeedbackPageComponent } from 'pages/feedback/feedback';
 import { AddWordPageComponent } from 'pages/add-word/add-word';
 import { AboutPageComponent } from 'pages/about/about';
 import { TechnologyPageComponent } from 'pages/technology/technology';
+import { AppRoutes } from 'app/routes';
+
 
 const routes: Routes = [
-  { path: '', component: SplashPageComponent },
-  { path: 'intro', redirectTo: 'intro/about', pathMatch: 'full' },
-  { path: 'intro/about', component: IntroAboutPageComponent },
-  { path: 'intro/feedback', component: IntroFeedbackPageComponent },
-  { path: 'intro/terms', component: IntroTermsPageComponent },
-  { path: 'terms', component: TermsPageComponent },
-  { path: 'photo-source', component: PhotoSourcePageComponent },
-  { path: 'capture', component: CapturePageComponent },
-  { path: 'translate', component: TranslatePageComponent },
-  { path: 'feedback', component: FeedbackPageComponent },
-  { path: 'about', component: AboutPageComponent },
-  { path: 'technology', component: TechnologyPageComponent },
-  { path: 'add-word', component: AddWordPageComponent },
+  { path: '', redirectTo: AppRoutes.Splash, pathMatch: 'full' },
+  { path: AppRoutes.Splash, component: SplashPageComponent },
+  { path: AppRoutes.Intro, redirectTo: AppRoutes.IntroAbout, pathMatch: 'full' },
+  { path: AppRoutes.IntroAbout, component: IntroAboutPageComponent },
+  { path: AppRoutes.IntroFeedback, component: IntroFeedbackPageComponent },
+  { path: AppRoutes.IntroTermsAndConditions, component: IntroTermsPageComponent },
+  { path: AppRoutes.TermsAndConditions, component: TermsPageComponent },
+  { path: AppRoutes.ImageSource, component: PhotoSourcePageComponent },
+  { path: AppRoutes.CaptureImage, component: CapturePageComponent },
+  { path: AppRoutes.CaptionImage, component: CaptionImagePageComponent },
+  { path: AppRoutes.Translate, component: TranslatePageComponent },
+  { path: AppRoutes.Feedback, component: FeedbackPageComponent },
+  { path: AppRoutes.About, component: AboutPageComponent },
+  { path: AppRoutes.Technology, component: TechnologyPageComponent },
+  { path: AppRoutes.AddWord, component: AddWordPageComponent },
   { path: '**', component: SplashPageComponent } // TODO: not found page
 ];
 

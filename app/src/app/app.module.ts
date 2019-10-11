@@ -14,6 +14,7 @@ import { TermsPageModule } from 'pages/terms/terms.module';
 import { AboutPageModule } from 'pages/about/about.module';
 import { TechnologyPageModule } from 'pages/technology/technology.module';
 import { AddWordPageModule } from 'pages/add-word/add-word.module';
+import { CaptionImagePageModule } from 'pages/caption-image/caption-image.module';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 
 declare const require: any; // Use the require method provided by webpack
@@ -35,6 +36,7 @@ declare const require: any; // Use the require method provided by webpack
     TechnologyPageModule,
     FeedbackPageModule,
     AddWordPageModule,
+    CaptionImagePageModule,
     HttpClientModule,
     BrowserAnimationsModule
   ],

@@ -47,7 +47,7 @@ export class WordScrollListComponent {
     }
   }
 
-  private _selectedWordIndex = 0;
+  private _selectedWordIndex = -1;
   public get selectedWordIndex(): number { return this._selectedWordIndex; }
   @Input('selectedWordIndex')
   public set selectedWordIndex(value: number) {
