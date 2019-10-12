@@ -39,21 +39,32 @@ class TranslationListItem extends ListItemBase {
   }
 
   saveTranslation_ = async (e) => {
+    // TODO(smus): While the translation is being saved, show a progress bar and
+    // prevent the button from being clicked again.
+
+    // First, if there's a new sound_blob, we should upload it and update our
+    // sound_link.
+    const {sound_blob} = this.state;
+    if (sound_blob) {
+      const sound_link = await this.saveSoundBlob_(sound_blob);
+      await this.setStateAsync({sound_link});
+    }
+    // Then, call endpoint to update the translation.
     try {
       const { english_word, sound_link, translation,
         transliteration } = this.state;
 
-      if (!translation) {
+      // If we have no data for this entry, show an error.
+      if (!sound_link && !translation && !transliteration) {
         this.setState({
-          // todo(parikshiv) - add visible error state, also
-          // figure out if any of these can be empty?
+          // TODO(parikshiv) - add visible error state, also figure out if any
+          // of these can be empty?
           error: true,
         })
         return;
       }
 
-      // TODO(smus): Upload this blob of audio to a Cloud storage and get the
-      // uploaded file's URL.
+      // Save any updated data for the translation entry.
       await fetch(`${ApiUtils.origin}${ApiUtils.path}addTranslations`, {
         method: 'POST',
         body: JSON.stringify({
@@ -80,6 +91,20 @@ class TranslationListItem extends ListItemBase {
     }
   }
 
+  /** Saves audio and returns the URL. */
+  saveSoundBlob_ = async (blob) => {
+    try {
+      const base64Audio = await blobToBase64(blob);
+      const res = await fetch(`${ApiUtils.origin}${ApiUtils.path}saveAudioSuggestions`, {
+        method: 'POST',
+        body: base64Audio,
+      });
+      return await res.text();
+    } catch(err) {
+      console.error(err);
+    }
+  }
+
   renderEndOfRow() {
     return [
       <Button
@@ -93,6 +118,26 @@ class TranslationListItem extends ListItemBase {
       </Button>
     ];
   }
+
+  async setStateAsync(state) {
+    return new Promise((resolve) => {
+      this.setState(state, resolve)
+    });
+  }
+}
+
+function blobToBase64(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(blob);
+    reader.onloadend = () => {
+      const base64 = reader.result;
+      // Cut off the data:audio/webm part.
+      const base64Data = base64.split(',')[1];
+      resolve(base64Data);
+    }
+    reader.onerror = reject;
+  });
 }
 
 export default TranslationListItem;
