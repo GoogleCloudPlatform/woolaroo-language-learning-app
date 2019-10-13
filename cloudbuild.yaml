@@ -16,7 +16,7 @@ steps:
   - name: node:10.16.3
     entrypoint: "npm"
     args: ["install"]
-    dir: "./app"
+    dir: "./client"
   - name: node:10.16.3
     entrypoint: "node"
     args: ["./create_app_config.js", "${_GOOGLE_API_KEY}", "${_THEME}"]
@@ -25,9 +25,9 @@ steps:
     entrypoint: "npm"
     args: ["run", "build", "--", "-c", "production", "--output-path=./dist",
            "--i18n-file=./src/locale/messages.${_LANGUAGE}.xlf", "--i18n-locale=${_LANGUAGE}"]
-    dir: "./app"
+    dir: "./client"
   - name: gcr.io/cloud-builders/gsutil
     args: ["-m", "rsync", "-r", "-c", "-d", "./dist", "gs://${_BUCKET_NAME}"]
-    dir: "./app"
+    dir: "./client"
   - name: gcr.io/cloud-builders/gsutil
     args: ["-m", "setmeta", "-h", "Content-Type:text/javascript", "gs://${_BUCKET_NAME}/**/*.js"]
