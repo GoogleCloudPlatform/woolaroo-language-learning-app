@@ -1,9 +1,9 @@
 <div class="translation-container" *ngIf="selectedTranslation && selectedTranslation.translation">
-  <div class="translation">
-    {{ selectedTranslation.translation }}
+  <div class="transliteration">
+    {{ selectedTranslation.transliteration }}
     <button *ngIf="shareAvailable" class="share" (click)="onShareClick()"><app-icon icon="share"></app-icon></button>
   </div>
-  <div class="transliteration">{{ selectedTranslation.transliteration }}</div>
+  <div class="translation">{{ selectedTranslation.translation }}</div>
   <button *ngIf="selectedTranslation.soundURL" class="play-audio" (click)="onPlayAudioClick()">
     <app-icon icon="play_audio"></app-icon>
   </button>
