@@ -3,11 +3,11 @@ version: '3'
 services:
   app:
     build:
-      context: ./app
+      context: ./client
       dockerfile: Dockerfile-dev
     ports:
       - "4200:4200"
     tty: true
     volumes:
-      - ./app:/var/www/app
+      - ./client:/var/www/app
       - /var/www/app/node_modules/
