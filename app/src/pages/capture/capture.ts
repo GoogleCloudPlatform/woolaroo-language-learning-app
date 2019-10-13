@@ -74,7 +74,7 @@ export class CapturePageComponent implements AfterViewInit {
     this.imageRecognitionService.loadDescriptions(image).then(
       (descriptions) => {
         if (descriptions.length > 0) {
-          this.router.navigateByUrl(AppRoutes.Feedback, { state: { image, words: descriptions.map(d => d.description) } }).finally(
+          this.router.navigateByUrl(AppRoutes.Translate, { state: { image, words: descriptions.map(d => d.description) } }).finally(
             () => loadingPopUp.close()
           );
         } else {
