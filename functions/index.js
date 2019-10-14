@@ -6,28 +6,36 @@ const path = require('path');
 
 admin.initializeApp();
 
-exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
-  BUCKET_NAME = 'barnard-project-audio'
-  var fileName = uuidv1();
-  FILE_NAME = `suggestions/${fileName}.webm`
-  const options = {
-    metadata: {
-      contentType: 'audio/webm',
-    }
-  };
-  var bucket = admin.storage().bucket(BUCKET_NAME);
-  var file = admin.storage().bucket(BUCKET_NAME).file(FILE_NAME);
-  await file.save(req.body, options)
-    .then(stuff => {
-        console.log('Audio saved successfully.');
-        var url = `gs://${BUCKET_NAME}/${FILE_NAME}`;
-        res.status(200).send(JSON.stringify(url));
-        return url;
-    })  
-    .catch(err => {
-        console.log(`Unable to upload audio ${err}`)
-    });
+const BUCKET_NAME = 'barnard-project-audio'
 
+exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
+  return cors(req, res, async () => {
+    const fileName = uuidv1();
+    const filePath = `suggestions/${fileName}.webm`
+    const options = {
+      metadata: {
+        contentType: 'audio/webm',
+      }
+    };
+    const file = admin.storage().bucket(BUCKET_NAME).file(filePath);
+    try {
+      // Convert base64 body to blob of webm.
+      const nodeBuffer = Buffer.from(req.body, 'base64');
+      await file.save(nodeBuffer, options);
+      console.log(`Audio saved successfully.`);
+      // Make the file publicly accessible.
+      file.makePublic();
+      // TODO(smus): Convert webm to the format we want to store audio in,
+      // probably audio/mp3.
+      // Rather than getting the bucket URL, get the public HTTP URL.
+      const metadata = await file.getMetadata();
+      const mediaLink = metadata[0].mediaLink;
+      console.log(`Audio available publicly at ${mediaLink}.`);
+      res.status(200).send(mediaLink);
+    } catch (err) {
+      console.log(`Unable to upload audio ${err}`)
+    }
+  });
 });
 
 
