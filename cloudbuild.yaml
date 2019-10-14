@@ -80,7 +80,7 @@ steps:
     args: ["./client/dist/index.html", "./server/build/index.html"]
     dir: "./"
   - id: 'deploy_server'
-    waitFor: ['create_server_index']
+    waitFor: ['copy_server_index']
     name: gcr.io/cloud-builders/gcloud
     args: ["-q", "app", "deploy"]
     dir: "./server"
