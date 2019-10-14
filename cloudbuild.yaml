@@ -36,7 +36,8 @@ steps:
     name: node:10.16.3
     entrypoint: "npm"
     args: ["run", "build", "--", "-c", "production", "--output-path=./dist",
-           "--i18n-file=./src/locale/messages.${_LANGUAGE}.xlf", "--i18n-locale=${_LANGUAGE}"]
+           "--i18n-file=./src/locale/messages.${_LANGUAGE}.xlf", "--i18n-locale=${_LANGUAGE}",
+           "--deploy-url=https://storage.googleapis.com/${_BUCKET_NAME}/"]
     dir: "./client"
   - id: 'deploy_client'
     waitFor: ['build_client']
@@ -72,12 +73,12 @@ steps:
     entrypoint: "npm"
     args: ["run", "build"]
     dir: "./server"
-  - id: 'create_server_index'
+  - id: 'copy_server_index'
     waitFor: ['build_server', 'build_client']
     name: node:10.16.3
-    entrypoint: "node"
-    args: ["./create_server_index.js", "../client/dist/index.html", "../server/build/index.html", "https://storage.googleapis.com/${_BUCKET_NAME}/"]
-    dir: "./scripts"
+    entrypoint: "cp"
+    args: ["./client/dist/index.html", "./server/build/index.html"]
+    dir: "./"
   - id: 'deploy_server'
     waitFor: ['create_server_index']
     name: gcr.io/cloud-builders/gcloud
