@@ -8,3 +8,11 @@
   margin: 0 80px;
   width: 100%;
 }
+
+.page-container.logged-out {
+  margin: 0;
+}
+
+.landing-page-img {
+  width: 100%;
+}
