@@ -67,9 +67,9 @@ class ListItemBase extends React.Component {
     );
   }
 
-  onSavedAudio(blob) {
-    console.log('onSavedAudio_', blob);
-    this.setState({sound_blob: blob, disabled: false});
+  onSavedAudio(e) {
+    console.log('onSavedAudio_', e);
+    this.setState({sound_blob: e.data, disabled: false});
   }
 
   renderAudioRecorder() {
