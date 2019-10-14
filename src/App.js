@@ -36,11 +36,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.authUtils_.getFirebaseAuth().onAuthStateChanged((user) => {
-      if (user) {
-        this.setState({email: user.email, authInitializing: false});
-      } else {
-        this.setState({email: null, authInitializing: false});
-      }
+      this.setState({email: user ? user.email : null, authInitializing: false});
     });
   }
 
