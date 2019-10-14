@@ -7,12 +7,12 @@ if(!GOOGLE_API_KEY) {
 }
 const THEME = process.argv[3] || 'pink';
 
-const configFilePath = path.join(__dirname, '../app/src/environments/environment.prod.ts');
+const configFilePath = path.join(__dirname, '../client/src/environments/environment.prod.ts');
 let configContent = fs.readFileSync(configFilePath, { 'encoding': 'utf-8' });
 configContent = configContent.replace('<GOOGLE_API_KEY>', GOOGLE_API_KEY);
 fs.writeFileSync(configFilePath, configContent);
 
-const themeFilePath = path.join(__dirname, '../app/src/style/theme.scss');
+const themeFilePath = path.join(__dirname, '../client/src/style/theme.scss');
 let themeContent = `@import 'theme-${THEME}';`;
 fs.writeFileSync(themeFilePath, themeContent);
 

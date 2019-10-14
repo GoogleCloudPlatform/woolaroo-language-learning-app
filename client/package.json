@@ -1,5 +1,5 @@
 {
-  "name": "google-barnard",
+  "name": "google-barnard-client",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",

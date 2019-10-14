@@ -1,33 +1,79 @@
 steps:
-  - name: node:10.16.3
+  # Terraform
+  - id: 'configure_terraform'
+    name: node:10.16.3
     entrypoint: "node"
     args: ["./create_terraform_config.js", "${_TERRAFORM_BUCKET_NAME}"]
     dir: "./scripts"
-  - name: hashicorp/terraform:light
+  - id: 'init_terraform'
+    name: hashicorp/terraform:light
     args: ["init"]
     dir: "./terraform"
-  - name: hashicorp/terraform:light
-    args: ["apply", "--auto-approve",
+  - id: 'run_terraform'
+    name: hashicorp/terraform:light
+    args: ["apply", "-auto-approve",
            "-var", "google_project=$PROJECT_ID",
-           "-var", "google_region=${_GOOGLE_REGION}",
            "-var", "bucket_name=${_BUCKET_NAME}",
-           "-var", "bucket_location=${_BUCKET_LOCATION}"]
+           "-var", "bucket_location=${_BUCKET_LOCATION}",
+           "-var", "app_location=${_APP_LOCATION}"]
     dir: "./terraform"
-  - name: node:10.16.3
+
+  # Server
+  - id: 'prepare_server'
+    waitFor: ['run_terraform']
+    name: node:10.16.3
+    entrypoint: "npm"
+    args: ["install"]
+    dir: "./server"
+  - id: 'build_server'
+    waitFor: ['prepare_server']
+    name: node:10.16.3
+    entrypoint: "npm"
+    args: ["run", "build"]
+    dir: "./server"
+  - id: 'deploy_server'
+    waitFor: ['build_server']
+    name: gcr.io/cloud-builders/gcloud
+    args: ["-q", "app", "deploy"]
+    dir: "./server"
+
+  # Client
+  - id: 'prepare_client'
+    waitFor: ['run_terraform']
+    name: node:10.16.3
     entrypoint: "npm"
     args: ["install"]
     dir: "./client"
-  - name: node:10.16.3
+  - id: 'configure_client'
+    waitFor: ['prepare_client']
+    name: node:10.16.3
     entrypoint: "node"
-    args: ["./create_app_config.js", "${_GOOGLE_API_KEY}", "${_THEME}"]
+    args: ["./create_client_config.js", "${_GOOGLE_API_KEY}", "${_THEME}"]
     dir: "./scripts"
-  - name: node:10.16.3
+  - id: 'build_client'
+    waitFor: ['configure_client']
+    name: node:10.16.3
     entrypoint: "npm"
     args: ["run", "build", "--", "-c", "production", "--output-path=./dist",
            "--i18n-file=./src/locale/messages.${_LANGUAGE}.xlf", "--i18n-locale=${_LANGUAGE}"]
     dir: "./client"
-  - name: gcr.io/cloud-builders/gsutil
+  - id: 'deploy_client'
+    waitFor: ['build_client']
+    name: gcr.io/cloud-builders/gsutil
     args: ["-m", "rsync", "-r", "-c", "-d", "./dist", "gs://${_BUCKET_NAME}"]
     dir: "./client"
-  - name: gcr.io/cloud-builders/gsutil
+  - id: 'fix_client_content_types'
+    waitFor: ['deploy_client']
+    name: gcr.io/cloud-builders/gsutil
     args: ["-m", "setmeta", "-h", "Content-Type:text/javascript", "gs://${_BUCKET_NAME}/**/*.js"]
+  - id: 'create_client_cors_config'
+    waitFor: ['deploy_client']
+    name: node:10.16.3
+    entrypoint: "node"
+    args: ["./create_client_cors_config.js", "https://$PROJECT_ID.appspost.com"]
+    dir: "./scripts"
+  - id: 'set_client_cors'
+    waitFor: ['create_client_cors_config']
+    name: gcr.io/cloud-builders/gsutil
+    args: ["cors", "set", "./client_cors.json", "gs://${_BUCKET_NAME}"]
+    dir: "./"
