@@ -9,6 +9,9 @@ const debugImageUrl = '/assets/debug/IMG_20190920_141505.jpg';
 
 export const environment = {
   production: false,
+  assets: {
+    baseUrl: './',
+  },
   pages: {
     splash: {
       duration: 3000

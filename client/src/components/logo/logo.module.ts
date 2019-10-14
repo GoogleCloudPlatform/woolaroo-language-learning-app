@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { LogoComponent } from './logo';
+import { PipesModule } from 'pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -7,6 +8,9 @@ import { LogoComponent } from './logo';
   ],
   exports: [
     LogoComponent
+  ],
+  imports: [
+    PipesModule
   ]
 })
 export class LogoModule {}
