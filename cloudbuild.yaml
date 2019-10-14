@@ -18,25 +18,6 @@ steps:
            "-var", "app_location=${_APP_LOCATION}"]
     dir: "./terraform"
 
-  # Server
-  - id: 'prepare_server'
-    waitFor: ['run_terraform']
-    name: node:10.16.3
-    entrypoint: "npm"
-    args: ["install"]
-    dir: "./server"
-  - id: 'build_server'
-    waitFor: ['prepare_server']
-    name: node:10.16.3
-    entrypoint: "npm"
-    args: ["run", "build"]
-    dir: "./server"
-  - id: 'deploy_server'
-    waitFor: ['build_server']
-    name: gcr.io/cloud-builders/gcloud
-    args: ["-q", "app", "deploy"]
-    dir: "./server"
-
   # Client
   - id: 'prepare_client'
     waitFor: ['run_terraform']
@@ -77,3 +58,28 @@ steps:
     name: gcr.io/cloud-builders/gsutil
     args: ["cors", "set", "./client_cors.json", "gs://${_BUCKET_NAME}"]
     dir: "./"
+
+  # Server
+  - id: 'prepare_server'
+    waitFor: ['run_terraform']
+    name: node:10.16.3
+    entrypoint: "npm"
+    args: ["install"]
+    dir: "./server"
+  - id: 'build_server'
+    waitFor: ['prepare_server']
+    name: node:10.16.3
+    entrypoint: "npm"
+    args: ["run", "build"]
+    dir: "./server"
+  - id: 'create_server_index'
+    waitFor: ['build_server', 'build_client']
+    name: node:10.16.3
+    entrypoint: "node"
+    args: ["./create_server_index.js", "../client/dist/index.html", "../server/build/static/index.html", "https://storage.googleapis.com/${_BUCKET_NAME}/"]
+    dir: "./scripts"
+  - id: 'deploy_server'
+    waitFor: ['create_server_index']
+    name: gcr.io/cloud-builders/gcloud
+    args: ["-q", "app", "deploy"]
+    dir: "./server"

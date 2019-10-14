@@ -13,7 +13,7 @@ gcloud iam roles create barnard.appdeployer --project=${PROJECT_ID} --permission
 
 # Add required roles to build service account
 gcloud projects add-iam-policy-binding ${PROJECT_ID} --member ${BUILD_SERVICE_ACCOUNT} --role roles/storage.admin
-gcloud projects add-iam-policy-binding ${PROJECT_ID} --member ${BUILD_SERVICE_ACCOUNT} --role roles/compute.admin
+gcloud projects add-iam-policy-binding ${PROJECT_ID} --member ${BUILD_SERVICE_ACCOUNT} --role roles/appengine.appAdmin
 gcloud projects add-iam-policy-binding ${PROJECT_ID} --member ${BUILD_SERVICE_ACCOUNT} --role projects/${PROJECT_ID}/roles/barnard.appdeployer
 
 # Create a bucket for terraform state
