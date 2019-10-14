@@ -42,7 +42,10 @@ const useStyles = makeStyles(theme => ({
   media: {
     height: 0,
     paddingTop: "56.25%" // 16:9
-  }
+  },
+  newSection: {
+    marginTop: theme.spacing(12)
+  },
 }));
 
 function ThemePage() {
@@ -73,7 +76,7 @@ function ThemePage() {
           margin="normal"
         />
       </div>
-      <div>
+      <div className={classes.newSection}>
         <h2> Language information </h2>
         <form className={classes.root} autoComplete="off">
           <FormControl required className={classes.formControl}>
@@ -101,7 +104,7 @@ function ThemePage() {
           </FormControl>
         </form>
       </div>
-      <div>
+      <div className={classes.newSection}>
         <h2> App information </h2>
         <TextField
           required

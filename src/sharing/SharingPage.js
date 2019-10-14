@@ -10,8 +10,11 @@ const useStyles = makeStyles(theme => ({
     width: 350
   },
   button: {
-    margin: theme.spacing(1)
-  }
+    margin: theme.spacing(1),
+  },
+  newSection: {
+    marginTop: theme.spacing(12)
+  },
 }));
 
 function SharingPage() {
@@ -44,13 +47,15 @@ function SharingPage() {
           className={classes.textField}
           margin="normal"
         />
+
+        <div>
+        <Button variant="contained" color="primary" className={classes.button}>
+          Send Invite
+        </Button>
+        </div>
       </div>
 
-      <Button variant="contained" color="primary" className={classes.button}>
-        Send Invite
-      </Button>
-
-      <div>
+      <div className={classes.newSection}>
         <TextField
           id="app-link"
           label="App URL"
@@ -63,12 +68,13 @@ function SharingPage() {
             shrink: true
           }}
         />
+<div>
+        <Button variant="contained" color="primary" className={classes.button}>
+          Copy link
+        </Button></div>
       </div>
-      <Button variant="contained" color="primary" className={classes.button}>
-        Copy link
-      </Button>
 
-      <div>
+      <div className={classes.newSection}>
         <TextField
           id="contributor-app-link"
           label="Contributor app URL"
@@ -81,10 +87,11 @@ function SharingPage() {
             shrink: true
           }}
         />
+<div>
+        <Button variant="contained" color="primary" className={classes.button}>
+          Copy link
+        </Button></div>
       </div>
-      <Button variant="contained" color="primary" className={classes.button}>
-        Copy link
-      </Button>
     </div>
   );
 }
