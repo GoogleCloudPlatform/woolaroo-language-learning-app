@@ -6,6 +6,9 @@ import { LocalProfileService } from 'services/local-profile';
 
 export const environment = {
   production: true,
+  assets: {
+    baseUrl: '<ASSETS_BASE_URL>',
+  },
   pages: {
     splash: {
       duration: 3000

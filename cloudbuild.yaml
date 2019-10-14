@@ -29,7 +29,7 @@ steps:
     waitFor: ['prepare_client']
     name: node:10.16.3
     entrypoint: "node"
-    args: ["./create_client_config.js", "${_GOOGLE_API_KEY}", "${_THEME}"]
+    args: ["./create_client_config.js", "https://storage.googleapis.com/${_BUCKET_NAME}/", "${_GOOGLE_API_KEY}", "${_THEME}"]
     dir: "./scripts"
   - id: 'build_client'
     waitFor: ['configure_client']
