@@ -76,7 +76,7 @@ steps:
     waitFor: ['build_server', 'build_client']
     name: node:10.16.3
     entrypoint: "node"
-    args: ["./create_server_index.js", "../client/dist/index.html", "../server/build/static/index.html", "https://storage.googleapis.com/${_BUCKET_NAME}/"]
+    args: ["./create_server_index.js", "../client/dist/index.html", "../server/build/index.html", "https://storage.googleapis.com/${_BUCKET_NAME}/"]
     dir: "./scripts"
   - id: 'deploy_server'
     waitFor: ['create_server_index']
