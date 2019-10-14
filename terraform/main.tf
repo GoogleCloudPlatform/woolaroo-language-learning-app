@@ -2,14 +2,16 @@ variable "google_project" {}
 variable "google_credentials" {
     default = ""
 }
-variable "google_region" {}
 variable "bucket_name" {}
 variable "bucket_location" {
   default = ""
 }
+variable "app_location" {
+  default = ""
+}
 
 output "app_url" {
-  value = "http://${google_compute_global_address.app-ip.address}/"
+  value = "https://${google_app_engine_application.app.default_hostname}"
 }
 
 output "bucket_url" {
@@ -19,7 +21,6 @@ output "bucket_url" {
 provider "google" {
   credentials = var.google_credentials
   project = var.google_project
-  region = var.google_region
 }
 
 resource "google_storage_bucket" "app-store" {
@@ -40,29 +41,14 @@ resource "google_storage_bucket_iam_member" "app-store-acl" {
   member = "allUsers"
 }
 
-resource "google_compute_backend_bucket" "app-backend" {
-  name = "barnard-backend"
-  bucket_name = "${google_storage_bucket.app-store.name}"
-  enable_cdn = true
+resource "google_app_engine_application" "app" {
+  location_id = var.app_location
 }
 
-resource "google_compute_global_address" "app-ip" {
-  name = "barnard-ip"
-}
+/*resource "google_app_engine_domain_mapping" "app-domain-mapping" {
+  domain_name = "barnard-dev.rushdigital.xyz"
 
-resource "google_compute_global_forwarding_rule" "app-forwarding-rule" {
-  name = "barnard-forwarding-rule"
-  port_range = "80"
-  ip_address = "${google_compute_global_address.app-ip.address}"
-  target = "${google_compute_target_http_proxy.app-http-proxy.self_link}"
-}
-
-resource "google_compute_target_http_proxy" "app-http-proxy" {
-  name = "barnard-http-proxy"
-  url_map = "${google_compute_url_map.app-url-map.self_link}"
-}
-
-resource "google_compute_url_map" "app-url-map" {
-  name = "barnard-url-map"
-  default_service = "${google_compute_backend_bucket.app-backend.self_link}"
-}
+  ssl_settings {
+    ssl_management_type = "AUTOMATIC"
+  }
+}*/
