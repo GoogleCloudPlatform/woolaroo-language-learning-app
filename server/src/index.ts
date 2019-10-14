@@ -4,7 +4,15 @@ import { default as path } from 'path';
 
 const app = express();
 
-app.get('/', (req, res) => {
+app.use((req, res, next) => {
+  if (req.secure) {
+    next();
+  } else {
+    res.redirect('https://' + req.headers.host + req.url);
+  }
+});
+
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
