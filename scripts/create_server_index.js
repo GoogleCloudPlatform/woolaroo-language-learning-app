@@ -17,6 +17,7 @@ if(!BASE_URL) {
 
 const sourceFilePath = path.join(process.cwd(), INDEX_SOURCE);
 let content = fs.readFileSync(sourceFilePath, { 'encoding': 'utf-8' });
-content = content.replace(/<base\s+href="[^"]*">/, `<base href="${BASE_URL}">`);
+// replace base paths of all js, css and favicon URLs
+content = content.replace(/(?<!base)\s+(href|src)="((?!https?:\/\/)(?!\/\/)[^"]*)"/g, ` $1="${BASE_URL}$2"`);
 const destFilePath = path.join(process.cwd(), INDEX_DEST);
 fs.writeFileSync(destFilePath, content);
