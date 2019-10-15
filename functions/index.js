@@ -150,6 +150,8 @@ exports.translations = functions.https.onRequest(async (req, res) => {
 // todo(parikhshiv) - made this method mainly for development, can be
 // replaced / expanded
 exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
+  const pageSize = +req.query.pageSize;
+  const pageNum = +req.query.pageNum;
   return cors(req, res, async () => {
     const collection = admin.firestore().collection(req.query.collectionName);
 
@@ -160,7 +162,13 @@ exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
             return {...doc.data(), id: doc.id};
           });
           console.log("Collection:", entireCollection);
-          res.status(200).send(entireCollection);
+          if (pageNum && pageSize) {
+            const startIdx = (pageNum - 1)*pageSize;
+            const endIdx = startIdx + pageSize;
+            res.status(200).send(entireCollection.slice(startIdx, endIdx));
+          } else {
+            res.status(200).send(entireCollection);
+          }
           return entireCollection;
       } else {
           console.log("No such collection");
