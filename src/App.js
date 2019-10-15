@@ -86,7 +86,7 @@ class App extends React.Component {
         <SideNav/>
         <div className="page-container">
           <Route path={ROUTES.ADD_WORDS} component={AddWordsPage} />
-          <Route exact path={[ROUTES.TRANSLATIONS, "/translations/:pageNum"]} component={TranslationsPage} />
+          <Route exact path={ROUTES.TRANSLATIONS} component={TranslationsPage} />
           <Route path={ROUTES.CONTRIBUTIONS} component={ContributionsPage} />
           <Route path={ROUTES.THEME} component={ThemePage} />
           <Route path={ROUTES.SHARING} component={SharingPage} />

@@ -8,8 +8,6 @@ class ListPageBase extends React.Component {
     this.state = {
       loading: true,
       items: [],
-      pageNum: null,
-      pageSize: null,
       // These values must be overridden by children.
       listItemTag: '',
       collectionName: '',
@@ -21,16 +19,10 @@ class ListPageBase extends React.Component {
       return;
     }
 
-    const {pageNum, pageSize, collectionName} = this.state;
-    let additionalParams = '';
-    if (pageNum && pageSize) {
-      additionalParams = `&pageNum=${pageNum}&pageSize=${pageSize}`;
-    }
-
     try {
-      const qs = `?collectionName=${collectionName}`;
+      const qs = `?collectionName=${this.state.collectionName}`;
       const resp = await
-        fetch(`${ApiUtils.origin}${ApiUtils.path}getEntireCollection${qs}${additionalParams}`);
+        fetch(`${ApiUtils.origin}${ApiUtils.path}getEntireCollection${qs}`);
 
       const items = await resp.json();
 
