@@ -9,23 +9,25 @@ class StateSelection extends React.Component {
   }
 
   render() {
+    const { completeState } = this.props;
+
     return (
       <div className="state-selection">
         <ul>
           <li
-            className={!this.props.completeState ? 'selected' : null}
+            className={!completeState || completeState === 'all' ? 'selected' : null}
             onClick={(e) => this.handleClick_(e, null)}
           >
             <a href='#'>All</a>
           </li>
           <li
-            className={this.props.completeState === 'incomplete' ? 'selected' : null}
+            className={completeState === 'incomplete' ? 'selected' : null}
             onClick={(e) => this.handleClick_(e, 'incomplete')}
           >
             <a href='#'>Incomplete</a>
           </li>
           <li
-            className={this.props.completeState === 'complete' ? 'selected' : null}
+            className={completeState === 'complete' ? 'selected' : null}
             onClick={(e) => this.handleClick_(e, 'complete')}
           >
             <a href='#'>Complete</a>

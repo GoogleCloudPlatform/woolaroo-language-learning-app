@@ -1,0 +1,9 @@
+.filter-chips {
+  margin-bottom: 24px;
+}
+
+.filter-chip.MuiChip-root {
+  font-size: 14px;
+  width: 180px;
+  height: 38px;
+}
