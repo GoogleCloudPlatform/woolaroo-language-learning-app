@@ -3,13 +3,12 @@ import { GoogleImageRecognitionService, SafeSearchLikelihood } from 'services/go
 import { APITranslationService } from 'services/api/translation';
 import { LocalProfileService } from 'services/local-profile';
 import { APIFeedbackService } from 'services/api/feedback';
-
-const baseEndpointUrl = 'https://us-central1-barnard-sicilian.cloudfunctions.net';
+import { params } from './environment.prod.params';
 
 export const environment = {
   production: true,
   assets: {
-    baseUrl: '<ASSETS_BASE_URL>',
+    baseUrl: params.assetsBaseUrl,
   },
   pages: {
     splash: {
@@ -57,7 +56,7 @@ export const environment = {
     imageRecognition: {
       type: GoogleImageRecognitionService,
       config: {
-        apiKey: '<GOOGLE_API_KEY>',
+        apiKey: params.googleApiKey,
         maxFileSize: 2 * 1024 * 1024,
         validImageFormats: [ 'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/bmp', 'image/webp' ],
         resizedImageDimension: 1000,
@@ -75,20 +74,20 @@ export const environment = {
     translation: {
       type: APITranslationService,
       config: {
-        endpointURL: `${baseEndpointUrl}/getTranslations`
+        endpointURL: `${params.apiUrl}/getTranslations`
       }
     },
     analytics: {
       type: GoogleAnalyticsService,
       config: {
-        trackerID: '<GOOGLE_TRACKER_ID>'
+        trackerID: params.googleTrackerId
       }
     },
     feedback: {
       type: APIFeedbackService,
       config: {
-        addWordAudioEndpointURL: `${baseEndpointUrl}/saveAudioSuggestions`,
-        addWordEndpointURL: `${baseEndpointUrl}/addSuggestions`
+        addWordAudioEndpointURL: `${params.apiUrl}/saveAudioSuggestions`,
+        addWordEndpointURL: `${params.apiUrl}/addSuggestions`
       }
     }
   }
