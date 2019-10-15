@@ -4,6 +4,7 @@
 
 # Enable required APIs
 gcloud services enable cloudbuild.googleapis.com
+gcloud services enable appengine.googleapis.com
 
 # Get build service account by role
 BUILD_SERVICE_ACCOUNT=`gcloud projects get-iam-policy ${PROJECT_ID} --filter=bindings.role:roles/cloudbuild.builds.builder --format='table[no-heading](bindings.members)' --flatten='bindings[].members' --limit=1`
