@@ -59,7 +59,7 @@ steps:
     waitFor: ['deploy_client']
     name: node:10.16.3
     entrypoint: "node"
-    args: ["./create_client_cors_config.js", "../client_cors.json", "https://$PROJECT_ID.appspot.com"]
+    args: ["./create_client_cors_config.js", "../client_cors.json", "https://$PROJECT_ID.appspot.com", "${_APP_URL}"]
     dir: "./scripts"
   - id: 'set_client_cors'
     waitFor: ['create_client_cors_config']
