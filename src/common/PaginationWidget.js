@@ -2,6 +2,12 @@ import React from 'react';
 import './PaginationWidget.css';
 
 class PaginationWidget extends React.Component {
+  handleClick_(e, nextPageNum) {
+    e.preventDefault();
+
+    this.props.updatePageNum(nextPageNum);
+  }
+
   renderPageNums_() {
     const pageNums = [];
     const minPage = Math.max(1, this.props.pageNum - 2);
@@ -10,7 +16,8 @@ class PaginationWidget extends React.Component {
       pageNums.push(
         <li key={pageNum}>
           <a
-            href={`/translations/${pageNum}`}
+            href='#'
+            onClick={(e) => this.handleClick_(e, pageNum)}
             className={this.props.pageNum === pageNum ? 'selected' : null}
           >
             {pageNum}
@@ -27,23 +34,35 @@ class PaginationWidget extends React.Component {
       <div className="pagination-widget">
         <ul className="page-numbers">
           <li>
-            <a href={`/translations/${Math.max(1, this.props.pageNum - 5)}`}>
+            <a
+              href='#'
+              onClick={(e) => this.handleClick_(e, Math.max(1, this.props.pageNum - 5))}
+            >
               {"<<"}
             </a>
           </li>
           <li>
-            <a href={`/translations/${Math.max(1, this.props.pageNum - 1)}`}>
+            <a
+              href='#'
+              onClick={(e) => this.handleClick_(e, Math.max(1, this.props.pageNum - 1))}
+            >
               {"<"}
             </a>
           </li>
           {this.renderPageNums_()}
           <li>
-            <a href={`/translations/${Math.max(1, this.props.pageNum + 1)}`}>
+            <a
+              href='#'
+              onClick={(e) => this.handleClick_(e, Math.max(1, this.props.pageNum + 1))}
+            >
               {">"}
             </a>
           </li>
           <li>
-            <a href={`/translations/${Math.max(1, this.props.pageNum + 5)}`}>
+            <a
+              href='#'
+              onClick={(e) => this.handleClick_(e, Math.max(1, this.props.pageNum + 5))}
+            >
               {">>"}
             </a>
           </li>
