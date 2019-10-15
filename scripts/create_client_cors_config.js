@@ -5,13 +5,22 @@ const CORS_FILE_PATH = process.argv[2];
 if(!CORS_FILE_PATH) {
     throw new Error('CORS file path not set');
 }
-const SERVER_ORIGIN = process.argv[3];
-if(!SERVER_ORIGIN) {
-    throw new Error('Server domain not set');
+const APP_URL_1 = process.argv[3];
+const APP_URL_2 = process.argv[4];
+if(!APP_URL_1 && !APP_URL_2) {
+    throw new Error('App URL not set');
+}
+
+const origins = [];
+if(APP_URL_1) {
+    origins.push(APP_URL_1);
+}
+if(APP_URL_2) {
+    origins.push(APP_URL_2);
 }
 
 const corsConfig = [{
-    "origin": [SERVER_ORIGIN],
+    "origin": origins,
     "responseHeader": ["Content-Type"],
     "method": ["GET", "HEAD"],
     "maxAgeSeconds": 3600
