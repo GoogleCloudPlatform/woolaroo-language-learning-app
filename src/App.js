@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 import AddWordsPage from './addWords/AddWordsPage';
-import TranslationsPage from './translations/TranslationsPage';
+import { TranslationsPageWithRouter } from './translations/TranslationsPage';
 import ContributionsPage from './contributions/ContributionsPage';
 import ThemePage from './theme/ThemePage';
 import AuthUtils from './utils/AuthUtils';
@@ -86,7 +86,7 @@ class App extends React.Component {
         <SideNav/>
         <div className="page-container">
           <Route path={ROUTES.ADD_WORDS} component={AddWordsPage} />
-          <Route exact path={[ROUTES.TRANSLATIONS, "/translations/:pageNum"]} component={TranslationsPage} />
+          <Route exact path={[ROUTES.TRANSLATIONS, "/translations/:pageNum"]} component={TranslationsPageWithRouter} />
           <Route path={ROUTES.CONTRIBUTIONS} component={ContributionsPage} />
           <Route path={ROUTES.THEME} component={ThemePage} />
           <Route path={ROUTES.SHARING} component={SharingPage} />
