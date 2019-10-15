@@ -30,7 +30,7 @@ steps:
     name: node:10.16.3
     entrypoint: "node"
     args: ["./create_client_config.js",
-           "../client/src/environments/environment.prod.params.ts"
+           "../client/src/environments/environment.prod.params.ts",
            "${_API_URL}",
            "https://storage.googleapis.com/${_BUCKET_NAME}/",
            "${_GOOGLE_API_KEY}",
