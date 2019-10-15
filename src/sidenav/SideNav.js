@@ -6,6 +6,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import './SideNav.css';
 import { ROUTES } from '../App';
 
+const TRANSLATIONS_LABEL = "Translations";
+
 class SideNav extends React.Component {
   onClick(route) {
     this.props.history.push(route);
@@ -13,9 +15,15 @@ class SideNav extends React.Component {
 
   renderMenuItem(label, route) {
     const { location } = this.props.history;
+    let selected = route === location.pathname;
+    if (label === TRANSLATIONS_LABEL
+        && location.pathname.startsWith("/translations")) {
+      selected = true;
+    }
+
     return (
       <MenuItem
-        selected={route === location.pathname}
+        selected={selected}
         onClick={() => this.onClick(route)}
         className="side-nav-menu-item"
       >
@@ -30,7 +38,7 @@ class SideNav extends React.Component {
         <Paper className="side-nav-paper">
           <MenuList className="side-nav-list">
             {this.renderMenuItem("Add Words", ROUTES.ADD_WORDS)}
-            {this.renderMenuItem("Translations", ROUTES.TRANSLATIONS)}
+            {this.renderMenuItem(TRANSLATIONS_LABEL, ROUTES.TRANSLATIONS)}
             {this.renderMenuItem("User Contributions", ROUTES.CONTRIBUTIONS)}
             {this.renderMenuItem("Theme Customization", ROUTES.THEME)}
             {this.renderMenuItem("Sharing Links", ROUTES.SHARING)}
