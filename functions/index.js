@@ -153,6 +153,7 @@ exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
   const pageSize = +req.query.pageSize;
   const pageNum = +req.query.pageNum;
   const state = req.query.state;
+  const needsRecording = req.query.needsRecording;
   return cors(req, res, async () => {
     let collection = admin.firestore().collection(req.query.collectionName)
       .orderBy("english_word");
@@ -160,28 +161,34 @@ exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
     try {
       const collectionDocs = await collection.get();
       if (collectionDocs.docs.length) {
-          let entireCollection = collectionDocs.docs.map((doc) => {
+          let filteredCollection = collectionDocs.docs.map((doc) => {
             return {...doc.data(), id: doc.id};
           });
 
           if (state === 'incomplete') {
-            entireCollection = entireCollection.filter((doc) => {
+            filteredCollection = filteredCollection.filter((doc) => {
               return !doc.translation;
             });
           } else if (state === 'complete') {
-            entireCollection = entireCollection.filter((doc) => {
+            filteredCollection = filteredCollection.filter((doc) => {
               return doc.translation;
+            });
+          }
+
+          if (needsRecording && needsRecording !== '0') {
+            filteredCollection = filteredCollection.filter((doc) => {
+              return !doc.sound_link;
             });
           }
 
           if (pageNum && pageSize) {
             const startIdx = (pageNum - 1)*pageSize;
             const endIdx = startIdx + pageSize;
-            res.status(200).send(entireCollection.slice(startIdx, endIdx));
+            res.status(200).send(filteredCollection.slice(startIdx, endIdx));
           } else {
-            res.status(200).send(entireCollection);
+            res.status(200).send(filteredCollection);
           }
-          return entireCollection;
+          return filteredCollection;
       } else {
           console.log("No such collection");
           res.status(404).send("404");
