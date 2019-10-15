@@ -10,6 +10,7 @@ class ListPageBase extends React.Component {
       items: [],
       pageNum: null,
       pageSize: null,
+      completeState: null,
       // These values must be overridden by children.
       listItemTag: '',
       collectionName: '',
@@ -27,10 +28,15 @@ class ListPageBase extends React.Component {
 
     this.setState({ loading: true });
 
-    const {pageNum, pageSize, collectionName} = this.state;
+    const {pageNum, pageSize, collectionName, completeState} = this.state;
     let additionalParams = '';
+
     if (pageNum && pageSize) {
-      additionalParams = `&pageNum=${pageNum}&pageSize=${pageSize}`;
+      additionalParams += `&pageNum=${pageNum}&pageSize=${pageSize}`;
+    }
+
+    if (completeState) {
+      additionalParams += `&state=${completeState}`;
     }
 
     try {

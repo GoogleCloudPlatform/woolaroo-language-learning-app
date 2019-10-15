@@ -152,16 +152,28 @@ exports.translations = functions.https.onRequest(async (req, res) => {
 exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
   const pageSize = +req.query.pageSize;
   const pageNum = +req.query.pageNum;
+  const state = req.query.state;
   return cors(req, res, async () => {
-    const collection = admin.firestore().collection(req.query.collectionName);
+    let collection = admin.firestore().collection(req.query.collectionName)
+      .orderBy("english_word");
 
     try {
       const collectionDocs = await collection.get();
       if (collectionDocs.docs.length) {
-          const entireCollection = collectionDocs.docs.map((doc) => {
+          let entireCollection = collectionDocs.docs.map((doc) => {
             return {...doc.data(), id: doc.id};
           });
-          console.log("Collection:", entireCollection);
+
+          if (state === 'incomplete') {
+            entireCollection = entireCollection.filter((doc) => {
+              return !doc.translation;
+            });
+          } else if (state === 'complete') {
+            entireCollection = entireCollection.filter((doc) => {
+              return doc.translation;
+            });
+          }
+
           if (pageNum && pageSize) {
             const startIdx = (pageNum - 1)*pageSize;
             const endIdx = startIdx + pageSize;
