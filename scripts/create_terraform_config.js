@@ -1,7 +1,11 @@
 const fs = require('fs');
 const path = require('path');
 
-const STATE_BUCKET_NAME = process.argv[2];
+const OVERRIDES_FILE_PATH = process.argv[2];
+if(!OVERRIDES_FILE_PATH) {
+    throw new Error('Overrides file path not set');
+}
+const STATE_BUCKET_NAME = process.argv[3];
 if(!STATE_BUCKET_NAME) {
     throw new Error('Terraform state bucket name not set');
 }
@@ -14,5 +18,5 @@ const configContent =
   }
 }`;
 
-const configFilePath = path.join(__dirname, '../terraform/override.tf');
+const configFilePath = path.join(process.cwd(), OVERRIDES_FILE_PATH);
 fs.writeFileSync(configFilePath, configContent);
