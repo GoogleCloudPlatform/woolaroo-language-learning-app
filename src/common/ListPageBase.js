@@ -17,9 +17,15 @@ class ListPageBase extends React.Component {
   }
 
   async componentDidMount() {
+    await this.fetchItems();
+  }
+
+  async fetchItems() {
     if (!this.state.collectionName) {
       return;
     }
+
+    this.setState({ loading: true });
 
     const {pageNum, pageSize, collectionName} = this.state;
     let additionalParams = '';
