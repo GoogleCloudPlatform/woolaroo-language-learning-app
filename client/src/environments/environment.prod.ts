@@ -4,7 +4,7 @@ import { APITranslationService } from 'services/api/translation';
 import { LocalProfileService } from 'services/local-profile';
 import { APIFeedbackService } from 'services/api/feedback';
 
-const baseEndpointUrl = 'https://us-central1-barnard-yiddish.cloudfunctions.net';
+const baseEndpointUrl = 'https://us-central1-barnard-sicilian.cloudfunctions.net';
 
 export const environment = {
   production: true,
