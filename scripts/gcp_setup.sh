@@ -1,10 +1,16 @@
 #!/usr/bin/env bash
 
-. ./gcp_vars.sh
+# Location of the bucket - https://cloud.google.com/storage/docs/locations#available_locations (optional)
+TERRAFORM_BUCKET_LOCATION=''
+# Google project ID - default to current project ID
+PROJECT_ID=`gcloud config get-value project`
+# Name of the bucket containing terraform state
+TERRAFORM_BUCKET_NAME=${PROJECT_ID}-terraform
 
 # Enable required APIs
 gcloud services enable cloudbuild.googleapis.com
 gcloud services enable appengine.googleapis.com
+gcloud services enable vision.googleapis.com
 
 # Get build service account by role
 BUILD_SERVICE_ACCOUNT=`gcloud projects get-iam-policy ${PROJECT_ID} --filter=bindings.role:roles/cloudbuild.builds.builder --format='table[no-heading](bindings.members)' --flatten='bindings[].members' --limit=1`

@@ -19,14 +19,14 @@ steps:
     dir: "./terraform"
 
   # Client
-  - id: 'prepare_client'
+  - id: 'install_client_dependencies'
     waitFor: ['run_terraform']
     name: node:10.16.3
     entrypoint: "npm"
     args: ["install"]
     dir: "./client"
   - id: 'configure_client'
-    waitFor: ['prepare_client']
+    waitFor: ['install_client_dependencies']
     name: node:10.16.3
     entrypoint: "node"
     args: ["./create_client_config.js",
@@ -68,14 +68,14 @@ steps:
     dir: "./"
 
   # Server
-  - id: 'prepare_server'
+  - id: 'install_server_dependencies'
     waitFor: ['run_terraform']
     name: node:10.16.3
     entrypoint: "npm"
     args: ["install"]
     dir: "./server"
   - id: 'build_server'
-    waitFor: ['prepare_server']
+    waitFor: ['install_server_dependencies']
     name: node:10.16.3
     entrypoint: "npm"
     args: ["run", "build"]
