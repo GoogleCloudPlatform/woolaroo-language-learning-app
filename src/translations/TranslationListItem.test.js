@@ -18,6 +18,8 @@ const stubbedTranslation = {
 const stubbedEmptyTranslation = {
   ...stubbedTranslation,
   translation: "",
+  sound_link: "",
+  transliteration: "",
 };
 
 beforeAll(() => {
