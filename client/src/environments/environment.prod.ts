@@ -1,8 +1,10 @@
-import { MockFeedbackService } from 'services/mock/feedback';
 import { GoogleAnalyticsService } from 'services/google/analytics';
 import { GoogleImageRecognitionService, SafeSearchLikelihood } from 'services/google/image-recognition';
 import { APITranslationService } from 'services/api/translation';
 import { LocalProfileService } from 'services/local-profile';
+import { APIFeedbackService } from 'services/api/feedback';
+
+const baseEndpointUrl = 'https://us-central1-barnard-sicilian.cloudfunctions.net';
 
 export const environment = {
   production: true,
@@ -73,7 +75,7 @@ export const environment = {
     translation: {
       type: APITranslationService,
       config: {
-        endpointURL: 'https://us-central1-barnard-project.cloudfunctions.net/getTranslations'
+        endpointURL: `${baseEndpointUrl}/getTranslations`
       }
     },
     analytics: {
@@ -83,8 +85,11 @@ export const environment = {
       }
     },
     feedback: {
-      type: MockFeedbackService,
-      config: null
+      type: APIFeedbackService,
+      config: {
+        addWordAudioEndpointURL: `${baseEndpointUrl}/saveAudioSuggestions`,
+        addWordEndpointURL: `${baseEndpointUrl}/addSuggestions`
+      }
     }
   }
 };
