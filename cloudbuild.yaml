@@ -35,6 +35,7 @@ steps:
            "https://storage.googleapis.com/${_BUCKET_NAME}/",
            "${_GOOGLE_API_KEY}",
            "${_GOOGLE_TRACKER_ID}",
+           "${_PARTNER_LOGO_URL}",
            "../client/src/style/theme.scss",
            "${_THEME}"]
     dir: "./scripts"
