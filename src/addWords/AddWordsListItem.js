@@ -27,7 +27,7 @@ class AddWordsListItem extends TranslationListItem {
     const newBaseWord = e.target.value.trim();
     this.setState({
       english_word: newBaseWord,
-      disabled: newBaseWord === this.savedData.english_word,
+      disabled: this.alwaysDisabled_({newBaseWord}) || newBaseWord === this.savedData.english_word,
     });
   }
 
@@ -35,7 +35,7 @@ class AddWordsListItem extends TranslationListItem {
     const newTranslation = e.target.value.trim();
     this.setState({
       translation: newTranslation,
-      disabled: newTranslation === this.savedData.translation,
+      disabled: this.alwaysDisabled_({newTranslation}) || newTranslation === this.savedData.translation,
     });
   }
 
@@ -43,8 +43,20 @@ class AddWordsListItem extends TranslationListItem {
     const newTransliteration = e.target.value.trim();
     this.setState({
       transliteration: newTransliteration,
-      disabled: newTransliteration === this.savedData.transliteration,
+      disabled: this.alwaysDisabled_() || newTransliteration === this.savedData.transliteration,
     });
+  }
+
+  onSavedAudio(e) {
+    console.log('onSavedAudio_', e);
+    this.setState({
+      sound_blob: e.data,
+      disabled: this.alwaysDisabled_(),
+    });
+  }
+
+  alwaysDisabled_(opts = {}) {
+    return !((opts.newBaseWord || this.state.english_word) && (opts.newTranslation || this.state.translation));
   }
 
   renderBaseWord() {
