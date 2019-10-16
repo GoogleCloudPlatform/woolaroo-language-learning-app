@@ -2,6 +2,7 @@
 
 :host {
   display: block;
+  @include toolbar-page;
 
   > form > .content {
     padding: 28px;

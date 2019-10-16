@@ -1,17 +1,11 @@
 @import 'components';
 
-mat-toolbar.mat-toolbar-single-row {
-}
-
-.close {
-  @include icon-button;
-  width: 30px;
-  height: 30px;
-  margin-right: 20px;
+:host {
+  @include toolbar-page;
 }
 
 .content {
-  padding: 63px 30px 30px 30px;
+  padding-top: 63px;
 
   .intro {
     margin-bottom: 38px;

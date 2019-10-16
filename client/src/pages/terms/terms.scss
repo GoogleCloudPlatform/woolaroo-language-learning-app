@@ -1,12 +1,5 @@
 @import 'components';
 
-.close {
-  @include icon-button;
-  width: 30px;
-  height: 30px;
-  margin-right: 20px;
-}
-
-.content {
-  padding: 30px;
+:host {
+  @include toolbar-page;
 }

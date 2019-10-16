@@ -4,7 +4,7 @@ import { APITranslationService } from 'services/api/translation';
 import { APIFeedbackService } from 'services/api/feedback';
 import { LocalProfileService } from 'services/local-profile';
 
-const baseEndpointUrl = 'https://us-central1-barnard-project.cloudfunctions.net';
+const baseEndpointUrl = 'https://us-central1-barnard-sicilian.cloudfunctions.net';
 const debugImageUrl = '/assets/debug/IMG_20190920_141505.jpg';
 
 export const environment = {
