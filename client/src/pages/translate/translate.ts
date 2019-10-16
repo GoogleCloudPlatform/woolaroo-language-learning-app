@@ -99,7 +99,10 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
         if (loadingPopUp) {
           loadingPopUp.close();
         }
-        this.router.navigateByUrl(AppRoutes.CaptionImage, { replaceUrl: true });
+        // show words as if none had translations
+        this.zone.run(() => {
+          this.translations = words.map(w => ({ original: w, translation: '', transliteration: '', soundURL: null }));
+        });
       }
     );
   }
