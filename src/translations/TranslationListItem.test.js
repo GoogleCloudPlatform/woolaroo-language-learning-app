@@ -18,7 +18,11 @@ const stubbedTranslation = {
 const stubbedEmptyTranslation = {
   ...stubbedTranslation,
   translation: "",
+  transliteration: "",
+  sound_link:  "",
 };
+
+const flushPromises = async () => new Promise(setImmediate);
 
 beforeAll(() => {
   fetchSpy = jest.spyOn(window, 'fetch');
@@ -40,10 +44,12 @@ it('renders correct elements for translation list item', () => {
   expect(wrapper.find(Button).length).toEqual(1);
 });
 
-it('saves translation with non-empty translation', () => {
+it('saves translation with non-empty translation', async () => {
   const wrapper = shallow(<TranslationListItem item={stubbedTranslation} />);
 
   wrapper.find(Button).simulate('click');
+
+  await flushPromises();
 
   expect(fetchSpy).toHaveBeenCalledWith(ApiUtils.origin + ApiUtils.path +
     "addTranslations", expect.anything());
@@ -51,11 +57,13 @@ it('saves translation with non-empty translation', () => {
   expect(wrapper.state().error).toEqual(false);
 });
 
-it('does not save translation row with empty translation', () => {
+it('does not save translation row with empty translation', async () => {
   const wrapper = shallow(
     <TranslationListItem item={stubbedEmptyTranslation} />);
 
   wrapper.find(Button).simulate('click');
+
+  await flushPromises();
 
   expect(fetchSpy).toHaveBeenCalledTimes(0);
   expect(wrapper.state().error).toEqual(true);
