@@ -28,7 +28,7 @@ export class APITranslationService implements ITranslationService {
       transliteration: tr.transliteration,
       soundURL: tr.sound_link
     }));
-    words.forEach((w) => {
+    lowercaseWords.forEach((w) => {
       if (!translations.find((tr) => tr.original === w)) {
         translations.push({ original: w, translation: '', transliteration: '', soundURL: '' });
       }
