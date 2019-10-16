@@ -70,40 +70,66 @@ export class WordScrollListComponent {
     return Date.now();
   }
 
-  @HostListener('touchstart', ['$event'])
-  onTouchStart(ev: TouchEvent) {
+  startDrag(x: number) {
     if (this.dragInterval) {
       clearInterval(this.dragInterval);
       this.dragInterval = null;
     }
     const positionX = this.getScrollPosition();
     this.dragVelocityX = 0;
-    this.dragOffsetX = positionX - ev.touches[0].clientX;
-    window.document.body.addEventListener('touchmove', this.onTouchMove);
+    this.dragOffsetX = positionX - x;
     const properties = { position: positionX, time: WordScrollListComponent.getTime() };
     this.dragInterval = setInterval(() => this.updateScrollVelocity(properties), this.config.animationInterval);
   }
 
-  @HostListener('touchend')
-  onTouchEnd() {
-    window.document.body.removeEventListener('touchmove', this.onTouchMove);
+  stopDrag() {
     clearInterval(this.dragInterval);
     const velocity = this.dragVelocityX;
     const properties = { time: WordScrollListComponent.getTime(), position: this.getScrollPosition(), velocity };
     const snapWordIndex = this.getEndingSnapWordIndex(properties.position, velocity);
     this.dragInterval = setInterval(() => this.updateSnapPosition(properties, snapWordIndex), this.config.animationInterval);
     this.updateTargetPosition();
-    // TODO
-    /*if(!this._lineAnimationInterval) {
-      this.setLineAngle(this._lineTargetAngle);
-    }*/
   }
 
-  onTouchMove = (ev: TouchEvent) => {
-    const scrollPosition = ev.touches[0].clientX + this.dragOffsetX;
+  updateDrag(x: number) {
+    const scrollPosition = x + this.dragOffsetX;
     this.setScrollPosition(scrollPosition);
     this.selectedWordIndex = this.getWordIndexFromScrollPosition(scrollPosition, this.selectedWordIndex);
     this.updateTargetPosition();
+  }
+
+  @HostListener('touchstart', ['$event'])
+  onTouchStart(ev: TouchEvent) {
+    window.document.body.addEventListener('touchmove', this.onTouchMove);
+    window.document.body.addEventListener('touchend', this.onTouchEnd);
+    this.startDrag(ev.touches[0].clientX);
+  }
+
+  @HostListener('mousedown', ['$event'])
+  onMouseDown(ev: MouseEvent) {
+    window.document.body.addEventListener('mousemove', this.onMouseMove);
+    window.document.body.addEventListener('mouseup', this.onMouseUp);
+    this.startDrag(ev.clientX);
+  }
+
+  onTouchEnd = () => {
+    window.document.body.removeEventListener('touchmove', this.onTouchMove);
+    window.document.body.removeEventListener('touchend', this.onTouchEnd);
+    this.stopDrag();
+  };
+
+  onMouseUp = () => {
+    window.document.body.removeEventListener('mousemove', this.onMouseMove);
+    window.document.body.removeEventListener('mouseup', this.onMouseUp);
+    this.stopDrag();
+  };
+
+  onTouchMove = (ev: TouchEvent) => {
+    this.updateDrag(ev.touches[0].clientX);
+  };
+
+  onMouseMove = (ev: MouseEvent) => {
+    this.updateDrag(ev.clientX);
   };
 
   // predict where snap position will be after decelerating
