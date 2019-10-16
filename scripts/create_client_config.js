@@ -27,7 +27,7 @@ const THEME = process.argv[paramIndex++] || 'pink';
 
 if(PARTNER_LOGO_URL) {
     let destLogoFileUrl = '/assets/img/partner-logo.png';
-    downloadFile(PARTNER_LOGO_URL, `../client/src${destLogoFileUrl}`).then(
+    downloadFileSync(PARTNER_LOGO_URL, `../client/src${destLogoFileUrl}`).then(
         () => {
             PARTNER_LOGO_URL = destLogoFileUrl;
             writeConfig();
@@ -58,11 +58,19 @@ function writeConfig() {
     fs.writeFileSync(themeFilePath, themeContent);
 }
 
+async function downloadFileSync(url, destFilePath) {
+    await downloadFile(url, destFilePath);
+}
+
 async function downloadFile(url, destFilePath) {
-    return await new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         const client = url.startsWith('https') ? https : http;
         client.get(url, (res) => {
-            if(res.statusCode !== 200) {
+            if(res.statusCode === 301 || res.statusCode === 302) {
+                // redirect
+                downloadFile(res.headers.location, destFilePath).then(resolve, reject);
+                return;
+            } else if(res.statusCode !== 200) {
                 reject(new Error(`Error downloading file: ${res.statusCode}`));
                 return;
             }
