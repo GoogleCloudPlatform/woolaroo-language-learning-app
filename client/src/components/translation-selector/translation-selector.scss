@@ -22,26 +22,57 @@
     max-width: 75%;
   }
 
-  .share {
-    @include icon-button;
-    color: white;
-    width: 32px;
-    height: 32px;
-    position: absolute;
-    right: -46px;
-    top: 58%;
-    transform: translateY(-50%);
-  }
-
   .translation {
     font-size: 2rem;
     line-height: 2rem;
     margin-bottom: 12px;
+    position: relative;
+    display: inline-block;
+  }
+
+  .translation,
+  .transliteration {
+    display: flex;
+    max-width: 100%;
+
+    &:before {
+      content: "";
+    }
+
+    &::content {
+      flex: 0 1 auto;
+    }
+
+    &:before,
+    .share {
+      flex: 1 1 60px;
+      padding-left: 20px;
+      padding-right: 20px;
+      box-sizing: border-box;
+    }
+
+    .share {
+      flex: 1 1 60px;
+      padding-left: 20px;
+      padding-right: 20px;
+      text-align: left;
+      box-sizing: border-box;
+
+      button {
+        @include icon-button;
+        color: white;
+        width: 32px;
+        height: 32px;
+      }
+    }
   }
 
   .play-audio,
   .record-audio {
     @include icon-button;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     color: white;
     width: 45px;
     height: 45px;
