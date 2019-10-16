@@ -1,4 +1,5 @@
 import {
+  AfterViewChecked,
   Component,
   ElementRef,
   EventEmitter,
@@ -28,7 +29,7 @@ export const WORD_SCROLL_LIST_CONFIG = new InjectionToken<WordScrollListConfig>(
   templateUrl: './word-scroll-list.html',
   styleUrls: ['./word-scroll-list.scss']
 })
-export class WordScrollListComponent {
+export class WordScrollListComponent implements AfterViewChecked {
   private dragInterval: any = null;
   private dragOffsetX = 0;
   private dragVelocityX = 0;
@@ -37,11 +38,13 @@ export class WordScrollListComponent {
   @Output()
   public selectedWordChanged: EventEmitter<WordTranslation|null> = new EventEmitter();
 
+  private translationsChanged:boolean = false;
   private _translations: WordTranslation[]|null = null;
   public get translations(): WordTranslation[]|null { return this._translations; }
   @Input('translations')
   public set translations(value: WordTranslation[]|null) {
     this._translations = value;
+    this.translationsChanged = true;
     if  (this._translations) {
       this.selectedWordIndex = Math.floor((this._translations.length - 1) / 2); // select center word (or left of center if even number)
     }
@@ -68,6 +71,13 @@ export class WordScrollListComponent {
 
   private static getTime(): number {
     return Date.now();
+  }
+
+  ngAfterViewChecked() {
+    if (this.translationsChanged) {
+      this.centerWords();
+      this.translationsChanged = false;
+    }
   }
 
   startDrag(x: number) {
@@ -131,6 +141,24 @@ export class WordScrollListComponent {
   onMouseMove = (ev: MouseEvent) => {
     this.updateDrag(ev.clientX);
   };
+
+  private centerWords() {
+    if (!this.scrollContent || this.selectedWordIndex < 0) {
+      return;
+    }
+    const scrollContainer = this.hostElement.nativeElement as HTMLElement;
+    const scrollContent = this.scrollContent.nativeElement;
+    const items = scrollContent.getElementsByTagName('li');
+    if (!items || this.selectedWordIndex >= items.length) {
+      return;
+    }
+    const containerBounds = scrollContainer.getBoundingClientRect();
+    const centerX = containerBounds.left + containerBounds.width * 0.5;
+    const currentItem = items[this.selectedWordIndex];
+    const currentItemBounds = currentItem.getBoundingClientRect();
+    const currentItemCenterX = currentItemBounds.left + currentItemBounds.width * 0.5;
+    this.setScrollPosition(centerX - currentItemCenterX);
+  }
 
   // predict where snap position will be after decelerating
   private getEndingSnapWordIndex(position: number, velocity: number): number {

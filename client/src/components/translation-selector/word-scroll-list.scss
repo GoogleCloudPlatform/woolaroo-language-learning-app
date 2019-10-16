@@ -12,26 +12,40 @@ ul {
   padding: 0;
   text-align: center;
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: flex-end;
   position: relative;
   bottom: 0;
   list-style-type: none;
 
   li {
-    margin: 0 20px;
+    margin: 0 10px;
     padding: 0;
     color: white;
     font-size: 1.2rem;
     text-transform: lowercase;
     line-height: 100%;
+    display: inline-block;
+    vertical-align: baseline;
+    position: relative;
 
-    &.selected {
+    &.selected,
+    .selected-spacer {
       font-size: 1.9rem;
       letter-spacing: 0.1rem;
+    }
+
+    /* Spacer is used to set the dimensions of the element to selected size,
+       so layout is unaffected when selecting/deselecting words */
+    .selected-spacer {
+      visibility: hidden;
+    }
+
+    .word {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: font-size 0.2s ease-in-out;
+      vertical-align: middle;
     }
   }
 }
