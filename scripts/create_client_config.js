@@ -74,11 +74,6 @@ async function downloadFile(url, destFilePath) {
                 reject(new Error(`Error downloading file: ${res.statusCode}`));
                 return;
             }
-            const contentType = res.headers['content-type'];
-            if(!contentType.startsWith('image/')) {
-                reject(new Error('Downloaded file is not an image'));
-                return;
-            }
             const data = [];
             res.on('error', function(err) {
                 reject(err);
