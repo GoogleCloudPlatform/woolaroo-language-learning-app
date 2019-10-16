@@ -2,5 +2,6 @@ export const params = {
   assetsBaseUrl: '',
   googleApiKey: '',
   googleTrackerId: '',
-  apiUrl: ''
+  apiUrl: '',
+  partnerLogoUrl: ''
 };
