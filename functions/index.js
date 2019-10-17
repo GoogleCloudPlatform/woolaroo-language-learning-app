@@ -1,12 +1,13 @@
 const functions = require('firebase-functions');
-const cors = require('cors')();
 const uuidv1 = require('uuid/v1');
 const admin = require('firebase-admin');
 const path = require('path');
+const cors = require('cors')({origin: true});
+
 
 admin.initializeApp();
-
-const BUCKET_NAME = 'barnard-project-audio'
+const projectId = admin.instanceId().app.options.projectId;
+const bucketName = `${projectId}.appspot.com`;
 
 exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
@@ -17,7 +18,7 @@ exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
         contentType: 'audio/webm',
       }
     };
-    const file = admin.storage().bucket(BUCKET_NAME).file(filePath);
+    const file = admin.storage().bucket(bucketName).file(filePath);
     try {
       // Convert base64 body to blob of webm.
       const nodeBuffer = Buffer.from(req.body, 'base64');
@@ -40,34 +41,31 @@ exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
 
 
 exports.addSuggestions = functions.https.onRequest(async (req, res) => {
-  console.log('Add a suggestion');
-
-  //req content type should be application/json
-  snapshot = await admin.firestore().collection('suggestions').add({
-    english_word: req.body.english_word,
-    translation: req.body.translation,
-    transliteration: req.body.transliteration,
-    sound_link: req.body.sound_link,
-    timestamp: admin.firestore.FieldValue.serverTimestamp(),
-  });
-  console.log('Translation suggestions saved.');
-  res.status(200).send("Translation suggestions saved.");
-});
-
-exports.addTranslations = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
-    console.log('Add a translation');
-
-    //req content type should be application/json
-    snapshot = await admin.firestore().collection('translations').doc(req.body.english_word).set({
+    var snapshot = await admin.firestore().collection('suggestions').add({
       english_word: req.body.english_word,
       translation: req.body.translation,
       transliteration: req.body.transliteration,
       sound_link: req.body.sound_link,
       timestamp: admin.firestore.FieldValue.serverTimestamp(),
     });
+    console.log('Translation suggestions saved.');
+    res.status(200).send("Translation suggestions saved.");
+  });
+});
+
+exports.addTranslations = functions.https.onRequest(async (req, res) => {
+  return cors(req, res, async () => {
+    var snapshot = await admin.firestore().collection('translations').doc(req.body.english_word).set({
+      english_word: req.body.english_word,
+      translation: req.body.translation,
+      transliteration: req.body.transliteration,
+      sound_link: req.body.sound_link,
+      frequency: +req.body.frequency || -1,
+      timestamp: admin.firestore.FieldValue.serverTimestamp(),
+    });
     console.log('Translation saved.');
-    res.status(200).send(JSON.stringify("Translation saved."));
+    res.status(200).send("Translation saved.");
   });
 });
 
@@ -110,11 +108,13 @@ exports.getTranslations = functions.https.onRequest(async (req, res) => {
     return collectionRef.doc(english_word).get()
   })
   Promise.all(promises).then(docs => {
-    translations = docs.map(x => createResponse(x.data()))
-    console.log(translations)
-    res.set('Access-Control-Allow-Origin', "*")
-    res.set('Access-Control-Allow-Methods', 'GET, POST')
-    res.status(200).send(translations)
+    var translations = docs.map(x => createResponse(x.data()))
+    console.log(translations);
+    res.set('Access-Control-Allow-Origin', "*");
+    res.set('Access-Control-Allow-Methods', 'GET, POST');
+    res.set('Access-Control-Allow-Headers', 'Content-Type');
+    res.status(200).send(translations);
+    return "200"
   }).catch(function(error) {
       console.log("Internal server error", error);
       res.status(500).send(error)
@@ -139,7 +139,7 @@ exports.translations = functions.https.onRequest(async (req, res) => {
         res.status(404).send("NO translations");
     } else {
         var docs = querySnapshot.docs.map(doc => doc.data())
-        translations_json = JSON.stringify({data: docs})
+        var translations_json = JSON.stringify({data: docs})
         res.status(200).send(translations_json)
     }
   } catch(err) {
@@ -177,7 +177,6 @@ exports.deleteRow = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
     const doc = admin.firestore().collection(req.body.collectionName)
       .doc(req.body.id);
-
     try {
       await doc.delete();
       console.log("successful deletion!");
