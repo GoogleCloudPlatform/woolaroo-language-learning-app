@@ -1,7 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const http = require('http');
-const https = require('https');
 
 let paramIndex = 2;
 const CONFIG_FILE_PATH = process.argv[paramIndex++];
@@ -26,65 +24,23 @@ if(!THEME_FILE_PATH) {
 const THEME = process.argv[paramIndex++] || 'pink';
 
 if(PARTNER_LOGO_URL) {
-    let destLogoFileUrl = '/assets/img/partner-logo.png';
-    downloadFileSync(PARTNER_LOGO_URL, `../client/src${destLogoFileUrl}`).then(
-        () => {
-            PARTNER_LOGO_URL = destLogoFileUrl;
-            writeConfig();
-        },
-        (err) => {
-            console.log('Error downloading partner logo', err);
-            PARTNER_LOGO_URL = '';
-            writeConfig();
-        }
-    );
+    const partnerLogoPath = path.join(__dirname, `../client/src${PARTNER_LOGO_URL}`);
+    if(!fs.existsSync(partnerLogoPath)) {
+        PARTNER_LOGO_URL = null;
+    }
 }
 
-
-function writeConfig() {
-    const configFilePath = path.join(process.cwd(), CONFIG_FILE_PATH);
-    let configContent =
+const configFilePath = path.join(process.cwd(), CONFIG_FILE_PATH);
+let configContent =
 `export const params = {
-  assetsBaseUrl: '${ASSETS_BASE_URL}',
-  googleApiKey: '${GOOGLE_API_KEY}',
-  googleTrackerId: '${GOOGLE_TRACKER_ID}',
-  apiUrl: '${API_URL}',
-  partnerLogoUrl: '${PARTNER_LOGO_URL}'
+assetsBaseUrl: '${ASSETS_BASE_URL}',
+googleApiKey: '${GOOGLE_API_KEY}',
+googleTrackerId: '${GOOGLE_TRACKER_ID}',
+apiUrl: '${API_URL}',
+partnerLogoUrl: '${PARTNER_LOGO_URL}'
 };`;
-    fs.writeFileSync(configFilePath, configContent);
+fs.writeFileSync(configFilePath, configContent);
 
-    const themeFilePath = path.join(process.cwd(), THEME_FILE_PATH);
-    let themeContent = `@import 'theme-${THEME}';`;
-    fs.writeFileSync(themeFilePath, themeContent);
-}
-
-async function downloadFileSync(url, destFilePath) {
-    await downloadFile(url, destFilePath);
-}
-
-async function downloadFile(url, destFilePath) {
-    return new Promise((resolve, reject) => {
-        const client = url.startsWith('https') ? https : http;
-        client.get(url, (res) => {
-            if(res.statusCode === 301 || res.statusCode === 302) {
-                // redirect
-                downloadFile(res.headers.location, destFilePath).then(resolve, reject);
-                return;
-            } else if(res.statusCode !== 200) {
-                reject(new Error(`Error downloading file: ${res.statusCode}`));
-                return;
-            }
-            const data = [];
-            res.on('error', function(err) {
-                reject(err);
-            });
-            res.on('data', function(chunk) {
-                data.push(Buffer.from(chunk, 'binary'));
-            });
-            res.on('end', function() {
-                fs.writeFileSync(destFilePath, Buffer.concat(data));
-                resolve();
-            });
-        });
-    });
-}
+const themeFilePath = path.join(process.cwd(), THEME_FILE_PATH);
+let themeContent = `@import 'theme-${THEME}';`;
+fs.writeFileSync(themeFilePath, themeContent);
