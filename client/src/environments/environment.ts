@@ -4,7 +4,7 @@ import { APITranslationService } from 'services/api/translation';
 import { APIFeedbackService } from 'services/api/feedback';
 import { LocalProfileService } from 'services/local-profile';
 
-const baseEndpointUrl = 'https://us-central1-barnard-sicilian.cloudfunctions.net';
+const baseEndpointUrl = 'https://us-central1-barnard-yiddish.cloudfunctions.net';
 const debugImageUrl = '/assets/debug/IMG_20190920_141505.jpg';
 
 export const environment = {
@@ -62,6 +62,22 @@ export const environment = {
     imageRecognition: {
       type: MockImageRecognitionService,
       config: null
+    },
+    imageRendering: {
+      config: {
+        dropShadowDistance: 1,
+        dropShadowColor: 'rgba(0, 0, 0, 0.5)',
+        foregroundColor: 'white',
+        transliterationFont: '43px Roboto',
+        transliterationBottom: 270,
+        translationFont: '30px Roboto',
+        translationBottom: 220,
+        originalWordFont: '30px Roboto',
+        originalWordBottom: 80,
+        lineTop: 200,
+        lineHeight: 80,
+        lineWidth: 1
+      }
     },
     translation: {
       type: APITranslationService,

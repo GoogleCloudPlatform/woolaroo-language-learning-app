@@ -6,6 +6,8 @@ import { WordTranslation } from 'services/entities/translation';
 import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
 import { ITranslationService, TRANSLATION_SERVICE } from 'services/translation';
 import { AppRoutes } from 'app/routes';
+import { ImageRenderingService } from 'services/image-rendering';
+import { downloadFile } from 'util/file';
 
 interface TranslatePageConfig {
   debugImageUrl?: string;
@@ -20,6 +22,7 @@ export const TRANSLATE_PAGE_CONFIG = new InjectionToken<TranslatePageConfig>('Tr
   styleUrls: ['./translate.scss']
 })
 export class TranslatePageComponent implements OnInit, OnDestroy {
+  public backgroundImageData: Blob|null = null;
   public backgroundImageURL: string|null = null;
   public translations: WordTranslation[]|null = null;
 
@@ -28,7 +31,8 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
                private router: Router,
                private zone: NgZone,
                @Inject(TRANSLATION_SERVICE) private translationService: ITranslationService,
-               @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {
+               @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
+               private imageRenderingService: ImageRenderingService) {
   }
 
   ngOnInit() {
@@ -80,6 +84,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
   }
 
   setImageData(image: Blob) {
+    this.backgroundImageData = image;
     this.backgroundImageURL = URL.createObjectURL(image);
   }
 
@@ -116,12 +121,24 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
   }
 
   onWordShared(word: WordTranslation) {
-    const nav: any = window.navigator;
-    if (nav.share) {
-      nav.share({ url: document.location.href, text: word.original, title: 'Barnard' });
-    } else {
-      // TODO
+    if (!this.backgroundImageData) {
+      console.warn('Background image data not found');
+      return;
     }
+    this.imageRenderingService.renderImage(this.backgroundImageData, word,
+      window.innerWidth * window.devicePixelRatio,
+      window.innerHeight * window.devicePixelRatio).then(
+      (img) => {
+        try {
+          downloadFile(img, `barnard-translation-${word.original}.jpg`);
+        } catch (err) {
+          console.warn('Error downloading image', err);
+        }
+      },
+      (err) => {
+        console.warn('Error rendering image', err);
+      }
+    );
   }
 
   onAddRecording(word: WordTranslation) {

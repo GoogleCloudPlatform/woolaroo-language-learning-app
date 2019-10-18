@@ -21,11 +21,7 @@ export class TranslationSelectorComponent {
   public audioPlaying = false;
   public lineTargetPosition: Point|null = null;
 
-  public get shareAvailable(): boolean {
-    return !!(window.navigator as any).share;
-  }
-
-  public selectedTranslation: WordTranslation|null = null;
+  public selectedWord: WordTranslation|null = null;
 
   onPlayAudioClick() {
     if (!this.audioPlayer || !this.audioPlayer.nativeElement) {
@@ -52,7 +48,7 @@ export class TranslationSelectorComponent {
   onSelectedWordChanged(translation: WordTranslation) {
     // will be fired immediately after "translations" is set, so need to delay changing
     // state again by a frame to avoid "expression changed after it was checked" error
-    setTimeout(() => this.selectedTranslation = translation, 1);
+    setTimeout(() => this.selectedWord = translation, 1);
   }
 
   onTargetPositionChanged(position: Point) {
@@ -60,20 +56,20 @@ export class TranslationSelectorComponent {
   }
 
   onAddRecordingClick() {
-    if (this.selectedTranslation) {
-      this.addRecording.emit(this.selectedTranslation);
+    if (this.selectedWord) {
+      this.addRecording.emit(this.selectedWord);
     }
   }
 
   onAddTranslationClick() {
-    if (this.selectedTranslation) {
-      this.addTranslation.emit(this.selectedTranslation);
+    if (this.selectedWord) {
+      this.addTranslation.emit(this.selectedWord);
     }
   }
 
   onShareClick() {
-    if (this.selectedTranslation) {
-      this.wordShared.emit(this.selectedTranslation);
+    if (this.selectedWord) {
+      this.wordShared.emit(this.selectedWord);
     }
   }
 }
