@@ -42,25 +42,6 @@ class AddWordsPage extends ListPageBase {
     });
   }
 
-  renderBulkUpload_() {
-    return null;
-    // todo(parikhshiv): implement bulk upload
-    // return (
-    //   <div>
-    //     <span>
-    //       Contribute to the app by adding new words and their translations.
-    //       You can either upload words in bulk from a Google Sheet or .csv file,
-    //       or add them in one by one below.
-    //     </span>
-    //     <h2>Bulk upload</h2>
-    //     <span>
-    //       Format your file so that the column headers are Word, English
-    //       translation, Transliteration.
-    //     </span>
-    //   </div>
-    // );
-  }
-
   saveAll_() {
     const allSaveButtons = this.individualWordsContainer_.current
       .querySelectorAll('.save-button');
@@ -98,7 +79,6 @@ class AddWordsPage extends ListPageBase {
   render() {
     return (
       <div>
-        {this.renderBulkUpload_()}
         {this.renderIndividualWords_()}
       </div>
     );
