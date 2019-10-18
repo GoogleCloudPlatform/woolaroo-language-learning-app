@@ -8,7 +8,7 @@ export type Icon = 'play_audio'|'record_audio'|'stop_audio'|'play_recording'|'ba
 
 @Component({
   selector: 'app-icon',
-  template: '<mat-icon [svgIcon]="icon" [color]="color"></mat-icon>',
+  template: '<mat-icon class="shadow" [svgIcon]="icon" *ngIf="shadow"></mat-icon><mat-icon [svgIcon]="icon" [color]="color"></mat-icon>',
   styleUrls: ['./icon.scss']
 })
 export class IconComponent {
@@ -16,6 +16,8 @@ export class IconComponent {
   public icon: Icon|null = null;
   @Input()
   public color: 'primary'|'accent'|'warn'|null = null;
+  @Input()
+  public shadow = false;
 
   constructor(iconRegistry: MatIconRegistry, domSanitizer: DomSanitizer) {
     IconComponent.registerIcons(iconRegistry, domSanitizer);

@@ -1,4 +1,25 @@
 @import 'dimensions';
+@import 'palette';
+
+@mixin icon-button {
+  padding: 0;
+  background: transparent;
+  border-style: none;
+  width: 24px;
+  height: 24px;
+  outline: none;
+  cursor: pointer;
+
+  app-icon {
+    width: 100%;
+    height: 100%;
+  }
+
+  mat-icon {
+    width: 100%;
+    height: 100%;
+  }
+}
 
 @mixin centered-page {
   height: 100%;
@@ -22,26 +43,6 @@
   }
 }
 
-@mixin icon-button {
-  padding: 0;
-  background: transparent;
-  border-style: none;
-  width: 24px;
-  height: 24px;
-  outline: none;
-  cursor: pointer;
-
-  app-icon {
-    width: 100%;
-    height: 100%;
-  }
-
-  mat-icon {
-    width: 100%;
-    height: 100%;
-  }
-}
-
 @mixin toolbar-page {
   .close {
     @include icon-button;
@@ -57,3 +58,6 @@
     margin-right: auto;
   }
 }
+
+
+
