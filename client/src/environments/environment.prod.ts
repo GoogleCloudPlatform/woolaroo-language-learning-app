@@ -72,6 +72,22 @@ export const environment = {
         }
       }
     },
+    imageRendering: {
+      config: {
+        dropShadowDistance: 1,
+        dropShadowColor: 'rgba(0, 0, 0, 0.5)',
+        foregroundColor: 'white',
+        transliterationFont: '43px Roboto',
+        transliterationBottom: 270,
+        translationFont: '30px Roboto',
+        translationBottom: 220,
+        originalWordFont: '30px Roboto',
+        originalWordBottom: 80,
+        lineTop: 200,
+        lineHeight: 80,
+        lineWidth: 1
+      }
+    },
     translation: {
       type: APITranslationService,
       config: {

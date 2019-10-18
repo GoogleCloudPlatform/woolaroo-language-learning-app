@@ -1,32 +1,32 @@
-<div class="translation-container" *ngIf="selectedTranslation && selectedTranslation.translation">
+<div class="translation-container" *ngIf="selectedWord && selectedWord.translation">
   <div class="transliteration">
-    {{ selectedTranslation.transliteration }}
+    {{ selectedWord.transliteration }}
     <span class="share">
-      <button *ngIf="shareAvailable && selectedTranslation.transliteration" (click)="onShareClick()">
+      <button *ngIf="selectedWord.transliteration" (click)="onShareClick()">
         <app-icon icon="share"></app-icon>
       </button>
     </span>
   </div>
   <div class="translation">
-    {{ selectedTranslation.translation }}
+    {{ selectedWord.translation }}
     <span class="share">
-      <button *ngIf="shareAvailable && !selectedTranslation.transliteration" (click)="onShareClick()">
+      <button *ngIf="!selectedWord.transliteration" (click)="onShareClick()">
         <app-icon icon="share"></app-icon>
       </button>
     </span>
   </div>
-  <button *ngIf="selectedTranslation.soundURL" class="play-audio" (click)="onPlayAudioClick()">
+  <button *ngIf="selectedWord.soundURL" class="play-audio" (click)="onPlayAudioClick()">
     <app-icon icon="play_audio"></app-icon>
   </button>
-  <button *ngIf="!selectedTranslation.soundURL" class="record-audio" (click)="onAddRecordingClick()">
+  <button *ngIf="!selectedWord.soundURL" class="record-audio" (click)="onAddRecordingClick()">
     <app-icon icon="record_audio"></app-icon>
   </button>
-  <audio #audioPlayer [src]="selectedTranslation.soundURL" preload="none"
+  <audio #audioPlayer [src]="selectedWord.soundURL" preload="none"
          (play)="onAudioPlaying()" (ended)="onAudioStopped()" (pause)="onAudioStopped()"></audio>
 </div>
-<div class="translation-not-found" *ngIf="selectedTranslation && !selectedTranslation.translation">
+<div class="translation-not-found" *ngIf="selectedWord && !selectedWord.translation">
   <div>Translation not found</div>
-  <button *ngIf="!selectedTranslation.soundURL" class="add-translation" (click)="onAddTranslationClick()">
+  <button *ngIf="!selectedWord.soundURL" class="add-translation" (click)="onAddTranslationClick()">
     <app-icon icon="record_audio"></app-icon>
   </button>
 </div>
