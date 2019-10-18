@@ -41,6 +41,7 @@ class TranslationListItem extends ListItemBase {
   saveTranslation_ = async (e) => {
     // TODO(smus): While the translation is being saved, show a progress bar and
     // prevent the button from being clicked again.
+    await this.setStateAsync({disabled: true});
 
     // First, if there's a new sound_blob, we should upload it and update our
     // sound_link.
@@ -83,6 +84,8 @@ class TranslationListItem extends ListItemBase {
         transliteration
       };
 
+      await this.showPopup('Saved!');
+
       this.setState({
         disabled: true,
       });
@@ -113,6 +116,7 @@ class TranslationListItem extends ListItemBase {
         disabled={this.state.disabled}
         onClick={() => this.saveTranslation_()}
         key={0}
+        className="save-button"
       >
         Save
       </Button>
