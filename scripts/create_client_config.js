@@ -26,7 +26,7 @@ const THEME = process.argv[paramIndex++] || 'pink';
 if(PARTNER_LOGO_URL) {
     const partnerLogoPath = path.join(__dirname, `../client/src${PARTNER_LOGO_URL}`);
     if(!fs.existsSync(partnerLogoPath)) {
-        PARTNER_LOGO_URL = null;
+        PARTNER_LOGO_URL = '';
     }
 }
 
