@@ -15,7 +15,7 @@ export class APIFeedbackService implements IFeedbackService {
 
 
   public async sendFeedback(feedback: Feedback): Promise<any> {
-    return null;
+    return Promise.reject(new Error('Not implemented'));
   }
 
   public async addWord(word: AddedWord): Promise<any> {

@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { LoadingPopUpModule } from 'components/loading-popup/loading-popup.module';
 import { FeedbackPageComponent } from './feedback';
 import { IconComponentModule } from 'components/icon/icon.module';
+import { ErrorPopUpModule } from 'components/error-popup/error-popup.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { IconComponentModule } from 'components/icon/icon.module';
     FormsModule,
     ReactiveFormsModule,
     LoadingPopUpModule,
-    IconComponentModule
+    IconComponentModule,
+    ErrorPopUpModule
   ]
 })
 export class FeedbackPageModule {}

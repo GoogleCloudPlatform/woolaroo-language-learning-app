@@ -3,12 +3,14 @@ import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
+import { ErrorPopUpComponent } from 'components/error-popup/error-popup';
 import { ANALYTICS_SERVICE, IAnalyticsService } from 'services/analytics';
 import { FEEDBACK_SERVICE, IFeedbackService } from 'services/feedback';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
 import { startRecording, play, AudioStream, RecordingStream } from 'util/audio';
 import { OperatingSystem, getOperatingSystem } from 'util/platform';
 import { WordTranslation } from 'services/entities/translation';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 
 enum RecordingState {
   Idle,
@@ -52,6 +54,7 @@ export class AddWordPageComponent implements AfterViewInit {
                private location: Location,
                private dialog: MatDialog,
                private zone: NgZone,
+               private i18n: I18n,
                @Inject(FEEDBACK_SERVICE) private feedbackService: IFeedbackService,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {
     const word: WordTranslation = history.state.word;
@@ -90,6 +93,8 @@ export class AddWordPageComponent implements AfterViewInit {
       },
       err => {
         console.warn('Failed adding word', err);
+        const errorMessage = this.i18n({ id: 'addWordError', value: 'Unable to add word' });
+        this.dialog.open(ErrorPopUpComponent, { data: { message: errorMessage } });
       }
     ).finally(
       () => {
