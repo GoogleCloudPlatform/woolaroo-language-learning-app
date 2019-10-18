@@ -28,10 +28,10 @@ steps:
   - id: 'download_partner_logo'
     name: gcr.io/cloud-builders/gsutil
     entrypoint: 'bash'
-    args: ["-c", "|", "[[ \"${_PARTNER_LOGO_URL}\" === \"\" ]]",
-           "echo", "no logo", "||",
-           "gsutil", "cp", "${_PARTNER_LOGO_URL}", "./src/assets/img/partner_logo.png",
-           "true"]
+    args:
+    - '-c'
+    - |
+      [[ "${_PARTNER_LOGO_URL}" === "" ]] echo "no logo" || gsutil cp ${_PARTNER_LOGO_URL} ./src/assets/img/partner_logo.png true
     dir: "./client"
   - id: 'configure_client'
     waitFor: ['install_client_dependencies', 'download_partner_logo']
