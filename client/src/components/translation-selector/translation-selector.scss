@@ -1,8 +1,10 @@
 @import 'components';
+@import 'palette';
 
 :host {
   display: block;
   width: 100%;
+  text-shadow: 1px 1px 2px $shadow-color;
 }
 
 .translation-container {
