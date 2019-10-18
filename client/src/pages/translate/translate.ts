@@ -24,6 +24,7 @@ export const TRANSLATE_PAGE_CONFIG = new InjectionToken<TranslatePageConfig>('Tr
 export class TranslatePageComponent implements OnInit, OnDestroy {
   public backgroundImageData: Blob|null = null;
   public backgroundImageURL: string|null = null;
+  public selectedWord: WordTranslation|null = null;
   public translations: WordTranslation[]|null = null;
 
   constructor( @Inject(TRANSLATE_PAGE_CONFIG) private config: TranslatePageConfig,
@@ -113,11 +114,15 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
   }
 
   onSubmitFeedbackClick() {
-    this.router.navigateByUrl(AppRoutes.Feedback);
+    this.router.navigateByUrl(AppRoutes.Feedback, { state: { word: this.selectedWord }});
   }
 
   onBackClick() {
     history.back();
+  }
+
+  onSelectedWordChanged(word: WordTranslation) {
+    this.selectedWord = word;
   }
 
   onWordShared(word: WordTranslation) {

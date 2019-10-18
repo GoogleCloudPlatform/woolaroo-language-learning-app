@@ -9,6 +9,7 @@ import { FEEDBACK_SERVICE, IFeedbackService } from 'services/feedback';
 import { FeedbackType, Feedback } from 'services/entities/feedback';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
 import { I18n } from '@ngx-translate/i18n-polyfill';
+import { WordTranslation } from 'services/entities/translation';
 
 @Component({
   selector: 'app-page-feedback',
@@ -17,6 +18,7 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 })
 export class FeedbackPageComponent implements AfterViewInit {
   public readonly feedbackForm: FormGroup;
+  private readonly word?: WordTranslation;
   public submittingForm = false;
   public FeedbackType = FeedbackType;
 
@@ -34,6 +36,7 @@ export class FeedbackPageComponent implements AfterViewInit {
         (ctl) => ctl.dirty && (!ctl.value || ctl.value.length === 0) ? { required: true } : null
       ])
     });
+    this.word = history.state.word;
   }
 
   ngAfterViewInit() {
@@ -50,7 +53,9 @@ export class FeedbackPageComponent implements AfterViewInit {
     }
     this.submittingForm = true;
     const loadingPopup = this.dialog.open(LoadingPopUpComponent);
-    this.feedbackService.sendFeedback(this.feedbackForm.value).then(
+    const feedback: Feedback = this.feedbackForm.value;
+    feedback.word = this.word;
+    this.feedbackService.sendFeedback(feedback).then(
       () => {
         console.log('Feedback submitted');
         this.location.back();
