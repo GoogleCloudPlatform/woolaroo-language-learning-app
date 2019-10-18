@@ -31,7 +31,11 @@ steps:
     args:
     - '-c'
     - |
-      [[ "${_PARTNER_LOGO_URL}" != "" ]] echo "no logo" || gsutil cp ${_PARTNER_LOGO_URL} ./src/assets/img/partner_logo.png true
+      if [ "${_PARTNER_LOGO_URL}" != "" ]
+      then
+        gsutil cp ${_PARTNER_LOGO_URL} ./src/assets/img/partner_logo.png
+      fi
+      true
     dir: "./client"
   - id: 'configure_client'
     waitFor: ['install_client_dependencies', 'download_partner_logo']
