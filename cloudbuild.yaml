@@ -34,7 +34,7 @@ steps:
            "true"]
     dir: "./client"
   - id: 'configure_client'
-    waitFor: ['install_client_dependencies']
+    waitFor: ['install_client_dependencies', 'download_partner_logo']
     name: node:10.16.3
     entrypoint: "node"
     args: ["./create_client_config.js",
