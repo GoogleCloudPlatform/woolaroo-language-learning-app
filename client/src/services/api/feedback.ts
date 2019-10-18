@@ -13,7 +13,6 @@ export class APIFeedbackService implements IFeedbackService {
   public constructor(private http: HttpClient, @Inject(FEEDBACK_CONFIG) private config: APIFeedbackConfig) {
   }
 
-
   public async sendFeedback(feedback: Feedback): Promise<any> {
     return Promise.reject(new Error('Not implemented'));
   }
