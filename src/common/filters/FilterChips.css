@@ -2,7 +2,7 @@
   margin-bottom: 24px;
 }
 
-.filter-chip.MuiChip-root {
+div.filter-chip {
   font-size: 14px;
   width: 180px;
   height: 38px;
