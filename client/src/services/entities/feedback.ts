@@ -1,3 +1,5 @@
+import { WordTranslation } from 'services/entities/translation';
+
 export enum FeedbackType {
   IncorrectTranslation = 'IncorrectTranslation',
   OffensiveTranslation = 'OffensiveTranslation',
@@ -8,6 +10,7 @@ export enum FeedbackType {
 export interface Feedback {
   types: FeedbackType[];
   content: string;
+  word?: WordTranslation;
 }
 
 export interface AddedWord {

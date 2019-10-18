@@ -3,7 +3,8 @@
   <app-icon icon="back" shadow="true"></app-icon>
 </button>
 <app-translation-selector [translations]="translations" (addRecording)="onAddRecording($event)"
-                          (addTranslation)="onAddTranslation($event)" (wordShared)="onWordShared($event)">
+                          (addTranslation)="onAddTranslation($event)" (wordShared)="onWordShared($event)"
+                          (selectedWordChanged)="onSelectedWordChanged($event)">
 </app-translation-selector>
 <button mat-button (click)="onSubmitFeedbackClick()" class="submit-feedback">
   <app-icon icon="add_feedback" shadow="true"></app-icon>

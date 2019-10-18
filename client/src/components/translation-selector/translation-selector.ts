@@ -16,6 +16,8 @@ export class TranslationSelectorComponent {
   public addRecording: EventEmitter<WordTranslation> = new EventEmitter<WordTranslation>();
   @Output()
   public addTranslation: EventEmitter<WordTranslation> = new EventEmitter<WordTranslation>();
+  @Output()
+  public selectedWordChanged: EventEmitter<WordTranslation> = new EventEmitter<WordTranslation>();
   @ViewChild('audioPlayer', {static: false})
   public audioPlayer: ElementRef|null = null;
   public audioPlaying = false;
@@ -49,6 +51,7 @@ export class TranslationSelectorComponent {
     // will be fired immediately after "translations" is set, so need to delay changing
     // state again by a frame to avoid "expression changed after it was checked" error
     setTimeout(() => this.selectedWord = translation, 1);
+    this.selectedWordChanged.emit(translation);
   }
 
   onTargetPositionChanged(position: Point) {
