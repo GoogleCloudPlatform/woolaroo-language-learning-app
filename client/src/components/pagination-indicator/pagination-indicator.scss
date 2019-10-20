@@ -1,3 +1,6 @@
+@import '~@angular/material/theming';
+@import 'theme';
+
 :host {
   display: block;
   text-align: center;
@@ -19,10 +22,10 @@ li {
   width: 10px;
   height: 10px;
   border-radius: 10px;
-  background-color: #FDEFC1;
+  background-color: mat-color($app-accent, 100);
 
   &.selected {
-    background-color: #F9AB00;
+    background-color: mat-color($app-accent);
   }
 
   &:last-child {

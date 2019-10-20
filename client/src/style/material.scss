@@ -1,16 +1,5 @@
 @import 'components';
-@import 'palette';
-
-$foreground-color: #303438;
-
-body {
-  color: $foreground-color;
-}
-
-.mat-typography h1 {
-  font-size: 2.1rem;
-  font-weight: 500;
-}
+@import 'theme';
 
 button.mat-button-base {
   text-transform: uppercase;
@@ -19,10 +8,6 @@ button.mat-button-base {
   min-width: 105px;
   border-radius: 5px;
   letter-spacing: 0.08rem;
-}
-
-a {
-  color: inherit;
 }
 
 .mat-body-1 {
@@ -38,10 +23,8 @@ a {
 mat-toolbar.mat-toolbar-single-row {
   height: 80px;
   padding: 0 0 0 30px;
-  background-color: white;
-  box-shadow: 0 0 10px $shadow-color;
+  box-shadow: 0 0 10px mat-color(map-get($app-theme, shadow), 500);
   font-size: 1.7rem;
-  color: $foreground-color;
   font-weight: 400;
 
   .mat-button-base {

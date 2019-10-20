@@ -1,14 +1,14 @@
 @import 'components';
-@import 'palette';
+@import 'theme';
 
 :host {
   display: block;
   width: 100%;
-  text-shadow: 1px 1px 2px $shadow-color;
+  text-shadow: 1px 1px 2px mat-color(map-get($app-theme, shadow), 500);
 }
 
 .translation-container {
-  color: white;
+  color: mat-contrast($app-inverted, 500);
   text-align: center;
   margin-bottom: 15px;
   width: 100%;
@@ -62,7 +62,7 @@
 
       button {
         @include icon-button;
-        color: white;
+        color: mat-contrast($app-inverted, 500);
         width: 32px;
         height: 32px;
       }
@@ -75,14 +75,14 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    color: white;
+    color: mat-contrast($app-inverted, 500);
     width: 45px;
     height: 45px;
   }
 }
 
 .translation-not-found {
-  color: white;
+  color: mat-contrast($app-inverted, 500);
   text-align: center;
   margin-bottom: 15px;
   width: 100%;
@@ -95,7 +95,7 @@
 
   .add-translation {
     @include icon-button;
-    color: white;
+    color: mat-contrast($app-inverted, 500);
     width: 45px;
     height: 45px;
   }

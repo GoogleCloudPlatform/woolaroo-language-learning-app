@@ -1,4 +1,5 @@
 @import 'components';
+@import 'theme';
 
 :host {
   width: 100%;
@@ -22,7 +23,7 @@
 .back,
 .add-feedback {
   @include icon-button;
-  color: white;
+  color: mat-contrast($app-inverted, 500);
   position: absolute;
   top: 0;
   width: 70px;
@@ -50,10 +51,10 @@ form {
   box-sizing: border-box;
 
   .mat-form-field.text {
-    color: white;
+    color: mat-contrast($app-inverted, 500);
 
     input::placeholder {
-      color: #b9b9b9;
+      color: mat-contrast($app-inverted, 100);
     }
 
     ::ng-deep .mat-form-field-outline {
@@ -67,7 +68,7 @@ form {
       right: 0;
       top: 0.25em;
       bottom: 0;
-      background-color: #323232;
+      background-color: mat-color($app-inverted);
       border-radius: 5px;
     }
   }

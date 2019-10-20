@@ -1,4 +1,5 @@
 @import 'components';
+@import 'theme';
 
 :host {
   display: block;
@@ -52,7 +53,7 @@ mat-form-field.text {
     border-radius: 50%;
     width: 60px;
     height: 60px;
-    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 3px 3px mat-color(map-get($app-theme, shadow), 100);
     position: relative;
 
     app-icon {
@@ -66,7 +67,7 @@ mat-form-field.text {
       position: absolute;
       top: 0;
       left: 0;
-      fill: #ad1457; // TODO: get from theme
+      fill: mat-color($app-primary);
     }
 
     app-icon {
