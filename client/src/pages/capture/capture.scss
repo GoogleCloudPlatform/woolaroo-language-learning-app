@@ -1,7 +1,8 @@
 @import 'components';
+@import 'theme';
 
 .mat-drawer-container {
-  background-color: black;
+  background-color: mat-color($app-inverted, 100);
   height: 100%;
 
   .mat-sidenav {
@@ -43,7 +44,7 @@ app-camera-preview {
     }
 
     .mat-icon {
-      color: white;
+      color: mat-contrast($app-inverted, 500);
     }
   }
 }
@@ -65,7 +66,7 @@ app-camera-preview {
     }
 
     .mat-icon {
-      color: white;
+      color: mat-contrast($app-inverted, 500);
     }
   }
 }
@@ -85,7 +86,7 @@ app-camera-preview {
     }
 
     .mat-icon {
-      color: white;
+      color: mat-contrast($app-inverted, 500);
     }
   }
 }
