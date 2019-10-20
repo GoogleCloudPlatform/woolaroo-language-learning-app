@@ -36,4 +36,12 @@ $app-theme: map-merge($app-theme, ("shadow": (
   500: rgba(0, 0, 0, 0.4))
 ));
 
-@include angular-material-theme($app-theme);
+@include mat-core-theme($app-theme);
+@include mat-button-theme($app-theme);
+@include mat-checkbox-theme($app-theme);
+@include mat-dialog-theme($app-theme);
+@include mat-form-field-theme($app-theme);
+@include mat-icon-theme($app-theme);
+@include mat-input-theme($app-theme);
+@include mat-sidenav-theme($app-theme);
+@include mat-toolbar-theme($app-theme);
