@@ -1,3 +1,5 @@
+@import 'theme';
+
 :host {
   display: block;
   height: 32px;
@@ -20,7 +22,7 @@ ul {
   li {
     margin: 0 10px;
     padding: 0;
-    color: white;
+    color: mat-contrast($app-inverted, 500);
     font-size: 1.2rem;
     text-transform: lowercase;
     line-height: 100%;

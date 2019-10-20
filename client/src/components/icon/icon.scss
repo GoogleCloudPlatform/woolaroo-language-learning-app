@@ -1,4 +1,4 @@
-@import 'palette';
+@import 'theme';
 
 :host {
   position: relative;
@@ -17,5 +17,5 @@ mat-icon.shadow {
   top: 1px;
   left: 1px;
   z-index: -1;
-  color: $shadow-color;
+  color: mat-color(map-get($app-theme, shadow), 500);
 }

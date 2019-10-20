@@ -1,4 +1,5 @@
 @import 'components';
+@import 'theme';
 
 :host {
   width: 100%;
@@ -19,7 +20,7 @@
 
 .back {
   @include icon-button;
-  color: white;
+  color: mat-contrast($app-inverted, 500);
   position: absolute;
   left: 0;
   top: 0;
@@ -38,12 +39,12 @@ app-translation-selector {
 }
 
 .submit-feedback {
-  text-shadow: 1px 1px 2px $shadow-color;
+  text-shadow: 1px 1px 2px mat-color(map-get($app-theme, shadow), 500);
   position: absolute;
   bottom: 3px;
   left: 50%;
   transform: translateX(-50%);
-  color: white;
+  color: mat-contrast($app-inverted, 500);
   padding-left: 7px;
   letter-spacing: 0.09rem;
 

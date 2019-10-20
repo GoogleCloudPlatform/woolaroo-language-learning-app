@@ -1,4 +1,4 @@
-@import 'palette';
+@import 'theme';
 
 :host {
   display: block;
@@ -9,11 +9,11 @@
 
   hr {
     width: 1px;
-    background-color: white;
+    background-color: mat-contrast($app-inverted, 500);
     border-style: none;
     transform: rotate(0deg);
     transform-origin: 50% 0;
     height: 100%;
-    box-shadow: 1px 1px 2px $shadow-color;
+    box-shadow: 1px 1px 2px mat-color(map-get($app-theme, shadow), 500);
   }
 }
