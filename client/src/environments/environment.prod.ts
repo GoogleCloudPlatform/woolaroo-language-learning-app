@@ -10,6 +10,9 @@ export const environment = {
   assets: {
     baseUrl: params.assetsBaseUrl,
   },
+  serviceWorker: {
+    url: `${params.assetsBaseUrl}ngsw-worker.js`
+  },
   pages: {
     splash: {
       duration: 3000,
