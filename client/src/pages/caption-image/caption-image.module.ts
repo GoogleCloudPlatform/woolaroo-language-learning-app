@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
+import { MatInputModule, MatDialogModule } from '@angular/material';
 import { ServicesModule } from 'services/services.module';
-import { CAPTION_IMAGE_PAGE_CONFIG, CaptionImagePageComponent } from 'pages/caption-image/caption-image';
 import { PipesModule } from 'pipes/pipes.module';
 import { IconComponentModule } from 'components/icon/icon.module';
 import { environment } from 'environments/environment';
+import { CAPTION_IMAGE_PAGE_CONFIG, CaptionImagePageComponent } from './caption-image';
 
 @NgModule({
   declarations: [
@@ -19,6 +19,7 @@ import { environment } from 'environments/environment';
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatDialogModule,
     CommonModule
   ],
   providers: [

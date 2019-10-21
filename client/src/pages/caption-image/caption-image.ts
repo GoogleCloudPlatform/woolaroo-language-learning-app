@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AppRoutes } from 'app/routes';
+import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
+import { SessionService } from 'services/session';
+import { MatDialog } from '@angular/material';
 
 interface CaptionImagePageConfig {
   debugImageUrl?: string;
@@ -25,6 +28,8 @@ export class CaptionImagePageComponent implements OnInit, OnDestroy {
                private http: HttpClient,
                private router: Router,
                private zone: NgZone,
+               private dialog: MatDialog,
+               private sessionService: SessionService,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {
     this.form = new FormGroup({
       caption: new FormControl('', [
@@ -76,7 +81,16 @@ export class CaptionImagePageComponent implements OnInit, OnDestroy {
     if (!this.form.valid) {
       return;
     }
-    this.router.navigateByUrl(AppRoutes.Translate, { state: { image: this.image, words: [ this.form.value.caption ]}});
+    const loadingPopUp = this.dialog.open(LoadingPopUpComponent, { closeOnNavigation: false, disableClose: true });
+    this.sessionService.currentSession.currentModal = loadingPopUp;
+    loadingPopUp.beforeClosed().subscribe({
+      next: () => this.sessionService.currentSession.currentModal = null
+    });
+    loadingPopUp.afterOpened().subscribe({
+      next: () => {
+        this.router.navigateByUrl(AppRoutes.Translate, {state: {image: this.image, words: [this.form.value.caption]}});
+      }
+    });
   }
 
   onAddFeedbackClick() {

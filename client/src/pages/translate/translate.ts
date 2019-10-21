@@ -1,13 +1,15 @@
 import { OnInit, Component, Inject, NgZone, OnDestroy, InjectionToken } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { WordTranslation } from 'services/entities/translation';
 import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
 import { ITranslationService, TRANSLATION_SERVICE } from 'services/translation';
 import { AppRoutes } from 'app/routes';
 import { ImageRenderingService } from 'services/image-rendering';
 import { downloadFile } from 'util/file';
+import { SessionService } from 'services/session';
+import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
 
 interface TranslatePageConfig {
   debugImageUrl?: string;
@@ -29,8 +31,10 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 
   constructor( @Inject(TRANSLATE_PAGE_CONFIG) private config: TranslatePageConfig,
                private http: HttpClient,
+               private dialog: MatDialog,
                private router: Router,
                private zone: NgZone,
+               private sessionService: SessionService,
                @Inject(TRANSLATION_SERVICE) private translationService: ITranslationService,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
                private imageRenderingService: ImageRenderingService) {
@@ -40,7 +44,14 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
     this.analyticsService.logPageView(this.router.url, 'Translate');
     const image: Blob|undefined = history.state.image;
     const words: string[]|undefined = history.state.words || this.config.debugWords;
-    const loadingPopUp: MatDialogRef<any>|undefined = history.state.loadingPopUp;
+    let loadingPopUp: MatDialogRef<any>|undefined = this.sessionService.currentSession.currentModal;
+    if (!loadingPopUp) {
+      loadingPopUp = this.dialog.open(LoadingPopUpComponent, { closeOnNavigation: false, disableClose: true });
+      this.sessionService.currentSession.currentModal = loadingPopUp;
+      loadingPopUp.beforeClosed().subscribe({
+        next: () => this.sessionService.currentSession.currentModal = null
+      });
+    }
     if (!image) {
       const debugImageUrl = this.config.debugImageUrl;
       if (!debugImageUrl) {
@@ -52,9 +63,15 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
       } else if (words) {
         this.loadImage(debugImageUrl, words, loadingPopUp);
       } else {
+        if (loadingPopUp) {
+          loadingPopUp.close();
+        }
         this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image } });
       }
     } else if (!words) {
+      if (loadingPopUp) {
+        loadingPopUp.close();
+      }
       this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image } });
     } else {
       this.setImageData(image);
