@@ -1,7 +1,6 @@
 import { MockAnalyticsService } from 'services/mock/analytics';
 import { MockImageRecognitionService } from 'services/mock/image-recognition';
 import { APITranslationService } from 'services/api/translation';
-import { APIFeedbackService } from 'services/api/feedback';
 import { LocalProfileService } from 'services/local-profile';
 import { MockFeedbackService } from 'services/mock/feedback';
 
@@ -12,6 +11,9 @@ export const environment = {
   production: false,
   assets: {
     baseUrl: './',
+  },
+  serviceWorker: {
+    url: 'ngsw-worker.js'
   },
   pages: {
     splash: {

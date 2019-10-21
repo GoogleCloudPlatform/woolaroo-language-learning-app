@@ -41,7 +41,7 @@ declare const require: any; // Use the require method provided by webpack
     CaptionImagePageModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register(environment.serviceWorker.url, { enabled: environment.production })
   ],
   providers: [
     {
