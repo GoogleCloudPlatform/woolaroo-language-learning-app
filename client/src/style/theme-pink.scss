@@ -1,7 +1,5 @@
 @import "~@angular/material/theming";
 
-@include mat-core();
-
 $_nav-pallet: (
   100: #FDEFC1,
   500: #F9AB00,
@@ -37,14 +35,3 @@ $app-theme: map-merge($app-theme, ("shadow": (
   100: rgba(0, 0, 0, 0.2),
   500: rgba(0, 0, 0, 0.4))
 ));
-
-@include mat-core-theme($app-theme);
-@include mat-button-theme($app-theme);
-@include mat-checkbox-theme($app-theme);
-@include mat-dialog-theme($app-theme);
-@include mat-form-field-theme($app-theme);
-@include mat-icon-theme($app-theme);
-@include mat-input-theme($app-theme);
-@include mat-sidenav-theme($app-theme);
-@include mat-toolbar-theme($app-theme);
-@include mat-snack-bar-theme($app-theme);
