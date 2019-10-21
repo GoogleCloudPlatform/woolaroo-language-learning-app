@@ -52,10 +52,10 @@ app-camera-preview {
 .capture {
   @include icon-button;
   position: absolute;
-  left: 52%;
   bottom: 15px;
   width: 100px;
   height: 100px;
+  left: 50%;
   transform: translateX(-50%);
   z-index: 1;
 

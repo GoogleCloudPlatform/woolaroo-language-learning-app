@@ -20,6 +20,7 @@ import { environment } from 'environments/environment';
 export class FeedbackPageComponent implements AfterViewInit {
   public readonly feedbackForm: FormGroup;
   private readonly word?: WordTranslation;
+  private readonly prevPageCssClass?: string;
   public submittingForm = false;
   public FeedbackType = FeedbackType;
 
@@ -38,6 +39,8 @@ export class FeedbackPageComponent implements AfterViewInit {
         (ctl) => ctl.dirty && (!ctl.value || ctl.value.length === 0) ? { required: true } : null
       ])
     });
+    this.prevPageCssClass = history.state.prevPageCssClass;
+    console.log(this.prevPageCssClass);
     this.word = history.state.word;
   }
 
@@ -61,8 +64,9 @@ export class FeedbackPageComponent implements AfterViewInit {
       () => {
         console.log('Feedback submitted');
         this.location.back();
+        const snackbarCssClass = this.prevPageCssClass ? `${this.prevPageCssClass}-snack-bar` : '';
         this.snackBar.open(this.i18n({ id: 'feedbackSubmitted', value: 'Feedback submitted' }), '',
-          { duration: environment.components.snackBar.duration });
+          { duration: environment.components.snackBar.duration, panelClass: snackbarCssClass });
       },
       err => {
         console.warn('Failed submitting feedback', err);

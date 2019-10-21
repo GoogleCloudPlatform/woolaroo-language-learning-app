@@ -41,6 +41,7 @@ export class AddWordPageComponent implements AfterViewInit {
   public readonly form: FormGroup;
   private audioStream: AudioStream|null = null;
   private recording: Blob|null = null;
+  private readonly prevPageCssClass?: string;
   public audioStreamProgress = 0;
   public submittingForm = false;
   public recordingState = RecordingState.Idle;
@@ -76,6 +77,7 @@ export class AddWordPageComponent implements AfterViewInit {
     this.keymanUrl = this.config.keymanUrl;
     this.gboardUrl = this.operatingSystem === OperatingSystem.Android ?
       this.config.androidGBoardUrl : this.config.iosGBoardUrl;
+    this.prevPageCssClass = history.state.prevPageCssClass;
   }
 
   ngAfterViewInit() {
@@ -92,8 +94,9 @@ export class AddWordPageComponent implements AfterViewInit {
       () => {
         console.log('Added word submitted');
         this.location.back();
+        const snackbarCssClass = this.prevPageCssClass ? `${this.prevPageCssClass}-snack-bar` : '';
         this.snackBar.open(this.i18n({ id: 'wordSubmitted', value: 'Submitted for review' }), '',
-          { duration: environment.components.snackBar.duration });
+          { duration: environment.components.snackBar.duration, panelClass: snackbarCssClass });
       },
       err => {
         console.warn('Failed adding word', err);
