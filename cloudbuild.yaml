@@ -61,8 +61,14 @@ steps:
            "--i18n-file=./src/locale/messages.${_LANGUAGE}.xlf", "--i18n-locale=${_LANGUAGE}",
            "--deploy-url=https://storage.googleapis.com/${_BUCKET_NAME}/"]
     dir: "./client"
-  - id: 'deploy_client'
+  - id: 'fix_client_asset_paths'
     waitFor: ['build_client']
+    name: node:10.16.3
+    entrypoint: "node"
+    args: ["./fix_asset_paths.js", "../client/dist/index.html", "https://storage.googleapis.com/${_BUCKET_NAME}"]
+    dir: "./scripts"
+  - id: 'deploy_client'
+    waitFor: ['fix_client_asset_paths']
     name: gcr.io/cloud-builders/gsutil
     args: ["-m", "rsync", "-r", "-c", "-d", "./dist", "gs://${_BUCKET_NAME}"]
     dir: "./client"
