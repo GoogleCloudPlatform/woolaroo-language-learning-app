@@ -16,6 +16,8 @@ import { TechnologyPageModule } from 'pages/technology/technology.module';
 import { AddWordPageModule } from 'pages/add-word/add-word.module';
 import { CaptionImagePageModule } from 'pages/caption-image/caption-image.module';
 import { I18n } from '@ngx-translate/i18n-polyfill';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 declare const require: any; // Use the require method provided by webpack
 
@@ -38,7 +40,8 @@ declare const require: any; // Use the require method provided by webpack
     AddWordPageModule,
     CaptionImagePageModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     {
