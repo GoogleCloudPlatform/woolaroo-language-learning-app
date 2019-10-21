@@ -22,10 +22,10 @@ li {
   width: 10px;
   height: 10px;
   border-radius: 10px;
-  background-color: mat-color($app-accent, 100);
+  background-color: mat-color($app-nav, 100);
 
   &.selected {
-    background-color: mat-color($app-accent);
+    background-color: mat-color($app-nav);
   }
 
   &:last-child {

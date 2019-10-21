@@ -30,6 +30,9 @@ export const environment = {
     }
   },
   components: {
+    snackBar: {
+      duration: 3000
+    },
     cameraPreview: {
       resizeDelay: 1000
     },

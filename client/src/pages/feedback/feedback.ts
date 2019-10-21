@@ -2,7 +2,7 @@ import { AfterViewInit, Component, Inject } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatCheckboxChange, MatDialog } from '@angular/material';
+import { MatCheckboxChange, MatDialog, MatSnackBar } from '@angular/material';
 import { ErrorPopUpComponent } from 'components/error-popup/error-popup';
 import { ANALYTICS_SERVICE, IAnalyticsService } from 'services/analytics';
 import { FEEDBACK_SERVICE, IFeedbackService } from 'services/feedback';
@@ -10,6 +10,7 @@ import { FeedbackType, Feedback } from 'services/entities/feedback';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { WordTranslation } from 'services/entities/translation';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-page-feedback',
@@ -26,6 +27,7 @@ export class FeedbackPageComponent implements AfterViewInit {
                private location: Location,
                private dialog: MatDialog,
                private i18n: I18n,
+               private snackBar: MatSnackBar,
                @Inject(FEEDBACK_SERVICE) private feedbackService: IFeedbackService,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {
     this.feedbackForm = new FormGroup({
@@ -59,6 +61,8 @@ export class FeedbackPageComponent implements AfterViewInit {
       () => {
         console.log('Feedback submitted');
         this.location.back();
+        this.snackBar.open(this.i18n({ id: 'feedbackSubmitted', value: 'Feedback submitted' }), '',
+          { duration: environment.components.snackBar.duration });
       },
       err => {
         console.warn('Failed submitting feedback', err);

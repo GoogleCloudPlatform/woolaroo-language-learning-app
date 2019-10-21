@@ -2,9 +2,9 @@
 
 @include mat-core();
 
-$_accent-pallet: (
+$_nav-pallet: (
   100: #FDEFC1,
-  800: #F9AB00,
+  500: #F9AB00,
   contrast: map-get($mat-orange, 'contrast')
 );
 
@@ -18,8 +18,9 @@ $_inverted-pallet: (
 );
 
 $app-primary: mat-palette($mat-pink, 800);
-$app-accent:  mat-palette($_accent-pallet, 800);
+$app-accent:  mat-palette($mat-pink, 800);
 $app-warn:    mat-palette($mat-red);
+$app-nav:  mat-palette($_nav-pallet);
 $app-inverted:  mat-palette($_inverted-pallet);
 
 $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
@@ -46,3 +47,4 @@ $app-theme: map-merge($app-theme, ("shadow": (
 @include mat-input-theme($app-theme);
 @include mat-sidenav-theme($app-theme);
 @include mat-toolbar-theme($app-theme);
+@include mat-snack-bar-theme($app-theme);
