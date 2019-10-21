@@ -20,7 +20,7 @@ export const environment = {
   endangeredLanguage: 'Sicilian',
   pages: {
     splash: {
-      duration: 3000,
+      duration: 5000,
       partnerLogoUrl: '/assets/debug/partner-logo.png'
     },
     translate: {
