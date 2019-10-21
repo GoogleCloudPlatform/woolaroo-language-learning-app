@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     window.addEventListener('beforeinstallprompt', (ev) => {
+      console.log('Before-install prompt event fired');
       ev.preventDefault();
       this.sessionService.currentSession.installPrompt = ev;
     });
