@@ -102,7 +102,7 @@ steps:
     args: ["run", "build"]
     dir: "./server"
   - id: 'copy_server_index'
-    waitFor: ['build_server', 'build_client']
+    waitFor: ['build_server', 'fix_client_asset_paths']
     name: node:10.16.3
     entrypoint: "cp"
     args: ["./client/dist/index.html", "./server/build/index.html"]
