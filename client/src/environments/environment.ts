@@ -3,6 +3,7 @@ import { MockImageRecognitionService } from 'services/mock/image-recognition';
 import { APITranslationService } from 'services/api/translation';
 import { APIFeedbackService } from 'services/api/feedback';
 import { LocalProfileService } from 'services/local-profile';
+import { MockFeedbackService } from 'services/mock/feedback';
 
 const baseEndpointUrl = 'https://us-central1-barnard-yiddish.cloudfunctions.net';
 const debugImageUrl = '/assets/debug/IMG_20190920_141505.jpg';
@@ -35,6 +36,9 @@ export const environment = {
     }
   },
   components: {
+    snackBar: {
+      duration: 3000
+    },
     cameraPreview: {
       resizeDelay: 1000
     },
@@ -90,7 +94,7 @@ export const environment = {
       config: null
     },
     feedback: {
-      type: APIFeedbackService,
+      type: MockFeedbackService,
       config: {
         addWordAudioEndpointURL: `${baseEndpointUrl}/saveAudioSuggestions`,
         addWordEndpointURL: `${baseEndpointUrl}/addSuggestions`

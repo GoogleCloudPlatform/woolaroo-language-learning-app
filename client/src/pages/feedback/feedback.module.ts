@@ -1,15 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatToolbarModule } from '@angular/material';
-import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatInputModule } from '@angular/material/input';
+import {
+  MatButtonModule,
+  MatCheckboxModule,
+  MatInputModule,
+  MatToolbarModule,
+  MatSnackBarModule,
+  ErrorStateMatcher,
+  ShowOnDirtyErrorStateMatcher
+} from '@angular/material';
 import { LoadingPopUpModule } from 'components/loading-popup/loading-popup.module';
-import { FeedbackPageComponent } from './feedback';
 import { IconComponentModule } from 'components/icon/icon.module';
 import { ErrorPopUpModule } from 'components/error-popup/error-popup.module';
+import { FeedbackPageComponent } from './feedback';
 
 @NgModule({
   declarations: [
@@ -24,6 +28,7 @@ import { ErrorPopUpModule } from 'components/error-popup/error-popup.module';
     MatButtonModule,
     MatCheckboxModule,
     MatInputModule,
+    MatSnackBarModule,
     FormsModule,
     ReactiveFormsModule,
     LoadingPopUpModule,
