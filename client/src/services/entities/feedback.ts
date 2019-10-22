@@ -17,5 +17,5 @@ export interface AddedWord {
   nativeWord: string;
   englishWord: string;
   transliteration: string;
-  recording: Blob;
+  recording: Blob|null;
 }

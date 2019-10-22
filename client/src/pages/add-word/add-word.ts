@@ -12,6 +12,7 @@ import { OperatingSystem, getOperatingSystem } from 'util/platform';
 import { WordTranslation } from 'services/entities/translation';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { environment } from 'environments/environment';
+import { AddedWord } from 'services/entities/feedback';
 
 enum RecordingState {
   Idle,
@@ -90,7 +91,9 @@ export class AddWordPageComponent implements AfterViewInit {
     }
     this.submittingForm = true;
     const loadingPopup = this.dialog.open(LoadingPopUpComponent);
-    this.feedbackService.addWord(this.form.value).then(
+    const addedWord: AddedWord = this.form.value;
+    addedWord.recording = this.recording;
+    this.feedbackService.addWord(addedWord).then(
       () => {
         console.log('Added word submitted');
         this.location.back();
