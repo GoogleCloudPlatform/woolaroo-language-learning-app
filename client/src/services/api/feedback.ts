@@ -31,7 +31,7 @@ export class APIFeedbackService implements IFeedbackService {
     let soundUrl: string|null = null;
     if (word.recording) {
       console.log('Sending audio');
-      soundUrl = await this.http.post<string>(this.config.addWordAudioEndpointURL, word.recording).toPromise();
+      soundUrl = await this.http.post(this.config.addWordAudioEndpointURL, word.recording, { responseType: 'text' }).toPromise();
     }
     console.log('Adding word');
     const requestBody = {
@@ -40,7 +40,7 @@ export class APIFeedbackService implements IFeedbackService {
       transliteration: word.transliteration,
       sound_link: soundUrl
     };
-    await this.http.post(this.config.addWordEndpointURL, requestBody).toPromise();
+    await this.http.post(this.config.addWordEndpointURL, requestBody, { responseType: 'text' }).toPromise();
     console.log('Word added');
   }
 }
