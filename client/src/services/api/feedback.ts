@@ -6,6 +6,7 @@ import { AddedWord, Feedback } from 'services/entities/feedback';
 interface APIFeedbackConfig {
   addWordAudioEndpointURL: string;
   addWordEndpointURL: string;
+  feedbackEndpointURL: string;
 }
 
 @Injectable()
@@ -14,7 +15,16 @@ export class APIFeedbackService implements IFeedbackService {
   }
 
   public async sendFeedback(feedback: Feedback): Promise<any> {
-    return Promise.reject(new Error('Not implemented'));
+    console.log('Sending feedback');
+    const requestBody = {
+      english_word: feedback.word ? feedback.word.original : null,
+      translation: feedback.word ? feedback.word.translation : null,
+      transliteration: feedback.word ? feedback.word.transliteration : null,
+      types: feedback.types,
+      content: feedback.content
+    };
+    await this.http.post(this.config.feedbackEndpointURL, requestBody, { responseType: 'text' }).toPromise();
+    console.log('Feedback sent');
   }
 
   public async addWord(word: AddedWord): Promise<any> {
