@@ -80,6 +80,10 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    const loadingPopUp: MatDialogRef<any>|undefined = this.sessionService.currentSession.currentModal;
+    if (loadingPopUp) {
+      loadingPopUp.close();
+    }
     if (this.backgroundImageURL) {
       URL.revokeObjectURL(this.backgroundImageURL);
       this.backgroundImageURL = null;

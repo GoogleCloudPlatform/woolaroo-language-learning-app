@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnDestroy, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 import { CameraPreviewComponent, CameraPreviewStatus } from 'components/camera-preview/camera-preview';
@@ -16,9 +16,10 @@ import { SessionService } from 'services/session';
   templateUrl: 'capture.html',
   styleUrls: ['./capture.scss']
 })
-export class CapturePageComponent implements AfterViewInit {
+export class CapturePageComponent implements AfterViewInit, OnDestroy {
   @ViewChild(CameraPreviewComponent, {static: false})
   private cameraPreview: CameraPreviewComponent|null = null;
+  private modalIsForCameraStartup = true;
   public captureInProgress = false;
   public sidenavOpen = false;
 
@@ -44,6 +45,9 @@ export class CapturePageComponent implements AfterViewInit {
     if (!loadingPopUp) {
       loadingPopUp = this.dialog.open(LoadingPopUpComponent, {disableClose: true});
     }
+    loadingPopUp.afterClosed().subscribe({
+      next: () => this.modalIsForCameraStartup = false
+    });
     this.cameraPreview.start().then(
       () => {
         console.log('Camera started');
@@ -63,6 +67,13 @@ export class CapturePageComponent implements AfterViewInit {
         });
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    const loadingPopUp: MatDialogRef<any>|undefined = this.sessionService.currentSession.currentModal;
+    if (loadingPopUp && this.modalIsForCameraStartup) {
+      loadingPopUp.close();
+    }
   }
 
   onCaptureClick() {
