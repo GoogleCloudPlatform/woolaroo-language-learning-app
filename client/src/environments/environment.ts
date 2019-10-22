@@ -2,7 +2,7 @@ import { MockAnalyticsService } from 'services/mock/analytics';
 import { MockImageRecognitionService } from 'services/mock/image-recognition';
 import { APITranslationService } from 'services/api/translation';
 import { LocalProfileService } from 'services/local-profile';
-import { MockFeedbackService } from 'services/mock/feedback';
+import { APIFeedbackService } from 'services/api/feedback';
 
 const baseEndpointUrl = 'https://us-central1-barnard-yiddish.cloudfunctions.net';
 const debugImageUrl = '/assets/debug/IMG_20190920_141505.jpg';
@@ -96,10 +96,11 @@ export const environment = {
       config: null
     },
     feedback: {
-      type: MockFeedbackService,
+      type: APIFeedbackService,
       config: {
         addWordAudioEndpointURL: `${baseEndpointUrl}/saveAudioSuggestions`,
-        addWordEndpointURL: `${baseEndpointUrl}/addSuggestions`
+        addWordEndpointURL: `${baseEndpointUrl}/addSuggestions`,
+        feedbackEndpointURL: `${baseEndpointUrl}/addFeedback`
       }
     }
   }

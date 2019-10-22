@@ -110,7 +110,8 @@ export const environment = {
       type: APIFeedbackService,
       config: {
         addWordAudioEndpointURL: `${params.apiUrl}/saveAudioSuggestions`,
-        addWordEndpointURL: `${params.apiUrl}/addSuggestions`
+        addWordEndpointURL: `${params.apiUrl}/addSuggestions`,
+        feedbackEndpointURL: `${params.apiUrl}/addFeedback`
       }
     }
   }
