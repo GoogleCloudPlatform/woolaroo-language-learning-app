@@ -4,7 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from 'environments/environment';
 
 export type Icon = 'play_audio'|'record_audio'|'stop_audio'|'play_recording'|'back'|'add_feedback'|
-  'add_to_home'|'brand'|'photo_library'|'capture_photo'|'menu'|'close'|'share';
+  'add_to_home'|'brand'|'photo_library'|'capture_photo'|'menu'|'close'|'share'|'search';
 
 @Component({
   selector: 'app-icon',
@@ -19,24 +19,30 @@ export class IconComponent {
   @Input()
   public shadow = false;
 
-  constructor(iconRegistry: MatIconRegistry, domSanitizer: DomSanitizer) {
-    IconComponent.registerIcons(iconRegistry, domSanitizer);
+  constructor(private iconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
+    this.registerIcons();
   }
 
-  public static registerIcons(iconRegistry: MatIconRegistry, domSanitizer: DomSanitizer) {
+  private registerIcons() {
     const baseUrl = environment.assets.baseUrl + 'assets/icons/';
-    iconRegistry.addSvgIcon('capture_photo', domSanitizer.bypassSecurityTrustResourceUrl(baseUrl + 'radio_button_unchecked.svg'));
-    iconRegistry.addSvgIcon('menu', domSanitizer.bypassSecurityTrustResourceUrl(baseUrl + 'menu.svg'));
-    iconRegistry.addSvgIcon('close', domSanitizer.bypassSecurityTrustResourceUrl(baseUrl + 'close.svg'));
-    iconRegistry.addSvgIcon('photo_library', domSanitizer.bypassSecurityTrustResourceUrl(baseUrl + 'photo_library.svg'));
-    iconRegistry.addSvgIcon('brand', domSanitizer.bypassSecurityTrustResourceUrl(baseUrl + 'radio_button_unchecked.svg'));
-    iconRegistry.addSvgIcon('add_to_home', domSanitizer.bypassSecurityTrustResourceUrl(baseUrl + 'save_alt.svg'));
-    iconRegistry.addSvgIcon('add_feedback', domSanitizer.bypassSecurityTrustResourceUrl(baseUrl + 'chat_bubble_outline.svg'));
-    iconRegistry.addSvgIcon('back', domSanitizer.bypassSecurityTrustResourceUrl(baseUrl + 'arrow_back.svg'));
-    iconRegistry.addSvgIcon('share', domSanitizer.bypassSecurityTrustResourceUrl(baseUrl + 'share.svg'));
-    iconRegistry.addSvgIcon('play_audio', domSanitizer.bypassSecurityTrustResourceUrl(baseUrl + 'volume_up.svg'));
-    iconRegistry.addSvgIcon('record_audio', domSanitizer.bypassSecurityTrustResourceUrl(baseUrl + 'mic.svg'));
-    iconRegistry.addSvgIcon('stop_audio', domSanitizer.bypassSecurityTrustResourceUrl(baseUrl + 'stop.svg'));
-    iconRegistry.addSvgIcon('play_recording', domSanitizer.bypassSecurityTrustResourceUrl(baseUrl + 'play_arrow.svg'));
+    const icons: {[index: string]: string} = {
+      capture_photo: 'radio_button_unchecked.svg',
+      menu: 'menu.svg',
+      close: 'close.svg',
+      photo_library: 'photo_library.svg',
+      brand: 'radio_button_unchecked.svg',
+      add_to_home: 'save_alt.svg',
+      add_feedback: 'chat_bubble_outline.svg',
+      back: 'arrow_back.svg',
+      share: 'share.svg',
+      play_audio: 'play_audio.svg',
+      record_audio: 'mic.svg',
+      stop_audio: 'stop.svg',
+      play_recording: 'play_arrow.svg',
+      search: 'search.svg',
+    };
+    for (const iconID of Object.keys(icons)) {
+      this.iconRegistry.addSvgIcon(iconID, this.domSanitizer.bypassSecurityTrustResourceUrl(baseUrl + icons[iconID]));
+    }
   }
 }

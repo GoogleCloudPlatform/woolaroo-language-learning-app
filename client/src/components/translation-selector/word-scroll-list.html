@@ -3,4 +3,8 @@
     <span class="selected-spacer">{{word.original}}</span>
     <span class="word">{{word.original}}</span>
   </li>
+  <li class="manual-entry" (click)="onManualEntryClick()">
+    <span i18n="@@somethingElse">Enter something else</span>
+    <app-icon icon="search"></app-icon>
+  </li>
 </ul>

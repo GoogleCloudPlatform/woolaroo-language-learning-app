@@ -32,4 +32,5 @@
 </div>
 <app-selection-line [targetPosition]="lineTargetPosition"></app-selection-line>
 <app-word-scroll-list [translations]="translations" (selectedWordChanged)="onSelectedWordChanged($event)"
-  (targetPositionChanged)="onTargetPositionChanged($event)"></app-word-scroll-list>
+  (targetPositionChanged)="onTargetPositionChanged($event)"
+  (manualEntrySelected)="onManualEntrySelected()"></app-word-scroll-list>

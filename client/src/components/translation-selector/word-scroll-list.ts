@@ -30,6 +30,7 @@ export const WORD_SCROLL_LIST_CONFIG = new InjectionToken<WordScrollListConfig>(
   styleUrls: ['./word-scroll-list.scss']
 })
 export class WordScrollListComponent implements AfterViewChecked {
+  private isDragging = false;
   private dragInterval: any = null;
   private dragOffsetX = 0;
   private dragVelocityX = 0;
@@ -37,8 +38,10 @@ export class WordScrollListComponent implements AfterViewChecked {
   public targetPositionChanged: EventEmitter<Point> = new EventEmitter();
   @Output()
   public selectedWordChanged: EventEmitter<WordTranslation|null> = new EventEmitter();
+  @Output()
+  public manualEntrySelected: EventEmitter<any> = new EventEmitter();
 
-  private translationsChanged:boolean = false;
+  private translationsChanged = false;
   private _translations: WordTranslation[]|null = null;
   public get translations(): WordTranslation[]|null { return this._translations; }
   @Input('translations')
@@ -94,11 +97,15 @@ export class WordScrollListComponent implements AfterViewChecked {
 
   stopDrag() {
     clearInterval(this.dragInterval);
-    const velocity = this.dragVelocityX;
-    const properties = { time: WordScrollListComponent.getTime(), position: this.getScrollPosition(), velocity };
-    const snapWordIndex = this.getEndingSnapWordIndex(properties.position, velocity);
-    this.dragInterval = setInterval(() => this.updateSnapPosition(properties, snapWordIndex), this.config.animationInterval);
-    this.updateTargetPosition();
+    this.dragInterval = null;
+    if (this.isDragging) {
+      this.isDragging = false;
+      const velocity = this.dragVelocityX;
+      const properties = {time: WordScrollListComponent.getTime(), position: this.getScrollPosition(), velocity};
+      const snapWordIndex = this.getEndingSnapWordIndex(properties.position, velocity);
+      this.dragInterval = setInterval(() => this.updateSnapPosition(properties, snapWordIndex), this.config.animationInterval);
+      this.updateTargetPosition();
+    }
   }
 
   updateDrag(x: number) {
@@ -135,12 +142,20 @@ export class WordScrollListComponent implements AfterViewChecked {
   };
 
   onTouchMove = (ev: TouchEvent) => {
+    this.isDragging = true;
     this.updateDrag(ev.touches[0].clientX);
   };
 
   onMouseMove = (ev: MouseEvent) => {
+    this.isDragging = true;
     this.updateDrag(ev.clientX);
   };
+
+  onManualEntryClick() {
+    if (!this.isDragging && !this.dragInterval) {
+      this.manualEntrySelected.emit();
+    }
+  }
 
   private centerWords() {
     if (!this.scrollContent || this.selectedWordIndex < 0) {

@@ -13,6 +13,7 @@
 @include mat-snack-bar-theme($app-theme);
 
 @import 'material';
+@import 'typography';
 
 html {
   height: 100%;
@@ -26,6 +27,10 @@ body {
 
 body {
   color: mat-color(map-get($app-theme, foreground), text);
+}
+
+button {
+  font-family: $main-font;
 }
 
 .mat-typography h1 {
