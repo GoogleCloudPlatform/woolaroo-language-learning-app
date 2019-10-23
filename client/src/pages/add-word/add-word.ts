@@ -164,23 +164,25 @@ export class AddWordPageComponent implements AfterViewInit {
     if (this.audioStream) {
       this.audioStream.stop();
     }
-    this.recordingState = RecordingState.Finished;
+    this.recordingState = this.recording ? RecordingState.Finished : RecordingState.Idle;
   }
 
   onPlayRecordingClick() {
     console.log('Starting playback');
     if (!this.recording) {
       console.warn('No audio recorded');
-      return;
+      return false;
     }
     this.audioStreamProgress = 0;
     this.recordingState = RecordingState.Playing;
     play(this.recording).then(
       (stream) => {
+        const duration = Number.isFinite(stream.getDuration()) ? stream.getDuration() : this.config.maxRecordingDuration * 0.001;
+        console.log(duration);
         this.audioStream = stream;
         const progressInterval = setInterval(() => {
           this.zone.run(() => {
-            this.audioStreamProgress = stream.getCurrentTime() / stream.getDuration();
+            this.audioStreamProgress = stream.getCurrentTime() / duration;
           });
         }, this.config.progressAnimationInterval);
         stream.onended = () => {
