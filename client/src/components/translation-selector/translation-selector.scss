@@ -41,8 +41,10 @@
       content: "";
     }
 
-    &::content {
+    .word {
       flex: 0 1 auto;
+      overflow-wrap: break-word;
+      max-width: calc(100% - 150px);
     }
 
     &:before,

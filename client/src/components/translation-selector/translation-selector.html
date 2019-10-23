@@ -1,6 +1,6 @@
 <div class="translation-container" *ngIf="selectedWord && selectedWord.translation">
   <div class="transliteration">
-    {{ selectedWord.transliteration }}
+    <span class="word">{{ selectedWord.transliteration }}</span>
     <span class="share">
       <button *ngIf="selectedWord.transliteration" (click)="onShareClick()">
         <app-icon icon="share" shadow="true"></app-icon>
@@ -8,7 +8,7 @@
     </span>
   </div>
   <div class="translation">
-    {{ selectedWord.translation }}
+    <span class="word">{{ selectedWord.translation }}</span>
     <span class="share">
       <button *ngIf="!selectedWord.transliteration" (click)="onShareClick()">
         <app-icon icon="share" shadow="true"></app-icon>
