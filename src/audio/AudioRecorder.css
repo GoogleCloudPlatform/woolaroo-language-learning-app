@@ -5,3 +5,7 @@
 button.recording, button.playing {
   border: solid 1px black;
 }
+
+button.recording, button.record {
+  margin-right: 10px;
+}

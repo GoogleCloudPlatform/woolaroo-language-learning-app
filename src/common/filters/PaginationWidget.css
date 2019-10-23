@@ -1,0 +1,25 @@
+.page-numbers {
+  padding: 0;
+  margin: 0 0 30px 0;
+  list-style: none;
+  text-align: center;
+  font-size: 28px;
+}
+
+.page-numbers li {
+  display: inline;
+  padding: 16px;
+}
+
+.page-numbers a {
+  text-decoration: none;
+  color: #5f6368;
+}
+
+.page-numbers a:hover {
+  opacity: 0.8;
+}
+
+.page-numbers a.selected {
+  color: #4285f4;
+}

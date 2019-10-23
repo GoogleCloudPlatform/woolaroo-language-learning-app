@@ -1,0 +1,9 @@
+.filter-chips {
+  margin-bottom: 24px;
+}
+
+div.filter-chip {
+  font-size: 14px;
+  width: 180px;
+  height: 38px;
+}

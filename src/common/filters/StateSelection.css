@@ -1,0 +1,31 @@
+.state-selection {
+  width: 70%;
+  margin-bottom: 24px;
+}
+
+.state-selection ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.state-selection li {
+  padding: 24px;
+  padding-bottom: 12px;
+  min-width: 240px;
+  cursor: pointer;
+}
+
+.state-selection li.selected {
+  border-bottom: 2px solid #1a73e8;
+}
+
+.state-selection a {
+  text-decoration: none;
+  color: #5f6368;
+}
