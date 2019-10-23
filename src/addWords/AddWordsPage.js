@@ -9,12 +9,14 @@ const BASE_NUM_ROWS = 10;
 class AddWordsPage extends ListPageBase {
   constructor(props) {
     super(props);
+
+    this.individualWordsContainer_ = React.createRef();
+
     this.state = {
       ...this.state,
       loading: false,
       listItemTag: AddWordsListItem,
       items: [...this.state.items, ...this.getEmptyItems_()],
-      disabled: true,
     };
   }
 
@@ -40,36 +42,25 @@ class AddWordsPage extends ListPageBase {
     });
   }
 
-  renderBulkUpload_() {
-    return (
-      <div>
-        <span>
-          Contribute to the app by adding new words and their translations.
-          You can either upload words in bulk from a Google Sheet or .csv file,
-          or add them in one by one below.
-        </span>
-        <h2>Bulk upload</h2>
-        <span>
-          Format your file so that the column headers are Word, English
-          translation, Transliteration.
-        </span>
-      </div>
-    );
+  saveAll_() {
+    const allSaveButtons = this.individualWordsContainer_.current
+      .querySelectorAll('.save-button');
+
+    allSaveButtons.forEach((button) => button.click());
   }
 
   renderIndividualWords_() {
     return (
-      <div>
+      <div ref={this.individualWordsContainer_}>
         <div className="title-row">
           <h2>Add individual words</h2>
           <Button
             variant="contained"
             color="primary"
             onClick={() => this.saveAll_()}
-            disabled={this.state.disabled}
             className="save-all-button"
           >
-            Add All
+            Save All
           </Button>
         </div>
         {this.renderItems()}
@@ -88,8 +79,6 @@ class AddWordsPage extends ListPageBase {
   render() {
     return (
       <div>
-        {this.renderBulkUpload_()}
-        <hr/>
         {this.renderIndividualWords_()}
       </div>
     );
