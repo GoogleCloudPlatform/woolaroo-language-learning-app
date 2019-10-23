@@ -35,7 +35,24 @@ exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
     } catch (err) {
       console.log(`Unable to upload audio ${err}`)
     }
+<<<<<<< HEAD
   });
+=======
+  };
+  var bucket = admin.storage().bucket(BUCKET_NAME);
+  var file = admin.storage().bucket(BUCKET_NAME).file(FILE_NAME);
+  await file.save(req.body, options)
+    .then(stuff => {
+        console.log('Audio saved successfully.');
+        var url = `gs://${BUCKET_NAME}/${FILE_NAME}`;
+        res.status(200).send(JSON.stringify(url));
+        return url;
+    })
+    .catch(err => {
+        console.log(`Unable to upload audio ${err}`)
+    });
+
+>>>>>>> add-settings
 });
 
 
@@ -68,6 +85,95 @@ exports.addTranslations = functions.https.onRequest(async (req, res) => {
     });
     console.log('Translation saved.');
     res.status(200).send(JSON.stringify("Translation saved."));
+  });
+});
+
+exports.initSettings = functions.https.onRequest(async (req, res) => {
+  return cors(req, res, async () => {
+    console.log("Initializing settings");
+    try {
+      const querySnapshot = await admin.firestore().collection("app_settings").doc("default").create({
+        privacy_policy: "",
+        logo_image_id: "",
+        app_enabled: true,
+        app_name: "",
+        app_url: "",
+        translation_language: "",
+        primary_language: "",
+      });
+      res.status(200).send(JSON.stringify("Settings initialized."));
+      console.log("Settings initialized.");
+    } catch (err) {
+      console.log("Error initializing settings:", err);
+      res.status(404).send("Error initializing settings");
+    }
+  });
+});
+
+exports.updateSettings = functions.https.onRequest(async (req, res) => {
+  return cors(req, res, async () => {
+    console.log("Updating settings");
+    try {
+      const querySnapshot = await admin.firestore().collection("app_settings").get();
+      // There should be 1 and only 1 document in the collection
+      if (querySnapshot.empty || querySnapshot.docs[0].empty) { // collection or document empty
+        console.log("Settings not found");
+        res.status(404).send("NO settings");
+        return "404";
+      }
+      if (querySnapshot.docs.length != 1) {
+        console.log("Too many documents in collection");
+        res.status(404).send("Error updating settings");
+        return "404";
+      }
+      var docs = querySnapshot.docs.map(doc => doc.data());
+
+      const privacy_policy = req.body.privacy_policy || docs[0]["privacy_policy"];
+      const logo_image_id = req.body.logo_image_id || docs[0]["logo_image_id"];
+      const app_enabled = req.body.app_enabled || docs[0]["app_enabled"];
+
+      const doc_ids = querySnapshot.docs.map (doc => doc.id);
+
+      snapshot = await admin.firestore().collection("app_settings").doc(doc_ids[0]).set({
+          privacy_policy: privacy_policy,
+          logo_image_id: logo_image_id,
+          app_enabled: app_enabled
+        },
+        {merge: true}
+      );
+      res.status(200).send(JSON.stringify("Settings updated."));
+      console.log("Settings updated");
+    } catch(err) {
+      console.log("Error updating settings:", err);
+      res.status(404).send("Error updating settings");
+    }
+  });
+});
+
+exports.readSettings = functions.https.onRequest(async (req, res) => {
+  return cors(req, res, async () => {
+    console.log("Reading settings");
+    try {
+      const querySnapshot = await admin.firestore().collection("app_settings").get();
+      // There should be 1 and only 1 document in the collection
+      if (querySnapshot.empty || querySnapshot.docs[0].empty) { // collection or document empty
+        console.log("Settings not found");
+        res.status(404).send("NO settings");
+        return "404";
+      }
+      if (querySnapshot.docs.length != 1) {
+        console.log("Too many documents in collection");
+        res.status(404).send("Error updating settings");
+        return "404";
+      }
+      var docs = querySnapshot.docs.map(doc => doc.data());
+      const settings_json = JSON.stringify({data: docs});
+      res.status(200).send(settings_json);
+      console.log("Finished reading settings");
+    } catch(err) {
+      console.log("Error reading settings:", err);
+      res.status(404).send("Error reading settings");
+    }
   });
 });
 
