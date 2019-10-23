@@ -20,7 +20,32 @@
   background: none;
 }
 
+div.header-search-root {
+  width: 610px;
+  padding-left: 6px;
+  position: relative;
+  top: -2px;
+}
+
 .MuiInputBase-input.header-search-input {
-  font-size: 14px;
+  font-size: 18px;
+  color: #80868b;
+  font-weight: 500;
+  padding: 2px 4px;
+}
+
+.MuiInputBase-input.header-search-input::placeholder {
+  opacity: 0.75;
+}
+
+svg.header-search-icon {
+  position: relative;
+  top: 4px;
+  font-size: 26px;
   color: #5f6368;
+  cursor: pointer;
+}
+
+svg.header-search-icon:hover {
+  opacity: 0.8;
 }
