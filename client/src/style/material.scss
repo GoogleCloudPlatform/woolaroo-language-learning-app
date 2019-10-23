@@ -2,6 +2,7 @@
 @import 'theme';
 
 button.mat-button-base {
+  flex: 0 0 auto;
   text-transform: uppercase;
   font-size: 1.1rem;
   padding: 4px 20px;
