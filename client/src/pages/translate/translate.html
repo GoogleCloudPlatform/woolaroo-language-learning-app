@@ -4,7 +4,8 @@
 </button>
 <app-translation-selector [translations]="translations" (addRecording)="onAddRecording($event)"
                           (addTranslation)="onAddTranslation($event)" (wordShared)="onWordShared($event)"
-                          (selectedWordChanged)="onSelectedWordChanged($event)">
+                          (selectedWordChanged)="onSelectedWordChanged($event)"
+                          (manualEntrySelected)="onManualEntrySelected()">
 </app-translation-selector>
 <button mat-button (click)="onSubmitFeedbackClick()" class="submit-feedback">
   <app-icon icon="add_feedback" shadow="true"></app-icon>

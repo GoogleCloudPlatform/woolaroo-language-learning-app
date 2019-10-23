@@ -167,6 +167,10 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
     );
   }
 
+  onManualEntrySelected() {
+    this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image: this.backgroundImageData }});
+  }
+
   onAddRecording(word: WordTranslation) {
     this.router.navigateByUrl(AppRoutes.AddWord, { state: { word }});
   }

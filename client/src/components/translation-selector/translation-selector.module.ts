@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatInputModule } from '@angular/material';
 import { IconComponentModule } from 'components/icon/icon.module';
 import { TranslationSelectorComponent } from './translation-selector';
 import { SelectionLineComponent, SELECTION_LINE_CONFIG } from './selection-line';
@@ -17,7 +18,8 @@ import { environment } from 'environments/environment';
   ],
   imports: [
     CommonModule,
-    IconComponentModule
+    IconComponentModule,
+    MatInputModule
   ],
   providers: [
     { provide: SELECTION_LINE_CONFIG, useValue: environment.components.translationSelector.selectionLine },

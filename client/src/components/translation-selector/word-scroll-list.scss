@@ -25,10 +25,13 @@ ul {
     color: mat-contrast($app-inverted, 500);
     font-size: 1.2rem;
     text-transform: lowercase;
-    line-height: 100%;
     display: inline-block;
-    vertical-align: baseline;
     position: relative;
+    vertical-align: middle;
+
+    > * {
+      vertical-align: middle;
+    }
 
     &.selected,
     .selected-spacer {
@@ -48,7 +51,17 @@ ul {
       left: 50%;
       transform: translate(-50%, -50%);
       transition: font-size 0.2s ease-in-out;
-      vertical-align: middle;
+    }
+
+    &.manual-entry {
+      border: solid mat-contrast($app-inverted, 500);
+      border-width: 0 0 1px 0;
+      font-style: italic;
+      text-transform: none;
+
+      app-icon {
+        margin-left: 5px;
+      }
     }
   }
 }

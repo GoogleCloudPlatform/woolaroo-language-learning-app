@@ -18,6 +18,8 @@ export class TranslationSelectorComponent {
   public addTranslation: EventEmitter<WordTranslation> = new EventEmitter<WordTranslation>();
   @Output()
   public selectedWordChanged: EventEmitter<WordTranslation> = new EventEmitter<WordTranslation>();
+  @Output()
+  public manualEntrySelected: EventEmitter<any> = new EventEmitter();
   @ViewChild('audioPlayer', {static: false})
   public audioPlayer: ElementRef|null = null;
   public audioPlaying = false;
@@ -68,6 +70,10 @@ export class TranslationSelectorComponent {
     if (this.selectedWord) {
       this.addTranslation.emit(this.selectedWord);
     }
+  }
+
+  onManualEntrySelected() {
+    this.manualEntrySelected.emit();
   }
 
   onShareClick() {
