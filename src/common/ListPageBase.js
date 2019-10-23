@@ -8,6 +8,10 @@ class ListPageBase extends React.Component {
     this.state = {
       loading: true,
       items: [],
+      pageNum: null,
+      pageSize: null,
+      completeState: null,
+      needsRecording: false,
       // These values must be overridden by children.
       listItemTag: '',
       collectionName: '',
@@ -15,14 +19,41 @@ class ListPageBase extends React.Component {
   }
 
   async componentDidMount() {
+    await this.fetchItems();
+  }
+
+  async fetchItems() {
     if (!this.state.collectionName) {
       return;
     }
 
+    this.setState({ loading: true });
+
+    const {
+      pageNum,
+      pageSize,
+      collectionName,
+      completeState,
+      needsRecording
+    } = this.state;
+    let additionalParams = '';
+
+    if (pageNum && pageSize) {
+      additionalParams += `&pageNum=${pageNum}&pageSize=${pageSize}`;
+    }
+
+    if (completeState) {
+      additionalParams += `&state=${completeState}`;
+    }
+
+    if (needsRecording) {
+      additionalParams += `&needsRecording=1`;
+    }
+
     try {
-      const qs = `?collectionName=${this.state.collectionName}`;
+      const qs = `?collectionName=${collectionName}`;
       const resp = await
-        fetch(`${ApiUtils.origin}${ApiUtils.path}getEntireCollection${qs}`);
+        fetch(`${ApiUtils.origin}${ApiUtils.path}getEntireCollection${qs}${additionalParams}`);
 
       const items = await resp.json();
 

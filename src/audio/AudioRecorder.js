@@ -18,7 +18,7 @@ class AudioRecorder extends React.Component {
   }
 
   render() {
-    const record = <Fab aria-label="record" onClick={() => this.startRecording_()}>
+    const record = <Fab aria-label="record" className="record" onClick={() => this.startRecording_()}>
         <MicIcon/>
       </Fab>;
     const stopRecording = <Fab aria-label="stop recording" className="recording" onClick={() => this.stopRecording_()}>
