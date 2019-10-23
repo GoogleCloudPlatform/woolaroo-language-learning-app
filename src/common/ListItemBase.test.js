@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import AudioRecorder from '../audio/AudioRecorder';
 import ListItemBase from './ListItemBase';
 import TextField from '@material-ui/core/TextField';
 import { shallow } from 'enzyme';
@@ -21,6 +22,7 @@ it('renders without crashing when translation of correct structure is passed in'
 it('renders correct elements for base list item', () => {
   const wrapper = shallow(<ListItemBase item={stubbedTranslation} />);
 
+  expect(wrapper.find(AudioRecorder).length).toEqual(1);
   expect(wrapper.find(TextField).length).toEqual(2);
   expect(wrapper.find('.base-word').length).toEqual(1);
 });

@@ -18,14 +18,14 @@ class AudioRecorder extends React.Component {
   }
 
   render() {
-    const record = <Fab aria-label="record">
-        <MicIcon onClick={() => this.startRecording_()}/>
+    const record = <Fab aria-label="record" onClick={() => this.startRecording_()}>
+        <MicIcon/>
       </Fab>;
-    const stopRecording = <Fab aria-label="stop recording" className="recording">
-        <StopIcon onClick={() => this.stopRecording_()}/>
+    const stopRecording = <Fab aria-label="stop recording" className="recording" onClick={() => this.stopRecording_()}>
+        <StopIcon/>
       </Fab>;
-    const play = <Fab aria-label="play" className={this.state.isPlaying ? 'playing' : ''}>
-        <PlayIcon onClick={() => this.playback_()}/>
+    const play = <Fab aria-label="play" className={this.state.isPlaying ? 'playing' : ''} onClick={() => this.playback_()}>
+        <PlayIcon/>
       </Fab>;
 
     return <div className="audio-buttons">

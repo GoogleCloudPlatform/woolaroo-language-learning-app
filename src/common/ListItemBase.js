@@ -1,11 +1,14 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import AudioRecorder from '../audio/AudioRecorder';
+import Snackbar from '@material-ui/core/Snackbar';
 import './ListItemBase.css';
 
 class ListItemBase extends React.Component {
   constructor(props) {
     super(props);
+
+    this.handleClose_ = this.handleClose_.bind(this);
 
     const { english_word, sound_link, translation,
       transliteration, id } = this.props.item;
@@ -16,7 +19,13 @@ class ListItemBase extends React.Component {
       sound_link,
       translation,
       transliteration,
+      promo_message: null,
+      promo_open: false,
     };
+  }
+
+  async showPopup(message) {
+    await this.setState({promo_message: message, promo_open: true})
   }
 
   handleTranslationChange = (e) => {
@@ -67,9 +76,9 @@ class ListItemBase extends React.Component {
     );
   }
 
-  onSavedAudio(blob) {
-    console.log('onSavedAudio_', blob);
-    this.setState({sound_blob: blob, disabled: false});
+  onSavedAudio(e) {
+    console.log('onSavedAudio_', e);
+    this.setState({sound_blob: e.data, disabled: false});
   }
 
   renderAudioRecorder() {
@@ -87,6 +96,25 @@ class ListItemBase extends React.Component {
     return null;
   }
 
+  handleClose_() {
+    this.setState({promo_open: false});
+  }
+
+  renderPromoMessage_() {
+    if (!this.state.promo_message || !this.state.promo_open) {
+      return null;
+    }
+
+    return (
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        message={<span id="message-id">{this.state.promo_message}</span>}
+        onClose={this.handleClose_}
+        open
+      />
+    );
+  }
+
   render() {
     return (
       <li className="translation-list-item">
@@ -95,6 +123,7 @@ class ListItemBase extends React.Component {
         {this.renderTransliteration()}
         {this.renderAudioRecorder()}
         {this.renderEndOfRow()}
+        {this.renderPromoMessage_()}
       </li>
     );
   }
