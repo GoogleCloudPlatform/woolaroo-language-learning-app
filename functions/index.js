@@ -279,6 +279,11 @@ exports.grantAdminRole = functions.https.onRequest((req, res) => {
   });
 });
 
+exports.onUserCreated = functions.auth.user().onCreate(async (user) => {
+  // todo(parikhshiv): make sure this is triggered properly
+  await setFirstUserAsAdmin();
+});
+
 
 // exports.getBatchTranslations = functions.https.onRequest(async (req, res) => {
 //   console.log('getBatchTranslations');
@@ -290,3 +295,18 @@ exports.grantAdminRole = functions.https.onRequest((req, res) => {
 //   });
 //   res.status(200).send("Translation returned..");
 // });
+
+async function setFirstUserAsAdmin() {
+  try {
+    const listUsersResult = await admin.auth().listUsers();
+    console.log(listUsersResult.users.length);
+    if (listUsersResult.users.length === 1) {
+      const user = listUsersResult.users[0];
+      admin.auth().setCustomUserClaims(user.uid, {
+        admin: true,
+      });
+    }
+  } catch(err) {
+    console.log('error', err);
+  }
+}
