@@ -29,6 +29,14 @@ class AuthUtils {
     return await firebase.auth().signOut();
   }
 
+  static getUser() {
+    return AuthUtils.user;
+  }
+
+  static setUser(user) {
+    AuthUtils.user = user;
+  }
+
   getFirebaseAuth() {
     return firebase.auth();
   }

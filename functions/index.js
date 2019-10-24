@@ -214,10 +214,68 @@ exports.deleteRow = functions.https.onRequest(async (req, res) => {
   });
 });
 
-// For testing purposes only
-exports.testEndpoint = functions.https.onRequest((req, res) => {
-  return cors(req, res, () => {
-    res.send({ 'a': 'hello from firebase'});
+// Auth functions
+exports.grantModeratorRole = functions.https.onRequest((req, res) => {
+  return cors(req, res, async () => {
+    try {
+      const idToken = req.body.idToken;
+      const customClaims = await admin.auth().verifyIdToken(idToken);
+      if (!(customClaims && customClaims.admin)) {
+        res.status(200).send(JSON.stringify("You are not authenticated to grant this role."));
+        return;
+      }
+      const user = await admin.auth().getUserByEmail(req.body.email);
+
+      if (!user) {
+        res.status(404);
+        return;
+      }
+
+      if (user.customClaims && user.customClaims.moderator === true) {
+          res.status(200).send(JSON.stringify("Already a moderator."));
+          return;
+      }
+
+      admin.auth().setCustomUserClaims(user.uid, {
+          moderator: true
+      });
+      res.status(200).send(JSON.stringify("Success"));
+    } catch(err) {
+      res.status(500).send(err);
+      console.log("Error", err);
+    }
+  });
+});
+
+exports.grantAdminRole = functions.https.onRequest((req, res) => {
+  return cors(req, res, async () => {
+    try {
+      const idToken = req.body.idToken;
+      const customClaims = await admin.auth().verifyIdToken(idToken);
+      if (!(customClaims && customClaims.admin)) {
+        res.status(200).send(JSON.stringify("You are not authenticated to grant this role."));
+        return;
+      }
+      const user = await admin.auth().getUserByEmail(req.body.email); // 1
+
+      if (!user) {
+        res.status(404);
+        return;
+      }
+
+      if (user.customClaims && user.customClaims.admin === true) {
+          res.status(200).send(JSON.stringify("Already an admin."));
+          return;
+      }
+
+      admin.auth().setCustomUserClaims(user.uid, {
+          admin: true
+      });
+      res.status(200).send(JSON.stringify("Success"));
+    } catch(err) {
+      res.status(500).send(err);
+      console.log("Error", err);
+    }
   });
 });
 
