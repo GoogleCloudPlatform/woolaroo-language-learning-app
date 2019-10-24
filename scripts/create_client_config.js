@@ -42,5 +42,5 @@ partnerLogoUrl: '${PARTNER_LOGO_URL}'
 fs.writeFileSync(configFilePath, configContent);
 
 const themeFilePath = path.join(process.cwd(), THEME_FILE_PATH);
-let themeContent = `@import 'theme-${THEME}';`;
+let themeContent = `@import 'themes/${THEME}';`;
 fs.writeFileSync(themeFilePath, themeContent);
