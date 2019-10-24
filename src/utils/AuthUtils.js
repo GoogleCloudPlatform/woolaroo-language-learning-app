@@ -42,7 +42,12 @@ class AuthUtils {
       return 'Bearer ';
     }
 
+    if (AuthUtils.idToken) {
+      return `Bearer ${AuthUtils.idToken}`;
+    }
+
     const idToken = await AuthUtils.user.getIdToken();
+    AuthUtils.idToken = idToken;
 
     return `Bearer ${idToken}`;
   }
