@@ -67,7 +67,7 @@ class TranslationListItem extends ListItemBase {
       }
 
       // Save any updated data for the translation entry.
-      await fetch(`${ApiUtils.origin}${ApiUtils.path}addTranslations`, {
+      const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}addTranslations`, {
         method: 'POST',
         body: JSON.stringify({
           english_word,
@@ -80,6 +80,10 @@ class TranslationListItem extends ListItemBase {
           'Content-Type': 'application/json',
         }
       });
+      if (resp.status === 403) {
+        await AuthUtils.signOut();
+        return;
+      }
 
       this.savedData = {
         translation,
@@ -107,6 +111,10 @@ class TranslationListItem extends ListItemBase {
           'Authorization': await AuthUtils.getAuthHeader(),
         }
       });
+      if (res.status === 403) {
+        await AuthUtils.signOut();
+        return;
+      }
       return await res.text();
     } catch(err) {
       console.error(err);

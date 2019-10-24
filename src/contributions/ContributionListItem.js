@@ -32,7 +32,7 @@ class ContributionListItem extends ListItemBase {
         return;
       }
 
-      await fetch(`${ApiUtils.origin}${ApiUtils.path}addTranslations`, {
+      const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}addTranslations`, {
         method: 'POST',
         body: JSON.stringify({
           english_word,
@@ -45,6 +45,11 @@ class ContributionListItem extends ListItemBase {
           'Authorization': await AuthUtils.getAuthHeader(),
         }
       });
+
+      if (resp.status === 403) {
+        await AuthUtils.signOut();
+        return;
+      }
 
       this.deleteContribution_(e);
     } catch(err) {
