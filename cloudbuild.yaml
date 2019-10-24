@@ -50,7 +50,7 @@ steps:
            "${_GOOGLE_API_KEY}",
            "${_GOOGLE_TRACKER_ID}",
            "/assets/img/partner_logo.png",
-           "../client/src/style/theme.scss",
+           "../client/src/style/theme-config.scss",
            "${_THEME}"]
     dir: "./scripts"
   - id: 'build_client'
