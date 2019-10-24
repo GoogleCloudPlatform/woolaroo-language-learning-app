@@ -1,5 +1,6 @@
 import React from 'react';
 import ApiUtils from '../utils/ApiUtils';
+import AuthUtils from '../utils/AuthUtils';
 import './ListPageBase.css';
 
 class ListPageBase extends React.Component {
@@ -53,7 +54,15 @@ class ListPageBase extends React.Component {
     try {
       const qs = `?collectionName=${collectionName}`;
       const resp = await
-        fetch(`${ApiUtils.origin}${ApiUtils.path}getEntireCollection${qs}${additionalParams}`);
+        fetch(`${ApiUtils.origin}${ApiUtils.path}getEntireCollection${qs}${additionalParams}`, {
+          headers: {
+            'Authorization': await AuthUtils.getAuthHeader(),
+          }
+        });
+      if (resp.status === 403) {
+        await AuthUtils.signOut();
+        return;
+      }
 
       const items = await resp.json();
 

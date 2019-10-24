@@ -11,6 +11,10 @@ const bucketName = `${projectId}.appspot.com`;
 
 exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
+    const hasAccess = await checkAccess_(req, res);
+    if (!hasAccess) {
+      return;
+    }
     const fileName = uuidv1();
     const filePath = `suggestions/${fileName}.webm`
     const options = {
@@ -42,6 +46,10 @@ exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
 
 exports.addSuggestions = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
+    const hasAccess = await checkAccess_(req, res);
+    if (!hasAccess) {
+      return;
+    }
     var snapshot = await admin.firestore().collection('suggestions').add({
       english_word: req.body.english_word,
       translation: req.body.translation,
@@ -71,6 +79,10 @@ exports.addTranslations = functions.https.onRequest(async (req, res) => {
 
 
 exports.getTranslation = functions.https.onRequest(async (req, res) => {
+  const hasAccess = await checkAccess_(req, res);
+  if (!hasAccess) {
+    return;
+  }
   var docRef = admin.firestore().collection("translations").doc(req.body);
 
   try {
@@ -92,6 +104,10 @@ exports.getTranslation = functions.https.onRequest(async (req, res) => {
 // For App, which will be used by app users
 // https://us-central1-barnard-project.cloudfunctions.net/getTranslations
 exports.getTranslations = functions.https.onRequest(async (req, res) => {
+  const hasAccess = await checkAccess_(req, res);
+  if (!hasAccess) {
+    return;
+  }
   const english_words = req.body.english_words || [];
   console.log(english_words);
   const collectionRef = admin.firestore().collection("translations");
@@ -124,6 +140,10 @@ exports.getTranslations = functions.https.onRequest(async (req, res) => {
 // For translation page, which will be used by admin & moderators.
 // https://us-central1-barnard-project.cloudfunctions.net/translations?limit=2&reverse=true
 exports.translations = functions.https.onRequest(async (req, res) => {
+  const hasAccess = await checkAccess_(req, res);
+  if (!hasAccess) {
+    return;
+  }
   const start = +req.query.start || 1;
   const limit = +req.query.limit || 20;
   const reverse = req.query.reverse || "false";
@@ -147,14 +167,16 @@ exports.translations = functions.https.onRequest(async (req, res) => {
   }
 });
 
-// todo(parikhshiv) - made this method mainly for development, can be
-// replaced / expanded
 exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
   const pageSize = +req.query.pageSize;
   const pageNum = +req.query.pageNum;
   const state = req.query.state;
   const needsRecording = req.query.needsRecording;
   return cors(req, res, async () => {
+    const hasAccess = await checkAccess_(req, res);
+    if (!hasAccess) {
+      return;
+    }
     let collection = admin.firestore().collection(req.query.collectionName)
       .orderBy("english_word");
 
@@ -202,6 +224,10 @@ exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
 
 exports.deleteRow = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
+    const hasAccess = await checkAccess_(req, res);
+    if (!hasAccess) {
+      return;
+    }
     const doc = admin.firestore().collection(req.body.collectionName)
       .doc(req.body.id);
     try {
@@ -218,12 +244,11 @@ exports.deleteRow = functions.https.onRequest(async (req, res) => {
 exports.grantModeratorRole = functions.https.onRequest((req, res) => {
   return cors(req, res, async () => {
     try {
-      const idToken = req.body.idToken;
-      const customClaims = await admin.auth().verifyIdToken(idToken);
-      if (!(customClaims && customClaims.admin)) {
-        res.status(200).send(JSON.stringify("You are not authenticated to grant this role."));
+      const hasAccess = await checkAdminAccess_(req, res);
+      if (!hasAccess) {
         return;
       }
+      const revoke = Boolean(req.body.revoke);
       const user = await admin.auth().getUserByEmail(req.body.email);
 
       if (!user) {
@@ -231,13 +256,21 @@ exports.grantModeratorRole = functions.https.onRequest((req, res) => {
         return;
       }
 
-      if (user.customClaims && user.customClaims.moderator) {
+      console.log(revoke);
+      if (revoke) {
+        if (!(user.customClaims && user.customClaims.moderator)) {
+          res.status(200).send(JSON.stringify("Already not a moderator."));
+          return;
+        }
+      } else {
+        if (user.customClaims && user.customClaims.moderator) {
           res.status(200).send(JSON.stringify("Already a moderator."));
           return;
+        }
       }
 
       admin.auth().setCustomUserClaims(user.uid, {
-          moderator: true
+          moderator: !revoke,
       });
       res.status(200).send(JSON.stringify("Success"));
     } catch(err) {
@@ -250,12 +283,11 @@ exports.grantModeratorRole = functions.https.onRequest((req, res) => {
 exports.grantAdminRole = functions.https.onRequest((req, res) => {
   return cors(req, res, async () => {
     try {
-      const idToken = req.body.idToken;
-      const customClaims = await admin.auth().verifyIdToken(idToken);
-      if (!(customClaims && customClaims.admin)) {
-        res.status(200).send(JSON.stringify("You are not authenticated to grant this role."));
+      const hasAccess = await checkAdminAccess_(req, res);
+      if (!hasAccess) {
         return;
       }
+      const revoke = Boolean(req.body.revoke);
       const user = await admin.auth().getUserByEmail(req.body.email); // 1
 
       if (!user) {
@@ -263,13 +295,20 @@ exports.grantAdminRole = functions.https.onRequest((req, res) => {
         return;
       }
 
-      if (user.customClaims && user.customClaims.admin) {
+      if (revoke) {
+        if (!(user.customClaims && user.customClaims.admin)) {
+          res.status(200).send(JSON.stringify("Already not an admin."));
+          return;
+        }
+      } else {
+        if (user.customClaims && user.customClaims.admin) {
           res.status(200).send(JSON.stringify("Already an admin."));
           return;
+        }
       }
 
       admin.auth().setCustomUserClaims(user.uid, {
-          admin: true
+          admin: !revoke,
       });
       res.status(200).send(JSON.stringify("Success"));
     } catch(err) {
@@ -278,6 +317,8 @@ exports.grantAdminRole = functions.https.onRequest((req, res) => {
     }
   });
 });
+
+// Auth Methods
 
 exports.onUserCreated = functions.auth.user().onCreate(async (user) => {
   await setFirstUserAsAdmin();
@@ -290,8 +331,9 @@ async function setFirstUserAsAdmin() {
       return user.customClaims && user.customClaims.admin;
     });
 
-    if (!anyAdmins) {
-      // For new apps, make every existing user an admin if none exist yet.
+    if (!anyAdmins && listUsersResult.users.length < 10) {
+      // For new apps (smaller number of users), make every existing user
+      // an admin if none exist yet.
       listUsersResult.users.forEach((user) => {
         admin.auth().setCustomUserClaims(user.uid, {
           admin: true,
@@ -303,14 +345,52 @@ async function setFirstUserAsAdmin() {
   }
 }
 
+async function checkAccess_(req, res) {
+  try {
+    const customClaims = await getCustomClaims_(req, res);
+    if (!customClaims) {
+      res.status(403).send(JSON.stringify("Permission Denied."));
+      return false;
+    }
 
-// exports.getBatchTranslations = functions.https.onRequest(async (req, res) => {
-//   console.log('getBatchTranslations');
-//   db.collection("translations").get().then(function(querySnapshot) {
-//     querySnapshot.forEach(function(doc) {
-//         // doc.data() is never undefined for query doc snapshots
-//         console.log(doc.id, " => ", doc.data());
-//     });
-//   });
-//   res.status(200).send("Translation returned..");
-// });
+    if (!(customClaims.moderator || customClaims.admin)) {
+      res.status(403).send(JSON.stringify("Permission Denied."));
+      return false;
+    }
+
+    return true;
+  } catch(err) {
+    res.status(403).send(JSON.stringify("Permission Denied."));
+    return false;
+  }
+}
+
+async function checkAdminAccess_(req, res) {
+  try {
+    const customClaims = await getCustomClaims_(req, res);
+    if (!customClaims) {
+      res.status(403).send(JSON.stringify("Permission Denied."));
+      return false;
+    }
+
+    if (!customClaims.admin) {
+      res.status(403).send(JSON.stringify("Permission Denied."));
+      return false;
+    }
+
+    return true;
+  } catch(err) {
+    res.status(403).send(JSON.stringify("Permission Denied."));
+    return false;
+  }
+}
+
+async function getCustomClaims_(req, res) {
+  const authHeader = req.get('Authorization');
+  if (!authHeader) {
+    res.status(403).send(JSON.stringify("Permission Denied."));
+    return false;
+  }
+  const tokenId = req.get('Authorization').split('Bearer ')[1];
+  return await admin.auth().verifyIdToken(tokenId);
+}
