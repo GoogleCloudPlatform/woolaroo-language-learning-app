@@ -25,6 +25,7 @@ export class TranslationSelectorComponent {
   public audioPlaying = false;
   public lineTargetPosition: Point|null = null;
 
+  public selectedWordVisible = false;
   public selectedWord: WordTranslation|null = null;
 
   onPlayAudioClick() {
@@ -52,22 +53,30 @@ export class TranslationSelectorComponent {
   onSelectedWordChanged(translation: WordTranslation) {
     // will be fired immediately after "translations" is set, so need to delay changing
     // state again by a frame to avoid "expression changed after it was checked" error
-    setTimeout(() => this.selectedWord = translation, 1);
+    setTimeout(() => {
+      this.selectedWordVisible = !!translation;
+      // don't set selectedWord to null - we don't want to immediately hide translation, but transition out
+      if (translation) {
+        this.selectedWord = translation;
+      }
+    }, 1);
     this.selectedWordChanged.emit(translation);
   }
 
   onTargetPositionChanged(position: Point) {
-    this.lineTargetPosition = position;
+    // will be fired immediately after "translations" is set, so need to delay changing
+    // state again by a frame to avoid "expression changed after it was checked" error
+    setTimeout(() => this.lineTargetPosition = position, 1);
   }
 
   onAddRecordingClick() {
-    if (this.selectedWord) {
+    if (this.selectedWordVisible && this.selectedWord) {
       this.addRecording.emit(this.selectedWord);
     }
   }
 
   onAddTranslationClick() {
-    if (this.selectedWord) {
+    if (this.selectedWordVisible && this.selectedWord) {
       this.addTranslation.emit(this.selectedWord);
     }
   }
@@ -77,7 +86,7 @@ export class TranslationSelectorComponent {
   }
 
   onShareClick() {
-    if (this.selectedWord) {
+    if (this.selectedWordVisible && this.selectedWord) {
       this.wordShared.emit(this.selectedWord);
     }
   }

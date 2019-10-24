@@ -107,6 +107,16 @@ app-selection-line {
   height: 125px;
 }
 
+.translation-container,
+.translation-not-found,
+app-selection-line {
+  transition: opacity 0.3s ease-in-out;
+
+  &.hidden {
+    opacity: 0;
+  }
+}
+
 app-word-scroll-list {
   margin-top: 15px;
 }

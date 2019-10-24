@@ -35,7 +35,7 @@ export class IconComponent {
       add_feedback: 'chat_bubble_outline.svg',
       back: 'arrow_back.svg',
       share: 'share.svg',
-      play_audio: 'play_audio.svg',
+      play_audio: 'volume_up.svg',
       record_audio: 'mic.svg',
       stop_audio: 'stop.svg',
       play_recording: 'play_arrow.svg',
