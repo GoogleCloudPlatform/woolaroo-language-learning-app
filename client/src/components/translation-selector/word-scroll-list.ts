@@ -249,21 +249,22 @@ export class WordScrollListComponent implements AfterViewChecked {
     const scrollContainer = this.hostElement.nativeElement as HTMLElement;
     const scrollContent = this.scrollContent.nativeElement;
     const items = scrollContent.getElementsByTagName('li');
-    if (!items || this.selectedWordIndex >= items.length) {
+    if (!items) {
       return;
     }
+    const wordIndex = Math.min(this.selectedWordIndex, items.length - 2);
     const containerBounds = scrollContainer.getBoundingClientRect();
     const centerX = containerBounds.left + containerBounds.width * 0.5;
-    const currentItem = items[this.selectedWordIndex];
+    const currentItem = items[wordIndex];
     const currentItemBounds = currentItem.getBoundingClientRect();
     const currentItemCenterX = currentItemBounds.left + currentItemBounds.width * 0.5;
     const dx = centerX - currentItemCenterX;
     let maxSnapDx = currentItemBounds.width * 0.5; // max distance before snapping to next element
     let adjacentItem = null;
-    if (dx < 0 && this.selectedWordIndex > 0) {
-      adjacentItem = items[this.selectedWordIndex - 1];
-    } else if (dx > 0 && this.selectedWordIndex < items.length - 1) {
-      adjacentItem = items[this.selectedWordIndex + 1];
+    if (dx < 0 && wordIndex > 0) {
+      adjacentItem = items[wordIndex - 1];
+    } else if (dx > 0 && wordIndex < items.length - 1) {
+      adjacentItem = items[wordIndex + 1];
     }
     if (adjacentItem) {
       // has adjacent item - adjust max snap distance to point between the items
