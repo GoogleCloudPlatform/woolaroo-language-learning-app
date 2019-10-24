@@ -4,6 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/NotInterested';
 import SaveIcon from '@material-ui/icons/Done';
 import ApiUtils from '../utils/ApiUtils';
+import AuthUtils from '../utils/AuthUtils';
 import './ContributionListItem.css';
 
 class ContributionListItem extends ListItemBase {
@@ -41,6 +42,7 @@ class ContributionListItem extends ListItemBase {
         }),
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': await AuthUtils.getAuthHeader(),
         }
       });
 
@@ -62,6 +64,7 @@ class ContributionListItem extends ListItemBase {
         }),
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': await AuthUtils.getAuthHeader(),
         }
       });
 

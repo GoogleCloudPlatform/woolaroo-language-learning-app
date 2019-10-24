@@ -1,6 +1,0 @@
-{
-  "rules": {
-    ".read": "auth.uid != null && (auth.token.moderator == true || auth.token.admin == true)",
-    ".write": "auth.uid != null && (auth.token.moderator == true || auth.token.admin == true)"
-  }
-}

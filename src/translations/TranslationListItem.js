@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import ListItemBase from '../common/ListItemBase'
 import ApiUtils from '../utils/ApiUtils';
+import AuthUtils from '../utils/AuthUtils';
 import './TranslationListItem.css';
 
 class TranslationListItem extends ListItemBase {
@@ -75,6 +76,7 @@ class TranslationListItem extends ListItemBase {
           transliteration,
         }),
         headers: {
+          'Authorization': await AuthUtils.getAuthHeader(),
           'Content-Type': 'application/json',
         }
       });
@@ -101,6 +103,9 @@ class TranslationListItem extends ListItemBase {
       const res = await fetch(`${ApiUtils.origin}${ApiUtils.path}saveAudioSuggestions`, {
         method: 'POST',
         body: base64Audio,
+        headers: {
+          'Authorization': await AuthUtils.getAuthHeader(),
+        }
       });
       return await res.text();
     } catch(err) {

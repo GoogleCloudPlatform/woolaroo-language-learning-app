@@ -21,16 +21,16 @@ class ManagementPage extends React.Component {
     this.setState({email: e.target.value});
   }
 
-  async grantAccess_(role) {
-    const idToken = await AuthUtils.getUser().getIdToken();
+  async grantAccess_(role, revoke = false) {
     try {
       const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}grant${role}Role`, {
         method: 'POST',
         body: JSON.stringify({
           email: this.state.email,
-          idToken,
+          revoke,
         }),
         headers: {
+          'Authorization': await AuthUtils.getAuthHeader(),
           'Content-Type': 'application/json',
         }
       });

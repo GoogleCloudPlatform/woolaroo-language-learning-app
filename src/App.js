@@ -61,7 +61,7 @@ class App extends React.Component {
 
   async logOut_() {
     try {
-      await this.authUtils_.signOut();
+      await AuthUtils.signOut();
     } catch(err) {
       console.error(err);
     }
