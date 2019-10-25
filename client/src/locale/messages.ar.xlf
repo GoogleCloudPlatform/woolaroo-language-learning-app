@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="introAbout" datatype="html">
+        <target>يقدّم تطبيق Project Woolaroo طريقة تفاعلية جديدة للوصول إلى لغات أصلية بدعم من نظام التعلُّم الآلي من Google.</target>
+      </trans-unit>
+      <trans-unit id="next" datatype="html">
+        <target>التالي</target>
+      </trans-unit>
+      <trans-unit id="skip" datatype="html">
+        <target>تخطّي</target>
+      </trans-unit>
+      <trans-unit id="introFeedback" datatype="html">
+        <target>قد يخطئ النظام أحيانًا، لذا يُرجى مساعدتنا في تحسينه من خلال مشاركة التعليقات والتصحيحات. </target>
+      </trans-unit>
+      <trans-unit id="startExploring" datatype="html">
+        <target>بدء الاستكشاف</target>
+      </trans-unit>
+      <trans-unit id="termsAndPrivacyTitle" datatype="html">
+        <target>الأحكام والخصوصية</target>
+      </trans-unit>
+      <trans-unit id="introTermsAndPrivacy" datatype="html">
+        <target>يشير استخدام تطبيق Project Barnard إلى موافقتك على الأحكام والشروط وسياسة الخصوصية.</target>
+      </trans-unit>
+      <trans-unit id="accept" datatype="html">
+        <target>الموافقة</target>
+      </trans-unit>
+      <trans-unit id="termsAndPrivacyContent" datatype="html">
+        <target></target>
+      </trans-unit>
+      <trans-unit id="photoSource" datatype="html">
+        <target>يمكنك استخدام صورة من هاتفك أو التقاط صورة لعنصر من حولك.</target>
+      </trans-unit>
+      <trans-unit id="pickPhoto" datatype="html">
+        <target>التقاط صورة</target>
+      </trans-unit>
+      <trans-unit id="takePhoto" datatype="html">
+        <target>اختيار صورة</target>
+      </trans-unit>
+      <trans-unit id="errorTitle" datatype="html">
+        <target>Error</target>
+      </trans-unit>
+      <trans-unit id="close" datatype="html">
+        <target>Close</target>
+      </trans-unit>
+      <trans-unit id="imageCaptionLabel" datatype="html">
+        <target>ما هذا؟</target>
+      </trans-unit>
+      <trans-unit id="imageCaptionRequired" datatype="html">
+        <target>Image caption is required</target>
+      </trans-unit>
+      <trans-unit id="translationFeedback" datatype="html">
+        <target>تعليقات حول الترجمة</target>
+      </trans-unit>
+      <trans-unit id="feedbackTitle" datatype="html">
+        <target>التعليقات</target>
+      </trans-unit>
+      <trans-unit id="submit" datatype="html">
+        <target>إرسال</target>
+      </trans-unit>
+      <trans-unit id="feedbackInstructions" datatype="html">
+        <target>يُرجى مساعدتنا في تحسين الترجمة في تطبيق Project Barnard من خلال إرسال التعليقات إلينا.</target>
+      </trans-unit>
+      <trans-unit id="incorrectTranslation" datatype="html">
+        <target>ترجمة غير صحيحة</target>
+      </trans-unit>
+      <trans-unit id="offensiveTranslation" datatype="html">
+        <target>ترجمة مسيئة</target>
+      </trans-unit>
+      <trans-unit id="alternateTranslation" datatype="html">
+        <target>ترجمة بديلة</target>
+      </trans-unit>
+      <trans-unit id="other" datatype="html">
+        <target>غير ذلك</target>
+      </trans-unit>
+      <trans-unit id="feedbackTypeRequired" datatype="html">
+        <target>لم يتم اختيار نوع التعليقات</target>
+      </trans-unit>
+      <trans-unit id="enterFeedback" datatype="html">
+        <target>إدخال التعليقات</target>
+      </trans-unit>
+      <trans-unit id="feedbackRequired" datatype="html">
+        <target>يجب إدخال التعليقات</target>
+      </trans-unit>
+      <trans-unit id="addWordTitle" datatype="html">
+        <target>إضافة كلمة</target>
+      </trans-unit>
+      <trans-unit id="add" datatype="html">
+        <target>إضافة</target>
+      </trans-unit>
+      <trans-unit id="addWordInstructions" datatype="html">
+        <target>يمكنك المساهمة في التطبيق من خلال إضافة كلمات جديدة باللغة <x id="INTERPOLATION" equiv-text="{{nativeLanguage}}"/> وترجماتها.</target>
+      </trans-unit>
+      <trans-unit id="wordInNativeScript" datatype="html">
+        <target>الكلمة في النص الأصلي</target>
+      </trans-unit>
+      <trans-unit id="nativeWordRequired" datatype="html">
+        <target>Word in native script is required</target>
+      </trans-unit>
+      <trans-unit id="nativeScriptHint" datatype="html">
+        <target>e.g. هتاف للترحيب</target>
+      </trans-unit>
+      <trans-unit id="wordInEnglish" datatype="html">
+        <target>الكلمة باللغة الإنجليزية</target>
+      </trans-unit>
+      <trans-unit id="englishWordRequired" datatype="html">
+        <target>English word is required</target>
+      </trans-unit>
+      <trans-unit id="englishWordHint" datatype="html">
+        <target>e.g. &apos;hello&apos;</target>
+      </trans-unit>
+      <trans-unit id="transliteration" datatype="html">
+        <target>التحويل الصوتي (اختياري)</target>
+      </trans-unit>
+      <trans-unit id="transliterationHint" datatype="html">
+        <target>كلمة بالحروف اللاتينية، مثل &apos;marhaba&apos;</target>
+      </trans-unit>
+      <trans-unit id="recordPronunciation" datatype="html">
+        <target>سجل النطق</target>
+      </trans-unit>
+      <trans-unit id="saved" datatype="html">
+        <target>Saved</target>
+      </trans-unit>
+      <trans-unit id="specialCharsInstructions" datatype="html">
+        <target>للكتابة بأحرف خاصة، يمكنك استخدام <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>GBoard<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> أو Keyman.
+        Want to type special characters? Try <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>GBoard<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> or <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>Keyman<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></target>
+      </trans-unit>
+      <trans-unit id="aboutTitle" datatype="html">
+        <target>لمحة عن التطبيق</target>
+      </trans-unit>
+      <trans-unit id="aboutContent1" datatype="html">
+        <target>نقدّم لك Woolaroo، وهو مشروع لبرنامج مفتوح المصدر من Google يستخدم الكاميرا في هاتفك لترجمة أسماء العناصر بشكل فوري إلى لغات أصلية. </target>
+      </trans-unit>
+      <trans-unit id="aboutContent2" datatype="html">
+        <target>يسهل استخدام هذا التطبيق، فما عليك سوى التقاط صورة لعنصر من حياتك اليومية (أو تحميل صورة بنفسك) وسيترجم التطبيق اسمها إلى اللغة <x id="INTERPOLATION" equiv-text="{{nativeLanguage}}"/> في الوقت الفعلي. يمكنك حفظ الصورة المترجَمة أو مشاركتها أو تجربة التطبيق مرة أخرى.</target>
+      </trans-unit>
+      <trans-unit id="technologyTitle" datatype="html">
+        <target>التكنولوجيا</target>
+      </trans-unit>
+      <trans-unit id="technologyContent1" datatype="html">
+        <target>يستخدم تطبيق Project Woolaroo تقنية متقدمة لتعلّم الآلة من أجل فهم العناصر في الصورة وترجمتها في الوقت الفعلي باستخدام "ترجمة Google" وتقنية Cloud Vision. </target>
+      </trans-unit>
+      <trans-unit id="technologyContent2" datatype="html">
+        <target>يقدّم التطبيق الترجمة الأصلية الأكثر ترجيحًا استنادًا إلى العنصر الرئيسي في الصورة. وإذا تم العثور على عناصر متعددة، يمكنك التنقّل بينها وصولاً إلى الترجمة الصحيحة واختيارها.</target>
+      </trans-unit>
+      <trans-unit id="technologyContent3" datatype="html">
+        <target>يعتمد تطبيق Project Woolaroo على أحدث تكنولوجيا الذكاء الاصطناعي، وبالتالي يمكن أن يخطئ أحيانًا، لكننا نعمل بجد على تحسينه. يمكنك مساعدتنا باستخدام ميزة "تعليقات بشأن الترجمة" لتسجيل أيّ ترجمات لا تبدو صحيحة. </target>
+      </trans-unit>
+      <trans-unit id="logo" datatype="html">
+        <target>Woolaroo</target>
+      </trans-unit>
+      <trans-unit id="addToHomeScreen" datatype="html">
+        <target>إضافة إلى الشاشة الرئيسية</target>
+      </trans-unit>
+      <trans-unit id="enterSomethingElse" datatype="html">
+        <target>Enter something else</target>
+      </trans-unit>
+      <trans-unit id="wordSubmitted" datatype="html">
+        <target>Submitted for review</target>
+      </trans-unit>
+      <trans-unit id="addWordError" datatype="html">
+        <target>Unable to add word</target>
+      </trans-unit>
+      <trans-unit id="startCameraError" datatype="html">
+        <target>Unable to start camera</target>
+      </trans-unit>
+      <trans-unit id="captureImageError" datatype="html">
+        <target>Unable to capture image</target>
+      </trans-unit>
+      <trans-unit id="feedbackSubmitted" datatype="html">
+        <target>Feedback submitted</target>
+      </trans-unit>
+      <trans-unit id="submitFeedbackError" datatype="html">
+        <target>Unable to save feedback</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
