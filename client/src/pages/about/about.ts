@@ -9,7 +9,7 @@ import { environment } from 'environments/environment';
   styleUrls: ['./about.scss']
 })
 export class AboutPageComponent implements AfterViewInit {
-  public get nativeLanguage(): string { return environment.nativeLanguage; }
+  public get endangeredLanguage(): string { return environment.endangeredLanguage; }
 
   constructor( private router: Router,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {

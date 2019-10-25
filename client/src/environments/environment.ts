@@ -15,7 +15,7 @@ export const environment = {
   serviceWorker: {
     url: 'ngsw-worker.js'
   },
-  nativeLanguage: 'Sicilian',
+  endangeredLanguage: 'Sicilian',
   pages: {
     splash: {
       duration: 3000,

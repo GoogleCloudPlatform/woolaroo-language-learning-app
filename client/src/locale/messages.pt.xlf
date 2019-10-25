@@ -90,7 +90,7 @@
         <target>ADICIONAR</target>
       </trans-unit>
       <trans-unit id="addWordInstructions" datatype="html">
-        <target>Adicione novas palavras em <x id="INTERPOLATION" equiv-text="{{nativeLanguage}}"/> e a tradução delas para contribuir com o app</target>
+        <target>Adicione novas palavras em <x id="INTERPOLATION" equiv-text="{{endangeredLanguage}}"/> e a tradução delas para contribuir com o app</target>
       </trans-unit>
       <trans-unit id="wordInNativeScript" datatype="html">
         <target>Palavra no idioma nativo</target>
@@ -132,7 +132,7 @@
         <target>Conheça o Woolaroo, um projeto de código aberto do Google que usa a câmera do seu smartphone para traduzir instantaneamente os nomes de objetos para idiomas indígenas. </target>
       </trans-unit>
       <trans-unit id="aboutContent2" datatype="html">
-        <target>É muito fácil usar o app: basta tirar a foto de um objeto (ou fazer o upload de uma imagem) para ver o nome dele traduzido para <x id="INTERPOLATION" equiv-text="{{nativeLanguage}}"/> em tempo real. Você pode salvar e compartilhar a foto traduzida ou solicitar outra tradução.</target>
+        <target>É muito fácil usar o app: basta tirar a foto de um objeto (ou fazer o upload de uma imagem) para ver o nome dele traduzido para <x id="INTERPOLATION" equiv-text="{{endangeredLanguage}}"/> em tempo real. Você pode salvar e compartilhar a foto traduzida ou solicitar outra tradução.</target>
       </trans-unit>
       <trans-unit id="technologyTitle" datatype="html">
         <target>A tecnologia</target>

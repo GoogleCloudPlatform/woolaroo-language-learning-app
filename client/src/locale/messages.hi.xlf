@@ -90,7 +90,7 @@
         <target>जोड़ें</target>
       </trans-unit>
       <trans-unit id="addWordInstructions" datatype="html">
-        <target><x id="INTERPOLATION" equiv-text="{{nativeLanguage}}"/> के नए शब्द और उनके अनुवाद जोड़कर ऐप्लिकेशन में योगदान दें.</target>
+        <target><x id="INTERPOLATION" equiv-text="{{endangeredLanguage}}"/> के नए शब्द और उनके अनुवाद जोड़कर ऐप्लिकेशन में योगदान दें.</target>
       </trans-unit>
       <trans-unit id="wordInNativeScript" datatype="html">
         <target>शब्द, स्थानीय लिपि में</target>
@@ -132,7 +132,7 @@
         <target>पेश है Woolaroo, एक ओपन सोर्स Google Project जो फ़ोन का कैमरा इस्तेमाल करके चीज़ों का स्थानीय भाषाओं में झटपट अनुवाद कर देता है. </target>
       </trans-unit>
       <trans-unit id="aboutContent2" datatype="html">
-        <target>इसे इस्तेमाल करना बहुत आसान है – रोज़मर्रा की किसी चीज़ की फ़ोटो लें (या आपके पास मौजूद फ़ोटो अपलोड करें) और इसका अनुवाद रियल-टाइम में <x id="INTERPOLATION" equiv-text="{{nativeLanguage}}"/> में किया जाएगा. आप अनुवाद की गई इमेज को सेव कर सकते हैं, शेयर कर सकते हैं या अनुवाद सही न लग रहा हो, तो दोबारा कोशिश कर सकते हैं.</target>
+        <target>इसे इस्तेमाल करना बहुत आसान है – रोज़मर्रा की किसी चीज़ की फ़ोटो लें (या आपके पास मौजूद फ़ोटो अपलोड करें) और इसका अनुवाद रियल-टाइम में <x id="INTERPOLATION" equiv-text="{{endangeredLanguage}}"/> में किया जाएगा. आप अनुवाद की गई इमेज को सेव कर सकते हैं, शेयर कर सकते हैं या अनुवाद सही न लग रहा हो, तो दोबारा कोशिश कर सकते हैं.</target>
       </trans-unit>
       <trans-unit id="technologyTitle" datatype="html">
         <target>टेक्नोलॉजी</target>
