@@ -3,12 +3,12 @@
 <mat-list>
   <mat-list-item><a [routerLink]="['/about']" i18n="@@aboutTitle">About the app</a></mat-list-item>
   <mat-list-item><a [routerLink]="['/technology']" i18n="@@technologyTitle">The technology</a></mat-list-item>
-  <mat-list-item><a [routerLink]="['/feedback']" [state]="{prevPageCssClass: 'capture'}" i18n="@@feedbackLongTitle">
+  <mat-list-item><a [routerLink]="['/feedback']" [state]="{prevPageCssClass: 'capture'}" i18n="@@translationFeedback">
     Translation feedback</a></mat-list-item>
   <mat-list-item><a [routerLink]="['/add-word']" [state]="{prevPageCssClass: 'capture'}" i18n="@@addWordTitle">Add word</a></mat-list-item>
   <mat-list-item><a [routerLink]="['/terms']" i18n="@@termsAndPrivacyTitle">Terms &amp; Privacy</a></mat-list-item>
 </mat-list>
-<button *ngIf="canAddToHomeScreen" class="home-screen" mat-button i18n="@@addToHomeScreen" (click)="onAddToHomeScreenClick()">
+<button *ngIf="canAddToHomeScreen" class="home-screen" mat-button (click)="onAddToHomeScreenClick()">
   <app-icon icon="add_to_home"></app-icon>
-  Add to home screen
+  <span i18n="@@addToHomeScreen">Add to home screen</span>
 </button>

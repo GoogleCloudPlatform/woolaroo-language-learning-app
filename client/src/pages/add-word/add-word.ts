@@ -22,6 +22,7 @@ enum RecordingState {
 }
 
 interface AddWordConfig {
+  nativeLanguage: string,
   maxRecordingDuration: number;
   recordingBufferSize: number;
   recordingMimeTypes: string[];
@@ -51,6 +52,8 @@ export class AddWordPageComponent implements AfterViewInit {
   public operatingSystemValues = OperatingSystem;
   public gboardUrl: string;
   public keymanUrl: string;
+
+  public get nativeLanguage(): string { return environment.nativeLanguage; }
 
   constructor( @Inject(ADD_WORD_CONFIG) private config: AddWordConfig,
                private router: Router,
