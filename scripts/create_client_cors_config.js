@@ -13,7 +13,7 @@ const APP_SERVICE = process.argv[4];
 const APP_URL = process.argv[5];
 
 const origins = [];
-origins.push(APP_SERVICE ? `https://${PROJECT_ID}-${APP_SERVICE}.appspot.com` : `https://${PROJECT_ID}.appspot.com`);
+origins.push(APP_SERVICE ? `https://${APP_SERVICE}-dot-${PROJECT_ID}.appspot.com` : `https://${PROJECT_ID}.appspot.com`);
 if(APP_URL) {
     origins.push(APP_URL);
 }
