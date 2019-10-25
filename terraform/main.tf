@@ -10,10 +10,6 @@ variable "app_location" {
   default = ""
 }
 
-output "app_url" {
-  value = "https://${google_app_engine_application.app.default_hostname}"
-}
-
 output "bucket_url" {
   value = "gs://${var.bucket_name}"
 }
