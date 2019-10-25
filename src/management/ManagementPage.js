@@ -27,28 +27,28 @@ const useStyles = makeStyles(theme => ({
 function ManagementPage() {
   const classes = useStyles();
 
-	const [inviteDialogIsOpen, setInviteDialogOpen] = React.useState(false);
-	const handleOpen = () => {
-		setInviteDialogOpen(true);
-	}
-	const handleClose = () => {
-		setInviteDialogOpen(false);
-	}	
+  const [inviteDialogIsOpen, setInviteDialogOpen] = React.useState(false);
+  const handleOpen = () => {
+    setInviteDialogOpen(true);
+  }
+  const handleClose = () => {
+    setInviteDialogOpen(false);
+  } 
 
-	const [inviteRole, setInviteRole] = React.useState('moderator');
-	const handleRoleSelected = (event) => {
-		setInviteRole(event.target.value);
-	}
+  const [inviteRole, setInviteRole] = React.useState('moderator');
+  const handleRoleSelected = (event) => {
+    setInviteRole(event.target.value);
+  }
 
   return (
     <div>
       <h2>User Management</h2>
       <Button
-      	variant='contained'
-      	color='primary'
-      	onClick={handleOpen}
-      	className={classes.button}
-    	>
+        variant='contained'
+        color='primary'
+        onClick={handleOpen}
+        className={classes.button}
+      >
         Invite users
       </Button>
 
@@ -69,13 +69,13 @@ function ManagementPage() {
           </DialogContentText>
           <DialogContentText>Assign role</DialogContentText>
 
-		      <FormControl component="fieldset" className={classes.formControl}>
-		        <FormLabel component="legend">Gender</FormLabel>
-		        <RadioGroup aria-label="gender" name="gender1" value={inviteRole} onChange={setInviteRole}>
-		          <FormControlLabel value="moderator" control={<Radio />} label="Moderator" />
-		          <FormControlLabel value="admin" control={<Radio />} label="Admin" />
-		        </RadioGroup>
-		      </FormControl>
+          <FormControl component="fieldset" className={classes.formControl}>
+            <FormLabel component="legend">Gender</FormLabel>
+            <RadioGroup aria-label="gender" name="gender1" value={inviteRole} onChange={setInviteRole}>
+              <FormControlLabel value="moderator" control={<Radio />} label="Moderator" />
+              <FormControlLabel value="admin" control={<Radio />} label="Admin" />
+            </RadioGroup>
+          </FormControl>
         </DialogContent>
 
         <DialogActions>
