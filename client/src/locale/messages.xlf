@@ -199,7 +199,7 @@
         </context-group>
       </trans-unit><trans-unit id="addWordInstructions" datatype="html">
         <source>
-      Contribute to the app by adding new words in <x id="INTERPOLATION" equiv-text="{{nativeLanguage}}"/> and their translations
+      Contribute to the app by adding new words in <x id="INTERPOLATION" equiv-text="{{endangeredLanguage}}"/> and their translations
     </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/pages/add-word/add-word.html</context>
@@ -292,7 +292,7 @@
         </context-group>
       </trans-unit><trans-unit id="aboutContent2" datatype="html">
         <source>It&apos;s really easy to use — just take a photo of  an everyday object
-    (or upload your own) and see it translated into <x id="INTERPOLATION" equiv-text="{{nativeLanguage}}"/> in real time. You can save the translated
+    (or upload your own) and see it translated into <x id="INTERPOLATION" equiv-text="{{endangeredLanguage}}"/> in real time. You can save the translated
     image, share it or have another go.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/pages/about/about.html</context>

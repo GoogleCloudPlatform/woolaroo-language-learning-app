@@ -92,7 +92,7 @@
         <target>Add</target>
       </trans-unit>
       <trans-unit id="addWordInstructions" datatype="html">
-        <target>Contribute to the app by adding new words in <x id="INTERPOLATION" equiv-text="{{nativeLanguage}}"/> and their translations</target>
+        <target>Contribute to the app by adding new words in <x id="INTERPOLATION" equiv-text="{{endangeredLanguage}}"/> and their translations</target>
       </trans-unit>
       <trans-unit id="wordInNativeScript" datatype="html">
         <target>Word in native script</target>
@@ -135,7 +135,7 @@
       </trans-unit>
       <trans-unit id="aboutContent2" datatype="html">
         <target>It&apos;s really easy to use — just take a photo of  an everyday object
-              (or upload your own) and see it translated into <x id="INTERPOLATION" equiv-text="{{nativeLanguage}}"/> in real time. You can save the translated
+              (or upload your own) and see it translated into <x id="INTERPOLATION" equiv-text="{{endangeredLanguage}}"/> in real time. You can save the translated
               image, share it or have another go.</target>
       </trans-unit>
       <trans-unit id="technologyTitle" datatype="html">

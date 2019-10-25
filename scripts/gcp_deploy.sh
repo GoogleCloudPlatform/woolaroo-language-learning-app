@@ -26,6 +26,10 @@ TERRAFORM_BUCKET_NAME=${PROJECT_ID}-terraform
 TERRAFORM_BUCKET_PATH=state
 # Color theme for the app - "red", "orange", "dark-orange", "turquoise" or "green"
 THEME='red'
+# Name of the endangered language (e.g. Sicilian)
+ENDANGERED_LANGUAGE=''
+# URL of the partner logo (gs://<url>)
+PARTNER_LOGO_URL=''
 
 # Get the directory of this script
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
@@ -35,5 +39,6 @@ pushdir ${SCRIPT_DIR}/../
 gcloud builds submit --substitutions=_APP_LOCATION=${APP_LOCATION},_GOOGLE_API_KEY=${GOOGLE_API_KEY},\
     _BUCKET_NAME=${BUCKET_NAME},_BUCKET_LOCATION=${BUCKET_LOCATION},_LANGUAGE=${LANGUAGE},\
     _THEME=${THEME},_TERRAFORM_BUCKET_NAME=${TERRAFORM_BUCKET_NAME},_TERRAFORM_BUCKET_PATH=${TERRAFORM_BUCKET_PATH},\
-    _APP_URL=${APP_URL},_APP_SERVICE=${APP_SERVICE},_API_URL=${API_URL}
+    _APP_URL=${APP_URL},_APP_SERVICE=${APP_SERVICE},_API_URL=${API_URL},_ENDANGERED_LANGUAGE=${ENDANGERED_LANGUAGE},\
+    _PARTNER_LOGO_URL=${PARTNER_LOGO_URL}
 popdir

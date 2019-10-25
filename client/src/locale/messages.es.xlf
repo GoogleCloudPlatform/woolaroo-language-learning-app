@@ -132,7 +132,7 @@
         <target>Te presentamos Woolaroo, un proyecto de Google de código abierto que utiliza la cámara de tu teléfono para identificar objetos y traducirlos rápidamente a la palabra correspondiente en una lengua indígena. </target>
       </trans-unit>
       <trans-unit id="aboutContent2" datatype="html">
-        <target>Es muy fácil de usar: solo tienes que hacer una foto de un objeto cotidiano (o subir una que ya tengas) y verás su traducción al <x id="INTERPOLATION" equiv-text="{{nativeLanguage}}"/> en tiempo real. Puedes guardar la imagen traducida, compartirla o traducir otro objeto.</target>
+        <target>Es muy fácil de usar: solo tienes que hacer una foto de un objeto cotidiano (o subir una que ya tengas) y verás su traducción al <x id="INTERPOLATION" equiv-text="{{endangeredLanguage}}"/> en tiempo real. Puedes guardar la imagen traducida, compartirla o traducir otro objeto.</target>
       </trans-unit>
       <trans-unit id="technologyTitle" datatype="html">
         <target>Información sobre la tecnología</target>

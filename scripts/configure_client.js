@@ -16,6 +16,10 @@ if(!GOOGLE_API_KEY) {
     throw new Error('Google API key not set');
 }
 const GOOGLE_TRACKER_ID = process.argv[paramIndex++];
+const ENDANGERED_LANGUAGE = process.argv[paramIndex++];
+if(!ENDANGERED_LANGUAGE) {
+    throw new Error('Endangered language not set');
+}
 let PARTNER_LOGO_URL = process.argv[paramIndex++];
 const THEME_FILE_PATH = process.argv[paramIndex++];
 const THEME = process.argv[paramIndex++];
@@ -37,6 +41,7 @@ assetsBaseUrl: '${ASSETS_BASE_URL}',
 googleApiKey: '${GOOGLE_API_KEY}',
 googleTrackerId: '${GOOGLE_TRACKER_ID}',
 apiUrl: '${API_URL}',
+endangeredLanguage: '${ENDANGERED_LANGUAGE}'
 partnerLogoUrl: '${PARTNER_LOGO_URL}'
 };`;
 fs.writeFileSync(configFilePath, configContent);

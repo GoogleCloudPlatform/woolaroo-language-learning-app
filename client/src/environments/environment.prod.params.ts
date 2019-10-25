@@ -4,5 +4,5 @@ export const params = {
   googleTrackerId: '',
   apiUrl: '',
   partnerLogoUrl: '',
-  nativeLanguage: ''
+  endangeredLanguage: ''
 };

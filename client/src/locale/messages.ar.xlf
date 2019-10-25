@@ -90,7 +90,7 @@
         <target>إضافة</target>
       </trans-unit>
       <trans-unit id="addWordInstructions" datatype="html">
-        <target>يمكنك المساهمة في التطبيق من خلال إضافة كلمات جديدة باللغة <x id="INTERPOLATION" equiv-text="{{nativeLanguage}}"/> وترجماتها.</target>
+        <target>يمكنك المساهمة في التطبيق من خلال إضافة كلمات جديدة باللغة <x id="INTERPOLATION" equiv-text="{{endangeredLanguage}}"/> وترجماتها.</target>
       </trans-unit>
       <trans-unit id="wordInNativeScript" datatype="html">
         <target>الكلمة في النص الأصلي</target>
@@ -133,7 +133,7 @@
         <target>نقدّم لك Woolaroo، وهو مشروع لبرنامج مفتوح المصدر من Google يستخدم الكاميرا في هاتفك لترجمة أسماء العناصر بشكل فوري إلى لغات أصلية. </target>
       </trans-unit>
       <trans-unit id="aboutContent2" datatype="html">
-        <target>يسهل استخدام هذا التطبيق، فما عليك سوى التقاط صورة لعنصر من حياتك اليومية (أو تحميل صورة بنفسك) وسيترجم التطبيق اسمها إلى اللغة <x id="INTERPOLATION" equiv-text="{{nativeLanguage}}"/> في الوقت الفعلي. يمكنك حفظ الصورة المترجَمة أو مشاركتها أو تجربة التطبيق مرة أخرى.</target>
+        <target>يسهل استخدام هذا التطبيق، فما عليك سوى التقاط صورة لعنصر من حياتك اليومية (أو تحميل صورة بنفسك) وسيترجم التطبيق اسمها إلى اللغة <x id="INTERPOLATION" equiv-text="{{endangeredLanguage}}"/> في الوقت الفعلي. يمكنك حفظ الصورة المترجَمة أو مشاركتها أو تجربة التطبيق مرة أخرى.</target>
       </trans-unit>
       <trans-unit id="technologyTitle" datatype="html">
         <target>التكنولوجيا</target>

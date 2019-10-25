@@ -52,6 +52,7 @@ steps:
            "https://storage.googleapis.com/${_BUCKET_NAME}/",
            "${_GOOGLE_API_KEY}",
            "${_GOOGLE_TRACKER_ID}",
+           "${_ENDANGERED_LANGUAGE}",
            "/assets/img/partner_logo.png",
            "../client/src/style/theme-config.scss",
            "${_THEME}"]

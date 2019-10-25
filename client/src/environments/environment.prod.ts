@@ -13,7 +13,7 @@ export const environment = {
   serviceWorker: {
     url: `${params.assetsBaseUrl}ngsw-worker.js`
   },
-  nativeLanguage: params.nativeLanguage,
+  endangeredLanguage: params.endangeredLanguage,
   pages: {
     splash: {
       duration: 3000,
