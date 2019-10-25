@@ -5,18 +5,17 @@ const CORS_FILE_PATH = process.argv[2];
 if(!CORS_FILE_PATH) {
     throw new Error('CORS file path not set');
 }
-const APP_URL_1 = process.argv[3];
-const APP_URL_2 = process.argv[4];
-if(!APP_URL_1 && !APP_URL_2) {
-    throw new Error('App URL not set');
+const PROJECT_ID = process.argv[3];
+if(!PROJECT_ID) {
+    throw new Error('Project ID not set');
 }
+const APP_SERVICE = process.argv[4];
+const APP_URL = process.argv[5];
 
 const origins = [];
-if(APP_URL_1) {
-    origins.push(APP_URL_1);
-}
-if(APP_URL_2) {
-    origins.push(APP_URL_2);
+origins.push(APP_SERVICE ? `https://${PROJECT_ID}-${APP_SERVICE}.appspot.com` : `https://${PROJECT_ID}.appspot.com`);
+if(APP_URL) {
+    origins.push(APP_URL);
 }
 
 const corsConfig = [{

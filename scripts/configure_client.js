@@ -18,10 +18,10 @@ if(!GOOGLE_API_KEY) {
 const GOOGLE_TRACKER_ID = process.argv[paramIndex++];
 let PARTNER_LOGO_URL = process.argv[paramIndex++];
 const THEME_FILE_PATH = process.argv[paramIndex++];
-if(!THEME_FILE_PATH) {
+const THEME = process.argv[paramIndex++];
+if(THEME && !THEME_FILE_PATH) {
     throw new Error('Theme file path not set');
 }
-const THEME = process.argv[paramIndex++] || 'pink';
 
 if(PARTNER_LOGO_URL) {
     const partnerLogoPath = path.join(__dirname, `../client/src${PARTNER_LOGO_URL}`);
@@ -41,6 +41,8 @@ partnerLogoUrl: '${PARTNER_LOGO_URL}'
 };`;
 fs.writeFileSync(configFilePath, configContent);
 
-const themeFilePath = path.join(process.cwd(), THEME_FILE_PATH);
-let themeContent = `@import 'themes/${THEME}';`;
-fs.writeFileSync(themeFilePath, themeContent);
+if(THEME) {
+    const themeFilePath = path.join(process.cwd(), THEME_FILE_PATH);
+    let themeContent = `@import 'themes/${THEME}';`;
+    fs.writeFileSync(themeFilePath, themeContent);
+}
