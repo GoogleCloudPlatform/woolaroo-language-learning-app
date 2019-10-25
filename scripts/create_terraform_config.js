@@ -9,12 +9,13 @@ const STATE_BUCKET_NAME = process.argv[3];
 if(!STATE_BUCKET_NAME) {
     throw new Error('Terraform state bucket name not set');
 }
+const STATE_BUCKET_PATH = process.argv[4] || 'state';
 
 const configContent =
 `terraform {
   backend "gcs" {
     bucket  = "${STATE_BUCKET_NAME}"
-    prefix  = "state"
+    prefix  = "${STATE_BUCKET_PATH}"
   }
 }`;
 
