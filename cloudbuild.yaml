@@ -43,7 +43,7 @@ steps:
     waitFor: ['install_client_dependencies', 'download_partner_logo']
     name: node:10.16.3
     entrypoint: "node"
-    args: ["./create_client_config.js",
+    args: ["./configure_client.js",
            "../client/src/environments/environment.prod.params.ts",
            "${_API_URL}",
            "https://storage.googleapis.com/${_BUCKET_NAME}/",
@@ -80,7 +80,7 @@ steps:
     waitFor: ['deploy_client']
     name: node:10.16.3
     entrypoint: "node"
-    args: ["./create_client_cors_config.js", "../client_cors.json", "https://$PROJECT_ID.appspot.com", "${_APP_URL}"]
+    args: ["./create_client_cors_config.js", "../client_cors.json", "$PROJECT_ID", "${_APP_SERVICE}", "${_APP_URL}"]
     dir: "./scripts"
   - id: 'set_client_cors'
     waitFor: ['create_client_cors_config']
@@ -95,8 +95,14 @@ steps:
     entrypoint: "npm"
     args: ["install"]
     dir: "./server"
+  - id: 'configure_server'
+    waitFor: ['run_terraform']
+    name: node:10.16.3
+    entrypoint: "node"
+    args: ["./configure_server.js", "${_APP_SERVICE}", "../server/app.yaml"]
+    dir: "./scripts"
   - id: 'build_server'
-    waitFor: ['install_server_dependencies']
+    waitFor: ['install_server_dependencies', 'configure_server']
     name: node:10.16.3
     entrypoint: "npm"
     args: ["run", "build"]
