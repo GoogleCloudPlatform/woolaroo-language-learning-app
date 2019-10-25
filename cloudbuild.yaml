@@ -3,7 +3,10 @@ steps:
   - id: 'configure_terraform'
     name: node:10.16.3
     entrypoint: "node"
-    args: ["./create_terraform_config.js", "../terraform/override.tf", "${_TERRAFORM_BUCKET_NAME}"]
+    args: ["./create_terraform_config.js",
+           "../terraform/override.tf",
+           "${_TERRAFORM_BUCKET_NAME}",
+           "${_TERRAFORM_BUCKET_PATH}"]
     dir: "./scripts"
   - id: 'init_terraform'
     name: hashicorp/terraform:light

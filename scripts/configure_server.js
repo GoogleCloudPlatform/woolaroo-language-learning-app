@@ -10,6 +10,6 @@ if(!APP_YAML_PATH) {
 if(APP_SERVICE) {
     const appYamlPath = path.join(process.cwd(), APP_YAML_PATH);
     let appYamlContent = fs.readFileSync(appYamlPath, {encoding: 'utf-8'});
-    appYamlContent += '\n\n' + APP_SERVICE;
+    appYamlContent += `\n\nservice: ${APP_SERVICE}`;
     fs.writeFileSync(appYamlPath, appYamlContent);
 }

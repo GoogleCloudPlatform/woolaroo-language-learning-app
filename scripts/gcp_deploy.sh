@@ -14,14 +14,18 @@ LANGUAGE=en
 API_URL=''
 # URL of app (optional)
 APP_URL=''
+# Service name of app (optional)
+APP_SERVICE=''
 # Google project ID - default to current project ID
 PROJECT_ID=`gcloud config get-value project`
 # Name of the bucket - can be any unique non-whitespace string
 BUCKET_NAME=${PROJECT_ID}-app
 # Name of the bucket containing terraform state
 TERRAFORM_BUCKET_NAME=${PROJECT_ID}-terraform
-# Color theme for the app - "pink" or "blue"
-THEME='pink'
+# Path of the terraform state within the bucket
+TERRAFORM_BUCKET_PATH=state
+# Color theme for the app - "red", "orange", "dark-orange", "turquoise" or "green"
+THEME='red'
 
 # Get the directory of this script
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
@@ -30,6 +34,6 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 pushdir ${SCRIPT_DIR}/../
 gcloud builds submit --substitutions=_APP_LOCATION=${APP_LOCATION},_GOOGLE_API_KEY=${GOOGLE_API_KEY},\
     _BUCKET_NAME=${BUCKET_NAME},_BUCKET_LOCATION=${BUCKET_LOCATION},_LANGUAGE=${LANGUAGE},\
-    ,_THEME=${THEME},_TERRAFORM_BUCKET_NAME=${TERRAFORM_BUCKET_NAME},_APP_URL=${APP_URL},\
-    ,_API_URL=${API_URL},
+    _THEME=${THEME},_TERRAFORM_BUCKET_NAME=${TERRAFORM_BUCKET_NAME},_TERRAFORM_BUCKET_PATH=${TERRAFORM_BUCKET_PATH},\
+    _APP_URL=${APP_URL},_APP_SERVICE=${APP_SERVICE},_API_URL=${API_URL}
 popdir
