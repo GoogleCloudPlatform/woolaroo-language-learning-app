@@ -38,6 +38,6 @@ resource "google_storage_bucket_iam_member" "app-store-acl" {
 }
 
 resource "google_app_engine_application" "app" {
-  count = "${var.app_location ? 1 : 0}"
+  count = "${var.app_location != "" ? 1 : 0}"
   location_id = var.app_location
 }
