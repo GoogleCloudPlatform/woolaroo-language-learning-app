@@ -9,18 +9,20 @@
     "enzyme-adapter-react-16": "^1.14.0",
     "ffmpeg": "0.0.4",
     "firebase": "^7.1.0",
-    "react": "^16.9.0",
+    "react": "^16.10.2",
     "react-dom": "^16.9.0",
+    "react-modal": "^3.10.1",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.1.1",
+    "react-scripts": "^3.1.1",
+    "react-table": "^6.10.3",
     "react-test-renderer": "^16.9.0",
     "uuid": "^3.3.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "node ./node_modules/react-scripts/bin/react-scripts.js start",
+    "build": "node ./node_modules/react-scripts/bin/react-scripts.js build",
+    "test": "node ./node_modules/react-scripts/bin/react-scripts.js test",
+    "eject": "node ./node_modules/react-scripts/bin/react-scripts.js eject",
     "serve_functions": "firebase serve --only functions"
   },
   "eslintConfig": {
