@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SPLASH_PAGE_CONFIG, SplashPageComponent } from './splash';
-import { LogoModule } from 'components/logo/logo.module';
 import { PipesModule } from 'pipes/pipes.module';
+import { AnimationModule } from 'components/animation/animation.module';
 import { environment } from 'environments/environment';
 
 @NgModule({
@@ -14,8 +14,8 @@ import { environment } from 'environments/environment';
   ],
   imports: [
     CommonModule,
-    LogoModule,
-    PipesModule
+    PipesModule,
+    AnimationModule
   ]
 })
 export class SplashPageModule {}

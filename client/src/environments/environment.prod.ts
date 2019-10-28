@@ -15,7 +15,7 @@ export const environment = {
   },
   pages: {
     splash: {
-      duration: 3000,
+      duration: 5000,
       partnerLogoUrl: params.partnerLogoUrl
     },
     translate: {
