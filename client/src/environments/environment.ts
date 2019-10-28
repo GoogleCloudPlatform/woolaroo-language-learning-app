@@ -1,8 +1,10 @@
 import { MockAnalyticsService } from 'services/mock/analytics';
-import { MockImageRecognitionService } from 'services/mock/image-recognition';
 import { APITranslationService } from 'services/api/translation';
 import { LocalProfileService } from 'services/local-profile';
 import { APIFeedbackService } from 'services/api/feedback';
+// import { SafeSearchLikelihood } from 'services/google/image-recognition';
+// import { APIImageRecognitionService } from 'services/api/image-recognition';
+import { MockImageRecognitionService } from 'services/mock/image-recognition';
 
 const baseEndpointUrl = 'https://us-central1-barnard-yiddish.cloudfunctions.net';
 const debugImageUrl = '/assets/debug/IMG_20190920_141505.jpg';
@@ -70,6 +72,24 @@ export const environment = {
       type: MockImageRecognitionService,
       config: null
     },
+    /*imageRecognition: {
+      type: APIImageRecognitionService,
+      config: {
+        endpointURL: `${baseEndpointUrl}/visionAPI`,
+        maxFileSize: 2 * 1024 * 1024,
+        validImageFormats: [ 'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/bmp', 'image/webp' ],
+        resizedImageDimension: 1000,
+        maxResults: 10,
+        retryCount: 3,
+        singleWordDescriptionsOnly: true,
+        maxSafeSearchLikelihoods: {
+          spoof: SafeSearchLikelihood.VERY_LIKELY,
+          medical: SafeSearchLikelihood.POSSIBLE,
+          adult: SafeSearchLikelihood.POSSIBLE,
+          violence: SafeSearchLikelihood.POSSIBLE,
+        }
+      }
+    },*/
     imageRendering: {
       config: {
         dropShadowDistance: 1,

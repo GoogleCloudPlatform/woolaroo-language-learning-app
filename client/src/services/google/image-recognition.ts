@@ -20,15 +20,18 @@ export enum SafeSearchCategory {
   VIOLENCE = 'violence'
 }
 
-interface ImageRecognitionConfig {
+export interface GoogleImageRecognitionConfigBase {
   maxFileSize: number;
   validImageFormats: string[];
   resizedImageDimension: number;
-  apiKey: string;
   maxResults: number;
   retryCount: number;
   singleWordDescriptionsOnly: boolean;
   maxSafeSearchLikelihoods: {[index: string]: SafeSearchLikelihood};
+}
+
+export interface GoogleImageRecognitionConfig extends GoogleImageRecognitionConfigBase {
+  apiKey: string;
 }
 
 interface RecognitionAnnotation {
@@ -49,10 +52,14 @@ interface RecognitionResponse {
 
 const VISION_URL = 'https://vision.googleapis.com/v1/images:annotate?key=';
 
-@Injectable()
-export class GoogleImageRecognitionService implements IImageRecognitionService {
-  constructor(@Inject(IMAGE_RECOGNITION_CONFIG) private config: ImageRecognitionConfig,
+export class GoogleImageRecognitionServiceBase implements IImageRecognitionService {
+  private config: GoogleImageRecognitionConfigBase;
+
+  protected get endpointUrl(): string { return ''; }
+
+  constructor(@Inject(IMAGE_RECOGNITION_CONFIG) config: GoogleImageRecognitionConfigBase,
               private http: HttpClient) {
+    this.config = config;
   }
 
   private static isSingleWord(value: RecognitionAnnotation) {
@@ -95,7 +102,7 @@ export class GoogleImageRecognitionService implements IImageRecognitionService {
 
   private loadImageDescriptions(imageBase64: string): Promise<ImageDescription[]> {
     return new Promise<ImageDescription[]>((resolve, reject) => {
-      this.http.post<RecognitionResponse>( VISION_URL + this.config.apiKey, {
+      this.http.post<RecognitionResponse>( this.endpointUrl, {
         requests: [ {
           image: { content: imageBase64 },
           features: [
@@ -123,8 +130,8 @@ export class GoogleImageRecognitionService implements IImageRecognitionService {
             const maxLikelihoods = this.config.maxSafeSearchLikelihoods;
             for (const cat in maxLikelihoods) {
               if (firstResponse.safeSearchAnnotation[cat] && maxLikelihoods[cat]
-                && GoogleImageRecognitionService.getSafeSearchLikelihoodIndex(firstResponse.safeSearchAnnotation[cat])
-                > GoogleImageRecognitionService.getSafeSearchLikelihoodIndex(maxLikelihoods[cat])) {
+                && GoogleImageRecognitionServiceBase.getSafeSearchLikelihoodIndex(firstResponse.safeSearchAnnotation[cat])
+                > GoogleImageRecognitionServiceBase.getSafeSearchLikelihoodIndex(maxLikelihoods[cat])) {
                 console.warn('Error loading image descriptions: image is inappropriate');
                 reject(new InappropriateContentError('Image is inappropriate'));
                 return;
@@ -138,7 +145,7 @@ export class GoogleImageRecognitionService implements IImageRecognitionService {
             }
             // filter out any annotations with multiple words
             if (this.config.singleWordDescriptionsOnly) {
-              firstResponse.labelAnnotations = firstResponse.labelAnnotations.filter( GoogleImageRecognitionService.isSingleWord );
+              firstResponse.labelAnnotations = firstResponse.labelAnnotations.filter( GoogleImageRecognitionServiceBase.isSingleWord );
             }
             resolve(firstResponse.labelAnnotations);
           },
@@ -147,5 +154,17 @@ export class GoogleImageRecognitionService implements IImageRecognitionService {
             reject(err);
           });
     });
+  }
+}
+
+@Injectable()
+export class GoogleImageRecognitionService extends GoogleImageRecognitionServiceBase {
+  private readonly apiKey: string;
+
+  protected get endpointUrl(): string { return VISION_URL + this.apiKey; }
+
+  constructor(@Inject(IMAGE_RECOGNITION_CONFIG) config: GoogleImageRecognitionConfig, http: HttpClient) {
+    super(config, http);
+    this.apiKey = config.apiKey;
   }
 }
