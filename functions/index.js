@@ -9,6 +9,19 @@ admin.initializeApp();
 const projectId = admin.instanceId().app.options.projectId;
 const bucketName = `${projectId}.appspot.com`;
 
+const SETTINGS = {
+  COLLECTION_NAME : "app_settings",
+  DOCUMENT_NAME : "default",
+  APP_ENABLED : "app_enabled",
+  PRIVACY_POLICY : "privacy_policy",
+  APP_NAME : "app_name",
+  APP_URL : "app_url",
+  PRIMARY_LANGUAGE : "primary_language",
+  TRANSLATION_LANGUAGE : "translation_language",
+  LOGO_IMAGE_ID : "logo_image_id",
+}
+
+
 exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
     const fileName = uuidv1();
@@ -41,59 +54,65 @@ exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
 
 exports.initSettings = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
-    console.log("Initializing settings");
-    try {
-      const querySnapshot = await admin.firestore().collection("app_settings").doc("default").create({
-        privacy_policy: "",
-        logo_image_id: "",
-        app_enabled: true,
-        app_name: "",
-        app_url: "",
-        translation_language: "",
-        primary_language: "",
-      });
-      res.status(200).send(JSON.stringify("Settings initialized."));
-      console.log("Settings initialized.");
-    } catch (err) {
-      console.log("Error initializing settings:", err);
-      res.status(404).send("Error initializing settings");
-    }
+      const docRef = admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME);
+      try {
+        const doc = await docRef.get();
+        if (doc.exists) {
+          console.log("Settings document already exists.");
+          res.status(200).send("Settings already exists.");
+        } else {
+          const querySnapshot = admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME).create({
+            privacy_policy: "",
+            logo_image_id: "",
+            app_enabled: true,
+            app_name: "",
+            app_url: "",
+            translation_language: "",
+            primary_language: "",
+          });
+          console.log("Settings document created.");
+          res.status(404).send("Settings initialized.");
+        }
+      } catch (err) {
+        console.log("Error creating settings document:", err);
+        res.status(404).send("Error initializing settings.");
+      }
   });
 });
 
 exports.updateSettings = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
     console.log("Updating settings");
+    const docRef = admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME);
     try {
-      const querySnapshot = await admin.firestore().collection("app_settings").get();
-      // There should be 1 and only 1 document in the collection
-      if (querySnapshot.empty || querySnapshot.docs[0].empty) { // collection or document empty
-        console.log("Settings not found");
-        res.status(404).send("NO settings");
-        return "404";
+      let doc = await docRef.get();
+      if (!doc.exists) {
+        console.log("Settings doesn't exist. Creating it...");
+        const querySnapshot = await admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME).create({
+          privacy_policy: "",
+          logo_image_id: "",
+          app_enabled: true,
+          app_name: "",
+          app_url: "",
+          translation_language: "",
+          primary_language: "",
+        });
+        doc = await docRef.get();
       }
-      if (querySnapshot.docs.length != 1) {
-        console.log("Too many documents in collection");
-        res.status(404).send("Error updating settings");
-        return "404";
-      }
-      var docs = querySnapshot.docs.map(doc => doc.data());
 
-      const privacy_policy = req.body.privacy_policy || docs[0]["privacy_policy"];
-      const logo_image_id = req.body.logo_image_id || docs[0]["logo_image_id"];
-      const app_enabled = req.body.app_enabled || docs[0]["app_enabled"];
+      const privacy_policy = req.body.privacy_policy || doc.get(SETTINGS.PRIVACY_POLICY);
+      const logo_image_id = req.body.logo_image_id || doc.get(SETTINGS.LOGO_IMAGE_ID);
+      const app_enabled = req.body.app_enabled || doc.get(SETTINGS.APP_ENABLED);
 
-      const doc_ids = querySnapshot.docs.map (doc => doc.id);
-
-      snapshot = await admin.firestore().collection("app_settings").doc(doc_ids[0]).set({
+      const snapshot = await admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME).set({
           privacy_policy: privacy_policy,
           logo_image_id: logo_image_id,
           app_enabled: app_enabled
         },
         {merge: true}
       );
-      res.status(200).send(JSON.stringify("Settings updated."));
       console.log("Settings updated");
+      res.status(200).send("Settings updated.");
     } catch(err) {
       console.log("Error updating settings:", err);
       res.status(404).send("Error updating settings");
@@ -105,22 +124,10 @@ exports.readSettings = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
     console.log("Reading settings");
     try {
-      const querySnapshot = await admin.firestore().collection("app_settings").get();
-      // There should be 1 and only 1 document in the collection
-      if (querySnapshot.empty || querySnapshot.docs[0].empty) { // collection or document empty
-        console.log("Settings not found");
-        res.status(404).send("NO settings");
-        return "404";
-      }
-      if (querySnapshot.docs.length != 1) {
-        console.log("Too many documents in collection");
-        res.status(404).send("Error updating settings");
-        return "404";
-      }
-      var docs = querySnapshot.docs.map(doc => doc.data());
-      const settings_json = JSON.stringify({data: docs});
-      res.status(200).send(settings_json);
+      const doc = await admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME).get();
+      const settings_json = JSON.stringify({data: doc.data()});
       console.log("Finished reading settings");
+      res.status(200).send(settings_json);
     } catch(err) {
       console.log("Error reading settings:", err);
       res.status(404).send("Error reading settings");
@@ -309,6 +316,24 @@ exports.testEndpoint = functions.https.onRequest((req, res) => {
   });
 });
 
+function createSettings () {
+  try {
+    const querySnapshot = admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME).create({
+      privacy_policy: "",
+      logo_image_id: "",
+      app_enabled: true,
+      app_name: "",
+      app_url: "",
+      translation_language: "",
+      primary_language: "",
+    });
+    console.log("Settings document created.");
+    return true;
+  } catch (err) {
+    console.log("Error creating settings document:", err);
+    return false;
+  }
+}
 
 // exports.getBatchTranslations = functions.https.onRequest(async (req, res) => {
 //   console.log('getBatchTranslations');
