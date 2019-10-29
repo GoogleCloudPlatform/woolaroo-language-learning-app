@@ -1,6 +1,8 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import UserTable from './UserTable';
+import './UserTable.css';
 import ApiUtils from '../utils/ApiUtils';
 import AuthUtils from '../utils/AuthUtils';
 
@@ -80,6 +82,8 @@ class ManagementPage extends React.Component {
           </Button>
         </div>
       </div>
+
+      <UserTable />
     );
   }
 }
