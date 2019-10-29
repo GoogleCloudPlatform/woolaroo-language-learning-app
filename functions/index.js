@@ -382,18 +382,6 @@ exports.grantModeratorRole = functions.https.onRequest((req, res) => {
   });
 });
 
-<<<<<<< HEAD
-// exports.getBatchTranslations = functions.https.onRequest(async (req, res) => {
-//   console.log('getBatchTranslations');
-//   db.collection("translations").get().then(function(querySnapshot) {
-//     querySnapshot.forEach(function(doc) {
-//         // doc.data() is never undefined for query doc snapshots
-//         console.log(doc.id, " => ", doc.data());
-//     });
-//   });
-//   res.status(200).send("Translation returned..");
-// });
-=======
 exports.grantAdminRole = functions.https.onRequest((req, res) => {
   return cors(req, res, async () => {
     try {
@@ -508,4 +496,3 @@ async function getCustomClaims_(req, res) {
   const tokenId = req.get('Authorization').split('Bearer ')[1];
   return await admin.auth().verifyIdToken(tokenId);
 }
->>>>>>> master
