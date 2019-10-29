@@ -67,13 +67,12 @@ function ManagementPage() {
           <DialogContentText>
             Enter comma-separated emails
           </DialogContentText>
-          <DialogContentText>Assign role</DialogContentText>
 
-          <FormControl component="fieldset" className={classes.formControl}>
-            <FormLabel component="legend">Gender</FormLabel>
-            <RadioGroup aria-label="gender" name="gender1" value={inviteRole} onChange={setInviteRole}>
-              <FormControlLabel value="moderator" control={<Radio />} label="Moderator" />
-              <FormControlLabel value="admin" control={<Radio />} label="Admin" />
+          <FormControl component='fieldset' className={classes.formControl}>
+            <FormLabel component='legend'>Assign role</FormLabel>
+            <RadioGroup aria-label='role' value={inviteRole} onChange={handleRoleSelected}>
+              <FormControlLabel value='moderator' control={<Radio />} label='Moderator' />
+              <FormControlLabel value='admin' control={<Radio />} label='Admin' />
             </RadioGroup>
           </FormControl>
         </DialogContent>
