@@ -61,7 +61,7 @@ steps:
            "${_GOOGLE_TRACKER_ID}",
            "${_ENDANGERED_LANGUAGE}",
            "${_TERMS_AND_CONDITIONS}",
-           "./client/src/locale/messages.${_LANGUAGE}.xlf"
+           "./client/src/locale/messages.${_LANGUAGE}.xlf",
            "/assets/img/partner_logo.png",
            "./client/src/style/theme-config.scss",
            "${_THEME}"]
