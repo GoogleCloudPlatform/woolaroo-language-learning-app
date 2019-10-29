@@ -12,84 +12,143 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
+import ApiUtils from '../utils/ApiUtils';
+import AuthUtils from '../utils/AuthUtils';
 import UserTable from './UserTable';
 import './UserTable.css';
 
-const useStyles = makeStyles(theme => ({
-  button: {
-    margin: '0 0 20px 0',
-  },
-  formControl: {
-    margin: '0',
-  },
-}));
+class ManagementPage extends React.Component {
+  constructor(props) {
+    super(props);
 
-function ManagementPage() {
-  const classes = useStyles();
+    this.authUtils_ = new AuthUtils();
 
-  const [inviteDialogIsOpen, setInviteDialogOpen] = React.useState(false);
-  const handleOpen = () => {
-    setInviteDialogOpen(true);
-  }
-  const handleClose = () => {
-    setInviteDialogOpen(false);
-  } 
+    this.handleEmailChange_ = this.handleEmailChange_.bind(this);
+    this.handleRoleSelected_ = this.handleRoleSelected_.bind(this);
 
-  const [inviteRole, setInviteRole] = React.useState('moderator');
-  const handleRoleSelected = (event) => {
-    setInviteRole(event.target.value);
+    // Invite dialog button actions.
+    this.handleOpen_ = this.handleOpen_.bind(this);
+    this.handleClose_ = this.handleClose_.bind(this);    
+
+    this.state = {
+      email: '',
+      inviteDialogIsOpen: false,
+      inviteRole: 'moderator',
+    };
   }
 
-  return (
-    <div>
-      <h2>User Management</h2>
-      <Button
-        variant='contained'
-        color='primary'
-        onClick={handleOpen}
-        className={classes.button}
-      >
-        Invite users
-      </Button>
+  handleEmailChange_(e) {
+    this.setState({email: e.target.value});
+  }
 
-      <Dialog open={inviteDialogIsOpen} onClose={handleClose} aria-labelledby='form-dialog-title'>
-        <DialogTitle id='form-dialog-title'>Invite users</DialogTitle>
-        <DialogContent>
-          <DialogContentText>Add people</DialogContentText>
+  handleOpen_() {
+    this.setState({inviteDialogIsOpen: true});
+  }
+
+  handleClose_() {
+    this.setState({inviteDialogIsOpen: false});
+  }
+
+  handleRoleSelected_(e) {
+    this.setState({inviteRole: e.target.value});
+  }
+
+  async grantAccess_(role, revoke = false) {
+    try {
+      const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}grant${role}Role`, {
+        method: 'POST',
+        body: JSON.stringify({
+          email: this.state.email,
+          revoke,
+        }),
+        headers: {
+          'Authorization': await AuthUtils.getAuthHeader(),
+          'Content-Type': 'application/json',
+        }
+      });
+
+      const respMsg = await resp.json();
+      if (respMsg) {
+        alert(respMsg.message || respMsg);
+      }
+    } catch(err) {
+      console.error(err);
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <h2>User Management</h2>
+        <div>
           <TextField
-            autoFocus
-            margin='dense'
-            id='name'
-            label='Email Address'
-            type='email'
-            fullWidth
+            label="Email"
+            variant="outlined"
+            margin="normal"
+            onChange={this.handleEmailChange_}
+            className="email-text-field"
           />
-          <DialogContentText>
-            Enter comma-separated emails
-          </DialogContentText>
-
-          <FormControl component='fieldset' className={classes.formControl}>
-            <FormLabel component='legend'>Assign role</FormLabel>
-            <RadioGroup aria-label='role' value={inviteRole} onChange={handleRoleSelected}>
-              <FormControlLabel value='moderator' control={<Radio />} label='Moderator' />
-              <FormControlLabel value='admin' control={<Radio />} label='Admin' />
-            </RadioGroup>
-          </FormControl>
-        </DialogContent>
-
-        <DialogActions>
-          <Button onClick={handleClose} color='primary'>
-            Cancel
+        </div>
+        <br/>
+        <div>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => this.grantAccess_('Admin')}
+            className="access-button"
+          >
+            Grant Admin Access
           </Button>
-          <Button onClick={handleClose} color='primary'>
-            Invite
+        </div>
+        <br/>
+        <div>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => this.grantAccess_('Moderator')}
+            className="access-button"
+          >
+            Grant Moderator Access
           </Button>
-        </DialogActions>
-      </Dialog>
+        </div>
 
-      <UserTable />
-    </div>
-  );
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={this.handleOpen_}
+        >
+          Invite users
+        </Button>
+
+        <Dialog open={this.state.inviteDialogIsOpen} aria-labelledby='form-dialog-title'>
+          <DialogTitle id='form-dialog-title'>Invite users</DialogTitle>
+          <DialogContent>
+
+
+            <FormControl component='fieldset'>
+              <FormLabel component='legend'>Assign role</FormLabel>
+              <RadioGroup aria-label='role' value={this.state.inviteRole} onChange={this.handleRoleSelected_}>
+                <FormControlLabel value='moderator' control={<Radio />} label='Moderator' />
+                <FormControlLabel value='admin' control={<Radio />} label='Admin' />
+              </RadioGroup>
+            </FormControl>
+          </DialogContent>
+
+          <DialogActions>
+            <Button onClick={this.handleClose_} color='primary'>
+              Cancel
+            </Button>
+            <Button onClick={this.handleClose_} color='primary'>
+              Invite
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        <UserTable />
+
+      </div>
+    );
+  }
 }
 
 export default ManagementPage;
