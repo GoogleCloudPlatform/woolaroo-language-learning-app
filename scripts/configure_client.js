@@ -49,7 +49,7 @@ googleApiKey: '${GOOGLE_API_KEY}',
 googleTrackerId: '${GOOGLE_TRACKER_ID}',
 apiUrl: '${API_URL}',
 partnerLogoUrl: '${PARTNER_LOGO_URL}',
-termsAndConditionsEnabled: ${!!TERMS_AND_CONDITIONS}
+termsAndPrivacyEnabled: ${!!TERMS_AND_CONDITIONS}
 };`;
 fs.writeFileSync(configFilePath, configContent);
 
