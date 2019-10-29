@@ -1,4 +1,11 @@
 steps:
+  # General
+  - id: 'install_script_dependencies'
+    name: node:10.16.3
+    entrypoint: "npm"
+    args: ["install"]
+    dir: "./scripts"
+
   # Terraform
   - id: 'configure_terraform'
     name: node:10.16.3
@@ -43,7 +50,7 @@ steps:
       fi
     dir: "./client"
   - id: 'configure_client'
-    waitFor: ['install_client_dependencies', 'download_partner_logo']
+    waitFor: ['install_client_dependencies', 'install_script_dependencies', 'download_partner_logo']
     name: node:10.16.3
     entrypoint: "node"
     args: ["./configure_client.js",
@@ -52,7 +59,9 @@ steps:
            "https://storage.googleapis.com/${_BUCKET_NAME}/",
            "${_GOOGLE_API_KEY}",
            "${_GOOGLE_TRACKER_ID}",
+           "${_TERMS_AND_CONDITIONS}",
            "${_ENDANGERED_LANGUAGE}",
+           "../client/src/locale/messages.${_LANGUAGE}.xlf",
            "/assets/img/partner_logo.png",
            "../client/src/style/theme-config.scss",
            "${_THEME}"]

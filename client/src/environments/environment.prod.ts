@@ -16,12 +16,15 @@ export const environment = {
   endangeredLanguage: params.endangeredLanguage,
   pages: {
     splash: {
-      duration: 3000,
+      duration: 5000,
       partnerLogoUrl: params.partnerLogoUrl
     },
     translate: {
     },
     captionImage: {
+    },
+    termsAndPrivacy: {
+      enabled: params.termsAndPrivacyEnabled
     },
     addWord: {
       maxRecordingDuration: 5000,
