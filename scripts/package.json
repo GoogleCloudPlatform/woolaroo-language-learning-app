@@ -1,0 +1,10 @@
+{
+  "name": "google-barnard-scripts",
+  "version": "0.0.0",
+  "scripts": {},
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "xml-js": "^1.6.11"
+  }
+}

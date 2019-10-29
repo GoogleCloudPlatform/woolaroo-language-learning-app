@@ -22,6 +22,9 @@ export const environment = {
     },
     captionImage: {
     },
+    termsAndPrivacy: {
+      enabled: params.termsAndPrivacyEnabled
+    },
     addWord: {
       maxRecordingDuration: 5000,
       recordingBufferSize: 4096,

@@ -31,7 +31,7 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
     this.analyticsService.logPageView(this.router.url, 'Splash');
     this.timeout = setTimeout(() => {
       this.profileService.loadProfile().then(
-        (profile) => this.router.navigateByUrl(!profile.termsAgreed ? AppRoutes.Intro : AppRoutes.ImageSource),
+        (profile) => this.router.navigateByUrl(!profile.termsAgreed ? AppRoutes.Intro : AppRoutes.CaptureImage),
         () => this.router.navigateByUrl(AppRoutes.Intro)
       );
     }, this.config.duration);

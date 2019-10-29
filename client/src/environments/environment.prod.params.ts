@@ -3,5 +3,6 @@ export const params = {
   googleApiKey: '',
   googleTrackerId: '',
   apiUrl: '',
-  partnerLogoUrl: ''
+  partnerLogoUrl: '',
+  termsAndPrivacyEnabled: false
 };

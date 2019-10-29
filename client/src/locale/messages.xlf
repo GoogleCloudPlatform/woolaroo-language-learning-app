@@ -46,10 +46,10 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/sidenav/sidenav.html</context>
-          <context context-type="linenumber">8</context>
+          <context context-type="linenumber">9</context>
         </context-group>
       </trans-unit><trans-unit id="introTermsAndPrivacy" datatype="html">
-        <source>By using the Project Barnard you are accepting the
+        <source>By using the Project Woolaroo you are accepting the
   <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Terms and Conditions<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> and <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Privacy Policy<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/pages/intro/terms/terms.html</context>
@@ -62,7 +62,7 @@
           <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit><trans-unit id="termsAndPrivacyContent" datatype="html">
-        <source>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</source>
+        <source>Terms and Privacy content</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/pages/terms/terms.html</context>
           <context context-type="linenumber">6</context>
@@ -103,11 +103,23 @@
           <context context-type="sourcefile">src/components/error-popup/error-popup.html</context>
           <context context-type="linenumber">6</context>
         </context-group>
+      </trans-unit><trans-unit id="imageCaptionLabel" datatype="html">
+        <source>What&apos;s this?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/pages/caption-image/caption-image.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit><trans-unit id="imageCaptionRequired" datatype="html">
+        <source>Image caption is required</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/pages/caption-image/caption-image.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
       </trans-unit><trans-unit id="translationFeedback" datatype="html">
         <source>Translation Feedback</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/pages/translate/translate.html</context>
-          <context context-type="linenumber">7</context>
+          <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit><trans-unit id="feedbackTitle" datatype="html">
         <source>Feedback</source>
@@ -179,7 +191,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/sidenav/sidenav.html</context>
-          <context context-type="linenumber">7</context>
+          <context context-type="linenumber">8</context>
         </context-group>
       </trans-unit><trans-unit id="add" datatype="html">
         <source>Add</source>
@@ -322,14 +334,9 @@
           <context context-type="sourcefile">src/pages/technology/technology.html</context>
           <context context-type="linenumber">12</context>
         </context-group>
-      </trans-unit><trans-unit id="logo" datatype="html">
-        <source>Barnard logo</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/components/logo/logo.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
       </trans-unit><trans-unit id="feedbackLongTitle" datatype="html">
-        <source>Translation feedback</source>
+        <source>
+    Translation feedback</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/sidenav/sidenav.html</context>
           <context context-type="linenumber">6</context>
@@ -341,7 +348,33 @@
 </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/sidenav/sidenav.html</context>
-          <context context-type="linenumber">10</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit><trans-unit id="logo" datatype="html">
+        <source>Barnard logo</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/logo/logo.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit><trans-unit id="enterSomethingElse" datatype="html">
+        <source>Enter something else</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/translation-selector/word-scroll-list.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="wordSubmitted" datatype="html">
+        <source>Submitted for review</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/pages/add-word/add-word.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="addWordError" datatype="html">
+        <source>Unable to add word</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/pages/add-word/add-word.ts</context>
+          <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="startCameraError" datatype="html">
@@ -355,6 +388,20 @@
         <source>Unable to capture image</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/pages/capture/capture.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="feedbackSubmitted" datatype="html">
+        <source>Feedback submitted</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/pages/feedback/feedback.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="submitFeedbackError" datatype="html">
+        <source>Unable to save feedback</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/pages/feedback/feedback.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
