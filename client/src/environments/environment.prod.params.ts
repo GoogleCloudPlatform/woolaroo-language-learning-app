@@ -5,5 +5,6 @@ export const params = {
   apiUrl: '',
   partnerLogoUrl: '',
   endangeredLanguage: '',
-  termsAndPrivacyEnabled: false
+  termsAndPrivacyEnabled: false,
+  termsAndPrivacyContent: null
 };

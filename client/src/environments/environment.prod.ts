@@ -24,7 +24,8 @@ export const environment = {
     captionImage: {
     },
     termsAndPrivacy: {
-      enabled: params.termsAndPrivacyEnabled
+      enabled: params.termsAndPrivacyEnabled,
+      content: params.termsAndPrivacyContent
     },
     addWord: {
       maxRecordingDuration: 5000,

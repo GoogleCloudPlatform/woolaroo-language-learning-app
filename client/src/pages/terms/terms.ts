@@ -1,6 +1,14 @@
-import { AfterViewInit, Component, Inject } from '@angular/core';
+import { AfterViewInit, Component, Inject, InjectionToken } from '@angular/core';
 import { Router } from '@angular/router';
 import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
+
+interface TermsPageConfig {
+  enabled: boolean;
+  content: string;
+}
+
+
+export const TERMS_PAGE_CONFIG = new InjectionToken<TermsPageConfig>('Terms page config');
 
 @Component({
   selector: 'app-page-terms',
@@ -8,8 +16,12 @@ import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
   styleUrls: ['./terms.scss']
 })
 export class TermsPageComponent implements AfterViewInit {
-  constructor( private router: Router,
+  public content: string;
+
+  constructor( @Inject(TERMS_PAGE_CONFIG) private config: TermsPageConfig,
+               private router: Router,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {
+    this.content = config.content;
   }
 
   ngAfterViewInit() {
