@@ -316,25 +316,6 @@ exports.testEndpoint = functions.https.onRequest((req, res) => {
   });
 });
 
-function createSettings () {
-  try {
-    const querySnapshot = admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME).create({
-      privacy_policy: "",
-      logo_image_id: "",
-      app_enabled: true,
-      app_name: "",
-      app_url: "",
-      translation_language: "",
-      primary_language: "",
-    });
-    console.log("Settings document created.");
-    return true;
-  } catch (err) {
-    console.log("Error creating settings document:", err);
-    return false;
-  }
-}
-
 // exports.getBatchTranslations = functions.https.onRequest(async (req, res) => {
 //   console.log('getBatchTranslations');
 //   db.collection("translations").get().then(function(querySnapshot) {
