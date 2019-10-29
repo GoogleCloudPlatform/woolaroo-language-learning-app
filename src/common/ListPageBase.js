@@ -35,7 +35,8 @@ class ListPageBase extends React.Component {
       pageSize,
       collectionName,
       completeState,
-      needsRecording
+      needsRecording,
+      search,
     } = this.state;
     let additionalParams = '';
 
@@ -49,6 +50,10 @@ class ListPageBase extends React.Component {
 
     if (needsRecording) {
       additionalParams += `&needsRecording=1`;
+    }
+
+    if (search) {
+      additionalParams += `&search=${search}`;
     }
 
     try {
@@ -76,6 +81,14 @@ class ListPageBase extends React.Component {
   }
 
   renderItems() {
+    if (this.state.items.length === 0) {
+      return (
+        <ul className="items-list">
+          <h5>No results to show.</h5>
+        </ul>
+      );
+    }
+
     const ListItemTag = this.state.listItemTag;
     return (
       <ul className="items-list">
