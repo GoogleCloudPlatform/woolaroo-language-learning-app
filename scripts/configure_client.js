@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const xml = require('xml-js');
 
 let paramIndex = 2;
 const CONFIG_FILE_PATH = process.argv[paramIndex++];
@@ -17,6 +16,7 @@ if(!GOOGLE_API_KEY) {
     throw new Error('Google API key not set');
 }
 const GOOGLE_TRACKER_ID = process.argv[paramIndex++];
+
 const ENDANGERED_LANGUAGE = process.argv[paramIndex++];
 if(!ENDANGERED_LANGUAGE) {
     throw new Error('Endangered language not set');
@@ -45,42 +45,20 @@ if(THEME && !THEME_FILE_PATH) {
     throw new Error('Theme file path not set');
 }
 
-const configFilePath = path.join(process.cwd(), CONFIG_FILE_PATH);
-let configContent =
-`export const params = {
-assetsBaseUrl: '${ASSETS_BASE_URL}',
-googleApiKey: '${GOOGLE_API_KEY}',
-googleTrackerId: '${GOOGLE_TRACKER_ID}',
-apiUrl: '${API_URL}',
-endangeredLanguage: '${ENDANGERED_LANGUAGE}'
-termsAndPrivacyEnabled: ${!!TERMS_AND_CONDITIONS}
-};`;
-fs.writeFileSync(configFilePath, configContent);
+const configParams = {
+    assetsBaseUrl: ASSETS_BASE_URL,
+    googleApiKey: GOOGLE_API_KEY,
+    googleTrackerId: GOOGLE_TRACKER_ID,
+    apiUrl: API_URL,
+    partnerLogoUrl: PARTNER_LOGO_URL,
+    endangeredLanguage: ENDANGERED_LANGUAGE,
+    termsAndPrivacyEnabled: !!TERMS_AND_CONDITIONS,
+    termsAndPrivacyContent: TERMS_AND_CONDITIONS
+};
 
-if(TERMS_AND_CONDITIONS) {
-    const languageFilePath = path.join(process.cwd(), LANGUAGE_FILE_PATH);
-    let languageFileContent = fs.readFileSync(languageFilePath, { encoding: 'utf-8' });
-    // parse localization file XML
-    const languageXML = xml.xml2js(languageFileContent);
-    // find translation unit element
-    const bodyElement = languageXML.elements[0].elements[0].elements[0];
-    const unitElement = bodyElement.elements.find(el => el.attributes.id === 'termsAndPrivacyContent');
-    const targetElement = unitElement.elements.find(el => el.name === 'target');
-    // replace line breaks with <br /> tags (encoded as xlf)
-    const lineBreakXML = xml.xml2js('<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>').elements[0];
-    const termLines = TERMS_AND_CONDITIONS.replace('\r', '').split('\n');
-    // replace terms and conditions
-    targetElement.elements = [];
-    for(let k = 0; k < termLines.length; k++) {
-        targetElement.elements.push({ type: 'text', text: termLines[k] });
-        if(k < termLines.length - 1) {
-            targetElement.elements.push(lineBreakXML);
-        }
-    }
-    console.log(targetElement);
-    // rewrite file
-    fs.writeFileSync(languageFilePath, xml.js2xml(languageXML, { spaces: 2 }));
-}
+const configFilePath = path.join(process.cwd(), CONFIG_FILE_PATH);
+let configContent = `export const params = ${JSON.stringify(configParams)};`;
+fs.writeFileSync(configFilePath, configContent);
 
 if(THEME) {
     const themeFilePath = path.join(process.cwd(), THEME_FILE_PATH);

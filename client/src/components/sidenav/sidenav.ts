@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SessionService } from 'services/session';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-sidenav',
@@ -7,7 +8,8 @@ import { SessionService } from 'services/session';
   styleUrls: ['./sidenav.scss']
 })
 export class SidenavComponent {
-  get canAddToHomeScreen(): boolean { return !!this.sessionService.currentSession.installPrompt; }
+  get addToHomeScreenEnabled(): boolean { return !!this.sessionService.currentSession.installPrompt; }
+  get termsAndPrivacyEnabled(): boolean { return environment.pages.termsAndPrivacy.enabled; }
 
   constructor(private sessionService: SessionService) {
   }

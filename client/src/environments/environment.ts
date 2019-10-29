@@ -28,7 +28,8 @@ export const environment = {
       debugWords: ['technology', 'ankle', 'book']
     },
     termsAndPrivacy: {
-      enabled: false
+      enabled: true,
+      content: '<b>Terms and Privacy content</b><br /><a href="#">Here\'s a link</a>'
     },
     captionImage: {
       debugImageUrl
