@@ -89,7 +89,7 @@ exports.updateSettings = functions.https.onRequest(async (req, res) => {
 
       const doc_ids = querySnapshot.docs.map (doc => doc.id);
 
-      snapshot = await admin.firestore().collection("app_settings").doc(doc_ids[0]).set({
+      const snapshot = await admin.firestore().collection("app_settings").doc(doc_ids[0]).set({
           privacy_policy: privacy_policy,
           logo_image_id: logo_image_id,
           app_enabled: app_enabled
