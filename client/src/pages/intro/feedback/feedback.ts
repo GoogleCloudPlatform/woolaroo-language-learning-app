@@ -2,6 +2,7 @@ import { AfterViewInit, Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppRoutes } from 'app/routes';
 import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-page-intro-feedback',
@@ -18,6 +19,10 @@ export class IntroFeedbackPageComponent implements AfterViewInit {
   }
 
   onNextClick() {
-    this.router.navigateByUrl(AppRoutes.IntroTermsAndConditions);
+    if (environment.pages.termsAndPrivacy.enabled) {
+      this.router.navigateByUrl(AppRoutes.IntroTermsAndConditions);
+    } else {
+      this.router.navigateByUrl(AppRoutes.ImageSource);
+    }
   }
 }

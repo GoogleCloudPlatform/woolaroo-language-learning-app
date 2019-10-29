@@ -27,6 +27,9 @@ export const environment = {
       debugImageUrl,
       debugWords: ['technology', 'ankle', 'book']
     },
+    termsAndPrivacy: {
+      enabled: false
+    },
     captionImage: {
       debugImageUrl
     },
