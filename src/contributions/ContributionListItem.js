@@ -4,6 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/NotInterested';
 import SaveIcon from '@material-ui/icons/Done';
 import ApiUtils from '../utils/ApiUtils';
+import AuthUtils from '../utils/AuthUtils';
 import './ContributionListItem.css';
 
 class ContributionListItem extends ListItemBase {
@@ -31,7 +32,7 @@ class ContributionListItem extends ListItemBase {
         return;
       }
 
-      await fetch(`${ApiUtils.origin}${ApiUtils.path}addTranslations`, {
+      const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}addTranslations`, {
         method: 'POST',
         body: JSON.stringify({
           english_word,
@@ -41,8 +42,14 @@ class ContributionListItem extends ListItemBase {
         }),
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': await AuthUtils.getAuthHeader(),
         }
       });
+
+      if (resp.status === 403) {
+        await AuthUtils.signOut();
+        return;
+      }
 
       this.deleteContribution_(e);
     } catch(err) {
@@ -62,6 +69,7 @@ class ContributionListItem extends ListItemBase {
         }),
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': await AuthUtils.getAuthHeader(),
         }
       });
 
