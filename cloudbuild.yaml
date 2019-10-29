@@ -10,11 +10,11 @@ steps:
   - id: 'configure_terraform'
     name: node:10.16.3
     entrypoint: "node"
-    args: ["./scripts/create_terraform_config.js",
-           "./terraform/override.tf",
+    args: ["./create_terraform_config.js",
+           "../terraform/override.tf",
            "${_TERRAFORM_BUCKET_NAME}",
            "${_TERRAFORM_BUCKET_PATH}"]
-    dir: "./"
+    dir: "./scripts"
   - id: 'init_terraform'
     name: hashicorp/terraform:light
     args: ["init"]
@@ -53,19 +53,19 @@ steps:
     waitFor: ['install_client_dependencies', 'install_script_dependencies', 'download_partner_logo']
     name: node:10.16.3
     entrypoint: "node"
-    args: ["./scripts/configure_client.js",
-           "./client/src/environments/environment.prod.params.ts",
+    args: ["./configure_client.js",
+           "../client/src/environments/environment.prod.params.ts",
            "${_API_URL}",
            "https://storage.googleapis.com/${_BUCKET_NAME}/",
            "${_GOOGLE_API_KEY}",
            "${_GOOGLE_TRACKER_ID}",
            "${_ENDANGERED_LANGUAGE}",
            "${_TERMS_AND_CONDITIONS}",
-           "./client/src/locale/messages.${_LANGUAGE}.xlf",
+           "../client/src/locale/messages.${_LANGUAGE}.xlf",
            "/assets/img/partner_logo.png",
-           "./client/src/style/theme-config.scss",
+           "../client/src/style/theme-config.scss",
            "${_THEME}"]
-    dir: "./"
+    dir: "./scripts"
   - id: 'build_client'
     waitFor: ['configure_client']
     name: node:10.16.3
@@ -78,8 +78,8 @@ steps:
     waitFor: ['build_client']
     name: node:10.16.3
     entrypoint: "node"
-    args: ["./scripts/fix_asset_paths.js", "./client/dist/index.html", "https://storage.googleapis.com/${_BUCKET_NAME}"]
-    dir: "./"
+    args: ["./fix_asset_paths.js", "../client/dist/index.html", "https://storage.googleapis.com/${_BUCKET_NAME}"]
+    dir: "./scripts"
   - id: 'deploy_client'
     waitFor: ['fix_client_asset_paths']
     name: gcr.io/cloud-builders/gsutil
@@ -93,8 +93,8 @@ steps:
     waitFor: ['deploy_client']
     name: node:10.16.3
     entrypoint: "node"
-    args: ["./scripts/create_client_cors_config.js", "./client_cors.json", "$PROJECT_ID", "${_APP_SERVICE}", "${_APP_URL}"]
-    dir: "./"
+    args: ["./create_client_cors_config.js", "../client_cors.json", "$PROJECT_ID", "${_APP_SERVICE}", "${_APP_URL}"]
+    dir: "./scripts"
   - id: 'set_client_cors'
     waitFor: ['create_client_cors_config']
     name: gcr.io/cloud-builders/gsutil
@@ -112,8 +112,8 @@ steps:
     waitFor: ['run_terraform']
     name: node:10.16.3
     entrypoint: "node"
-    args: ["./scripts/configure_server.js", "${_APP_SERVICE}", "../server/app.yaml"]
-    dir: "./"
+    args: ["./configure_server.js", "${_APP_SERVICE}", "../server/app.yaml"]
+    dir: "./scripts"
   - id: 'build_server'
     waitFor: ['install_server_dependencies', 'configure_server']
     name: node:10.16.3
