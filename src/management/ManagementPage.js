@@ -81,9 +81,9 @@ class ManagementPage extends React.Component {
             Grant Moderator Access
           </Button>
         </div>
-      </div>
 
-      <UserTable />
+        <UserTable />
+      </div>
     );
   }
 }
