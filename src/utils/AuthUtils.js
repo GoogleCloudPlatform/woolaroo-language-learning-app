@@ -25,8 +25,31 @@ class AuthUtils {
     return await firebase.auth().signInWithPopup(this.provider_);
   }
 
-  async signOut() {
+  static async signOut() {
     return await firebase.auth().signOut();
+  }
+
+  static getUser() {
+    return AuthUtils.user;
+  }
+
+  static setUser(user) {
+    AuthUtils.user = user;
+  }
+
+  static async getAuthHeader() {
+    if (!AuthUtils.user) {
+      return 'Bearer ';
+    }
+
+    if (AuthUtils.idToken) {
+      return `Bearer ${AuthUtils.idToken}`;
+    }
+
+    const idToken = await AuthUtils.user.getIdToken();
+    AuthUtils.idToken = idToken;
+
+    return `Bearer ${idToken}`;
   }
 
   getFirebaseAuth() {

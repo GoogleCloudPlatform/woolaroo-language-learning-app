@@ -1,5 +1,6 @@
 import React from 'react';
 import ApiUtils from '../utils/ApiUtils';
+import AuthUtils from '../utils/AuthUtils';
 import './ListPageBase.css';
 
 class ListPageBase extends React.Component {
@@ -34,7 +35,8 @@ class ListPageBase extends React.Component {
       pageSize,
       collectionName,
       completeState,
-      needsRecording
+      needsRecording,
+      search,
     } = this.state;
     let additionalParams = '';
 
@@ -50,10 +52,22 @@ class ListPageBase extends React.Component {
       additionalParams += `&needsRecording=1`;
     }
 
+    if (search) {
+      additionalParams += `&search=${search}`;
+    }
+
     try {
       const qs = `?collectionName=${collectionName}`;
       const resp = await
-        fetch(`${ApiUtils.origin}${ApiUtils.path}getEntireCollection${qs}${additionalParams}`);
+        fetch(`${ApiUtils.origin}${ApiUtils.path}getEntireCollection${qs}${additionalParams}`, {
+          headers: {
+            'Authorization': await AuthUtils.getAuthHeader(),
+          }
+        });
+      if (resp.status === 403) {
+        await AuthUtils.signOut();
+        return;
+      }
 
       const items = await resp.json();
 
@@ -67,6 +81,14 @@ class ListPageBase extends React.Component {
   }
 
   renderItems() {
+    if (this.state.items.length === 0) {
+      return (
+        <ul className="items-list">
+          <h5>No results to show.</h5>
+        </ul>
+      );
+    }
+
     const ListItemTag = this.state.listItemTag;
     return (
       <ul className="items-list">

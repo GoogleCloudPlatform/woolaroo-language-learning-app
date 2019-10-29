@@ -35,8 +35,19 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.authUtils_.getFirebaseAuth().onAuthStateChanged((user) => {
-      this.setState({email: user ? user.email : null, authInitializing: false});
+    this.authUtils_.getFirebaseAuth().onAuthStateChanged(async (user) => {
+      if (!user) {
+        this.setState({email: null, authInitializing: false});
+        return;
+      }
+
+      const idTokenResult = await user.getIdTokenResult();
+      if (idTokenResult.claims.admin || idTokenResult.claims.moderator) {
+        AuthUtils.setUser(user);
+        this.setState({email: user.email, authInitializing: false});
+      } else {
+        this.logOut_();
+      }
     });
   }
 
@@ -50,7 +61,7 @@ class App extends React.Component {
 
   async logOut_() {
     try {
-      await this.authUtils_.signOut();
+      await AuthUtils.signOut();
     } catch(err) {
       console.error(err);
     }

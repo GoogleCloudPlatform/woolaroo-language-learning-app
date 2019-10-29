@@ -30,7 +30,19 @@ class TranslationsPage extends ListPageBase {
       completeState: queryStringParams.get('state'),
       needsRecording: !!(needsRecording && needsRecording !== '0'),
       pageNum: pageNum || 1,
+      search: queryStringParams.get('search'),
     };
+  }
+
+  async componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      const queryStringParams = new URLSearchParams(this.props.location.search);
+      const newSearch = queryStringParams.get('search') || '';
+      if (newSearch !== this.state.search) {
+        await this.setState({search: newSearch});
+        await this.fetchItems();
+      }
+    }
   }
 
   async updateCompleteState(nextCompleteState) {
@@ -68,6 +80,7 @@ class TranslationsPage extends ListPageBase {
       <PaginationWidget
         pageNum={this.state.pageNum}
         updatePageNum={this.updatePageNum}
+        lastPage={this.state.items.length < this.state.pageSize}
       />
     );
   }

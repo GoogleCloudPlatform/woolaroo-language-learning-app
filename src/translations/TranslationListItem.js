@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import ListItemBase from '../common/ListItemBase'
 import ApiUtils from '../utils/ApiUtils';
+import AuthUtils from '../utils/AuthUtils';
 import './TranslationListItem.css';
 
 class TranslationListItem extends ListItemBase {
@@ -66,7 +67,7 @@ class TranslationListItem extends ListItemBase {
       }
 
       // Save any updated data for the translation entry.
-      await fetch(`${ApiUtils.origin}${ApiUtils.path}addTranslations`, {
+      const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}addTranslations`, {
         method: 'POST',
         body: JSON.stringify({
           english_word,
@@ -75,9 +76,14 @@ class TranslationListItem extends ListItemBase {
           transliteration,
         }),
         headers: {
+          'Authorization': await AuthUtils.getAuthHeader(),
           'Content-Type': 'application/json',
         }
       });
+      if (resp.status === 403) {
+        await AuthUtils.signOut();
+        return;
+      }
 
       this.savedData = {
         translation,
@@ -101,7 +107,14 @@ class TranslationListItem extends ListItemBase {
       const res = await fetch(`${ApiUtils.origin}${ApiUtils.path}saveAudioSuggestions`, {
         method: 'POST',
         body: base64Audio,
+        headers: {
+          'Authorization': await AuthUtils.getAuthHeader(),
+        }
       });
+      if (res.status === 403) {
+        await AuthUtils.signOut();
+        return;
+      }
       return await res.text();
     } catch(err) {
       console.error(err);
