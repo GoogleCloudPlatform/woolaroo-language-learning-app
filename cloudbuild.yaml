@@ -114,7 +114,7 @@ steps:
     args: ["run", "build"]
     dir: "./server"
   - id: 'copy_server_files'
-    waitFor: ['build_server', 'fix_client_asset_paths']
+    waitFor: ['build_server', 'build_client']
     name: node:10.16.3
     entrypoint: "node"
     args: ["./copy_server_files.js",
