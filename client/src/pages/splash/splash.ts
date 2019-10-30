@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, Inject, InjectionToken, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, Inject, InjectionToken, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
 import { IProfileService, PROFILE_SERVICE } from 'services/profile';
 import { AppRoutes } from 'app/routes';
+import { AnimationComponent } from 'components/animation/animation';
 
 interface SplashPageConfig {
   partnerLogoUrl?: string;
@@ -20,6 +21,8 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
   private timeout: any = null;
   public partnerLogoUrl?: string;
   public videoComplete = false;
+  @ViewChild('logoAnimation', { static: true })
+  public logoAnimation: AnimationComponent|null = null;
 
   constructor( @Inject(SPLASH_PAGE_CONFIG) private config: SplashPageConfig,
                private router: Router,
@@ -40,8 +43,10 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
   }
 
   onVideoEnded() {
-    console.log('ended');
     this.videoComplete = true;
+    if (this.logoAnimation) {
+      this.logoAnimation.play();
+    }
     this.timeout = setTimeout(() => {
       this.profileService.loadProfile().then(
         (profile) => this.router.navigateByUrl(!profile.termsAgreed ? AppRoutes.Intro : AppRoutes.CaptureImage),
