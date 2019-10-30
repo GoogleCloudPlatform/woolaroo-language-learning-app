@@ -1,19 +1,18 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { environment } from 'environments/environment';
 
 @Pipe({ name: 'assetUrl' })
 export class AssetUrlPipe implements PipeTransform {
-  constructor(private sanitizer: DomSanitizer) {
+  constructor() {
   }
 
-  transform(url: any): SafeStyle {
+  transform(url: any): string {
     if (!url) {
       return '';
     }
     let baseUrl = environment.assets.baseUrl;
     if (!baseUrl) {
-      return this.sanitizer.bypassSecurityTrustUrl(url);
+      return url;
     }
     if (!baseUrl.endsWith('/')) {
       baseUrl += '/';
@@ -22,6 +21,6 @@ export class AssetUrlPipe implements PipeTransform {
     if (urlStr.startsWith('/')) {
       urlStr = urlStr.substr(1);
     }
-    return this.sanitizer.bypassSecurityTrustUrl(baseUrl + urlStr);
+    return baseUrl + urlStr;
   }
 }
