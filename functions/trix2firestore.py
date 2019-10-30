@@ -5,7 +5,9 @@ import json
 import requests
 import os
 from google.oauth2 import service_account
-
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 # The ID and range of a sample spreadsheet.
@@ -21,8 +23,18 @@ def main():
     """Shows basic usage of the Sheets API.
     Prints values from a sample spreadsheet.
     """
-    credentials = service_account.Credentials.from_service_account_file(credentials_file, scopes=SCOPES)
-    service = build('sheets', 'v4', credentials=credentials)
+    cred = credentials.Certificate(credentials_file)
+    firebase_admin.initialize_app(cred, {
+        'storageBucket': '%s.appspot.com' % os.environ['PROJECT_ID']
+    })
+
+    bucket = storage.bucket()
+    # Use a service account
+    firebase_admin.initialize_app(cred)
+
+    db = firestore.client()
+    credentials_service_account = service_account.Credentials.from_service_account_file(credentials_file, scopes=SCOPES)
+    service = build('sheets', 'v4', credentials=credentials_service_account)
 
     # Call the Sheets API
     sheet = service.spreadsheets()
@@ -54,3 +66,5 @@ def main():
                 print(response.text)
 
 
+if __name__ == "__main__":
+    main()

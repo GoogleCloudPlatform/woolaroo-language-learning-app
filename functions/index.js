@@ -1,13 +1,26 @@
+const fs = require('fs');
 const functions = require('firebase-functions');
 const uuidv1 = require('uuid/v1');
 const admin = require('firebase-admin');
 const path = require('path');
 const cors = require('cors')({origin: true});
+const vision = require('@google-cloud/vision');
+const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
+const ffmpeg = require('fluent-ffmpeg');
+ffmpeg.setFfmpegPath(ffmpegPath);
 
+
+// Makes an ffmpeg command return a promise.
+function promisifyCommand(command) {
+  return new Promise((resolve, reject) => {
+    command.on('end', resolve).on('error', reject).run();
+  });
+}
 
 admin.initializeApp();
 const projectId = admin.instanceId().app.options.projectId;
 const bucketName = `${projectId}.appspot.com`;
+const visionClient = new vision.v1p3beta1.ImageAnnotatorClient();
 
 exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
@@ -16,22 +29,31 @@ exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
       return;
     }
     const fileName = uuidv1();
-    const filePath = `suggestions/${fileName}.webm`
+    const filePath = `suggestions/${fileName}.mp3`
     const options = {
+      destination: filePath,
       metadata: {
-        contentType: 'audio/webm',
+        contentType: 'audio/mp3',
       }
     };
-    const file = admin.storage().bucket(bucketName).file(filePath);
+    const bucket = admin.storage().bucket(bucketName);
     try {
       // Convert base64 body to blob of webm.
       const nodeBuffer = Buffer.from(req.body, 'base64');
-      await file.save(nodeBuffer, options);
+      var tempLocalPath = `/tmp/${fileName}.webm`;
+      const targetTempFilePath =  `/tmp/${fileName}.mp3`;
+      fs.writeFileSync(tempLocalPath, nodeBuffer);
+      var command = new ffmpeg(tempLocalPath)
+        .toFormat('mp3')
+        .save(targetTempFilePath); 
+      await promisifyCommand(command);
+      await bucket.upload(targetTempFilePath, options);
       console.log(`Audio saved successfully.`);
+      fs.unlinkSync(tempLocalPath);
+      fs.unlinkSync(targetTempFilePath);
       // Make the file publicly accessible.
+      var file = bucket.file(filePath);
       file.makePublic();
-      // TODO(smus): Convert webm to the format we want to store audio in,
-      // probably audio/mp3.
       // Rather than getting the bucket URL, get the public HTTP URL.
       const metadata = await file.getMetadata();
       const mediaLink = metadata[0].mediaLink;
@@ -76,7 +98,7 @@ exports.updateSettings = functions.https.onRequest(async (req, res) => {
         res.status(404).send("NO settings");
         return "404";
       }
-      if (querySnapshot.docs.length != 1) {
+      if (querySnapshot.docs.length !== 1) {
         console.log("Too many documents in collection");
         res.status(404).send("Error updating settings");
         return "404";
@@ -116,7 +138,7 @@ exports.readSettings = functions.https.onRequest(async (req, res) => {
         res.status(404).send("NO settings");
         return "404";
       }
-      if (querySnapshot.docs.length != 1) {
+      if (querySnapshot.docs.length !== 1) {
         console.log("Too many documents in collection");
         res.status(404).send("Error updating settings");
         return "404";
@@ -157,7 +179,7 @@ exports.addTranslations = functions.https.onRequest(async (req, res) => {
       translation: req.body.translation,
       transliteration: req.body.transliteration,
       sound_link: req.body.sound_link,
-      frequency: +req.body.frequency || -1,
+      frequency: Number(req.body.frequency) || 11,
       timestamp: admin.firestore.FieldValue.serverTimestamp(),
     });
     console.log('Translation saved.');
@@ -172,7 +194,6 @@ exports.getTranslation = functions.https.onRequest(async (req, res) => {
     return;
   }
   var docRef = admin.firestore().collection("translations").doc(req.body);
-
   try {
     const doc = await docRef.get();
     if (doc.exists) {
@@ -226,23 +247,30 @@ exports.getTranslations = functions.https.onRequest(async (req, res) => {
 });
 
 // For translation page, which will be used by admin & moderators.
-// https://us-central1-barnard-project.cloudfunctions.net/translations?limit=2&reverse=true
+// https://us-central1-barnard-project.cloudfunctions.net/translations?limit=2&reverse=true&first500=true
 exports.translations = functions.https.onRequest(async (req, res) => {
   const hasAccess = await checkAccess_(req, res);
   if (!hasAccess) {
     return;
   }
-  const start = +req.query.start || 1;
-  const limit = +req.query.limit || 20;
-  const reverse = req.query.reverse || "false";
+  const start = Number(req.query.start) || 1;
+  const limit = Number(req.query.limit) || 20;
+  const reverse = Boolean(req.query.reverse) || false;
+  const first500 = Boolean(req.query.first500) || false;
   //const array_contains = req.query.array_contains || "";
-
-  var reverse_order = (reverse === "true") ? "desc" : "asc";
+  var reverse_order = (reverse) ? "asc" : "desc";
   var docRef = admin.firestore().collection("translations")
-    .orderBy("english_word", reverse_order).limit(limit);
+    .orderBy("frequency", reverse_order).limit(limit);
 
-  try {
-    const querySnapshot = await docRef.get();
+  let querySnapshot;
+
+  if (first500) {
+    querySnapshot = await docRef.where('frequency', '>', 10).get();
+  } else {
+    querySnapshot = await docRef.get();
+  }
+
+  docRef.get().then(querySnapshot => { 
     if (querySnapshot.empty) {
         res.status(404).send("NO translations");
     } else {
@@ -250,9 +278,11 @@ exports.translations = functions.https.onRequest(async (req, res) => {
         var translations_json = JSON.stringify({data: docs})
         res.status(200).send(translations_json)
     }
-  } catch(err) {
-    console.log("Error getting document:", err);
-  }
+    return "200"
+  }).catch(error => {
+    console.log("Error getting document:", error);
+    res.status(500).send(error);
+  });  
 });
 
 exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
@@ -317,6 +347,21 @@ exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
   });
 });
 
+exports.addFeedback = functions.https.onRequest(async (req, res) => {
+  return cors(req, res, async () => {
+    var snapshot = await admin.firestore().collection('feedback').add({
+      english_word: req.body.english_word,
+      translation: req.body.translation,
+      transliteration: req.body.transliteration,
+      types: req.body.types,
+      content: req.body.content,
+      timestamp: admin.firestore.FieldValue.serverTimestamp(),
+    });
+    res.status(200).send("feedback saved.");
+  });
+});
+
+
 exports.deleteRow = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
     const hasAccess = await checkAccess_(req, res);
@@ -334,6 +379,7 @@ exports.deleteRow = functions.https.onRequest(async (req, res) => {
     }
   });
 });
+
 
 // Auth functions
 exports.grantModeratorRole = functions.https.onRequest((req, res) => {
@@ -374,6 +420,47 @@ exports.grantModeratorRole = functions.https.onRequest((req, res) => {
     }
   });
 });
+
+exports.visionAPI = functions.https.onRequest(async (req, res) => {
+  return cors(req, res, async () => {
+    try {
+      const requestVision = {
+        image: {content: Buffer.from(req.body, 'base64')},
+        features: [{type: 'LABEL_DETECTION'}, {type: 'SAFE_SEARCH_DETECTION'}]
+      };
+      visionClient.annotateImage(requestVision)
+        .then(response => {
+          const labels = response[0].labelAnnotations;
+          var objects = labels.map(label => label.description);
+          res.status(200).send(objects);
+          return "200"
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    } catch (err) {
+      console.log(`Unable to detect objects: ${err}`)
+    }
+  });
+});
+
+exports.visionAPIProxy = functions.https.onRequest(async (req, res) => {
+  return cors(req, res, async () => {
+    try {
+      visionClient.annotateImage(req)
+        .then(response => {
+          res.status(200).send(response);
+          return "200"
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    } catch (err) {
+      console.log(`Unable to detect objects: ${err}`)
+    }
+  });
+});
+
 
 exports.grantAdminRole = functions.https.onRequest((req, res) => {
   return cors(req, res, async () => {
@@ -489,3 +576,11 @@ async function getCustomClaims_(req, res) {
   const tokenId = req.get('Authorization').split('Bearer ')[1];
   return await admin.auth().verifyIdToken(tokenId);
 }
+
+
+// For testing purposes only
+exports.testEndpoint = functions.https.onRequest((req, res) => {
+  return cors(req, res, () => {
+    res.send({ 'a': 'hello from firebase'});
+  });
+});
