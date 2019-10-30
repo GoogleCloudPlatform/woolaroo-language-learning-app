@@ -15,6 +15,14 @@
   }
 }
 
+video {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
 app-logo {
   width: 75%;
   margin-bottom: 180px;
@@ -26,5 +34,16 @@ app-logo {
   img {
     display: block;
     width: 100%;
+  }
+}
+
+video,
+app-logo,
+.sponsor-logo {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+
+  &.hidden {
+    opacity: 0;
   }
 }
