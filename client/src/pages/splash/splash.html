@@ -1,5 +1,7 @@
-<video [src]="'assets/videos/DOTS_05.mp4' | assetUrl" autoplay muted (ended)="onVideoEnded()" [class.hidden]="videoComplete"></video>
+<video autoplay="autoplay" muted="muted" (ended)="onVideoEnded()" [class.hidden]="videoComplete">
+  <source [src]="'assets/videos/DOTS_05.mp4' | assetUrl" type="video/mp4" />
+</video>
 <app-animation *ngIf="videoComplete" [class.hidden]="!videoComplete" [sourcePath]="'assets/animations/logo/data.json' | assetUrl"></app-animation>
 <div class="partner-logo" [class.hidden]="!videoComplete" *ngIf="partnerLogoUrl">
-  <img [src]="partnerLogoUrl | assetUrl" alt="Sponsor logo" />
+  <img [src]="partnerLogoUrl | assetUrl" alt="Sponsor logo" *ngIf="partnerLogoUrl" />
 </div>
