@@ -10,9 +10,6 @@ export const environment = {
   assets: {
     baseUrl: params.assetsBaseUrl,
   },
-  serviceWorker: {
-    url: `${params.assetsBaseUrl}ngsw-worker.js`
-  },
   endangeredLanguage: params.endangeredLanguage,
   pages: {
     splash: {
