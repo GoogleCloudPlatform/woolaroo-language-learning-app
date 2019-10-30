@@ -2,11 +2,11 @@ runtime: nodejs10
 
 handlers:
   - url: /ngsw-worker.js
-    static_files: ngsw-worker.js
-    upload: ../client/dist/ngsw-worker.js
+    static_files: static/ngsw-worker.js
+    upload: static/ngsw-worker.js
   - url: /ngsw.json
-    static_files: ngsw.json
-    upload: ../client/dist/ngsw.json
+    static_files: static/ngsw.json
+    upload: static/ngsw.json
   - url: /.*
     redirect_http_response_code: 301
     secure: always
