@@ -19,6 +19,7 @@ export const SPLASH_PAGE_CONFIG = new InjectionToken<SplashPageConfig>('Splash p
 export class SplashPageComponent implements AfterViewInit, OnDestroy {
   private timeout: any = null;
   public partnerLogoUrl?: string;
+  public videoComplete = false;
 
   constructor( @Inject(SPLASH_PAGE_CONFIG) private config: SplashPageConfig,
                private router: Router,
@@ -29,12 +30,6 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.analyticsService.logPageView(this.router.url, 'Splash');
-    this.timeout = setTimeout(() => {
-      this.profileService.loadProfile().then(
-        (profile) => this.router.navigateByUrl(!profile.termsAgreed ? AppRoutes.Intro : AppRoutes.CaptureImage),
-        () => this.router.navigateByUrl(AppRoutes.Intro)
-      );
-    }, this.config.duration);
   }
 
   ngOnDestroy() {
@@ -42,5 +37,16 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
       clearTimeout(this.timeout);
       this.timeout = null;
     }
+  }
+
+  onVideoEnded() {
+    console.log('ended');
+    this.videoComplete = true;
+    this.timeout = setTimeout(() => {
+      this.profileService.loadProfile().then(
+        (profile) => this.router.navigateByUrl(!profile.termsAgreed ? AppRoutes.Intro : AppRoutes.CaptureImage),
+        () => this.router.navigateByUrl(AppRoutes.Intro)
+      );
+    }, this.config.duration);
   }
 }
