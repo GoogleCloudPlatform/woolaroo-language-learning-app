@@ -14,9 +14,6 @@ export const environment = {
   assets: {
     baseUrl: './',
   },
-  serviceWorker: {
-    url: 'ngsw-worker.js'
-  },
   endangeredLanguage: 'Sicilian',
   pages: {
     splash: {
