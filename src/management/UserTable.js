@@ -13,9 +13,9 @@ class UserTable extends React.Component {
     this.toggleRow = this.toggleRow.bind(this);
   }
 
-  toggleRow(email) {
+  toggleRow(uid) {
     const newSelected = Object.assign({}, this.state.selected);
-    newSelected[email] = !this.state.selected[email];
+    newSelected[uid] = !this.state.selected[uid];
     this.setState({
       selected: newSelected,
       selectAll: 2,
@@ -27,7 +27,7 @@ class UserTable extends React.Component {
 
     if (this.state.selectAll === 0) {
       this.state.data.forEach(x => {
-        newSelected[x.email] = true;
+        newSelected[x.uid] = true;
       });
     }
 
@@ -53,8 +53,8 @@ class UserTable extends React.Component {
                 <input
                   type='checkbox'
                   className='checkbox'
-                  checked={this.state.selected[original.email] === true}
-                  onChange={() => this.toggleRow(original.email)}
+                  checked={this.state.selected[original.uid] === true}
+                  onChange={() => this.toggleRow(original.uid)}
                 />
               );
             },
@@ -112,6 +112,7 @@ export default UserTable;
 function makeData() {
   return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21].map(i => {
     return {
+      uid: i,
       name: 'Dimsum' + i,
       email: i + '@dimsum.com',
       role: 'Admin',
