@@ -20,7 +20,6 @@ export class AnimationComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log(this.autoplay);
     this.animation = lottie.loadAnimation({
       container: this.container.nativeElement,
       renderer: 'svg',
