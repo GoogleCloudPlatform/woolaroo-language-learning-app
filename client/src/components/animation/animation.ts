@@ -1,13 +1,16 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
-import lottie from 'lottie-web';
+import lottie, { AnimationItem } from 'lottie-web';
 
 @Component({
   selector: 'app-animation',
   template: '<div></div>'
 })
 export class AnimationComponent implements AfterViewInit {
+  private animation: AnimationItem|null = null;
   @Input()
   public loop = false;
+  @Input()
+  public autoplay = true;
   @Input()
   public sourcePath = '';
   @Output()
@@ -17,16 +20,23 @@ export class AnimationComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    const animation = lottie.loadAnimation({
+    console.log(this.autoplay);
+    this.animation = lottie.loadAnimation({
       container: this.container.nativeElement,
       renderer: 'svg',
       loop: this.loop,
-      autoplay: true,
+      autoplay: this.autoplay,
       path: this.sourcePath
     });
-    animation.addEventListener('complete', () => {
+    this.animation.addEventListener('complete', () => {
       this.playbackEnded.emit();
     });
-    animation.play();
+  }
+
+  public play() {
+    if (!this.animation) {
+      throw new Error('Animation not loaded');
+    }
+    this.animation.play();
   }
 }
