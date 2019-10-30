@@ -131,7 +131,7 @@
         <target>About the app</target>
       </trans-unit>
       <trans-unit id="aboutContent1" datatype="html">
-        <target>Introducing Barnard, an open source Google Project that uses the camera in your phone to instantly translate objects into indigenous languages.</target>
+        <target>Introducing Woolaroo, an open source Google Project that uses the camera in your phone to instantly translate objects into indigenous languages.</target>
       </trans-unit>
       <trans-unit id="aboutContent2" datatype="html">
         <target>It&apos;s really easy to use — just take a photo of  an everyday object
@@ -143,7 +143,7 @@
       </trans-unit>
       <trans-unit id="technologyContent1" datatype="html">
         <target>Built with Google Translate and Cloud Vision technology,
-                Project Barnard uses advanced Machine Learning to understand the objects in your photos and translate them,
+                Project Woolaroo uses advanced Machine Learning to understand the objects in your photos and translate them,
                 in real time.</target>
       </trans-unit>
       <trans-unit id="technologyContent2" datatype="html">
@@ -152,12 +152,12 @@
                 translation.</target>
       </trans-unit>
       <trans-unit id="technologyContent3" datatype="html">
-        <target>Project Barnard relies on the latest AI technology so it may
+        <target>Project Woolaroo relies on the latest AI technology so it may
                 not get it right every time, but we&apos;re working hard to improve it. You can help us by using the Translation
                 Feedback feature to log any translations that don&apos;t seem right.</target>
       </trans-unit>
       <trans-unit id="logo" datatype="html">
-        <target>Barnard logo</target>
+        <target>Woolaroo</target>
       </trans-unit>
       <trans-unit id="addToHomeScreen" datatype="html">
         <target>Add to home screen</target>
