@@ -89,7 +89,7 @@ exports.updateSettings = functions.https.onRequest(async (req, res) => {
 
       const doc_ids = querySnapshot.docs.map (doc => doc.id);
 
-      snapshot = await admin.firestore().collection("app_settings").doc(doc_ids[0]).set({
+      const snapshot = await admin.firestore().collection("app_settings").doc(doc_ids[0]).set({
           privacy_policy: privacy_policy,
           logo_image_id: logo_image_id,
           app_enabled: app_enabled
@@ -260,6 +260,7 @@ exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
   const pageNum = +req.query.pageNum;
   const state = req.query.state;
   const needsRecording = req.query.needsRecording;
+  const search = req.query.search;
   return cors(req, res, async () => {
     const hasAccess = await checkAccess_(req, res);
     if (!hasAccess) {
@@ -291,6 +292,12 @@ exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
             });
           }
 
+          if (search) {
+            filteredCollection = filteredCollection.filter((doc) => {
+              return doc.english_word.startsWith(search);
+            });
+          }
+
           if (pageNum && pageSize) {
             const startIdx = (pageNum - 1)*pageSize;
             const endIdx = startIdx + pageSize;
@@ -301,8 +308,8 @@ exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
           return filteredCollection;
       } else {
           console.log("No such collection");
-          res.status(404).send("404");
-          return "404";
+          res.status(200).send(collectionDocs.docs);
+          return collectionDocs.docs;
       }
     } catch(err) {
       console.log("Error getting translations:", err);
