@@ -13,6 +13,8 @@ class FilterChips extends React.Component {
   }
 
   render() {
+    const top500Props = this.props.top500 ? {color: 'primary'} : {};
+    const needsRecordingProps = this.props.needsRecording ? {color: 'primary'} : {};
     return (
       <div className="filter-chips">
         <Chip
@@ -21,7 +23,7 @@ class FilterChips extends React.Component {
           clickable
           onClick={() => { this.handleTop500Click_(!this.props.top500) }}
           className="filter-chip top500-chip"
-          color={this.props.top500 ? 'primary' : ''}
+          {...top500Props}
         />
         <Chip
           icon={this.props.needsRecording ? <DoneIcon /> : null}
@@ -29,7 +31,7 @@ class FilterChips extends React.Component {
           clickable
           onClick={() => { this.handleNeedsRecordingClick_(!this.props.needsRecording) }}
           className="filter-chip recording-chip"
-          color={this.props.needsRecording ? 'primary' : ''}
+          {...needsRecordingProps}
         />
       </div>
     );
