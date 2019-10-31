@@ -270,8 +270,8 @@ exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
     let collection = admin.firestore().collection(req.query.collectionName);
 
     if (top500 && top500 !== '0') {
-      collection = collection.orderBy("frequency", "desc")
-        .where('frequency', '>', 10);
+      collection = collection.where('frequency', '>', 10)
+        .orderBy("frequency", "desc");
     } else {
       collection = collection.orderBy("english_word");
     }
