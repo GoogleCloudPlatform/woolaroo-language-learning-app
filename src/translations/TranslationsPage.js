@@ -42,7 +42,10 @@ class TranslationsPage extends ListPageBase {
       const queryStringParams = new URLSearchParams(this.props.location.search);
       const newSearch = queryStringParams.get('search') || '';
       if (newSearch !== this.state.search) {
-        await this.setState({search: newSearch});
+        await this.setState({
+          search: newSearch,
+          pageNum: 1,
+        });
         await this.fetchItems();
       }
     }
