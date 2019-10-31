@@ -261,42 +261,46 @@ exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
   const state = req.query.state;
   const needsRecording = req.query.needsRecording;
   const search = req.query.search;
+  const top500 = req.query.top500;
   return cors(req, res, async () => {
     const hasAccess = await checkAccess_(req, res);
     if (!hasAccess) {
       return;
     }
-    let collection = admin.firestore().collection(req.query.collectionName)
-      .orderBy("english_word");
+    let collection = admin.firestore().collection(req.query.collectionName);
+
+    if (top500 && top500 !== '0') {
+      collection = collection.orderBy("frequency", "desc")
+        .where('frequency', '>', 10);
+    } else {
+      collection = collection.orderBy("english_word");
+    }
 
     try {
       const collectionDocs = await collection.get();
       if (collectionDocs.docs.length) {
-          let filteredCollection = collectionDocs.docs.map((doc) => {
-            return {...doc.data(), id: doc.id};
+          let filteredCollection = [];
+          collectionDocs.docs.forEach((doc, docIdx) => {
+            const docData = doc.data();
+
+            if (state === 'incomplete' && docData.translation) {
+              return;
+            }
+
+            if (state === 'complete' && !docData.translation) {
+              return;
+            }
+
+            if (needsRecording && needsRecording !== '0' && docData.sound_link) {
+              return;
+            }
+
+            if (search && docData.english_word.indexOf(search) === -1) {
+              return;
+            }
+
+            filteredCollection.push({...docData, id: doc.id});
           });
-
-          if (state === 'incomplete') {
-            filteredCollection = filteredCollection.filter((doc) => {
-              return !doc.translation;
-            });
-          } else if (state === 'complete') {
-            filteredCollection = filteredCollection.filter((doc) => {
-              return doc.translation;
-            });
-          }
-
-          if (needsRecording && needsRecording !== '0') {
-            filteredCollection = filteredCollection.filter((doc) => {
-              return !doc.sound_link;
-            });
-          }
-
-          if (search) {
-            filteredCollection = filteredCollection.filter((doc) => {
-              return doc.english_word.startsWith(search);
-            });
-          }
 
           if (pageNum && pageSize) {
             const startIdx = (pageNum - 1)*pageSize;

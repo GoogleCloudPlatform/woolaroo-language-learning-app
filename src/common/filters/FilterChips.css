@@ -7,3 +7,7 @@ div.filter-chip {
   width: 180px;
   height: 38px;
 }
+
+div.top500-chip {
+  margin-right: 12px;
+}
