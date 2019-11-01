@@ -93,7 +93,7 @@ export class AddWordPageComponent implements AfterViewInit {
       return;
     }
     this.submittingForm = true;
-    const loadingPopup = this.dialog.open(LoadingPopUpComponent);
+    const loadingPopup = this.dialog.open(LoadingPopUpComponent, { panelClass: 'loading-popup' });
     const addedWord: AddedWord = this.form.value;
     addedWord.recording = this.recording;
     this.feedbackService.addWord(addedWord).then(

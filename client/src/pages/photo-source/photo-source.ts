@@ -25,7 +25,7 @@ export class PhotoSourcePageComponent implements AfterViewInit {
   }
 
   onImageUploaded(image: Blob) {
-    const loadingPopUp = this.dialog.open(LoadingPopUpComponent, { closeOnNavigation: false, disableClose: true });
+    const loadingPopUp = this.dialog.open(LoadingPopUpComponent, { closeOnNavigation: false, disableClose: true, panelClass: 'loading-popup' });
     this.sessionService.currentSession.currentModal = loadingPopUp;
     loadingPopUp.beforeClosed().subscribe({
       next: () => this.sessionService.currentSession.currentModal = null
@@ -61,7 +61,7 @@ export class PhotoSourcePageComponent implements AfterViewInit {
   }
 
   onCaptureClick() {
-    const loadingPopUp = this.dialog.open(LoadingPopUpComponent, { closeOnNavigation: false, disableClose: true });
+    const loadingPopUp = this.dialog.open(LoadingPopUpComponent, { closeOnNavigation: false, disableClose: true, panelClass: 'loading-popup' });
     this.sessionService.currentSession.currentModal = loadingPopUp;
     loadingPopUp.beforeClosed().subscribe({
       next: () => this.sessionService.currentSession.currentModal = null

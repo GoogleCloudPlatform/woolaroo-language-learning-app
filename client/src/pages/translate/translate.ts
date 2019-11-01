@@ -46,7 +46,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
     const words: string[]|undefined = history.state.words || this.config.debugWords;
     let loadingPopUp: MatDialogRef<any>|undefined = this.sessionService.currentSession.currentModal;
     if (!loadingPopUp) {
-      loadingPopUp = this.dialog.open(LoadingPopUpComponent, { closeOnNavigation: false, disableClose: true });
+      loadingPopUp = this.dialog.open(LoadingPopUpComponent, { closeOnNavigation: false, disableClose: true, panelClass: 'loading-popup' });
       this.sessionService.currentSession.currentModal = loadingPopUp;
       loadingPopUp.beforeClosed().subscribe({
         next: () => this.sessionService.currentSession.currentModal = null
