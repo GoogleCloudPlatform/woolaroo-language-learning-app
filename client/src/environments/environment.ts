@@ -30,15 +30,6 @@ export const environment = {
     },
     captionImage: {
       debugImageUrl
-    },
-    addWord: {
-      maxRecordingDuration: 5000,
-      recordingBufferSize: 4096,
-      recordingMimeTypes: [ 'audio/mpeg', 'audio/wav', 'audio/webm' ],
-      androidGBoardUrl: 'https://play.google.com/store/apps/details?id=com.google.android.inputmethod.latin',
-      iosGBoardUrl: 'https://apps.apple.com/us/app/gboard-the-google-keyboard/id1091700242',
-      keymanUrl: 'https://keyman.com/',
-      progressAnimationInterval: 25
     }
   },
   components: {
@@ -47,6 +38,15 @@ export const environment = {
     },
     cameraPreview: {
       resizeDelay: 1000
+    },
+    addWordFieldset: {
+      maxRecordingDuration: 5000,
+      recordingBufferSize: 4096,
+      recordingMimeTypes: [ 'audio/mpeg', 'audio/wav', 'audio/webm' ],
+      androidGBoardUrl: 'https://play.google.com/store/apps/details?id=com.google.android.inputmethod.latin',
+      iosGBoardUrl: 'https://apps.apple.com/us/app/gboard-the-google-keyboard/id1091700242',
+      keymanUrl: 'https://keyman.com/',
+      progressAnimationInterval: 25
     },
     translationSelector: {
       scrollList: {
