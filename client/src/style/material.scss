@@ -124,3 +124,21 @@ form {
 .mat-snack-bar-container.capture-snack-bar {
   margin-bottom: 130px;
 }
+
+/* Make loading dialogs fullscreen */
+.loading-popup {
+  width: 100%;
+  height: 100%;
+  max-width: none !important;
+
+  .mat-dialog-container {
+    border-radius: 0;
+  }
+
+  .mat-dialog-content {
+    max-height: none;
+    overflow: visible;
+    margin: 0;
+    padding: 0;
+  }
+}

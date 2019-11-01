@@ -43,7 +43,7 @@ export class CapturePageComponent implements AfterViewInit, OnDestroy {
       return;
     }
     if (!loadingPopUp) {
-      loadingPopUp = this.dialog.open(LoadingPopUpComponent, {disableClose: true});
+      loadingPopUp = this.dialog.open(LoadingPopUpComponent, { disableClose: true, panelClass: 'loading-popup' });
     }
     loadingPopUp.afterClosed().subscribe({
       next: () => this.modalIsForCameraStartup = false
@@ -84,7 +84,7 @@ export class CapturePageComponent implements AfterViewInit, OnDestroy {
     }
     const preview = this.cameraPreview;
     this.captureInProgress = true;
-    const loadingPopUp = this.dialog.open(CapturePopUpComponent, { closeOnNavigation: false, disableClose: true });
+    const loadingPopUp = this.dialog.open(CapturePopUpComponent, { closeOnNavigation: false, disableClose: true, panelClass: 'loading-popup' });
     this.sessionService.currentSession.currentModal = loadingPopUp;
     loadingPopUp.beforeClosed().subscribe({
       next: () => this.sessionService.currentSession.currentModal = null
@@ -141,7 +141,7 @@ export class CapturePageComponent implements AfterViewInit, OnDestroy {
   }
 
   onImageUploaded(image: Blob) {
-    const loadingPopUp = this.dialog.open(LoadingPopUpComponent, { closeOnNavigation: false, disableClose: true });
+    const loadingPopUp = this.dialog.open(LoadingPopUpComponent, { closeOnNavigation: false, disableClose: true, panelClass: 'loading-popup' });
     this.sessionService.currentSession.currentModal = loadingPopUp;
     loadingPopUp.afterOpened().subscribe({
       next: () => this.loadImageDescriptions(image, loadingPopUp)

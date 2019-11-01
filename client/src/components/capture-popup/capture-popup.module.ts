@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { MatDialogModule } from '@angular/material';
 import { CapturePopUpComponent } from './capture-popup';
+import { BusySpinnerModule } from 'components/busy-spinner/busy-spinner.module';
 
 @NgModule({
   declarations: [
@@ -10,7 +11,8 @@ import { CapturePopUpComponent } from './capture-popup';
     CapturePopUpComponent
   ],
   imports: [
-    MatDialogModule
+    MatDialogModule,
+    BusySpinnerModule
   ],
   entryComponents: [
     CapturePopUpComponent

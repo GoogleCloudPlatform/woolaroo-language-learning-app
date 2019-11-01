@@ -81,7 +81,7 @@ export class CaptionImagePageComponent implements OnInit, OnDestroy {
     if (!this.form.valid) {
       return;
     }
-    const loadingPopUp = this.dialog.open(LoadingPopUpComponent, { closeOnNavigation: false, disableClose: true });
+    const loadingPopUp = this.dialog.open(LoadingPopUpComponent, { closeOnNavigation: false, disableClose: true, panelClass: 'loading-popup' });
     this.sessionService.currentSession.currentModal = loadingPopUp;
     loadingPopUp.beforeClosed().subscribe({
       next: () => this.sessionService.currentSession.currentModal = null

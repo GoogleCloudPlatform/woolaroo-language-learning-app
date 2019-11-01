@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
-import { MatDialogModule } from "@angular/material";
+import { MatDialogModule } from '@angular/material';
 import { LoadingPopUpComponent } from './loading-popup';
+import { BusySpinnerModule } from 'components/busy-spinner/busy-spinner.module';
 
 @NgModule({
   declarations: [
@@ -10,7 +11,8 @@ import { LoadingPopUpComponent } from './loading-popup';
     LoadingPopUpComponent
   ],
   imports: [
-    MatDialogModule
+    MatDialogModule,
+    BusySpinnerModule
   ],
   entryComponents: [
     LoadingPopUpComponent

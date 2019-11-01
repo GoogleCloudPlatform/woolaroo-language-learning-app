@@ -57,7 +57,7 @@ export class FeedbackPageComponent implements AfterViewInit {
       return;
     }
     this.submittingForm = true;
-    const loadingPopup = this.dialog.open(LoadingPopUpComponent);
+    const loadingPopup = this.dialog.open(LoadingPopUpComponent, { panelClass: 'loading-popup' });
     const feedback: Feedback = this.feedbackForm.value;
     feedback.word = this.word;
     this.feedbackService.sendFeedback(feedback).then(
