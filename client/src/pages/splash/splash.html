@@ -1,4 +1,4 @@
-<video autoplay="autoplay" muted="muted" (ended)="onVideoEnded()" [class.hidden]="videoComplete"
+<video autoplay muted playsinline (ended)="onVideoEnded()" [class.hidden]="videoComplete"
        oncanplay="this.play()" onloadedmetadata="this.muted=true">
   <source [src]="'assets/videos/DOTS_05.mp4' | assetUrl" type="video/mp4" />
 </video>
