@@ -3,5 +3,3 @@
 /Dockerfile-dev
 /tsconfig.json
 /.dockerignore
-/package.json
-/package-lock.json
