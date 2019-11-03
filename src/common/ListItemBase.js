@@ -11,7 +11,7 @@ class ListItemBase extends React.Component {
     this.handleClose_ = this.handleClose_.bind(this);
 
     const { english_word, sound_link, translation,
-      transliteration, id } = this.props.item;
+      transliteration, id, frequency } = this.props.item;
 
     this.state = {
       id,
@@ -19,6 +19,7 @@ class ListItemBase extends React.Component {
       sound_link,
       translation,
       transliteration,
+      frequency,
       promo_message: null,
       promo_open: false,
     };
