@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogState } from '@angular/material';
 import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
 import { IImageRecognitionService, IMAGE_RECOGNITION_SERVICE } from 'services/image-recognition';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
@@ -25,13 +25,14 @@ export class PhotoSourcePageComponent implements AfterViewInit {
   }
 
   onImageUploaded(image: Blob) {
-    const loadingPopUp = this.dialog.open(LoadingPopUpComponent, { closeOnNavigation: false, disableClose: true, panelClass: 'loading-popup' });
+    const loadingPopUp = this.dialog.open(LoadingPopUpComponent,
+      { closeOnNavigation: false, disableClose: true, panelClass: 'loading-popup' });
     this.sessionService.currentSession.currentModal = loadingPopUp;
     loadingPopUp.beforeClosed().subscribe({
-      next: () => this.sessionService.currentSession.currentModal = null
+      complete: () => this.sessionService.currentSession.currentModal = null
     });
     loadingPopUp.afterOpened().subscribe({
-      next: () => {
+      complete: () => {
         this.imageRecognitionService.loadDescriptions(image).then(
           (descriptions) => {
             if (descriptions.length > 0) {
@@ -61,13 +62,28 @@ export class PhotoSourcePageComponent implements AfterViewInit {
   }
 
   onCaptureClick() {
-    const loadingPopUp = this.dialog.open(LoadingPopUpComponent, { closeOnNavigation: false, disableClose: true, panelClass: 'loading-popup' });
+    const loadingPopUp = this.dialog.open(LoadingPopUpComponent,
+      { closeOnNavigation: false, disableClose: true, panelClass: 'loading-popup' });
     this.sessionService.currentSession.currentModal = loadingPopUp;
     loadingPopUp.beforeClosed().subscribe({
-      next: () => this.sessionService.currentSession.currentModal = null
+      complete: () => this.sessionService.currentSession.currentModal = null
     });
+    let opened = false;
     loadingPopUp.afterOpened().subscribe({
-      next: () => this.router.navigateByUrl(AppRoutes.CaptureImage)
+      complete: () => {
+        if (!opened) {
+          opened = true;
+          this.router.navigateByUrl(AppRoutes.CaptureImage);
+        }
+      }
     });
+    // HACK: afterOpened not firing on some platforms (iPhone 7+ Safari)
+    // Force navigation
+    setTimeout(() => {
+      if (!opened) {
+        opened = true;
+        this.router.navigateByUrl(AppRoutes.CaptureImage);
+      }
+    }, 1000);
   }
 }
