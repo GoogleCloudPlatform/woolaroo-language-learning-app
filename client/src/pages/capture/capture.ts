@@ -10,6 +10,7 @@ import { IImageRecognitionService, IMAGE_RECOGNITION_SERVICE } from 'services/im
 import { AppRoutes } from 'app/routes';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
 import { SessionService } from 'services/session';
+import { addOpenedListener } from 'util/dialog';
 
 @Component({
   selector: 'app-page-capture',
@@ -62,9 +63,7 @@ export class CapturePageComponent implements AfterViewInit, OnDestroy {
         }
         const errorMessage = this.i18n({ id: 'startCameraError', value: 'Unable to start camera' });
         const errorDialog = this.dialog.open(ErrorPopUpComponent, { data: { message: errorMessage } });
-        errorDialog.afterClosed().subscribe(() => {
-          history.back();
-        });
+        errorDialog.afterClosed().subscribe({ complete: () => history.back() });
       }
     );
   }
@@ -84,27 +83,26 @@ export class CapturePageComponent implements AfterViewInit, OnDestroy {
     }
     const preview = this.cameraPreview;
     this.captureInProgress = true;
-    const loadingPopUp = this.dialog.open(CapturePopUpComponent, { closeOnNavigation: false, disableClose: true, panelClass: 'loading-popup' });
+    const loadingPopUp = this.dialog.open(CapturePopUpComponent,
+      { closeOnNavigation: false, disableClose: true, panelClass: 'loading-popup' });
     this.sessionService.currentSession.currentModal = loadingPopUp;
     loadingPopUp.beforeClosed().subscribe({
-      next: () => this.sessionService.currentSession.currentModal = null
+      complete: () => this.sessionService.currentSession.currentModal = null
     });
-    loadingPopUp.afterOpened().subscribe({
-      next: () => {
-        preview.capture().then(
-          image => {
-            console.log('Image captured');
-            this.loadImageDescriptions(image, loadingPopUp);
-          },
-          err => {
-            console.warn('Failed to capture image', err);
-            this.captureInProgress = false;
-            loadingPopUp.close();
-            const errorMessage = this.i18n({ id: 'captureImageError', value: 'Unable to capture image' });
-            this.dialog.open(ErrorPopUpComponent, { data: { message: errorMessage } });
-          }
-        );
-      }
+    addOpenedListener(loadingPopUp, () => {
+      preview.capture().then(
+        image => {
+          console.log('Image captured');
+          this.loadImageDescriptions(image, loadingPopUp);
+        },
+        err => {
+          console.warn('Failed to capture image', err);
+          this.captureInProgress = false;
+          loadingPopUp.close();
+          const errorMessage = this.i18n({ id: 'captureImageError', value: 'Unable to capture image' });
+          this.dialog.open(ErrorPopUpComponent, { data: { message: errorMessage } });
+        }
+      );
     });
   }
 
@@ -141,14 +139,13 @@ export class CapturePageComponent implements AfterViewInit, OnDestroy {
   }
 
   onImageUploaded(image: Blob) {
-    const loadingPopUp = this.dialog.open(LoadingPopUpComponent, { closeOnNavigation: false, disableClose: true, panelClass: 'loading-popup' });
+    const loadingPopUp = this.dialog.open(LoadingPopUpComponent,
+      { closeOnNavigation: false, disableClose: true, panelClass: 'loading-popup' });
     this.sessionService.currentSession.currentModal = loadingPopUp;
-    loadingPopUp.afterOpened().subscribe({
-      next: () => this.loadImageDescriptions(image, loadingPopUp)
-    });
     loadingPopUp.beforeClosed().subscribe({
-      next: () => this.sessionService.currentSession.currentModal = null
+      complete: () => this.sessionService.currentSession.currentModal = null
     });
+    addOpenedListener(loadingPopUp, () => this.loadImageDescriptions(image, loadingPopUp));
   }
 
   onSidenavClosed() {

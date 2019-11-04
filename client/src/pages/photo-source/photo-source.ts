@@ -1,11 +1,12 @@
 import { AfterViewInit, Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog, MatDialogState } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
 import { IImageRecognitionService, IMAGE_RECOGNITION_SERVICE } from 'services/image-recognition';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
 import { AppRoutes } from 'app/routes';
 import { SessionService } from 'services/session';
+import { addOpenedListener } from 'util/dialog';
 
 @Component({
   selector: 'app-page-photo-source',
@@ -31,33 +32,31 @@ export class PhotoSourcePageComponent implements AfterViewInit {
     loadingPopUp.beforeClosed().subscribe({
       complete: () => this.sessionService.currentSession.currentModal = null
     });
-    loadingPopUp.afterOpened().subscribe({
-      complete: () => {
-        this.imageRecognitionService.loadDescriptions(image).then(
-          (descriptions) => {
-            if (descriptions.length > 0) {
-              this.router.navigateByUrl(AppRoutes.Translate, { state: { image, words: descriptions.map(d => d.description) } }).then(
-                (success) => {
-                  if (!success) {
-                    loadingPopUp.close();
-                  }
-                },
-                () => loadingPopUp.close()
-              );
-            } else {
-              this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image } }).finally(
-                () => loadingPopUp.close()
-              );
-            }
-          },
-          (err) => {
-            console.warn('Error loading image descriptions', err);
+    addOpenedListener(loadingPopUp, () => {
+      this.imageRecognitionService.loadDescriptions(image).then(
+        (descriptions) => {
+          if (descriptions.length > 0) {
+            this.router.navigateByUrl(AppRoutes.Translate, { state: { image, words: descriptions.map(d => d.description) } }).then(
+              (success) => {
+                if (!success) {
+                  loadingPopUp.close();
+                }
+              },
+              () => loadingPopUp.close()
+            );
+          } else {
             this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image } }).finally(
               () => loadingPopUp.close()
             );
           }
-        );
-      }
+        },
+        (err) => {
+          console.warn('Error loading image descriptions', err);
+          this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image } }).finally(
+            () => loadingPopUp.close()
+          );
+        }
+      );
     });
   }
 
@@ -68,22 +67,6 @@ export class PhotoSourcePageComponent implements AfterViewInit {
     loadingPopUp.beforeClosed().subscribe({
       complete: () => this.sessionService.currentSession.currentModal = null
     });
-    let opened = false;
-    loadingPopUp.afterOpened().subscribe({
-      complete: () => {
-        if (!opened) {
-          opened = true;
-          this.router.navigateByUrl(AppRoutes.CaptureImage);
-        }
-      }
-    });
-    // HACK: afterOpened not firing on some platforms (iPhone 7+ Safari)
-    // Force navigation
-    setTimeout(() => {
-      if (!opened) {
-        opened = true;
-        this.router.navigateByUrl(AppRoutes.CaptureImage);
-      }
-    }, 1000);
+    addOpenedListener(loadingPopUp, () => this.router.navigateByUrl(AppRoutes.CaptureImage));
   }
 }
