@@ -22,7 +22,7 @@ export const environment = {
     },
     translate: {
       debugImageUrl,
-      debugWords: ['technology', 'ankle', 'book']
+      debugWords: ['technology', 'garbage', 'book']
     },
     termsAndPrivacy: {
       enabled: true,

@@ -88,11 +88,23 @@
   text-align: center;
   margin-bottom: 15px;
   width: 100%;
-  font-size: 2rem;
-  line-height: 2rem;
 
-  div {
-    margin-bottom: 12px;
+  .message {
+    margin-bottom: 20px;
+    font-size: 3rem;
+    line-height: 3rem;
+    cursor: pointer;
+
+    span {
+      vertical-align: middle;
+    }
+
+    app-icon {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
   }
 
   .add-translation {
@@ -100,6 +112,9 @@
     color: mat-contrast($app-inverted, 500);
     width: 45px;
     height: 45px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
