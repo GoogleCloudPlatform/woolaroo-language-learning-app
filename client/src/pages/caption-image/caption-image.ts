@@ -7,6 +7,7 @@ import { AppRoutes } from 'app/routes';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
 import { SessionService } from 'services/session';
 import { MatDialog } from '@angular/material';
+import { addOpenedListener } from 'util/dialog';
 
 interface CaptionImagePageConfig {
   debugImageUrl?: string;
@@ -81,15 +82,14 @@ export class CaptionImagePageComponent implements OnInit, OnDestroy {
     if (!this.form.valid) {
       return;
     }
-    const loadingPopUp = this.dialog.open(LoadingPopUpComponent, { closeOnNavigation: false, disableClose: true, panelClass: 'loading-popup' });
+    const loadingPopUp = this.dialog.open(LoadingPopUpComponent,
+      { closeOnNavigation: false, disableClose: true, panelClass: 'loading-popup' });
     this.sessionService.currentSession.currentModal = loadingPopUp;
     loadingPopUp.beforeClosed().subscribe({
       next: () => this.sessionService.currentSession.currentModal = null
     });
-    loadingPopUp.afterOpened().subscribe({
-      next: () => {
-        this.router.navigateByUrl(AppRoutes.Translate, {state: {image: this.image, words: [this.form.value.caption]}});
-      }
+    addOpenedListener(loadingPopUp, () => {
+      this.router.navigateByUrl(AppRoutes.Translate, {state: {image: this.image, words: [this.form.value.caption]}});
     });
   }
 
