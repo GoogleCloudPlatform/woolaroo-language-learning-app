@@ -61,12 +61,6 @@
           <context context-type="sourcefile">src/pages/intro/terms/terms.html</context>
           <context context-type="linenumber">4</context>
         </context-group>
-      </trans-unit><trans-unit id="termsAndPrivacyContent" datatype="html">
-        <source>Terms and Privacy content</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/pages/terms/terms.html</context>
-          <context context-type="linenumber">6</context>
-        </context-group>
       </trans-unit><trans-unit id="photoSource" datatype="html">
         <source>You can use a photo from your phone or take a photo of something around you</source>
         <context-group purpose="location">
