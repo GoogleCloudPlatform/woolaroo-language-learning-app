@@ -26,9 +26,6 @@
       <trans-unit id="accept" datatype="html">
         <target>Accepter</target>
       </trans-unit>
-      <trans-unit id="termsAndPrivacyContent" datatype="html">
-        <target></target>
-      </trans-unit>
       <trans-unit id="photoSource" datatype="html">
         <target>Vous pouvez prendre une photo autour de vous ou en choisir une sur votre téléphone</target>
       </trans-unit>

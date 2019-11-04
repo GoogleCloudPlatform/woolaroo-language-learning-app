@@ -26,9 +26,6 @@
       <trans-unit id="accept" datatype="html">
         <target>स्वीकार करें</target>
       </trans-unit>
-      <trans-unit id="termsAndPrivacyContent" datatype="html">
-        <target></target>
-      </trans-unit>
       <trans-unit id="photoSource" datatype="html">
         <target>आप अपने फ़ोन में मौजूद फ़ोटो इस्तेमाल कर सकते हैं या अपने आस-पास की किसी चीज़ की फ़ोटो लें</target>
       </trans-unit>
