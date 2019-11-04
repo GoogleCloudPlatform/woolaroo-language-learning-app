@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# Location of the bucket - https://cloud.google.com/storage/docs/locations#available_locations (optional)
-TERRAFORM_BUCKET_LOCATION=''
+# Location of the bucket - https://cloud.google.com/storage/docs/locations#available_locations
+TERRAFORM_BUCKET_LOCATION='asia'
 # Google project ID - default to current project ID
 PROJECT_ID=`gcloud config get-value project`
 # Name of the bucket containing terraform state

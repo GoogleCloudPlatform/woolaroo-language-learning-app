@@ -13,7 +13,9 @@ export const environment = {
   endangeredLanguage: params.endangeredLanguage,
   pages: {
     splash: {
-      duration: 5000,
+      duration: 4000,
+      videoMaxStartTime: 3000,
+      showLogosVideoPosition: 0.8,
       partnerLogoUrl: params.partnerLogoUrl
     },
     translate: {
