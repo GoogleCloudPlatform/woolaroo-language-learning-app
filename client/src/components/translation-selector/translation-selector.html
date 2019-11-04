@@ -25,7 +25,10 @@
          (play)="onAudioPlaying()" (ended)="onAudioStopped()" (pause)="onAudioStopped()"></audio>
 </div>
 <div class="translation-not-found" [class.hidden]="!selectedWordVisible" *ngIf="selectedWord && !selectedWord.translation">
-  <div>Translation not found</div>
+  <div class="message" (click)="onAddTranslationClick()">
+    <app-icon icon="add" shadow="true"></app-icon>
+    <span i18n="@@addWord">Add word</span>
+  </div>
   <button *ngIf="!selectedWord.soundURL" class="add-translation" (click)="onAddTranslationClick()">
     <app-icon icon="record_audio" shadow="true"></app-icon>
   </button>

@@ -253,6 +253,9 @@ export class WordScrollListComponent implements AfterViewChecked {
       return;
     }
     const wordIndex = Math.min(this.selectedWordIndex, items.length - 2);
+    if (wordIndex < 0) {
+      return;
+    }
     const containerBounds = scrollContainer.getBoundingClientRect();
     const centerX = containerBounds.left + containerBounds.width * 0.5;
     const currentItem = items[wordIndex];

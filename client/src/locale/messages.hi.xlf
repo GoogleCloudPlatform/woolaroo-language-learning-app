@@ -83,7 +83,7 @@
       <trans-unit id="feedbackRequired" datatype="html">
         <target>सुझाव देना ज़रूरी है</target>
       </trans-unit>
-      <trans-unit id="addWordTitle" datatype="html">
+      <trans-unit id="addWord" datatype="html">
         <target>शब्द जोड़ें</target>
       </trans-unit>
       <trans-unit id="add" datatype="html">

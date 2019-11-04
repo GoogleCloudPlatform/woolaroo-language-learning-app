@@ -83,7 +83,7 @@
       <trans-unit id="feedbackRequired" datatype="html">
         <target>Commentaire obligatoire</target>
       </trans-unit>
-      <trans-unit id="addWordTitle" datatype="html">
+      <trans-unit id="addWord" datatype="html">
         <target>Ajouter un mot</target>
       </trans-unit>
       <trans-unit id="add" datatype="html">

@@ -83,7 +83,7 @@
       <trans-unit id="feedbackRequired" datatype="html">
         <target>يجب إدخال التعليقات</target>
       </trans-unit>
-      <trans-unit id="addWordTitle" datatype="html">
+      <trans-unit id="addWord" datatype="html">
         <target>إضافة كلمة</target>
       </trans-unit>
       <trans-unit id="add" datatype="html">

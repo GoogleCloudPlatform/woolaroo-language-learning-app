@@ -4,7 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from 'environments/environment';
 
 export type Icon = 'play_audio'|'record_audio'|'stop_audio'|'play_recording'|'back'|'add_feedback'|
-  'add_to_home'|'brand'|'photo_library'|'capture_photo'|'menu'|'close'|'share'|'search';
+  'add_to_home'|'brand'|'photo_library'|'capture_photo'|'menu'|'close'|'share'|'search'|'add';
 
 @Component({
   selector: 'app-icon',
@@ -40,6 +40,7 @@ export class IconComponent {
       stop_audio: 'stop.svg',
       play_recording: 'play_arrow.svg',
       search: 'search.svg',
+      add: 'add.svg'
     };
     for (const iconID of Object.keys(icons)) {
       this.iconRegistry.addSvgIcon(iconID, this.domSanitizer.bypassSecurityTrustResourceUrl(baseUrl + icons[iconID]));
