@@ -20,19 +20,10 @@
                         [checked]="typeIsSelected(FeedbackType.OffensiveTranslation)"
                         i18n="@@offensiveTranslation">Offensive translation</mat-checkbox>
         </li>
-        <li>
-          <mat-checkbox (change)="onFeedbackTypeChange($event, FeedbackType.AlternateTranslation)"
-                        [checked]="typeIsSelected(FeedbackType.AlternateTranslation)"
-                        i18n="@@alternateTranslation">Alternate translation</mat-checkbox>
-        </li>
-        <li>
-          <mat-checkbox (change)="onFeedbackTypeChange($event, FeedbackType.Other)"
-                        [checked]="typeIsSelected(FeedbackType.Other)"
-                        i18n="@@other">Other</mat-checkbox>
-        </li>
       </ul>
       <mat-error *ngIf="feedbackForm.controls['types'].hasError('required')" i18n="@@feedbackTypeRequired">No feedback type selected</mat-error>
     </div>
+    <app-add-word-fieldset [formGroup]="feedbackForm"></app-add-word-fieldset>
     <mat-form-field class="textarea" appearance="outline">
       <mat-label i18n="@@enterFeedback">Enter feedback</mat-label>
       <textarea matInput name="content" required formControlName="content"></textarea>

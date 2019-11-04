@@ -7,15 +7,14 @@ export enum FeedbackType {
   Other = 'Other'
 }
 
-export interface Feedback {
-  types: FeedbackType[];
-  content: string;
-  word?: WordTranslation;
-}
-
 export interface AddedWord {
   nativeWord: string;
   englishWord: string;
   transliteration: string;
   recording: Blob|null;
+}
+
+export interface Feedback extends AddedWord {
+  types: FeedbackType[];
+  content: string;
 }

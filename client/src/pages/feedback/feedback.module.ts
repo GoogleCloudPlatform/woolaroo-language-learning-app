@@ -13,6 +13,7 @@ import {
 import { LoadingPopUpModule } from 'components/loading-popup/loading-popup.module';
 import { IconComponentModule } from 'components/icon/icon.module';
 import { ErrorPopUpModule } from 'components/error-popup/error-popup.module';
+import { AddWordFieldsetModule } from 'components/add-word-fieldset/add-word-fieldset.module';
 import { FeedbackPageComponent } from './feedback';
 
 @NgModule({
@@ -33,6 +34,7 @@ import { FeedbackPageComponent } from './feedback';
     ReactiveFormsModule,
     LoadingPopUpModule,
     IconComponentModule,
+    AddWordFieldsetModule,
     ErrorPopUpModule
   ]
 })
