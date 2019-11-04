@@ -32,7 +32,7 @@ export async function startRecording(bufferSize: number, mimeTypes?: string[]): 
   return new Promise<RecordingStream>((resolve, reject) => {
     navigator.mediaDevices.getUserMedia({video: false, audio: true}).then(
       (stream) => {
-        if (MediaRecorder) {
+        if (typeof(MediaRecorder) !== 'undefined') {
           console.log('Starting MediaRecorder recording');
           startMediaRecorderRecording(stream, bufferSize, mimeTypes).then(
             str => resolve(str),
@@ -109,31 +109,32 @@ async function startAudioContextRecording(stream: MediaStream, bufferSize: numbe
         stream.getAudioTracks()[0].stop();
       }
       if (recordingStream.onended) {
-        recordingStream.onended(audioBuffersToWAV(buffers, sampleRate));
+        recordingStream.onended(audioBuffersToWAV(buffer, sampleRate));
       }
     }
   };
-  const buffers: Float32Array[] = [];
+  let buffer: Float32Array = new Float32Array();
   streamNode.connect(processorNode);
   processorNode.connect(context.destination);
   stream.getAudioTracks()[0].onended = () => {
     streamNode.disconnect();
     processorNode.disconnect();
     if (recordingStream.onended) {
-      recordingStream.onended(audioBuffersToWAV(buffers, sampleRate));
+      recordingStream.onended(audioBuffersToWAV(buffer, sampleRate));
     }
   };
   processorNode.addEventListener('audioprocess', (ev: AudioProcessingEvent) => {
-    buffers.push(ev.inputBuffer.getChannelData(0));
+    const samples = ev.inputBuffer.getChannelData(0);
+    const tmp = new Float32Array(buffer.length + samples.length);
+    tmp.set(buffer, 0);
+    tmp.set(samples, buffer.length);
+    buffer = tmp;
   });
   return recordingStream;
 }
 
-function audioBuffersToWAV(buffers: Float32Array[], sampleRate: number): Blob {
-  let sampleCount = 0;
-  for (const b of buffers) {
-    sampleCount += b.length;
-  }
+function audioBuffersToWAV(sampleBuffer: Float32Array, sampleRate: number): Blob {
+  const sampleCount = sampleBuffer.length;
   const buffer = new ArrayBuffer(44 + sampleCount * 2);
   const view = new DataView(buffer);
   writeWAVString(view, 0, 'RIFF');
@@ -161,12 +162,10 @@ function audioBuffersToWAV(buffers: Float32Array[], sampleRate: number): Blob {
   view.setUint32(40, sampleCount * 2, true);
   // data
   let offset = 44;
-  for (const b of buffers) {
-    for (const spl of b) {
-      const s = Math.max(-1, Math.min(1, spl));
-      view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
-      offset += 2;
-    }
+  for (const spl of sampleBuffer) {
+    const s = Math.max(-1, Math.min(1, spl));
+    view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
+    offset += 2;
   }
   return new Blob([buffer], { type: 'audio/wav' });
 }
