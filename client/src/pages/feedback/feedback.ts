@@ -19,7 +19,6 @@ import { environment } from 'environments/environment';
 })
 export class FeedbackPageComponent implements AfterViewInit {
   public readonly feedbackForm: FormGroup;
-  private readonly word?: WordTranslation;
   private readonly prevPageCssClass?: string;
   public submittingForm = false;
   public FeedbackType = FeedbackType;
@@ -31,7 +30,16 @@ export class FeedbackPageComponent implements AfterViewInit {
                private snackBar: MatSnackBar,
                @Inject(FEEDBACK_SERVICE) private feedbackService: IFeedbackService,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {
+    const word = history.state.word;
     this.feedbackForm = new FormGroup({
+      nativeWord: new FormControl(word ? word.translation : '', [
+      ]),
+      englishWord: new FormControl(word ? word.original : '', [
+      ]),
+      transliteration: new FormControl(word ? word.transliteration : '', [
+      ]),
+      recording: new FormControl(null, [
+      ]),
       content: new FormControl('', [
         Validators.required
       ]),
@@ -41,7 +49,6 @@ export class FeedbackPageComponent implements AfterViewInit {
     });
     this.prevPageCssClass = history.state.prevPageCssClass;
     console.log(this.prevPageCssClass);
-    this.word = history.state.word;
   }
 
   ngAfterViewInit() {
@@ -49,9 +56,12 @@ export class FeedbackPageComponent implements AfterViewInit {
   }
 
   onFormSubmit() {
+    // Force validation of all fields
+    for (const k of Object.keys(this.feedbackForm.controls)) {
+      this.feedbackForm.controls[k].markAsDirty();
+    }
     // Force types checkboxes to validate
     const typesControl = this.feedbackForm.controls.types;
-    typesControl.markAsDirty();
     typesControl.updateValueAndValidity();
     if (!this.feedbackForm.valid) {
       return;
@@ -59,7 +69,6 @@ export class FeedbackPageComponent implements AfterViewInit {
     this.submittingForm = true;
     const loadingPopup = this.dialog.open(LoadingPopUpComponent, { panelClass: 'loading-popup' });
     const feedback: Feedback = this.feedbackForm.value;
-    feedback.word = this.word;
     this.feedbackService.sendFeedback(feedback).then(
       () => {
         console.log('Feedback submitted');

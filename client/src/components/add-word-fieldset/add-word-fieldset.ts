@@ -65,9 +65,6 @@ export class AddWordFieldsetComponent {
   }
 
   onRecordingStarted = (stream: RecordingStream) => {
-    if (this.formGroup) {
-      console.log(this.formGroup.controls.englishWord.hasError('required'));
-    }
     console.log('Recording started');
     this.audioStream = stream;
     const recordingTimeout = setTimeout(() => {

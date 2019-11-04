@@ -10,8 +10,6 @@ import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
 import { WordTranslation } from 'services/entities/translation';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { environment } from 'environments/environment';
-import { AddedWord } from 'services/entities/feedback';
-import { AddWordFieldsetComponent } from 'components/add-word-fieldset/add-word-fieldset';
 
 @Component({
   selector: 'app-page-add-word',
@@ -22,8 +20,6 @@ export class AddWordPageComponent implements AfterViewInit {
   public readonly form: FormGroup;
   private readonly prevPageCssClass?: string;
   public submittingForm = false;
-  @ViewChild('addWordFieldset', { static: true })
-  private addWordFieldset: AddWordFieldsetComponent|null = null;
 
   public get endangeredLanguage(): string { return environment.endangeredLanguage; }
 
@@ -56,7 +52,10 @@ export class AddWordPageComponent implements AfterViewInit {
   }
 
   onFormSubmit() {
-    this.form.markAsDirty( {onlySelf: false} );
+    // Force validation of all fields
+    for (const k of Object.keys(this.form.controls)) {
+      this.form.controls[k].markAsDirty();
+    }
     if (!this.form.valid) {
       return;
     }

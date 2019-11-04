@@ -15,11 +15,17 @@ export class APIFeedbackService implements IFeedbackService {
   }
 
   public async sendFeedback(feedback: Feedback): Promise<any> {
+    let soundUrl: string|null = null;
+    if (feedback.recording) {
+      console.log('Sending audio');
+      soundUrl = await this.http.post(this.config.addWordAudioEndpointURL, feedback.recording, { responseType: 'text' }).toPromise();
+    }
     console.log('Sending feedback');
     const requestBody = {
-      english_word: feedback.word ? feedback.word.original : null,
-      translation: feedback.word ? feedback.word.translation : null,
-      transliteration: feedback.word ? feedback.word.transliteration : null,
+      english_word: feedback.englishWord,
+      translation: feedback.nativeWord,
+      transliteration: feedback.transliteration,
+      sound_link: soundUrl,
       types: feedback.types,
       content: feedback.content
     };
