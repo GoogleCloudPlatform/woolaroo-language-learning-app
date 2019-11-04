@@ -49,6 +49,13 @@ export class AddWordFieldsetComponent {
       this.config.androidGBoardUrl : this.config.iosGBoardUrl;
   }
 
+  public fieldHasError(field: string, error: string): boolean {
+    if (!this.formGroup) {
+      return false;
+    }
+    return this.formGroup.controls[field].hasError(error);
+  }
+
   onStartRecordingClick() {
     console.log('Starting recording');
     this.audioStreamProgress = 0;
