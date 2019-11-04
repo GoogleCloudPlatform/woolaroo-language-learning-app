@@ -21,6 +21,7 @@ video {
   position: absolute;
   left: 0;
   top: 0;
+  z-index: -1;
 }
 
 app-logo {
@@ -28,7 +29,7 @@ app-logo {
   margin-bottom: 180px;
 }
 
-.sponsor-logo {
+.partner-logo {
   width: 65%;
 
   img {
@@ -39,7 +40,7 @@ app-logo {
 
 video,
 .logo,
-.sponsor-logo {
+.partner-logo {
   opacity: 1;
   transition: opacity 0.5s ease-in-out;
 

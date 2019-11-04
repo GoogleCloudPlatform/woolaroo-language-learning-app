@@ -7,6 +7,8 @@ import { AnimationComponent } from 'components/animation/animation';
 
 interface SplashPageConfig {
   partnerLogoUrl?: string;
+  videoMaxStartTime: number;
+  showLogosVideoPosition: number;
   duration: number;
 }
 
@@ -20,7 +22,9 @@ export const SPLASH_PAGE_CONFIG = new InjectionToken<SplashPageConfig>('Splash p
 export class SplashPageComponent implements AfterViewInit, OnDestroy {
   private timeout: any = null;
   public partnerLogoUrl?: string;
+  public videoStarted = false;
   public videoComplete = false;
+  public logosVisible = false;
   @ViewChild('logoAnimation', { static: true })
   public logoAnimation: AnimationComponent|null = null;
 
@@ -33,6 +37,13 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.analyticsService.logPageView(this.router.url, 'Splash');
+    // if video hasn't started playing before timeout, skip it
+    this.timeout = setTimeout(() => {
+      this.videoComplete = true;
+      if (!this.logosVisible) {
+        this._showLogos();
+      }
+    }, this.config.videoMaxStartTime);
   }
 
   ngOnDestroy() {
@@ -42,10 +53,38 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  onVideoUpdate(ev: Event) {
+    if (this.logosVisible) {
+      return;
+    }
+    const video = ev.currentTarget as HTMLVideoElement;
+    if (video.duration && video.currentTime / video.duration > this.config.showLogosVideoPosition) {
+      this._showLogos();
+    }
+  }
+
+  onVideoPlaying() {
+    this.videoStarted = true;
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+      this.timeout = null;
+    }
+  }
+
   onVideoEnded() {
     this.videoComplete = true;
+    if (!this.logosVisible) {
+      this._showLogos();
+    }
+  }
+
+  _showLogos() {
+    this.logosVisible = true;
     if (this.logoAnimation) {
       this.logoAnimation.play();
+    }
+    if (this.timeout) {
+      clearTimeout(this.timeout);
     }
     this.timeout = setTimeout(() => {
       this.profileService.loadProfile().then(
