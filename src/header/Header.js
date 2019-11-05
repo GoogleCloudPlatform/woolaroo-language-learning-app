@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import { withRouter } from 'react-router-dom';
 import './Header.css';
+import NavMenu from '../navmenu/NavMenu';
 
 class Header extends React.Component {
   constructor(props) {
@@ -95,6 +96,7 @@ class Header extends React.Component {
       <div className="header-container">
         <AppBar position="static" className="header">
           <Toolbar>
+            <NavMenu />
             <h1 className="header-title">
               Barnard
             </h1>
