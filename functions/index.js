@@ -266,44 +266,55 @@ exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
   const pageSize = +req.query.pageSize;
   const pageNum = +req.query.pageNum;
   const state = req.query.state;
-  const needsRecording = req.query.needsRecording;
+  const needsRecording = Boolean(req.query.needsRecording && req.query.needsRecording !== '0');
   const search = req.query.search;
+  const top500 = Boolean(req.query.top500 && req.query.top500 !== '0');
   return cors(req, res, async () => {
     const hasAccess = await checkAccess_(req, res);
     if (!hasAccess) {
       return;
     }
-    let collection = admin.firestore().collection(req.query.collectionName)
-      .orderBy("english_word");
+    let collection = admin.firestore().collection(req.query.collectionName);
+    const limitQuery = pageSize && pageNum && pageNum === 1 &&
+      state !== 'incomplete' && state !== 'complete' && !needsRecording &&
+      !search;
+
+    if (top500) {
+      collection = collection.where('frequency', '>', 10)
+        .orderBy("frequency", "desc");
+    } else {
+      collection = collection.orderBy("english_word");
+    }
+
+    if (limitQuery) {
+      collection = collection.limit(pageSize);
+    }
 
     try {
       const collectionDocs = await collection.get();
       if (collectionDocs.docs.length) {
-          let filteredCollection = collectionDocs.docs.map((doc) => {
-            return {...doc.data(), id: doc.id};
+          let filteredCollection = [];
+          collectionDocs.docs.forEach((doc, docIdx) => {
+            const docData = doc.data();
+
+            if (state === 'incomplete' && docData.translation) {
+              return;
+            }
+
+            if (state === 'complete' && !docData.translation) {
+              return;
+            }
+
+            if (needsRecording && docData.sound_link) {
+              return;
+            }
+
+            if (search && docData.english_word.indexOf(search) === -1) {
+              return;
+            }
+
+            filteredCollection.push({...docData, id: doc.id});
           });
-
-          if (state === 'incomplete') {
-            filteredCollection = filteredCollection.filter((doc) => {
-              return !doc.translation;
-            });
-          } else if (state === 'complete') {
-            filteredCollection = filteredCollection.filter((doc) => {
-              return doc.translation;
-            });
-          }
-
-          if (needsRecording && needsRecording !== '0') {
-            filteredCollection = filteredCollection.filter((doc) => {
-              return !doc.sound_link;
-            });
-          }
-
-          if (search) {
-            filteredCollection = filteredCollection.filter((doc) => {
-              return doc.english_word.startsWith(search);
-            });
-          }
 
           if (pageNum && pageSize) {
             const startIdx = (pageNum - 1)*pageSize;

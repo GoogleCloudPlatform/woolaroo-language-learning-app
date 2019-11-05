@@ -6,6 +6,9 @@ import './ListPageBase.css';
 class ListPageBase extends React.Component {
   constructor(props) {
     super(props);
+
+    this.abortController = new AbortController();
+
     this.state = {
       loading: true,
       items: [],
@@ -13,6 +16,7 @@ class ListPageBase extends React.Component {
       pageSize: null,
       completeState: null,
       needsRecording: false,
+      top500: false,
       // These values must be overridden by children.
       listItemTag: '',
       collectionName: '',
@@ -28,6 +32,8 @@ class ListPageBase extends React.Component {
       return;
     }
 
+    this.abortController.abort();
+    this.abortController = new AbortController();
     this.setState({ loading: true });
 
     const {
@@ -36,6 +42,7 @@ class ListPageBase extends React.Component {
       collectionName,
       completeState,
       needsRecording,
+      top500,
       search,
     } = this.state;
     let additionalParams = '';
@@ -56,13 +63,18 @@ class ListPageBase extends React.Component {
       additionalParams += `&search=${search}`;
     }
 
+    if (top500) {
+      additionalParams += `&top500=1`;
+    }
+
     try {
       const qs = `?collectionName=${collectionName}`;
       const resp = await
         fetch(`${ApiUtils.origin}${ApiUtils.path}getEntireCollection${qs}${additionalParams}`, {
           headers: {
             'Authorization': await AuthUtils.getAuthHeader(),
-          }
+          },
+          signal: this.abortController.signal,
         });
       if (resp.status === 403) {
         await AuthUtils.signOut();

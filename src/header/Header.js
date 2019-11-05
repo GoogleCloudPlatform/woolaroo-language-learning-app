@@ -19,13 +19,17 @@ class Header extends React.Component {
 
     this.state = {
       search: queryStringParams.get('search') || '',
+      top500: queryStringParams.get('top500') !== '0',
     };
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
       const queryStringParams = new URLSearchParams(this.props.location.search);
-      this.setState({search: queryStringParams.get('search') || ''});
+      this.setState({
+        search: queryStringParams.get('search') || '',
+        top500: queryStringParams.get('top500') !== '0',
+      });
     }
   }
 
@@ -42,7 +46,11 @@ class Header extends React.Component {
   }
 
   doSearch_() {
-    this.props.history.push(`/?search=${this.state.search}`);
+    let nextHistory = `/?search=${this.state.search}`;
+    if (!this.state.top500) {
+      nextHistory += '&top500=0';
+    }
+    this.props.history.push(nextHistory);
   }
 
   renderHeaderSearch_() {

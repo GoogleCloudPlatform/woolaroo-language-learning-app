@@ -54,7 +54,7 @@ class TranslationListItem extends ListItemBase {
     // Then, call endpoint to update the translation.
     try {
       const { english_word, sound_link, translation,
-        transliteration } = this.state;
+        transliteration, frequency } = this.state;
 
       // If we have no data for this entry, show an error.
       if (!sound_link && !translation && !transliteration) {
@@ -74,6 +74,7 @@ class TranslationListItem extends ListItemBase {
           sound_link,
           translation,
           transliteration,
+          frequency,
         }),
         headers: {
           'Authorization': await AuthUtils.getAuthHeader(),
