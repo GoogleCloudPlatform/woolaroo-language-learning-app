@@ -22,7 +22,11 @@ class NavMenu extends React.Component {
     }
 
     return (
-      <MenuItem selected={selected} onClick={() => this.onClick(route)}>
+      <MenuItem
+        selected={selected}
+        onClick={() => this.onClick(route)}
+        className="nav-menu-item"
+      >
         {label}
       </MenuItem>
     );

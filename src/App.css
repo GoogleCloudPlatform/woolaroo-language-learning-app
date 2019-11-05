@@ -1,11 +1,16 @@
 .body-container {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   margin-top: 24px;
 }
 
+.body-margin {
+  width: 1000px;
+  flex-shrink: 2;
+}
+
 .page-container {
-  margin: 0 80px;
   width: 100%;
 }
 

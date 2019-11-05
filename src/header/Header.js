@@ -95,8 +95,8 @@ class Header extends React.Component {
     return (
       <div className="header-container">
         <AppBar position="static" className="header">
+          <NavMenu />
           <Toolbar>
-            <NavMenu />
             <h1 className="header-title">
               Barnard
             </h1>
