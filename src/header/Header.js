@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import { withRouter } from 'react-router-dom';
 import './Header.css';
+import NavMenu from '../navmenu/NavMenu';
 
 class Header extends React.Component {
   constructor(props) {
@@ -19,13 +20,17 @@ class Header extends React.Component {
 
     this.state = {
       search: queryStringParams.get('search') || '',
+      top500: queryStringParams.get('top500') !== '0',
     };
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
       const queryStringParams = new URLSearchParams(this.props.location.search);
-      this.setState({search: queryStringParams.get('search') || ''});
+      this.setState({
+        search: queryStringParams.get('search') || '',
+        top500: queryStringParams.get('top500') !== '0',
+      });
     }
   }
 
@@ -42,7 +47,11 @@ class Header extends React.Component {
   }
 
   doSearch_() {
-    this.props.history.push(`/?search=${this.state.search}`);
+    let nextHistory = `/?search=${this.state.search}`;
+    if (!this.state.top500) {
+      nextHistory += '&top500=0';
+    }
+    this.props.history.push(nextHistory);
   }
 
   renderHeaderSearch_() {
@@ -86,6 +95,7 @@ class Header extends React.Component {
     return (
       <div className="header-container">
         <AppBar position="static" className="header">
+          <NavMenu />
           <Toolbar>
             <h1 className="header-title">
               Barnard
