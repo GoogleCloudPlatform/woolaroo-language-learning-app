@@ -3,17 +3,13 @@
 :host {
   display: block;
   @include toolbar-page;
-
-  > form > .content {
-    padding: 28px;
-    box-sizing: border-box;
-  }
 }
 
 mat-toolbar.mat-toolbar-single-row {
   display: flex;
   flex-direction: row;
   align-items: center;
+  padding-right: 0;
 
   span {
     flex: 1 1 auto;
@@ -21,6 +17,7 @@ mat-toolbar.mat-toolbar-single-row {
 
   .mat-button-base {
     flex: 0 0 auto;
+    margin-left: 20px;
   }
 
   .close {
