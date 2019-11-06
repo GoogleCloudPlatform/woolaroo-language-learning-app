@@ -30,6 +30,7 @@ class AddWordsPage extends ListPageBase {
         sound_link: '',
         translation: '',
         transliteration: '',
+        frequency: -1,
       });
     }
 
