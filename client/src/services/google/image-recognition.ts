@@ -66,6 +66,16 @@ export class GoogleImageRecognitionServiceBase implements IImageRecognitionServi
     return value.description.trim().split(' ').length === 1;
   }
 
+  private static removeDuplicateWords(annotations: RecognitionAnnotation[]): RecognitionAnnotation[] {
+    const newAnnotations: RecognitionAnnotation[] = [];
+    annotations.forEach((ann) => {
+      if (!newAnnotations.find((newAnn) => ann.description === newAnn.description)) {
+        newAnnotations.push(ann);
+      }
+    });
+    return newAnnotations;
+  }
+
   private static getSafeSearchLikelihoodIndex(likelihood: SafeSearchLikelihood): number {
     let index = 0;
     for (const i of Object.values(SafeSearchLikelihood)) {
@@ -114,45 +124,49 @@ export class GoogleImageRecognitionServiceBase implements IImageRecognitionServi
       // .timeout(10000)
         .pipe( retry(this.config.retryCount) )
         .subscribe(response => {
-            if (!response.responses) {
-              console.warn('Empty response from Cloud Vision');
-              resolve([]);
+          // check that image has at least one annotation
+          if (!response.responses) {
+            console.warn('Empty response from Cloud Vision');
+            resolve([]);
+            return;
+          }
+          // check errors
+          const firstResponse = response.responses[0];
+          if (firstResponse.error) {
+            console.warn('Error loading image descriptions: ' + firstResponse.error);
+            reject(new Error(firstResponse.error.message));
+            return;
+          }
+          // check if image as flagged as inappropriate
+          const maxLikelihoods = this.config.maxSafeSearchLikelihoods;
+          for (const cat in maxLikelihoods) {
+            if (firstResponse.safeSearchAnnotation[cat] && maxLikelihoods[cat]
+              && GoogleImageRecognitionServiceBase.getSafeSearchLikelihoodIndex(firstResponse.safeSearchAnnotation[cat])
+              > GoogleImageRecognitionServiceBase.getSafeSearchLikelihoodIndex(maxLikelihoods[cat])) {
+              console.warn('Error loading image descriptions: image is inappropriate');
+              reject(new InappropriateContentError('Image is inappropriate'));
               return;
             }
-            // check that image has at least one annotation
-            const firstResponse = response.responses[0];
-            if (firstResponse.error) {
-              console.warn('Error loading image descriptions: ' + firstResponse.error);
-              reject(new Error(firstResponse.error.message));
-              return;
-            }
-            // check if image as flagged as inappropriate
-            const maxLikelihoods = this.config.maxSafeSearchLikelihoods;
-            for (const cat in maxLikelihoods) {
-              if (firstResponse.safeSearchAnnotation[cat] && maxLikelihoods[cat]
-                && GoogleImageRecognitionServiceBase.getSafeSearchLikelihoodIndex(firstResponse.safeSearchAnnotation[cat])
-                > GoogleImageRecognitionServiceBase.getSafeSearchLikelihoodIndex(maxLikelihoods[cat])) {
-                console.warn('Error loading image descriptions: image is inappropriate');
-                reject(new InappropriateContentError('Image is inappropriate'));
-                return;
-              }
-            }
-            // check if image has no annotations
-            if (!firstResponse || !firstResponse.labelAnnotations || firstResponse.labelAnnotations.length === 0) {
-              console.warn('No Labels detected');
-              reject(new Error('No Labels detected'));
-              return;
-            }
-            // filter out any annotations with multiple words
-            if (this.config.singleWordDescriptionsOnly) {
-              firstResponse.labelAnnotations = firstResponse.labelAnnotations.filter( GoogleImageRecognitionServiceBase.isSingleWord );
-            }
-            resolve(firstResponse.labelAnnotations);
-          },
-          err => {
-            console.warn('Error loading image descriptions: ' + err);
-            reject(err);
-          });
+          }
+          // check if image has no annotations
+          if (!firstResponse || !firstResponse.labelAnnotations || firstResponse.labelAnnotations.length === 0) {
+            console.warn('No Labels detected');
+            reject(new Error('No Labels detected'));
+            return;
+          }
+          // filter out any annotations with multiple words
+          let annotations = firstResponse.labelAnnotations;
+          if (this.config.singleWordDescriptionsOnly) {
+            annotations = annotations.filter( GoogleImageRecognitionServiceBase.isSingleWord );
+          }
+          // filter out duplicates
+          annotations = GoogleImageRecognitionService.removeDuplicateWords(annotations);
+          resolve(annotations);
+        },
+        err => {
+          console.warn('Error loading image descriptions: ' + err);
+          reject(err);
+        });
     });
   }
 }
