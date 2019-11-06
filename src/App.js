@@ -9,7 +9,6 @@ import AuthUtils from './utils/AuthUtils';
 import SharingPage from './sharing/SharingPage';
 import ManagementPage from './management/ManagementPage';
 import Header from './header/Header';
-import SideNav from './sidenav/SideNav';
 
 const ROUTES = {
   ADD_WORDS: '/add-words',
@@ -93,8 +92,8 @@ class App extends React.Component {
     }
 
     return (
-      <div className = "body-container">
-        <SideNav/>
+      <div className="body-container">
+        <div className="body-margin" />
         <div className="page-container">
           <Route path={ROUTES.ADD_WORDS} component={AddWordsPage} />
           <Route exact path={[ROUTES.TRANSLATIONS, "/translations/:pageNum"]} component={TranslationsPageWithRouter} />
@@ -103,6 +102,7 @@ class App extends React.Component {
           <Route path={ROUTES.SHARING} component={SharingPage} />
           <Route path={ROUTES.MANAGEMENT} component={ManagementPage} />
         </div>
+        <div className="body-margin" />
       </div>
     );
   }
