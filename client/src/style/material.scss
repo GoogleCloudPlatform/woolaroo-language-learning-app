@@ -22,11 +22,14 @@ button.mat-button-base {
 }
 
 mat-toolbar.mat-toolbar-single-row {
+  position: fixed;
   height: 80px;
-  padding: 0 0 0 30px;
+  padding: 0 20px 0 30px;
   box-shadow: 0 0 10px mat-color(map-get($app-theme, shadow), 500);
   font-size: 1.7rem;
   font-weight: 400;
+  white-space: normal;
+  z-index: 1;
 
   .mat-button-base {
     height: 100%;
