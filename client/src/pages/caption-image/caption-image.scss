@@ -73,3 +73,15 @@ form {
     }
   }
 }
+
+:host-context([dir=rtl]) {
+  .back {
+    left: auto;
+    right: 0;
+  }
+
+  .add-feedback {
+    right: auto;
+    left: 0;
+  }
+}

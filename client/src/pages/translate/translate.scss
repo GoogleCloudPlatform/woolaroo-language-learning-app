@@ -41,7 +41,7 @@ app-translation-selector {
 .submit-feedback {
   text-shadow: 1px 1px 2px mat-color(map-get($app-theme, shadow), 500);
   position: absolute;
-  bottom: 3px;
+  bottom: 5px;
   left: 50%;
   transform: translateX(-50%);
   color: mat-contrast($app-inverted, 500);
@@ -50,5 +50,22 @@ app-translation-selector {
 
   app-icon {
     margin-right: 10px;
+  }
+}
+
+:host-context([dir=rtl]) {
+  .back {
+    left: auto;
+    right: 0;
+  }
+
+  .submit-feedback {
+    padding-left: 20px;
+    padding-right: 7px;
+
+    app-icon {
+      margin-right: 0;
+      margin-left: 10px;
+    }
   }
 }

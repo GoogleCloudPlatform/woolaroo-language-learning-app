@@ -21,10 +21,10 @@
 
     button {
       min-width: 155px;
+      margin: 0 5px;
     }
 
     .load-photo {
-      margin-right: 10px;
       // Move padding from button to label, so file select is
       // triggered wherever the user clicks, not just on the button text
       padding: 0;

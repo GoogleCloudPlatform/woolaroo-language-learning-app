@@ -2,6 +2,9 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template">
     <body>
+      <trans-unit id="dir" datatype="html">
+        <target>ltr</target>
+      </trans-unit>
       <trans-unit id="introAbout" datatype="html">
         <target>Google मशीन लर्निंग की पेशकश, प्रोजेक्ट Woolaroo यानी स्थानीय भाषाओं में अनुवाद का इंटरैक्टिव तरीका.</target>
         </trans-unit>
