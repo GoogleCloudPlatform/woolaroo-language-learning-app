@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
 import { SessionService } from 'services/session';
 import { filter } from 'rxjs/operators';
+import { I18n } from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ import { filter } from 'rxjs/operators';
 export class AppComponent implements OnInit {
   title = 'google-barnard';
 
-  constructor(private router: Router, private sessionService: SessionService) {
+  constructor(private router: Router, private sessionService: SessionService, private i18n: I18n) {
     // restore page state on back navigation
     this.router.events.pipe(
       filter((e) => e instanceof NavigationStart),
@@ -32,5 +33,7 @@ export class AppComponent implements OnInit {
       ev.preventDefault();
       this.sessionService.currentSession.installPrompt = ev;
     });
+    // set document language direction
+    window.document.body.setAttribute('dir', this.i18n({id: 'dir', value: 'ltr'}));
   }
 }

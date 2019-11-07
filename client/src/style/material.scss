@@ -24,12 +24,16 @@ button.mat-button-base {
 mat-toolbar.mat-toolbar-single-row {
   position: fixed;
   height: 80px;
-  padding: 0 20px 0 30px;
+  padding: 0 20px;
   box-shadow: 0 0 10px mat-color(map-get($app-theme, shadow), 500);
   font-size: 1.7rem;
   font-weight: 400;
   white-space: normal;
   z-index: 1;
+
+  span {
+    margin: 0 10px;
+  }
 
   .mat-button-base {
     height: 100%;
@@ -42,10 +46,9 @@ mat-toolbar.mat-toolbar-single-row {
     @include icon-button;
     width: 30px;
     height: 30px;
-    margin-right: 20px;
+    margin: 0 10px;
   }
 }
-
 
 mat-checkbox {
   .mat-checkbox-inner-container {
@@ -94,6 +97,16 @@ mat-checkbox {
     padding-top: 5px;
   }
 }
+
+/*:host-context([dir=rtl]) {
+  .mat-form-field.textarea,
+  .mat-form-field.text {
+
+    .mat-form-field-label-wrapper label {
+      margin-right: 10px;
+    }
+  }
+}*/
 
 .mat-form-field.textarea {
   .mat-form-field-label-wrapper label {

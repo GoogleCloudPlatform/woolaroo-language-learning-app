@@ -9,7 +9,6 @@ import { FEEDBACK_SERVICE, IFeedbackService } from 'services/feedback';
 import { FeedbackType, Feedback } from 'services/entities/feedback';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { WordTranslation } from 'services/entities/translation';
 import { environment } from 'environments/environment';
 
 @Component({

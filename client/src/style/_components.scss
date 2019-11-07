@@ -43,18 +43,47 @@
 }
 
 @mixin toolbar-page {
-  .close {
-    @include icon-button;
-    width: 30px;
-    height: 30px;
-    margin-right: 20px;
-  }
+  display: block;
 
   .content {
     padding: 110px 30px 30px 30px;
     max-width: $max-content-width;
     margin-left: auto;
     margin-right: auto;
+  }
+}
+
+@mixin form-page {
+  @include toolbar-page;
+
+  mat-toolbar.mat-toolbar-single-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-right: 0;
+
+    span {
+      flex: 1 1 auto;
+    }
+
+    .mat-button-base {
+      flex: 0 0 auto;
+      margin-left: 20px;
+    }
+
+    .close {
+      flex: 0 0 auto;
+    }
+  }
+
+  :host-context([dir=rtl]) mat-toolbar.mat-toolbar-single-row {
+    padding-right: 20px;
+    padding-left: 0;
+
+    .mat-button-base {
+      margin-left: 0;
+      margin-right: 20px;
+    }
   }
 }
 

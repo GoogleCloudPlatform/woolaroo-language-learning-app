@@ -1,28 +1,12 @@
 @import 'components';
 
 :host {
-  display: block;
-  @include toolbar-page;
+  @include form-page;
 }
 
 mat-toolbar.mat-toolbar-single-row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding-right: 0;
-
   span {
-    flex: 1 1 auto;
     padding-bottom: 4px;
-  }
-
-  .mat-button-base {
-    flex: 0 0 auto;
-    margin-left: 20px;
-  }
-
-  .close {
-    flex: 0 0 auto;
   }
 }
 

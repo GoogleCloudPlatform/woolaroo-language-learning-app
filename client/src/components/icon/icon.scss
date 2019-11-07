@@ -5,6 +5,10 @@
   display: inline-block;
   width: 24px;
   height: 24px;
+
+  &.back :host-context([dir=rtl]) {
+    transform: scaleX(-1);
+  }
 }
 
 mat-icon {

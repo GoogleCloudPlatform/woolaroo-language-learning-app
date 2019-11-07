@@ -2,6 +2,9 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template">
     <body>
+      <trans-unit id="dir" datatype="html">
+        <target>rtl</target>
+      </trans-unit>
       <trans-unit id="introAbout" datatype="html">
         <target>يقدّم تطبيق Project Woolaroo طريقة تفاعلية جديدة للوصول إلى لغات أصلية بدعم من نظام التعلُّم الآلي من Google.</target>
       </trans-unit>

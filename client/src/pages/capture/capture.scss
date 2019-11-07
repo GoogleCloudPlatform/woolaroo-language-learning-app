@@ -90,3 +90,15 @@ app-camera-preview {
     }
   }
 }
+
+:host-context([dir=rtl]) {
+  .open-menu {
+    left: auto;
+    right: 8px;
+  }
+
+  .load-photo {
+    left: auto;
+    right: 35px;
+  }
+}

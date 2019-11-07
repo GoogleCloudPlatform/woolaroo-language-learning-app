@@ -65,3 +65,11 @@ ul {
     }
   }
 }
+
+
+:host-context([dir=rtl]) {
+  ul li.manual-entry app-icon {
+    margin-left: 0;
+    margin-right: 5px;
+  }
+}
