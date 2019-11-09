@@ -20,6 +20,7 @@ class ListPageBase extends React.Component {
       // These values must be overridden by children.
       listItemTag: '',
       collectionName: '',
+      pageTitle: '',
     };
   }
 
@@ -35,7 +36,6 @@ class ListPageBase extends React.Component {
     this.abortController.abort();
     this.abortController = new AbortController();
     this.setState({ loading: true });
-
     const {
       pageNum,
       pageSize,
@@ -121,6 +121,7 @@ class ListPageBase extends React.Component {
   render() {
     return (
       <div>
+        <h2>{this.state.pageTitle}</h2>
         {this.state.loading ? <div>Loading...</div> : this.renderItems()}
       </div>
     );

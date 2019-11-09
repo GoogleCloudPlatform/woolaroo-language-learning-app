@@ -145,6 +145,7 @@ class TranslationsPage extends ListPageBase {
   render() {
     return (
       <div>
+        <h2>Translations</h2>
         {this.renderStateSelection_()}
         {this.renderFilterChips_()}
         {this.state.loading ? <div>Loading...</div> : this.renderItems()}
