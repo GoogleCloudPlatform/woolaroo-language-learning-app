@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ContributionListItem from './ContributionListItem';
 import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/NotInterested';
+import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Done';
 import ApiUtils from '../utils/ApiUtils';
 import { shallow } from 'enzyme';
@@ -50,7 +50,6 @@ it('saves contribution with non-empty translation', async () => {
   const wrapper = shallow(<ContributionListItem item={stubbedTranslation} />);
 
   wrapper.find('.save-contribution').simulate('click');
-
   await flushPromises();
 
   expect(fetchSpy).toHaveBeenCalledWith(ApiUtils.origin + ApiUtils.path +
@@ -75,7 +74,8 @@ it('deletes contribution on delete button click', async () => {
   const wrapper = shallow(<ContributionListItem item={stubbedTranslation} />);
 
   wrapper.find('.delete-contribution').simulate('click');
-
+  await flushPromises();
+  wrapper.find('.delete-confirm').simulate('click');
   await flushPromises();
 
   expect(fetchSpy).toHaveBeenCalledWith(ApiUtils.origin + ApiUtils.path +
