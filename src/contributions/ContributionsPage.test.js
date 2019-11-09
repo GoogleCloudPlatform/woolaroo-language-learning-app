@@ -7,6 +7,8 @@ import { shallow } from 'enzyme';
 
 let fetchSpy;
 
+const flushPromises = async () => new Promise(setImmediate);
+
 beforeAll(() => {
   fetchSpy = jest.spyOn(window, 'fetch');
 });
@@ -21,12 +23,14 @@ it('renders without crashing', () => {
   ReactDOM.unmountComponentAtNode(div);
 });
 
-it('makes the correct call to fetch contributions/suggestions', () => {
+it('makes the correct call to fetch contributions/suggestions', async () => {
   const wrapper = shallow(<ContributionsPage />);
+
+  await flushPromises();
 
   expect(fetchSpy).toHaveBeenCalledTimes(1);
   expect(fetchSpy).toHaveBeenCalledWith(ApiUtils.origin + ApiUtils.path +
-    "getEntireCollection?collectionName=suggestions");
+    "getEntireCollection?collectionName=suggestions", expect.any(Object));
 });
 
 it('renders correct number of ContributionListItem elements', () => {

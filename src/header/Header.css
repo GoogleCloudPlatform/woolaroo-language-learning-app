@@ -8,6 +8,11 @@
   font-weight: 300;
 }
 
+.header-title.signed-in {
+  left: 36px;
+  position: relative;
+}
+
 .header-search {
   margin: auto;
   background: #f1f3f4;

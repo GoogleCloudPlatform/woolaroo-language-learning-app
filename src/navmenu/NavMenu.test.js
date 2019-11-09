@@ -18,6 +18,6 @@ it('renders a <MenuItem/> nav link for each of the routes specified in App.js',
     const NavMenuWrapper = mount(<Router><NavMenu /></Router>);
 
     const numRoutes = Object.keys(ROUTES).length;
-    expect(NavMenuWrapper.find('li.side-nav-menu-item').length)
+    expect(NavMenuWrapper.find('li.nav-menu-item').length)
       .toEqual(numRoutes);
 });

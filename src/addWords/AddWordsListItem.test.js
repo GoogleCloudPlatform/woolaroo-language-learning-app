@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import AddWordsListItem from './AddWordsListItem';
 
-let fetchSpy;
 const stubbedTranslation = {
   english_word: "",
   sound_link: "",

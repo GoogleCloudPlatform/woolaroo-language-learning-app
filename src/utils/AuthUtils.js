@@ -1,7 +1,8 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
-const IS_LOCAL = process.env.NODE_ENV === 'development';
+const IS_LOCAL = process.env.NODE_ENV === 'development' ||
+  process.env.NODE_ENV === 'test';
 
 const localFirebaseConfig_ = {
   apiKey: "AIzaSyAdh6AhIjdLezKR0SH3x6vzbMh1_benKk8",
