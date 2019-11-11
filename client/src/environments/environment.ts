@@ -2,8 +2,8 @@ import { MockAnalyticsService } from 'services/mock/analytics';
 import { APITranslationService } from 'services/api/translation';
 import { LocalProfileService } from 'services/local-profile';
 import { APIFeedbackService } from 'services/api/feedback';
-// import { SafeSearchLikelihood } from 'services/google/image-recognition';
-// import { APIImageRecognitionService } from 'services/api/image-recognition';
+import { SafeSearchLikelihood } from 'services/google/image-recognition';
+import { APIImageRecognitionService } from 'services/api/image-recognition';
 import { MockImageRecognitionService } from 'services/mock/image-recognition';
 
 const baseEndpointUrl = 'https://us-central1-barnard-yiddish.cloudfunctions.net';
@@ -79,9 +79,9 @@ export const environment = {
       type: APIImageRecognitionService,
       config: {
         endpointURL: `${baseEndpointUrl}/visionAPI`,
-        maxFileSize: 2 * 1024 * 1024,
+        maxFileSize: 50 * 1024,
         validImageFormats: [ 'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/bmp', 'image/webp' ],
-        resizedImageDimension: 1000,
+        resizedImageDimension: 500,
         maxResults: 10,
         retryCount: 3,
         singleWordDescriptionsOnly: true,
