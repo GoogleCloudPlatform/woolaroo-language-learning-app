@@ -37,10 +37,6 @@ const SETTINGS = {
 
 exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
-    const hasAccess = await checkAccess_(req, res);
-    if (!hasAccess) {
-      return;
-    }
     const fileName = uuidv1();
     const filePath = `suggestions/${fileName}.mp3`
     const options = {
@@ -163,10 +159,6 @@ exports.readSettings = functions.https.onRequest(async (req, res) => {
 
 exports.addSuggestions = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
-    const hasAccess = await checkAccess_(req, res);
-    if (!hasAccess) {
-      return;
-    }
     var snapshot = await admin.firestore().collection('suggestions').add({
       english_word: req.body.english_word,
       translation: req.body.translation,
@@ -220,10 +212,6 @@ exports.getTranslation = functions.https.onRequest(async (req, res) => {
 // For App, which will be used by app users
 // https://us-central1-barnard-project.cloudfunctions.net/getTranslations
 exports.getTranslations = functions.https.onRequest(async (req, res) => {
-  const hasAccess = await checkAccess_(req, res);
-  if (!hasAccess) {
-    return;
-  }
   const english_words = req.body.english_words || [];
   console.log(english_words);
   const collectionRef = admin.firestore().collection("translations");
