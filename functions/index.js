@@ -359,6 +359,7 @@ exports.addFeedback = functions.https.onRequest(async (req, res) => {
       english_word: req.body.english_word,
       translation: req.body.translation,
       transliteration: req.body.transliteration,
+      sound_link: req.body.sound_link,
       types: req.body.types,
       content: req.body.content,
       timestamp: admin.firestore.FieldValue.serverTimestamp(),
