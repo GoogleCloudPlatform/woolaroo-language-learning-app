@@ -25,13 +25,13 @@ export interface GoogleImageRecognitionConfigBase {
   validImageFormats: string[];
   resizedImageDimension: number;
   maxResults: number;
-  retryCount: number;
   singleWordDescriptionsOnly: boolean;
   maxSafeSearchLikelihoods: {[index: string]: SafeSearchLikelihood};
 }
 
 export interface GoogleImageRecognitionConfig extends GoogleImageRecognitionConfigBase {
   apiKey: string;
+  retryCount: number;
 }
 
 interface RecognitionAnnotation {
@@ -40,26 +40,19 @@ interface RecognitionAnnotation {
   topicality: number;
 }
 
-interface RecognitionResponseData {
+export interface RecognitionResponse {
   labelAnnotations: Array<RecognitionAnnotation>;
   safeSearchAnnotation: {[index: string]: SafeSearchLikelihood};
-  error: {code: number, message: string};
-}
-
-interface RecognitionResponse {
-  responses: Array<RecognitionResponseData>;
+  error: {code: number, message: string}|null;
 }
 
 const VISION_URL = 'https://vision.googleapis.com/v1/images:annotate?key=';
 
 export class GoogleImageRecognitionServiceBase implements IImageRecognitionService {
-  private config: GoogleImageRecognitionConfigBase;
+  private baseConfig: GoogleImageRecognitionConfigBase;
 
-  protected get endpointUrl(): string { return ''; }
-
-  constructor(@Inject(IMAGE_RECOGNITION_CONFIG) config: GoogleImageRecognitionConfigBase,
-              private http: HttpClient) {
-    this.config = config;
+  constructor(@Inject(IMAGE_RECOGNITION_CONFIG) baseConfig: GoogleImageRecognitionConfigBase) {
+    this.baseConfig = baseConfig;
   }
 
   private static isSingleWord(value: RecognitionAnnotation) {
@@ -88,19 +81,30 @@ export class GoogleImageRecognitionServiceBase implements IImageRecognitionServi
   }
 
   public async loadDescriptions(imageData: Blob): Promise<ImageDescription[]> {
-    if (this.config.validImageFormats.indexOf(imageData.type) < 0) {
+    if (this.baseConfig.validImageFormats.indexOf(imageData.type) < 0) {
       throw new InvalidFormatError('Image is not in supported format');
     }
-    if (imageData.size > this.config.maxFileSize) {
+    if (imageData.size > this.baseConfig.maxFileSize) {
       console.log('Image file size is too large - resizing: ' + imageData.size);
-      imageData = await resizeImage(imageData, this.config.resizedImageDimension, this.config.resizedImageDimension);
+      imageData = await resizeImage(imageData, this.baseConfig.resizedImageDimension, this.baseConfig.resizedImageDimension);
     }
     return new Promise<ImageDescription[]>((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => {
         const imageURL = reader.result as string;
         const imageDataBase64 = imageURL.split(',')[1]; // remove data scheme prefix
-        this.loadImageDescriptions(imageDataBase64).then(resolve, reject);
+        this.loadImageDescriptions(imageDataBase64).then(
+          response => {
+            let descriptions = null;
+            try {
+              descriptions = this.filterImageDescriptions(response);
+            } catch (err) {
+              console.warn('Error in image response', err);
+              reject(err);
+              return;
+            }
+            resolve(descriptions);
+          }, reject);
       };
       reader.onerror = err => {
         console.warn('Error reading image data', err);
@@ -110,9 +114,50 @@ export class GoogleImageRecognitionServiceBase implements IImageRecognitionServi
     });
   }
 
-  private loadImageDescriptions(imageBase64: string): Promise<ImageDescription[]> {
-    return new Promise<ImageDescription[]>((resolve, reject) => {
-      this.http.post<RecognitionResponse>( this.endpointUrl, {
+  protected async loadImageDescriptions(imageBase64: string): Promise<RecognitionResponse|null> {
+    throw new Error('Not implemented');
+  }
+
+  private filterImageDescriptions(response: RecognitionResponse|null): ImageDescription[] {
+    if (!response) {
+      console.warn('No Labels detected');
+      throw new Error('No Labels detected');
+    }
+    // check if image as flagged as inappropriate
+    const maxLikelihoods = this.baseConfig.maxSafeSearchLikelihoods;
+    for (const cat in maxLikelihoods) {
+      if (response.safeSearchAnnotation[cat] && maxLikelihoods[cat]
+        && GoogleImageRecognitionServiceBase.getSafeSearchLikelihoodIndex(response.safeSearchAnnotation[cat])
+        > GoogleImageRecognitionServiceBase.getSafeSearchLikelihoodIndex(maxLikelihoods[cat])) {
+        console.warn('Error loading image descriptions: image is inappropriate');
+        throw new InappropriateContentError('Image is inappropriate');
+      }
+    }
+    // check if image has no annotations
+    if (!response || !response.labelAnnotations || response.labelAnnotations.length === 0) {
+      console.warn('No Labels detected');
+      throw new Error('No Labels detected');
+    }
+    // filter out any annotations with multiple words
+    let annotations = response.labelAnnotations;
+    if (this.baseConfig.singleWordDescriptionsOnly) {
+      annotations = annotations.filter( GoogleImageRecognitionServiceBase.isSingleWord );
+    }
+    // filter out duplicates
+    annotations = GoogleImageRecognitionService.removeDuplicateWords(annotations);
+    return annotations;
+  }
+}
+
+@Injectable()
+export class GoogleImageRecognitionService extends GoogleImageRecognitionServiceBase {
+  constructor(@Inject(IMAGE_RECOGNITION_CONFIG) private config: GoogleImageRecognitionConfig, private http: HttpClient) {
+    super(config);
+  }
+
+  protected async loadImageDescriptions(imageBase64: string): Promise<RecognitionResponse|null> {
+    return new Promise<RecognitionResponse|null>((resolve, reject) => {
+      this.http.post<{responses: RecognitionResponse[]}>( VISION_URL + this.config.apiKey, {
         requests: [ {
           image: { content: imageBase64 },
           features: [
@@ -121,14 +166,12 @@ export class GoogleImageRecognitionServiceBase implements IImageRecognitionServi
           ]
         } ]
       } )
-      // .timeout(10000)
         .pipe( retry(this.config.retryCount) )
         .subscribe(response => {
           // check that image has at least one annotation
           if (!response.responses) {
             console.warn('Empty response from Cloud Vision');
-            resolve([]);
-            return;
+            resolve(null);
           }
           // check errors
           const firstResponse = response.responses[0];
@@ -137,48 +180,8 @@ export class GoogleImageRecognitionServiceBase implements IImageRecognitionServi
             reject(new Error(firstResponse.error.message));
             return;
           }
-          // check if image as flagged as inappropriate
-          const maxLikelihoods = this.config.maxSafeSearchLikelihoods;
-          for (const cat in maxLikelihoods) {
-            if (firstResponse.safeSearchAnnotation[cat] && maxLikelihoods[cat]
-              && GoogleImageRecognitionServiceBase.getSafeSearchLikelihoodIndex(firstResponse.safeSearchAnnotation[cat])
-              > GoogleImageRecognitionServiceBase.getSafeSearchLikelihoodIndex(maxLikelihoods[cat])) {
-              console.warn('Error loading image descriptions: image is inappropriate');
-              reject(new InappropriateContentError('Image is inappropriate'));
-              return;
-            }
-          }
-          // check if image has no annotations
-          if (!firstResponse || !firstResponse.labelAnnotations || firstResponse.labelAnnotations.length === 0) {
-            console.warn('No Labels detected');
-            reject(new Error('No Labels detected'));
-            return;
-          }
-          // filter out any annotations with multiple words
-          let annotations = firstResponse.labelAnnotations;
-          if (this.config.singleWordDescriptionsOnly) {
-            annotations = annotations.filter( GoogleImageRecognitionServiceBase.isSingleWord );
-          }
-          // filter out duplicates
-          annotations = GoogleImageRecognitionService.removeDuplicateWords(annotations);
-          resolve(annotations);
-        },
-        err => {
-          console.warn('Error loading image descriptions: ' + err);
-          reject(err);
-        });
+          resolve(firstResponse);
+        }, reject );
     });
-  }
-}
-
-@Injectable()
-export class GoogleImageRecognitionService extends GoogleImageRecognitionServiceBase {
-  private readonly apiKey: string;
-
-  protected get endpointUrl(): string { return VISION_URL + this.apiKey; }
-
-  constructor(@Inject(IMAGE_RECOGNITION_CONFIG) config: GoogleImageRecognitionConfig, http: HttpClient) {
-    super(config, http);
-    this.apiKey = config.apiKey;
   }
 }

@@ -1,20 +1,29 @@
 import { Inject, Injectable } from '@angular/core';
 import { IMAGE_RECOGNITION_CONFIG } from 'services/image-recognition';
 import { HttpClient } from '@angular/common/http';
-import { GoogleImageRecognitionServiceBase, GoogleImageRecognitionConfigBase } from 'services/google/image-recognition';
+import {
+  GoogleImageRecognitionServiceBase,
+  GoogleImageRecognitionConfigBase,
+  RecognitionResponse
+} from 'services/google/image-recognition';
+import { retry } from 'rxjs/operators';
 
 interface APIImageRecognitionConfig extends GoogleImageRecognitionConfigBase {
   endpointURL: string;
+  retryCount: number;
 }
 
 @Injectable()
 export class APIImageRecognitionService extends GoogleImageRecognitionServiceBase {
-  private apiConfig: APIImageRecognitionConfig;
+  constructor(@Inject(IMAGE_RECOGNITION_CONFIG) private config: APIImageRecognitionConfig, private http: HttpClient) {
+    super(config);
+  }
 
-  protected get endpointUrl(): string { return this.apiConfig.endpointURL; }
-
-  constructor(@Inject(IMAGE_RECOGNITION_CONFIG) config: APIImageRecognitionConfig, http: HttpClient) {
-    super(config, http);
-    this.apiConfig = config;
+  protected async loadImageDescriptions(imageBase64: string): Promise<RecognitionResponse|null> {
+    return new Promise<RecognitionResponse>((resolve, reject) => {
+      this.http.post<RecognitionResponse>( this.config.endpointURL, imageBase64 )
+        .pipe( retry(this.config.retryCount) )
+        .subscribe(resolve, reject);
+    });
   }
 }

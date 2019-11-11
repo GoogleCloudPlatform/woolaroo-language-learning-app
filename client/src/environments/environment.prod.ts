@@ -68,9 +68,9 @@ export const environment = {
       type: GoogleImageRecognitionService,
       config: {
         apiKey: params.googleApiKey,
-        maxFileSize: 2 * 1024 * 1024,
+        maxFileSize: 50 * 1024,
         validImageFormats: [ 'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/bmp', 'image/webp' ],
-        resizedImageDimension: 1000,
+        resizedImageDimension: 500,
         maxResults: 10,
         retryCount: 3,
         singleWordDescriptionsOnly: true,
