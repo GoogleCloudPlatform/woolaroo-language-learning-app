@@ -136,6 +136,18 @@ function ThemePage() {
             </Select>
           </FormControl>
         </form>
+        <TextField
+          id="optional-message"
+          multiline="multiline"
+          rows="6"
+          placeholder="Terms and Conditions (optional)"
+          className={classes.textField}
+          margin="normal"
+        />
+        <FormHelperText>
+          Your own terms and conditions for people using your app
+        </FormHelperText>
+
         <h3> Logo </h3>
         <Card className={classes.card}>
           <CardMedia
