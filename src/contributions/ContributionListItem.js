@@ -1,7 +1,7 @@
 import React from 'react';
 import ListItemBase from '../common/ListItemBase'
 import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/NotInterested';
+import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Done';
 import ApiUtils from '../utils/ApiUtils';
 import AuthUtils from '../utils/AuthUtils';
@@ -13,8 +13,8 @@ class ContributionListItem extends ListItemBase {
 
     this.state = {
       ...this.state,
-      deleted: false,
       error: false,
+      collectionName: 'suggestions',
     }
   }
 
@@ -57,30 +57,6 @@ class ContributionListItem extends ListItemBase {
     }
   }
 
-  deleteContribution_ = async (e) => {
-    try {
-      const { id } = this.state;
-
-      await fetch(`${ApiUtils.origin}${ApiUtils.path}deleteRow`, {
-        method: 'DELETE',
-        body: JSON.stringify({
-          id,
-          collectionName: 'suggestions',
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': await AuthUtils.getAuthHeader(),
-        }
-      });
-
-      this.setState({
-        deleted: true,
-      });
-    } catch(err) {
-      console.error(err);
-    }
-  }
-
   renderEndOfRow() {
     return [
       <IconButton
@@ -95,7 +71,7 @@ class ContributionListItem extends ListItemBase {
         aria-label="delete"
         className="delete-contribution"
         key={1}
-        onClick={this.deleteContribution_}
+        onClick={this.showDeleteConfirm_}
       >
         <DeleteIcon />
       </IconButton>,

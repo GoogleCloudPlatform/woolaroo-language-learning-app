@@ -9,7 +9,17 @@ import { ROUTES } from '../App';
 const TRANSLATIONS_LABEL = "Translations";
 
 class NavMenu extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleStateChange = this.handleStateChange.bind(this);
+
+    this.state = {
+      menuOpen: false,
+    }
+  }
   onClick(route) {
+    this.setState({menuOpen: false});
     this.props.history.push(route);
   }
 
@@ -32,9 +42,15 @@ class NavMenu extends React.Component {
     );
   }
 
+  handleStateChange(state) {
+    this.setState({menuOpen: state.menuOpen});
+  }
+
   render() {
     return (
-      <SlideMenu className="slide-menu">
+      <SlideMenu className="slide-menu" isOpen={this.state.menuOpen}
+        onStateChange={this.handleStateChange}
+      >
         {this.renderMenuItem("Add Words", ROUTES.ADD_WORDS)}
         {this.renderMenuItem(TRANSLATIONS_LABEL, ROUTES.TRANSLATIONS)}
         {this.renderMenuItem("User Contributions", ROUTES.CONTRIBUTIONS)}

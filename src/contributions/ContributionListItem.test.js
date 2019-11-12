@@ -2,12 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ContributionListItem from './ContributionListItem';
 import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/NotInterested';
+import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Done';
 import ApiUtils from '../utils/ApiUtils';
 import { shallow } from 'enzyme';
 
 let fetchSpy;
+const flushPromises = async () => new Promise(setImmediate);
+
 const stubbedTranslation = {
   english_word: "dog",
   sound_link: "https://gcs/efwfefxs.mp3",
@@ -44,10 +46,11 @@ it('renders correct elements for contribution list item', () => {
 });
 
 
-it('saves contribution with non-empty translation', () => {
+it('saves contribution with non-empty translation', async () => {
   const wrapper = shallow(<ContributionListItem item={stubbedTranslation} />);
 
   wrapper.find('.save-contribution').simulate('click');
+  await flushPromises();
 
   expect(fetchSpy).toHaveBeenCalledWith(ApiUtils.origin + ApiUtils.path +
     "addTranslations", expect.anything());
@@ -55,20 +58,25 @@ it('saves contribution with non-empty translation', () => {
   expect(wrapper.state().error).toEqual(false);
 });
 
-it('does not save contribution with empty translation', () => {
+it('does not save contribution with empty translation', async () => {
   const wrapper = shallow(
     <ContributionListItem item={stubbedEmptyTranslation} />);
 
   wrapper.find('.save-contribution').simulate('click');
 
+  await flushPromises();
+
   expect(fetchSpy).toHaveBeenCalledTimes(0);
   expect(wrapper.state().error).toEqual(true);
 });
 
-it('deletes contribution on delete button click', () => {
+it('deletes contribution on delete button click', async () => {
   const wrapper = shallow(<ContributionListItem item={stubbedTranslation} />);
 
   wrapper.find('.delete-contribution').simulate('click');
+  await flushPromises();
+  wrapper.find('.delete-confirm').simulate('click');
+  await flushPromises();
 
   expect(fetchSpy).toHaveBeenCalledWith(ApiUtils.origin + ApiUtils.path +
     "deleteRow", expect.anything());

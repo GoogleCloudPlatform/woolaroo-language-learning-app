@@ -3,6 +3,8 @@ import Button from '@material-ui/core/Button';
 import ListItemBase from '../common/ListItemBase'
 import ApiUtils from '../utils/ApiUtils';
 import AuthUtils from '../utils/AuthUtils';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
 import './TranslationListItem.css';
 
 class TranslationListItem extends ListItemBase {
@@ -16,8 +18,11 @@ class TranslationListItem extends ListItemBase {
       transliteration
     };
 
+    this.saveTranslation_ = this.saveTranslation_.bind(this);
+
     this.state = {
       ...this.state,
+      collectionName: 'translations',
       disabled: true,
       error: false,
     };
@@ -123,18 +128,33 @@ class TranslationListItem extends ListItemBase {
   }
 
   renderEndOfRow() {
-    return [
+    const endOfRow = [
       <Button
         variant="contained"
         color="primary"
         disabled={this.state.disabled}
-        onClick={() => this.saveTranslation_()}
+        onClick={this.saveTranslation_}
         key={0}
         className="save-button"
       >
         Save
       </Button>
     ];
+
+    if (this.state.frequency < 0) {
+      endOfRow.push(
+        <IconButton
+          aria-label="delete"
+          className="delete-translation"
+          key={1}
+          onClick={this.showDeleteConfirm_}
+        >
+          <DeleteIcon />
+        </IconButton>
+      );
+    }
+
+    return endOfRow;
   }
 
   async setStateAsync(state) {
