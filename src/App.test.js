@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { shallow } from 'enzyme';
 import { App } from './App';
 import Header from './header/Header';
-import SideNav from './sidenav/SideNav';
+import NavMenu from './navmenu/NavMenu';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
@@ -21,10 +21,4 @@ it('renders only a header and a landing image if user is not signed in', () => {
   wrapper.setState({authInitializing: false});
   expect(wrapper.containsMatchingElement(<Header/>)).toEqual(true);
   expect(wrapper.containsMatchingElement(<img/>)).toEqual(true);
-});
-
-it('renders a side nav when user has signed in', () => {
-  const wrapper = shallow(<App />);
-  wrapper.setState({authInitializing: false, email: 'fake@email.com'});
-  expect(wrapper.contains(<SideNav/>)).toEqual(true);
 });

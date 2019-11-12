@@ -95,9 +95,9 @@ class Header extends React.Component {
     return (
       <div className="header-container">
         <AppBar position="static" className="header">
-          <NavMenu />
+          {this.props.signedIn ? <NavMenu /> : null}
           <Toolbar>
-            <h1 className="header-title">
+            <h1 className={`header-title ${this.props.signedIn && 'signed-in'}`}>
               Barnard
             </h1>
             <div
