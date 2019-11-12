@@ -8,6 +8,7 @@ import { AppRoutes } from 'app/routes';
 import { SessionService } from 'services/session';
 import { addOpenedListener } from 'util/dialog';
 import { ImageLoaderPageBase } from 'pages/capture/capture';
+import { cameraStreamIsAvailable } from 'util/camera';
 
 @Component({
   selector: 'app-page-photo-source',
@@ -15,6 +16,8 @@ import { ImageLoaderPageBase } from 'pages/capture/capture';
   styleUrls: ['./photo-source.scss']
 })
 export class PhotoSourcePageComponent extends ImageLoaderPageBase implements AfterViewInit {
+  public get cameraIsAvailable() { return cameraStreamIsAvailable(); }
+
   constructor( router: Router,
                dialog: MatDialog,
                sessionService: SessionService,

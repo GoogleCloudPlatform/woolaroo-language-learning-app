@@ -10,6 +10,8 @@ export class FileUploadButtonComponent {
   imageUploaded = new EventEmitter<Blob>();
   @Input()
   accept = '*';
+  @Input()
+  captureOnly = false;
 
   onFileChanged(ev: Event) {
     const fileUpload = ev.currentTarget as HTMLInputElement;

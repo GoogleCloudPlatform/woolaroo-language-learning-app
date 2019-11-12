@@ -1,4 +1,4 @@
 <label>
-  <input type="file" [accept]="accept" (change)="onFileChanged($event)" />
+  <input type="file" [accept]="accept" (change)="onFileChanged($event)" [attr.capture]="captureOnly ? '' : null" />
   <ng-content></ng-content>
 </label>
