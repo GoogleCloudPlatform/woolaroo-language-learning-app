@@ -39,16 +39,16 @@
         <target>TIRE UMA FOTO</target>
       </trans-unit>
       <trans-unit id="errorTitle" datatype="html">
-        <target>Error</target>
+        <target>Erro</target>
       </trans-unit>
       <trans-unit id="close" datatype="html">
-        <target>Close</target>
+        <target>Fechar</target>
       </trans-unit>
       <trans-unit id="imageCaptionLabel" datatype="html">
         <target>O que é isso?</target>
       </trans-unit>
       <trans-unit id="imageCaptionRequired" datatype="html">
-        <target>Image caption is required</target>
+        <target>É obrigatório inserir uma legenda na foto</target>
       </trans-unit>
       <trans-unit id="translationFeedback" datatype="html">
         <target>Feedback sobre a tradução</target>
@@ -96,10 +96,10 @@
         <target>Palavra no idioma nativo</target>
       </trans-unit>
       <trans-unit id="nativeWordRequired" datatype="html">
-        <target>Word in native script is required</target>
+        <target>A palavra escrita no idioma nativo é obrigatória</target>
       </trans-unit>
       <trans-unit id="nativeScriptHint" datatype="html">
-        <target>e.g. هتاف للترحيب</target>
+        <target>Por exemplo: هتاف" "للترحيب</target>
       </trans-unit>
       <trans-unit id="wordInEnglish" datatype="html">
         <target>Palavra em inglês</target>
@@ -108,7 +108,7 @@
         <target>English word is required</target>
       </trans-unit>
       <trans-unit id="englishWordHint" datatype="html">
-        <target>e.g. &apos;hello&apos;</target>
+        <targetPor exemplo, &apos;hello&apos;</target>
       </trans-unit>
       <trans-unit id="transliteration" datatype="html">
         <target>Transliteração (opcional)</target>
@@ -120,7 +120,7 @@
         <target>Gravar pronúncia</target>
       </trans-unit>
       <trans-unit id="saved" datatype="html">
-        <target>Saved</target>
+        <target>Salvo</target>
       </trans-unit>
       <trans-unit id="specialCharsInstructions" datatype="html">
         <target>Quer digitar caracteres especiais? Use o <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>GBoard<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> ou o <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>Keyman<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></target>
@@ -153,25 +153,25 @@
         <target>Adicionar à tela inicial</target>
       </trans-unit>
       <trans-unit id="enterSomethingElse" datatype="html">
-        <target>Enter something else</target>
+        <target>Adicione outra palavra</target>
       </trans-unit>
       <trans-unit id="wordSubmitted" datatype="html">
-        <target>Submitted for review</target>
+        <target>Enviada para revisão</target>
       </trans-unit>
       <trans-unit id="addWordError" datatype="html">
-        <target>Unable to add word</target>
+        <target>Não foi possível adicionar a palavra</target>
       </trans-unit>
       <trans-unit id="startCameraError" datatype="html">
-        <target>Unable to start camera</target>
+        <target>Não foi possível adicionar a palavra</target>
       </trans-unit>
       <trans-unit id="captureImageError" datatype="html">
-        <target>Unable to capture image</target>
+        <target>Não foi possível capturar a imagem</target>
       </trans-unit>
       <trans-unit id="feedbackSubmitted" datatype="html">
-        <target>Feedback submitted</target>
+        <target>Feedback enviado</target>
       </trans-unit>
       <trans-unit id="submitFeedbackError" datatype="html">
-        <target>Unable to save feedback</target>
+        <target>Não foi possível salvar o feedback</target>
       </trans-unit>
     </body>
   </file>
