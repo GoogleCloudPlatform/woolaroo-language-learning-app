@@ -4,7 +4,6 @@ import { LocalProfileService } from 'services/local-profile';
 import { APIFeedbackService } from 'services/api/feedback';
 import { SafeSearchLikelihood } from 'services/google/image-recognition';
 import { APIImageRecognitionService } from 'services/api/image-recognition';
-import { MockImageRecognitionService } from 'services/mock/image-recognition';
 
 const baseEndpointUrl = 'https://us-central1-barnard-yiddish.cloudfunctions.net';
 const debugImageUrl = '/assets/debug/IMG_20190920_141505.jpg';
@@ -72,10 +71,6 @@ export const environment = {
       config: null
     },
     imageRecognition: {
-      type: MockImageRecognitionService,
-      config: null
-    },
-    /*imageRecognition: {
       type: APIImageRecognitionService,
       config: {
         endpointURL: `${baseEndpointUrl}/visionAPI`,
@@ -92,7 +87,7 @@ export const environment = {
           violence: SafeSearchLikelihood.POSSIBLE,
         }
       }
-    },*/
+    },
     imageRendering: {
       config: {
         dropShadowDistance: 1,
