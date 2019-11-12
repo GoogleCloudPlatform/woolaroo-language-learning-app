@@ -75,6 +75,14 @@ function ThemePage() {
           className={classes.textField}
           margin="normal"
         />
+        <br/>
+        <TextField
+          id="organization-website"
+          label="Organization website"
+          defaultValue=""
+          className={classes.textField}
+          margin="normal"
+        />
       </div>
       <div className={classes.newSection}>
         <h2> Language information </h2>
