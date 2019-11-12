@@ -433,20 +433,20 @@ exports.visionAPI = functions.https.onRequest(async (req, res) => {
     try {
       const requestVision = {
         image: {content: Buffer.from(req.body, 'base64')},
-        features: [{type: 'LABEL_DETECTION'}, {type: 'SAFE_SEARCH_DETECTION'}]
+        features: [{type: 'LABEL_DETECTION', maxResults: 10}, {type: 'SAFE_SEARCH_DETECTION'}]
       };
       visionClient.annotateImage(requestVision)
         .then(response => {
-          const labels = response[0].labelAnnotations;
-          var objects = labels.map(label => label.description);
-          res.status(200).send(objects);
+          res.status(200).send(response && response.length > 0 ? response[0] : null);
           return "200"
         })
         .catch(err => {
           console.error(err);
+          res.status(500).send(err);
         });
     } catch (err) {
       console.log(`Unable to detect objects: ${err}`)
+      res.status(500).send(err);
     }
   });
 });
