@@ -1,9 +1,10 @@
 import { GoogleAnalyticsService } from 'services/google/analytics';
-import { GoogleImageRecognitionService, SafeSearchLikelihood } from 'services/google/image-recognition';
+import { SafeSearchLikelihood } from 'services/google/image-recognition';
 import { APITranslationService } from 'services/api/translation';
 import { LocalProfileService } from 'services/local-profile';
 import { APIFeedbackService } from 'services/api/feedback';
 import { params } from './environment.prod.params';
+import { APIImageRecognitionService } from 'services/api/image-recognition';
 
 export const environment = {
   production: true,
@@ -65,9 +66,9 @@ export const environment = {
       config: null
     },
     imageRecognition: {
-      type: GoogleImageRecognitionService,
+      type: APIImageRecognitionService,
       config: {
-        apiKey: params.googleApiKey,
+        endpointURL: `${params.apiUrl}/visionAPI`,
         maxFileSize: 50 * 1024,
         validImageFormats: [ 'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/bmp', 'image/webp' ],
         resizedImageDimension: 500,

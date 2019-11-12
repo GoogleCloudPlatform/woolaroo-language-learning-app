@@ -23,7 +23,20 @@ export class APIImageRecognitionService extends GoogleImageRecognitionServiceBas
     return new Promise<RecognitionResponse>((resolve, reject) => {
       this.http.post<RecognitionResponse>( this.config.endpointURL, imageBase64 )
         .pipe( retry(this.config.retryCount) )
-        .subscribe(resolve, reject);
+        .subscribe(
+          response => {
+            if (response.labelAnnotations) {
+              resolve(response);
+            } else {
+              // old format - array of strings
+              const words = (response as any) as string[];
+              resolve({
+                labelAnnotations: words.map(w => ({ description: w, score: 1, topicality: 1 })),
+                safeSearchAnnotation: {},
+                error: null });
+            }
+          },
+          reject);
     });
   }
 }
