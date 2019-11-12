@@ -153,7 +153,7 @@ function ThemePage() {
           <CardMedia
             className={classes.media}
             image="https://storage.googleapis.com/barnard-public-assets/Barnard%20lock%20up%202.1.png"
-            title="Paella dish"
+            title="App logo"
           />
         </Card>
         Upload new logo: <input type="file" name="myFile" />
