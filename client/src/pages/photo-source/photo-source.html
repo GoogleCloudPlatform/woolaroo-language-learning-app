@@ -5,5 +5,10 @@
       Pick Photo
     </app-file-upload-button>
   </button>
-  <button mat-flat-button color="primary" (click)="onCaptureClick()" class="capture" i18n="@@takePhoto">Take Photo</button>
+  <button *ngIf="cameraIsAvailable" mat-flat-button color="primary" (click)="onCaptureClick()" class="capture" i18n="@@takePhoto">Take Photo</button>
+  <button *ngIf="!cameraIsAvailable" mat-flat-button color="primary" class="capture">
+    <app-file-upload-button (imageUploaded)="this.onImageUploaded($event)" i18n="@@takePhoto" accept="image/*" [captureOnly]="true">
+      Take Photo
+    </app-file-upload-button>
+  </button>
 </div>

@@ -7,6 +7,7 @@ import {
   OnDestroy, ElementRef, InjectionToken, Inject
 } from '@angular/core';
 import { canvasToBlob } from 'util/image';
+import { cameraStreamIsAvailable } from 'util/camera';
 
 interface CameraPreviewConfig {
   resizeDelay: number;
@@ -70,7 +71,7 @@ export class CameraPreviewComponent implements OnDestroy {
   }
 
   async start(): Promise<any> {
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    if (!cameraStreamIsAvailable()) {
       throw new Error('User media not supported');
     } else if (this.status !== CameraPreviewStatus.Stopped) {
       throw new Error('Video stream already started');
