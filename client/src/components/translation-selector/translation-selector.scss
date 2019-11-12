@@ -2,12 +2,14 @@
 @import 'theme';
 
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   text-shadow: 1px 1px 2px mat-color(map-get($app-theme, shadow), 500);
 }
 
 .translation-container {
+  flex: 0 0 auto;
   color: mat-contrast($app-inverted, 500);
   text-align: center;
   margin-bottom: 15px;
@@ -84,6 +86,7 @@
 }
 
 .translation-not-found {
+  flex: 0 0 auto;
   color: mat-contrast($app-inverted, 500);
   text-align: center;
   margin-bottom: 15px;
@@ -120,6 +123,7 @@
 
 app-selection-line {
   height: 125px;
+  flex: 0 1 auto;
 }
 
 .translation-container,
@@ -133,6 +137,7 @@ app-selection-line {
 }
 
 app-word-scroll-list {
+  flex: 0 0 auto;
   margin-top: 15px;
 }
 
