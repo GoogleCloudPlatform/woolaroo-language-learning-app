@@ -11,25 +11,81 @@ import { AppRoutes } from 'app/routes';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
 import { SessionService } from 'services/session';
 import { addOpenedListener } from 'util/dialog';
+import { removeImageTransform } from 'util/image';
+
+export class ImageLoaderPageBase {
+  constructor( protected router: Router,
+               protected dialog: MatDialog,
+               protected sessionService: SessionService,
+               @Inject(IMAGE_RECOGNITION_SERVICE) protected imageRecognitionService: IImageRecognitionService) {
+  }
+
+  onImageUploaded(image: Blob) {
+    const loadingPopUp = this.dialog.open(LoadingPopUpComponent,
+      { closeOnNavigation: false, disableClose: true, panelClass: 'loading-popup' });
+    this.sessionService.currentSession.currentModal = loadingPopUp;
+    loadingPopUp.beforeClosed().subscribe({
+      complete: () => this.sessionService.currentSession.currentModal = null
+    });
+    addOpenedListener(loadingPopUp, () => {
+      removeImageTransform(image).then(
+        correctedImage => this.loadImageDescriptions(correctedImage, loadingPopUp),
+        err => {
+          console.warn('Error removing image rotation - defaulting to current rotation', err);
+          this.loadImageDescriptions(image, loadingPopUp)
+        }
+      );
+    });
+  }
+
+  protected loadImageDescriptions(image: Blob, loadingPopUp: MatDialogRef<CapturePopUpComponent>) {
+    this.imageRecognitionService.loadDescriptions(image).then(
+      (descriptions) => {
+        if (descriptions.length > 0) {
+          this.router.navigateByUrl(AppRoutes.Translate, { state: { image, words: descriptions.map(d => d.description) } }).then(
+            (success) => {
+              if (!success) {
+                loadingPopUp.close();
+              }
+            },
+            () => loadingPopUp.close()
+          );
+        } else {
+          this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image } }).finally(
+            () => loadingPopUp.close()
+          );
+        }
+      },
+      (err) => {
+        console.warn('Error loading image descriptions', err);
+        loadingPopUp.close();
+        this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image } }).finally(
+          () => loadingPopUp.close()
+        );
+      }
+    );
+  }
+}
 
 @Component({
   selector: 'app-page-capture',
   templateUrl: 'capture.html',
   styleUrls: ['./capture.scss']
 })
-export class CapturePageComponent implements AfterViewInit, OnDestroy {
+export class CapturePageComponent extends ImageLoaderPageBase implements AfterViewInit, OnDestroy {
   @ViewChild(CameraPreviewComponent, {static: false})
   private cameraPreview: CameraPreviewComponent|null = null;
   private modalIsForCameraStartup = true;
   public captureInProgress = false;
   public sidenavOpen = false;
 
-  constructor( private router: Router,
-               private dialog: MatDialog,
+  constructor( router: Router,
+               dialog: MatDialog,
+               sessionService: SessionService,
+               @Inject(IMAGE_RECOGNITION_SERVICE) imageRecognitionService: IImageRecognitionService,
                private i18n: I18n,
-               private sessionService: SessionService,
-               @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
-               @Inject(IMAGE_RECOGNITION_SERVICE) private imageRecognitionService: IImageRecognitionService) {
+               @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService) {
+    super(router, dialog, sessionService, imageRecognitionService);
   }
 
   ngAfterViewInit() {
@@ -106,46 +162,8 @@ export class CapturePageComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  loadImageDescriptions(image: Blob, loadingPopUp: MatDialogRef<CapturePopUpComponent>) {
-    this.imageRecognitionService.loadDescriptions(image).then(
-      (descriptions) => {
-        if (descriptions.length > 0) {
-          this.router.navigateByUrl(AppRoutes.Translate, { state: { image, words: descriptions.map(d => d.description) } }).then(
-            (success) => {
-              if (!success) {
-                loadingPopUp.close();
-              }
-            },
-            () => loadingPopUp.close()
-          );
-        } else {
-          this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image } }).finally(
-            () => loadingPopUp.close()
-          );
-        }
-      },
-      (err) => {
-        console.warn('Error loading image descriptions', err);
-        loadingPopUp.close();
-        this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image } }).finally(
-          () => loadingPopUp.close()
-        );
-      }
-    );
-  }
-
   onOpenMenuClick() {
     this.sidenavOpen = !this.sidenavOpen;
-  }
-
-  onImageUploaded(image: Blob) {
-    const loadingPopUp = this.dialog.open(LoadingPopUpComponent,
-      { closeOnNavigation: false, disableClose: true, panelClass: 'loading-popup' });
-    this.sessionService.currentSession.currentModal = loadingPopUp;
-    loadingPopUp.beforeClosed().subscribe({
-      complete: () => this.sessionService.currentSession.currentModal = null
-    });
-    addOpenedListener(loadingPopUp, () => this.loadImageDescriptions(image, loadingPopUp));
   }
 
   onSidenavClosed() {
