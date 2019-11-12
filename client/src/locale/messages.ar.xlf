@@ -39,16 +39,16 @@
         <target>اختيار صورة</target>
       </trans-unit>
       <trans-unit id="errorTitle" datatype="html">
-        <target>Error</target>
+        <target>خطأ</target>
       </trans-unit>
       <trans-unit id="close" datatype="html">
-        <target>Close</target>
+        <target>إغلاق</target>
       </trans-unit>
       <trans-unit id="imageCaptionLabel" datatype="html">
         <target>ما هذا؟</target>
       </trans-unit>
       <trans-unit id="imageCaptionRequired" datatype="html">
-        <target>Image caption is required</target>
+        <target>يجب إضافة شرح للصورة.</target>
       </trans-unit>
       <trans-unit id="translationFeedback" datatype="html">
         <target>تعليقات حول الترجمة</target>
@@ -96,19 +96,19 @@
         <target>الكلمة في النص الأصلي</target>
       </trans-unit>
       <trans-unit id="nativeWordRequired" datatype="html">
-        <target>Word in native script is required</target>
+        <target>يجب إضافة الكلمة في النص الأصلي.</target>
       </trans-unit>
       <trans-unit id="nativeScriptHint" datatype="html">
-        <target>e.g. هتاف للترحيب</target>
+        <target>مثلاً، هتاف للترحيب</target>
       </trans-unit>
       <trans-unit id="wordInEnglish" datatype="html">
         <target>الكلمة باللغة الإنجليزية</target>
       </trans-unit>
       <trans-unit id="englishWordRequired" datatype="html">
-        <target>English word is required</target>
+        <target>يجب إضافة الكلمة باللغة الإنجليزية.</target>
       </trans-unit>
       <trans-unit id="englishWordHint" datatype="html">
-        <target>e.g. &apos;hello&apos;</target>
+        <target>مثلاً، hello</target>
       </trans-unit>
       <trans-unit id="transliteration" datatype="html">
         <target>التحويل الصوتي (اختياري)</target>
@@ -120,11 +120,10 @@
         <target>سجل النطق</target>
       </trans-unit>
       <trans-unit id="saved" datatype="html">
-        <target>Saved</target>
+        <target>تم الحفظ.</target>
       </trans-unit>
       <trans-unit id="specialCharsInstructions" datatype="html">
-        <target>للكتابة بأحرف خاصة، يمكنك استخدام <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>GBoard<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> أو Keyman.
-        Want to type special characters? Try <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>GBoard<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> or <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>Keyman<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></target>
+        <target>للكتابة بأحرف خاصة، يمكنك استخدام <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>GBoard<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> أو <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>Keyman<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.</target>
       </trans-unit>
       <trans-unit id="aboutTitle" datatype="html">
         <target>لمحة عن التطبيق</target>
@@ -154,25 +153,25 @@
         <target>إضافة إلى الشاشة الرئيسية</target>
       </trans-unit>
       <trans-unit id="enterSomethingElse" datatype="html">
-        <target>Enter something else</target>
+        <target>إدخال ترجمة أخرى</target>
       </trans-unit>
       <trans-unit id="wordSubmitted" datatype="html">
-        <target>Submitted for review</target>
+        <target>تم إرسالها للمراجعة.</target>
       </trans-unit>
       <trans-unit id="addWordError" datatype="html">
-        <target>Unable to add word</target>
+        <target>تعذّرت إضافة الكلمة.</target>
       </trans-unit>
       <trans-unit id="startCameraError" datatype="html">
-        <target>Unable to start camera</target>
+        <target>تعذّر تشغيل الكاميرا.</target>
       </trans-unit>
       <trans-unit id="captureImageError" datatype="html">
-        <target>Unable to capture image</target>
+        <target>تعذّر التقاط الصورة.</target>
       </trans-unit>
       <trans-unit id="feedbackSubmitted" datatype="html">
-        <target>Feedback submitted</target>
+        <target>تم إرسال التعليقات.</target>
       </trans-unit>
       <trans-unit id="submitFeedbackError" datatype="html">
-        <target>Unable to save feedback</target>
+        <target>تعذّر حفظ التعليقات.</target>
       </trans-unit>
     </body>
   </file>
