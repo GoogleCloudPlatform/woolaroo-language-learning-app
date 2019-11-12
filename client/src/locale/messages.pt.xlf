@@ -108,7 +108,7 @@
         <target>English word is required</target>
       </trans-unit>
       <trans-unit id="englishWordHint" datatype="html">
-        <targetPor exemplo, &apos;hello&apos;</target>
+        <target>Por exemplo, &apos;hello&apos;</target>
       </trans-unit>
       <trans-unit id="transliteration" datatype="html">
         <target>Transliteração (opcional)</target>
