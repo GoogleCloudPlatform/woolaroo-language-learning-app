@@ -156,7 +156,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
       window.innerHeight * window.devicePixelRatio).then(
       (img) => {
         try {
-          downloadFile(img, `barnard-translation-${word.original}.jpg`);
+          downloadFile(img, `woolaroo-translation-${word.original}.jpg`);
         } catch (err) {
           console.warn('Error downloading image', err);
         }
