@@ -1,7 +1,10 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
-const firebaseConfig_ = {
+const IS_LOCAL = process.env.NODE_ENV === 'development' ||
+  process.env.NODE_ENV === 'test';
+
+const localFirebaseConfig_ = {
   apiKey: "AIzaSyAdh6AhIjdLezKR0SH3x6vzbMh1_benKk8",
   authDomain: "barnard-project.firebaseapp.com",
   databaseURL: "https://barnard-project.firebaseio.com",
@@ -11,6 +14,8 @@ const firebaseConfig_ = {
   appId: "1:929114075380:web:3ab89bf036919331262ea1",
   measurementId: "G-4X4KQ1ZF68"
 };
+
+const firebaseConfig_ = IS_LOCAL ? localFirebaseConfig_ : _CONFIG_PLACEHOLDER_; // eslint-disable-line
 
 class AuthUtils {
   constructor() {

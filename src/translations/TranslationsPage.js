@@ -14,9 +14,11 @@ class TranslationsPage extends ListPageBase {
     this.updatePageNum = this.updatePageNum.bind(this);
     this.updateCompleteState = this.updateCompleteState.bind(this);
     this.updateNeedsRecording = this.updateNeedsRecording.bind(this);
+    this.updateTop500 = this.updateTop500.bind(this);
 
     const queryStringParams = new URLSearchParams(props.location.search);
     const needsRecording = queryStringParams.get('needsRecording');
+    const top500 = queryStringParams.get('top500');
     let pageNum;
     if (props.match && props.match.params) {
       pageNum = +props.match.params.pageNum;
@@ -29,6 +31,7 @@ class TranslationsPage extends ListPageBase {
       pageSize: 25,
       completeState: queryStringParams.get('state'),
       needsRecording: !!(needsRecording && needsRecording !== '0'),
+      top500: top500 !== '0',
       pageNum: pageNum || 1,
       search: queryStringParams.get('search'),
     };
@@ -39,16 +42,25 @@ class TranslationsPage extends ListPageBase {
       const queryStringParams = new URLSearchParams(this.props.location.search);
       const newSearch = queryStringParams.get('search') || '';
       if (newSearch !== this.state.search) {
-        await this.setState({search: newSearch});
+        await this.setState({
+          search: newSearch,
+          pageNum: 1,
+        });
         await this.fetchItems();
       }
     }
   }
 
   async updateCompleteState(nextCompleteState) {
-    let nextHistory = `/translations/1?state=${this.state.needsRecording ? '1' : '0'}`;
+    let nextHistory = "/translations/1";
     if (nextCompleteState) {
       nextHistory += `&state=${nextCompleteState}`;
+    }
+    if (!this.state.top500) {
+      nextHistory += `&top500=0`;
+    }
+    if (this.state.needsRecording) {
+      nextHistory += `&needsRecording=1`;
     }
     this.props.history.push(nextHistory);
     await this.setState({completeState: nextCompleteState, loading: true, pageNum: 1});
@@ -63,11 +75,27 @@ class TranslationsPage extends ListPageBase {
 
   async updateNeedsRecording(nextNeedsRecording) {
     let nextHistory = `/translations/1?state=${this.state.completeState || 'all'}`;
+    if (!this.state.top500) {
+      nextHistory += `&top500=0`;
+    }
     if (nextNeedsRecording) {
       nextHistory += `&needsRecording=1`;
     }
     this.props.history.push(nextHistory);
     await this.setState({needsRecording: nextNeedsRecording, loading: true, pageNum: 1});
+    await this.fetchItems();
+  }
+
+  async updateTop500(nextTop500) {
+    let nextHistory = `/translations/1?state=${this.state.completeState || 'all'}`;
+    if (this.state.needsRecording) {
+      nextHistory += `&needsRecording=1`;
+    }
+    if (!nextTop500) {
+      nextHistory += `&top500=0`;
+    }
+    this.props.history.push(nextHistory);
+    await this.setState({top500: nextTop500, loading: true, pageNum: 1});
     await this.fetchItems();
   }
 
@@ -98,7 +126,9 @@ class TranslationsPage extends ListPageBase {
     return (
       <FilterChips
         needsRecording={this.state.needsRecording}
+        top500={this.state.top500}
         updateNeedsRecording={this.updateNeedsRecording}
+        updateTop500={this.updateTop500}
       />
     );
   }
@@ -115,6 +145,7 @@ class TranslationsPage extends ListPageBase {
   render() {
     return (
       <div>
+        <h2>Translations</h2>
         {this.renderStateSelection_()}
         {this.renderFilterChips_()}
         {this.state.loading ? <div>Loading...</div> : this.renderItems()}
