@@ -105,7 +105,7 @@
         <target>Palavra em inglês</target>
       </trans-unit>
       <trans-unit id="englishWordRequired" datatype="html">
-        <target>English word is required</target>
+        <target>A palavra em inglês é obrigatória</target>
       </trans-unit>
       <trans-unit id="englishWordHint" datatype="html">
         <target>Por exemplo, &apos;hello&apos;</target>
