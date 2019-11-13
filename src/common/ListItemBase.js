@@ -1,7 +1,15 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
 import AudioRecorder from '../audio/AudioRecorder';
+import ApiUtils from '../utils/ApiUtils';
+import AuthUtils from '../utils/AuthUtils';
+import TextField from '@material-ui/core/TextField';
 import Snackbar from '@material-ui/core/Snackbar';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogActions from '@material-ui/core/DialogActions';
 import './ListItemBase.css';
 
 class ListItemBase extends React.Component {
@@ -9,9 +17,13 @@ class ListItemBase extends React.Component {
     super(props);
 
     this.handleClose_ = this.handleClose_.bind(this);
+    this.deleteItem_ = this.deleteItem_.bind(this);
+    this.handleDialogClose_ = this.handleDialogClose_.bind(this);
+    this.handleDeleteConfirm_ = this.handleDeleteConfirm_.bind(this);
+    this.showDeleteConfirm_ = this.showDeleteConfirm_.bind(this);
 
     const { english_word, sound_link, translation,
-      transliteration, id } = this.props.item;
+      transliteration, id, frequency } = this.props.item;
 
     this.state = {
       id,
@@ -19,13 +31,23 @@ class ListItemBase extends React.Component {
       sound_link,
       translation,
       transliteration,
+      frequency,
       promo_message: null,
       promo_open: false,
+      deleted: false,
+      showDeleteConfirm: false,
+      collectionName: '',
     };
   }
 
   async showPopup(message) {
     await this.setState({promo_message: message, promo_open: true})
+  }
+
+  showDeleteConfirm_() {
+    this.setState({
+      showDeleteConfirm: true,
+    });
   }
 
   handleTranslationChange = (e) => {
@@ -40,6 +62,30 @@ class ListItemBase extends React.Component {
     this.setState({
       transliteration: newTransliteration,
     });
+  }
+
+  deleteItem_ = async (e) => {
+    try {
+      const { id, collectionName } = this.state;
+
+      await fetch(`${ApiUtils.origin}${ApiUtils.path}deleteRow`, {
+        method: 'DELETE',
+        body: JSON.stringify({
+          id,
+          collectionName,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': await AuthUtils.getAuthHeader(),
+        }
+      });
+
+      this.setState({
+        deleted: true,
+      });
+    } catch(err) {
+      console.error(err);
+    }
   }
 
   renderBaseWord() {
@@ -115,7 +161,47 @@ class ListItemBase extends React.Component {
     );
   }
 
+  handleDeleteConfirm_(e) {
+    e && e.stopPropagation();
+    this.setState({showDeleteConfirm: false, deleted: true});
+    this.deleteItem_();
+  }
+
+  handleDialogClose_() {
+    this.setState({showDeleteConfirm: false});
+  }
+
+  renderDeleteConfirmAlert_() {
+    if (!this.state.showDeleteConfirm) {
+      return;
+    }
+
+    return (
+      <Dialog open onClose={this.handleDialogClose_}>
+        <DialogTitle>Are you sure?</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            This will delete this word and all data associated with it.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.handleDialogClose_} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={this.handleDeleteConfirm_} color="primary" autoFocus
+            className="delete-confirm">
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  }
+
   render() {
+    if (this.state.deleted) {
+      return null;
+    }
+
     return (
       <li className="translation-list-item">
         {this.renderBaseWord()}
@@ -124,6 +210,7 @@ class ListItemBase extends React.Component {
         {this.renderAudioRecorder()}
         {this.renderEndOfRow()}
         {this.renderPromoMessage_()}
+        {this.renderDeleteConfirmAlert_()}
       </li>
     );
   }

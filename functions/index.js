@@ -1,37 +1,68 @@
+const fs = require('fs');
 const functions = require('firebase-functions');
 const uuidv1 = require('uuid/v1');
 const admin = require('firebase-admin');
 const path = require('path');
 const cors = require('cors')({origin: true});
+const vision = require('@google-cloud/vision');
+const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
+const ffmpeg = require('fluent-ffmpeg');
+ffmpeg.setFfmpegPath(ffmpegPath);
 
+
+// Makes an ffmpeg command return a promise.
+function promisifyCommand(command) {
+  return new Promise((resolve, reject) => {
+    command.on('end', resolve).on('error', reject).run();
+  });
+}
 
 admin.initializeApp();
 const projectId = admin.instanceId().app.options.projectId;
 const bucketName = `${projectId}.appspot.com`;
+const visionClient = new vision.v1p3beta1.ImageAnnotatorClient();
+
+const SETTINGS = {
+  COLLECTION_NAME : "app_settings",
+  DOCUMENT_NAME : "default",
+  APP_ENABLED : "app_enabled",
+  PRIVACY_POLICY : "privacy_policy",
+  APP_NAME : "app_name",
+  APP_URL : "app_url",
+  PRIMARY_LANGUAGE : "primary_language",
+  TRANSLATION_LANGUAGE : "translation_language",
+  LOGO_IMAGE_ID : "logo_image_id",
+}
+
 
 exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
-    const hasAccess = await checkAccess_(req, res);
-    if (!hasAccess) {
-      return;
-    }
     const fileName = uuidv1();
-    const filePath = `suggestions/${fileName}.webm`
+    const filePath = `suggestions/${fileName}.mp3`
     const options = {
+      destination: filePath,
       metadata: {
-        contentType: 'audio/webm',
+        contentType: 'audio/mp3',
       }
     };
-    const file = admin.storage().bucket(bucketName).file(filePath);
+    const bucket = admin.storage().bucket(bucketName);
     try {
       // Convert base64 body to blob of webm.
       const nodeBuffer = Buffer.from(req.body, 'base64');
-      await file.save(nodeBuffer, options);
+      var tempLocalPath = `/tmp/${fileName}.webm`;
+      const targetTempFilePath =  `/tmp/${fileName}.mp3`;
+      fs.writeFileSync(tempLocalPath, nodeBuffer);
+      var command = new ffmpeg(tempLocalPath)
+        .toFormat('mp3')
+        .save(targetTempFilePath); 
+      await promisifyCommand(command);
+      await bucket.upload(targetTempFilePath, options);
       console.log(`Audio saved successfully.`);
+      fs.unlinkSync(tempLocalPath);
+      fs.unlinkSync(targetTempFilePath);
       // Make the file publicly accessible.
+      var file = bucket.file(filePath);
       file.makePublic();
-      // TODO(smus): Convert webm to the format we want to store audio in,
-      // probably audio/mp3.
       // Rather than getting the bucket URL, get the public HTTP URL.
       const metadata = await file.getMetadata();
       const mediaLink = metadata[0].mediaLink;
@@ -45,59 +76,65 @@ exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
 
 exports.initSettings = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
-    console.log("Initializing settings");
-    try {
-      const querySnapshot = await admin.firestore().collection("app_settings").doc("default").create({
-        privacy_policy: "",
-        logo_image_id: "",
-        app_enabled: true,
-        app_name: "",
-        app_url: "",
-        translation_language: "",
-        primary_language: "",
-      });
-      res.status(200).send(JSON.stringify("Settings initialized."));
-      console.log("Settings initialized.");
-    } catch (err) {
-      console.log("Error initializing settings:", err);
-      res.status(404).send("Error initializing settings");
-    }
+      const docRef = admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME);
+      try {
+        const doc = await docRef.get();
+        if (doc.exists) {
+          console.log("Settings document already exists.");
+          res.status(200).send("Settings already exists.");
+        } else {
+          const querySnapshot = admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME).create({
+            privacy_policy: "",
+            logo_image_id: "",
+            app_enabled: true,
+            app_name: "",
+            app_url: "",
+            translation_language: "",
+            primary_language: "",
+          });
+          console.log("Settings document created.");
+          res.status(404).send("Settings initialized.");
+        }
+      } catch (err) {
+        console.log("Error creating settings document:", err);
+        res.status(404).send("Error initializing settings.");
+      }
   });
 });
 
 exports.updateSettings = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
     console.log("Updating settings");
+    const docRef = admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME);
     try {
-      const querySnapshot = await admin.firestore().collection("app_settings").get();
-      // There should be 1 and only 1 document in the collection
-      if (querySnapshot.empty || querySnapshot.docs[0].empty) { // collection or document empty
-        console.log("Settings not found");
-        res.status(404).send("NO settings");
-        return "404";
+      let doc = await docRef.get();
+      if (!doc.exists) {
+        console.log("Settings doesn't exist. Creating it...");
+        const querySnapshot = await admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME).create({
+          privacy_policy: "",
+          logo_image_id: "",
+          app_enabled: true,
+          app_name: "",
+          app_url: "",
+          translation_language: "",
+          primary_language: "",
+        });
+        doc = await docRef.get();
       }
-      if (querySnapshot.docs.length != 1) {
-        console.log("Too many documents in collection");
-        res.status(404).send("Error updating settings");
-        return "404";
-      }
-      var docs = querySnapshot.docs.map(doc => doc.data());
 
-      const privacy_policy = req.body.privacy_policy || docs[0]["privacy_policy"];
-      const logo_image_id = req.body.logo_image_id || docs[0]["logo_image_id"];
-      const app_enabled = req.body.app_enabled || docs[0]["app_enabled"];
+      const privacy_policy = req.body.privacy_policy || doc.get(SETTINGS.PRIVACY_POLICY);
+      const logo_image_id = req.body.logo_image_id || doc.get(SETTINGS.LOGO_IMAGE_ID);
+      const app_enabled = req.body.app_enabled || doc.get(SETTINGS.APP_ENABLED);
 
-      const doc_ids = querySnapshot.docs.map (doc => doc.id);
-
-      const snapshot = await admin.firestore().collection("app_settings").doc(doc_ids[0]).set({
+      const snapshot = await admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME).set({
           privacy_policy: privacy_policy,
           logo_image_id: logo_image_id,
           app_enabled: app_enabled
         },
         {merge: true}
       );
-      res.status(200).send(JSON.stringify("Settings updated."));
       console.log("Settings updated");
+      res.status(200).send("Settings updated.");
     } catch(err) {
       console.log("Error updating settings:", err);
       res.status(404).send("Error updating settings");
@@ -109,22 +146,10 @@ exports.readSettings = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
     console.log("Reading settings");
     try {
-      const querySnapshot = await admin.firestore().collection("app_settings").get();
-      // There should be 1 and only 1 document in the collection
-      if (querySnapshot.empty || querySnapshot.docs[0].empty) { // collection or document empty
-        console.log("Settings not found");
-        res.status(404).send("NO settings");
-        return "404";
-      }
-      if (querySnapshot.docs.length != 1) {
-        console.log("Too many documents in collection");
-        res.status(404).send("Error updating settings");
-        return "404";
-      }
-      var docs = querySnapshot.docs.map(doc => doc.data());
-      const settings_json = JSON.stringify({data: docs});
-      res.status(200).send(settings_json);
+      const doc = await admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME).get();
+      const settings_json = JSON.stringify({data: doc.data()});
       console.log("Finished reading settings");
+      res.status(200).send(settings_json);
     } catch(err) {
       console.log("Error reading settings:", err);
       res.status(404).send("Error reading settings");
@@ -134,10 +159,6 @@ exports.readSettings = functions.https.onRequest(async (req, res) => {
 
 exports.addSuggestions = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
-    const hasAccess = await checkAccess_(req, res);
-    if (!hasAccess) {
-      return;
-    }
     var snapshot = await admin.firestore().collection('suggestions').add({
       english_word: req.body.english_word,
       translation: req.body.translation,
@@ -157,7 +178,7 @@ exports.addTranslations = functions.https.onRequest(async (req, res) => {
       translation: req.body.translation,
       transliteration: req.body.transliteration,
       sound_link: req.body.sound_link,
-      frequency: +req.body.frequency || -1,
+      frequency: Number(req.body.frequency) || 11,
       timestamp: admin.firestore.FieldValue.serverTimestamp(),
     });
     console.log('Translation saved.');
@@ -172,7 +193,6 @@ exports.getTranslation = functions.https.onRequest(async (req, res) => {
     return;
   }
   var docRef = admin.firestore().collection("translations").doc(req.body);
-
   try {
     const doc = await docRef.get();
     if (doc.exists) {
@@ -192,10 +212,6 @@ exports.getTranslation = functions.https.onRequest(async (req, res) => {
 // For App, which will be used by app users
 // https://us-central1-barnard-project.cloudfunctions.net/getTranslations
 exports.getTranslations = functions.https.onRequest(async (req, res) => {
-  const hasAccess = await checkAccess_(req, res);
-  if (!hasAccess) {
-    return;
-  }
   const english_words = req.body.english_words || [];
   console.log(english_words);
   const collectionRef = admin.firestore().collection("translations");
@@ -226,23 +242,30 @@ exports.getTranslations = functions.https.onRequest(async (req, res) => {
 });
 
 // For translation page, which will be used by admin & moderators.
-// https://us-central1-barnard-project.cloudfunctions.net/translations?limit=2&reverse=true
+// https://us-central1-barnard-project.cloudfunctions.net/translations?limit=2&reverse=true&first500=true
 exports.translations = functions.https.onRequest(async (req, res) => {
   const hasAccess = await checkAccess_(req, res);
   if (!hasAccess) {
     return;
   }
-  const start = +req.query.start || 1;
-  const limit = +req.query.limit || 20;
-  const reverse = req.query.reverse || "false";
+  const start = Number(req.query.start) || 1;
+  const limit = Number(req.query.limit) || 20;
+  const reverse = Boolean(req.query.reverse) || false;
+  const first500 = Boolean(req.query.first500) || false;
   //const array_contains = req.query.array_contains || "";
-
-  var reverse_order = (reverse === "true") ? "desc" : "asc";
+  var reverse_order = (reverse) ? "asc" : "desc";
   var docRef = admin.firestore().collection("translations")
-    .orderBy("english_word", reverse_order).limit(limit);
+    .orderBy("frequency", reverse_order).limit(limit);
 
-  try {
-    const querySnapshot = await docRef.get();
+  let querySnapshot;
+
+  if (first500) {
+    querySnapshot = await docRef.where('frequency', '>', 10).get();
+  } else {
+    querySnapshot = await docRef.get();
+  }
+
+  docRef.get().then(querySnapshot => { 
     if (querySnapshot.empty) {
         res.status(404).send("NO translations");
     } else {
@@ -250,53 +273,66 @@ exports.translations = functions.https.onRequest(async (req, res) => {
         var translations_json = JSON.stringify({data: docs})
         res.status(200).send(translations_json)
     }
-  } catch(err) {
-    console.log("Error getting document:", err);
-  }
+    return "200"
+  }).catch(error => {
+    console.log("Error getting document:", error);
+    res.status(500).send(error);
+  });  
 });
 
 exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
   const pageSize = +req.query.pageSize;
   const pageNum = +req.query.pageNum;
   const state = req.query.state;
-  const needsRecording = req.query.needsRecording;
+  const needsRecording = Boolean(req.query.needsRecording && req.query.needsRecording !== '0');
   const search = req.query.search;
+  const top500 = Boolean(req.query.top500 && req.query.top500 !== '0');
   return cors(req, res, async () => {
     const hasAccess = await checkAccess_(req, res);
     if (!hasAccess) {
       return;
     }
-    let collection = admin.firestore().collection(req.query.collectionName)
-      .orderBy("english_word");
+    let collection = admin.firestore().collection(req.query.collectionName);
+    const limitQuery = pageSize && pageNum && pageNum === 1 &&
+      state !== 'incomplete' && state !== 'complete' && !needsRecording &&
+      !search;
+
+    if (top500) {
+      collection = collection.where('frequency', '>', 10)
+        .orderBy("frequency", "desc");
+    } else {
+      collection = collection.orderBy("english_word");
+    }
+
+    if (limitQuery) {
+      collection = collection.limit(pageSize);
+    }
 
     try {
       const collectionDocs = await collection.get();
       if (collectionDocs.docs.length) {
-          let filteredCollection = collectionDocs.docs.map((doc) => {
-            return {...doc.data(), id: doc.id};
+          let filteredCollection = [];
+          collectionDocs.docs.forEach((doc, docIdx) => {
+            const docData = doc.data();
+
+            if (state === 'incomplete' && docData.translation) {
+              return;
+            }
+
+            if (state === 'complete' && !docData.translation) {
+              return;
+            }
+
+            if (needsRecording && docData.sound_link) {
+              return;
+            }
+
+            if (search && docData.english_word.indexOf(search) === -1) {
+              return;
+            }
+
+            filteredCollection.push({...docData, id: doc.id});
           });
-
-          if (state === 'incomplete') {
-            filteredCollection = filteredCollection.filter((doc) => {
-              return !doc.translation;
-            });
-          } else if (state === 'complete') {
-            filteredCollection = filteredCollection.filter((doc) => {
-              return doc.translation;
-            });
-          }
-
-          if (needsRecording && needsRecording !== '0') {
-            filteredCollection = filteredCollection.filter((doc) => {
-              return !doc.sound_link;
-            });
-          }
-
-          if (search) {
-            filteredCollection = filteredCollection.filter((doc) => {
-              return doc.english_word.startsWith(search);
-            });
-          }
 
           if (pageNum && pageSize) {
             const startIdx = (pageNum - 1)*pageSize;
@@ -317,6 +353,22 @@ exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
   });
 });
 
+exports.addFeedback = functions.https.onRequest(async (req, res) => {
+  return cors(req, res, async () => {
+    var snapshot = await admin.firestore().collection('feedback').add({
+      english_word: req.body.english_word,
+      translation: req.body.translation,
+      transliteration: req.body.transliteration,
+      sound_link: req.body.sound_link,
+      types: req.body.types,
+      content: req.body.content,
+      timestamp: admin.firestore.FieldValue.serverTimestamp(),
+    });
+    res.status(200).send("feedback saved.");
+  });
+});
+
+
 exports.deleteRow = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
     const hasAccess = await checkAccess_(req, res);
@@ -334,6 +386,7 @@ exports.deleteRow = functions.https.onRequest(async (req, res) => {
     }
   });
 });
+
 
 // Auth functions
 exports.grantModeratorRole = functions.https.onRequest((req, res) => {
@@ -374,6 +427,47 @@ exports.grantModeratorRole = functions.https.onRequest((req, res) => {
     }
   });
 });
+
+exports.visionAPI = functions.https.onRequest(async (req, res) => {
+  return cors(req, res, async () => {
+    try {
+      const requestVision = {
+        image: {content: Buffer.from(req.body, 'base64')},
+        features: [{type: 'LABEL_DETECTION', maxResults: 10}, {type: 'SAFE_SEARCH_DETECTION'}]
+      };
+      visionClient.annotateImage(requestVision)
+        .then(response => {
+          res.status(200).send(response && response.length > 0 ? response[0] : null);
+          return "200"
+        })
+        .catch(err => {
+          console.error(err);
+          res.status(500).send(err);
+        });
+    } catch (err) {
+      console.log(`Unable to detect objects: ${err}`)
+      res.status(500).send(err);
+    }
+  });
+});
+
+exports.visionAPIProxy = functions.https.onRequest(async (req, res) => {
+  return cors(req, res, async () => {
+    try {
+      visionClient.annotateImage(req)
+        .then(response => {
+          res.status(200).send(response);
+          return "200"
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    } catch (err) {
+      console.log(`Unable to detect objects: ${err}`)
+    }
+  });
+});
+
 
 exports.grantAdminRole = functions.https.onRequest((req, res) => {
   return cors(req, res, async () => {
@@ -489,3 +583,11 @@ async function getCustomClaims_(req, res) {
   const tokenId = req.get('Authorization').split('Bearer ')[1];
   return await admin.auth().verifyIdToken(tokenId);
 }
+
+
+// For testing purposes only
+exports.testEndpoint = functions.https.onRequest((req, res) => {
+  return cors(req, res, () => {
+    res.send({ 'a': 'hello from firebase'});
+  });
+});

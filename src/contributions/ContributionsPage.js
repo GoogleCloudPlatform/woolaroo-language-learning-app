@@ -9,6 +9,7 @@ class ContributionsPage extends ListPageBase {
       ...this.state,
       listItemTag: ContributionListItem,
       collectionName: 'suggestions',
+      pageTitle: 'User Contributions'
     };
   }
 }
