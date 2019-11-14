@@ -90,7 +90,6 @@ export class ImageRenderingService {
     const croppedImageHeight = Math.round(height * imageScale);
     const croppedImageDx = (imageWidth - croppedImageWidth) * 0.5;
     const croppedImageDy = (imageHeight - croppedImageHeight) * 0.5;
-    const maxTextWidth = width - 2 * this.config.padding;
     context.drawImage(image, croppedImageDx, croppedImageDy, croppedImageWidth, croppedImageHeight, 0, 0, width, height);
     if (!word) {
       return canvasToBlob(canvas);
@@ -99,13 +98,14 @@ export class ImageRenderingService {
     const centerX = width * 0.5 / scale;
     context.setTransform(scale, 0, 0, scale, 0, 0);
     let y = height / scale; // start at bottom
+    const maxTextWidth = (width - 2 * this.config.padding) / scale;
     y = this._renderText(context, word.original, this.config.originalWord, centerX, y, maxTextWidth);
     y = this._renderLine(context, centerX, y);
-    if (word.transliteration) {
-      y = this._renderText(context, word.transliteration, this.config.transliteration, centerX, y, maxTextWidth);
-    }
     if (word.translation) {
-      this._renderText(context, word.translation, this.config.translation, centerX, y, maxTextWidth);
+      y = this._renderText(context, word.translation, this.config.translation, centerX, y, maxTextWidth);
+    }
+    if (word.transliteration) {
+      this._renderText(context, word.transliteration, this.config.transliteration, centerX, y, maxTextWidth);
     }
     return canvasToBlob(canvas);
   }
