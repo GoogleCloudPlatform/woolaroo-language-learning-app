@@ -16,9 +16,10 @@ export const environment = {
   endangeredLanguage: 'Sicilian',
   pages: {
     splash: {
-      duration: 4000,
+      logosDuration: 4000,
       videoMaxStartTime: 3000,
-      showLogosVideoPosition: 0.8,
+      maxLogosDelay: 3000,
+      showLogosVideoPosition: 0.5,
       partnerLogoUrl: '/assets/debug/partner-logo.png'
     },
     translate: {

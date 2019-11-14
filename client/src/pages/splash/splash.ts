@@ -10,8 +10,9 @@ import { cameraStreamIsAvailable } from 'util/camera';
 interface SplashPageConfig {
   partnerLogoUrl?: string;
   videoMaxStartTime: number;
+  maxLogosDelay: number;
   showLogosVideoPosition: number;
-  duration: number;
+  logosDuration: number;
 }
 
 export const SPLASH_PAGE_CONFIG = new InjectionToken<SplashPageConfig>('Splash page config');
@@ -69,8 +70,13 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
     this.videoStarted = true;
     if (this.timeout) {
       clearTimeout(this.timeout);
-      this.timeout = null;
     }
+    this.timeout = setTimeout(
+      () => {
+        if (!this.logosVisible) {
+          this._showLogos();
+        }
+      }, this.config.maxLogosDelay);
   }
 
   onVideoEnded() {
@@ -103,6 +109,6 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
         },
         () => this.router.navigateByUrl(AppRoutes.Intro)
       );
-    }, this.config.duration);
+    }, this.config.logosDuration);
   }
 }
