@@ -22,6 +22,10 @@ const WEBMANIFEST_FILE = process.argv[argIndex++];
 if(!WEBMANIFEST_FILE) {
     throw new Error('Webmanifest file path not set');
 }
+const FAVICON_FILE = process.argv[argIndex++];
+if(!FAVICON_FILE) {
+    throw new Error('Favicon file path not set');
+}
 const CDN_BASE_URL = process.argv[argIndex++];
 if(!CDN_BASE_URL) {
     throw new Error('CDN base URL not set');
@@ -39,6 +43,7 @@ try {
     console.warn("Error creating service worker dir", err);
 }
 fs.copyFileSync(path.join(process.cwd(), SERVICE_WORKER_FILE), path.join(serviceWorkerDestDir, path.basename(SERVICE_WORKER_FILE)));
+fs.copyFileSync(path.join(process.cwd(), FAVICON_FILE), path.join(serviceWorkerDestDir, path.basename(FAVICON_FILE)));
 
 let serviceWorkerData = SON.parse(fs.readFileSync(path.join(process.cwd(), SERVICE_WORKER_DATA_FILE), 'utf-8'));
 for(const group of serviceWorkerData.assetGroups) {
@@ -57,7 +62,7 @@ for(const url of Object.keys(serviceWorkerData.hashTable)) {
         newHashTable[url] = serviceWorkerData.hashTable[url];
     }
 }
-
+serviceWorkerData.hashTable = newHashTable;
 fs.writeFileSync(path.join(serviceWorkerDestDir, path.basename(SERVICE_WORKER_DATA_FILE)), JSON.stringify(serviceWorkerData));
 
 let manifest = JSON.parse(fs.readFileSync(path.join(process.cwd(), WEBMANIFEST_FILE), 'utf-8'));
