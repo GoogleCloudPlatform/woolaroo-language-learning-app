@@ -6,21 +6,48 @@ interface ImageRenderingConfig {
   dropShadowDistance: number;
   dropShadowColor: string;
   foregroundColor: string;
-  transliterationFont: string;
-  transliterationBottom: number;
-  translationFont: string;
-  translationBottom: number;
-  originalWordFont: string;
-  originalWordBottom: number;
-  lineTop: number;
+  transliteration: ImageRenderingTextConfig;
+  translation: ImageRenderingTextConfig;
+  originalWord: ImageRenderingTextConfig;
+  line: { width: number, height: number, marginBottom: number };
+  padding: number;
+}
+
+interface ImageRenderingTextConfig {
+  font: string;
   lineHeight: number;
-  lineWidth: number;
+  lineSpacing: number;
+  marginBottom: number;
 }
 
 export const IMAGE_RENDERING_CONFIG = new InjectionToken<ImageRenderingConfig>('Image rendering config');
 
 @Injectable()
 export class ImageRenderingService {
+  private static _getTextLines(context: CanvasRenderingContext2D, text: string, maxWidth: number): string[] {
+    const lines: string[] = [];
+    let remainingText = text;
+    while (remainingText) {
+      const metrics = context.measureText(remainingText);
+      if (metrics.width < maxWidth) {
+        lines.push(remainingText);
+        break;
+      }
+      let breakIndex = Math.floor(remainingText.length * maxWidth / metrics.width);
+      if (breakIndex <= 0) {
+        lines.push(remainingText);
+        break;
+      }
+      const prevWhitespaceIndex = remainingText.lastIndexOf(' ', breakIndex);
+      if (prevWhitespaceIndex >= 0) {
+        breakIndex = prevWhitespaceIndex;
+      }
+      lines.push(remainingText.slice(0, breakIndex));
+      remainingText = remainingText.slice(breakIndex).trim();
+    }
+    return lines;
+  }
+
   constructor(@Inject(IMAGE_RENDERING_CONFIG) private config: ImageRenderingConfig) {
   }
 
@@ -63,47 +90,55 @@ export class ImageRenderingService {
     const croppedImageHeight = Math.round(height * imageScale);
     const croppedImageDx = (imageWidth - croppedImageWidth) * 0.5;
     const croppedImageDy = (imageHeight - croppedImageHeight) * 0.5;
+    const maxTextWidth = width - 2 * this.config.padding;
     context.drawImage(image, croppedImageDx, croppedImageDy, croppedImageWidth, croppedImageHeight, 0, 0, width, height);
-    if (word) {
-      const scale = Math.min(width / window.innerWidth, height / window.innerHeight);
-      context.setTransform(scale, 0, 0, scale, 0, 0);
-      if (word.transliteration) {
-        context.font = this.config.transliterationFont;
-        const transliterationMetrics = context.measureText(word.transliteration);
-        this._renderText(context, word.transliteration,
-          width * 0.5 / scale - transliterationMetrics.width * 0.5,
-          height / scale - this.config.transliterationBottom);
-      }
-      if (word.translation) {
-        context.font = this.config.translationFont;
-        const translationMetrics = context.measureText(word.translation);
-        this._renderText(context, word.translation,
-          width * 0.5 / scale - translationMetrics.width * 0.5,
-          height / scale - this.config.translationBottom);
-      }
-      context.fillStyle = this.config.dropShadowColor;
-      context.fillRect(
-        width * 0.5 / scale + this.config.dropShadowDistance,
-        height / scale - this.config.lineTop + this.config.dropShadowDistance,
-        this.config.lineWidth, this.config.lineHeight);
-      context.fillStyle = this.config.foregroundColor;
-      context.fillRect(
-        width * 0.5 / scale,
-        height / scale - this.config.lineTop,
-        this.config.lineWidth, this.config.lineHeight);
-      context.font = this.config.originalWordFont;
-      const originalMetrics = context.measureText(word.original);
-      this._renderText(context, word.original,
-        width * 0.5 / scale - originalMetrics.width * 0.5,
-        height / scale - this.config.originalWordBottom);
+    if (!word) {
+      return canvasToBlob(canvas);
+    }
+    const scale = Math.min(width / window.innerWidth, height / window.innerHeight);
+    const centerX = width * 0.5 / scale;
+    context.setTransform(scale, 0, 0, scale, 0, 0);
+    let y = height / scale; // start at bottom
+    y = this._renderText(context, word.original, this.config.originalWord, centerX, y, maxTextWidth);
+    y = this._renderLine(context, centerX, y);
+    if (word.transliteration) {
+      y = this._renderText(context, word.transliteration, this.config.transliteration, centerX, y, maxTextWidth);
+    }
+    if (word.translation) {
+      this._renderText(context, word.translation, this.config.translation, centerX, y, maxTextWidth);
     }
     return canvasToBlob(canvas);
   }
 
-  private _renderText(context: CanvasRenderingContext2D, text: string, x: number, y: number) {
+  private _renderLine(context: CanvasRenderingContext2D, centerX: number, bottomY: number): number {
+    const lineConfig = this.config.line;
+    const y = bottomY - lineConfig.height - lineConfig.marginBottom;
     context.fillStyle = this.config.dropShadowColor;
-    context.fillText(text, x + this.config.dropShadowDistance, y + this.config.dropShadowDistance);
+    context.fillRect(centerX + this.config.dropShadowDistance, y + this.config.dropShadowDistance,
+      lineConfig.width, lineConfig.height);
     context.fillStyle = this.config.foregroundColor;
-    context.fillText(text, x, y);
+    context.fillRect(centerX, y, lineConfig.width, lineConfig.height);
+    return y;
+  }
+
+  private _renderText(context: CanvasRenderingContext2D, text: string, config: ImageRenderingTextConfig,
+                      centerX: number, bottomY: number, maxWidth: number): number {
+    context.font = config.font;
+    let y = bottomY - config.marginBottom;
+    const lines = ImageRenderingService._getTextLines(context, text, maxWidth);
+    for (let k = lines.length - 1; k >= 0; k--) {
+      const line = lines[k];
+      const metrics = context.measureText(line);
+      const x = centerX - Math.min(metrics.width, maxWidth) * 0.5;
+      context.fillStyle = this.config.dropShadowColor;
+      context.fillText(line, x + this.config.dropShadowDistance, y + this.config.dropShadowDistance, maxWidth);
+      context.fillStyle = this.config.foregroundColor;
+      context.fillText(line, x, y, maxWidth);
+      y -= config.lineHeight;
+      if (k > 0) {
+        y -= config.lineSpacing;
+      }
+    }
+    return y;
   }
 }
