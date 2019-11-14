@@ -45,12 +45,12 @@ try {
 fs.copyFileSync(path.join(process.cwd(), SERVICE_WORKER_FILE), path.join(serviceWorkerDestDir, path.basename(SERVICE_WORKER_FILE)));
 fs.copyFileSync(path.join(process.cwd(), FAVICON_FILE), path.join(serviceWorkerDestDir, path.basename(FAVICON_FILE)));
 
-let serviceWorkerData = SON.parse(fs.readFileSync(path.join(process.cwd(), SERVICE_WORKER_DATA_FILE), 'utf-8'));
+let serviceWorkerData = JSON.parse(fs.readFileSync(path.join(process.cwd(), SERVICE_WORKER_DATA_FILE), 'utf-8'));
 for(const group of serviceWorkerData.assetGroups) {
     for(let k = 0; k < group.urls.length; k++) {
         let url = group.urls[k];
         if(url !== '/index.html' && url !== '/favicon.ico') {
-            groups.urls[k] = (new URL(url, CDN_BASE_URL)).toString();
+            group.urls[k] = (new URL(url, CDN_BASE_URL)).toString();
         }
     }
 }
