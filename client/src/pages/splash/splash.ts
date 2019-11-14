@@ -4,6 +4,8 @@ import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
 import { IProfileService, PROFILE_SERVICE } from 'services/profile';
 import { AppRoutes } from 'app/routes';
 import { AnimationComponent } from 'components/animation/animation';
+import { environment } from 'environments/environment';
+import { cameraStreamIsAvailable } from 'util/camera';
 
 interface SplashPageConfig {
   partnerLogoUrl?: string;
@@ -88,7 +90,17 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
     }
     this.timeout = setTimeout(() => {
       this.profileService.loadProfile().then(
-        (profile) => this.router.navigateByUrl(!profile.termsAgreed ? AppRoutes.Intro : AppRoutes.CaptureImage),
+        (profile) => {
+          const skipIntro = (environment.pages.termsAndPrivacy.enabled && profile.termsAgreed)
+            || (!environment.pages.termsAndPrivacy.enabled && profile.introViewed);
+          if (!skipIntro) {
+            this.router.navigateByUrl(AppRoutes.Intro);
+          } else if (cameraStreamIsAvailable()) {
+            this.router.navigateByUrl(AppRoutes.CaptureImage);
+          } else {
+            this.router.navigateByUrl(AppRoutes.ImageSource);
+          }
+        },
         () => this.router.navigateByUrl(AppRoutes.Intro)
       );
     }, this.config.duration);

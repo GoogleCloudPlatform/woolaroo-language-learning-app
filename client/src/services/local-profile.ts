@@ -13,7 +13,7 @@ export class LocalProfileService implements IProfileService {
       }
     }
     if (!profile) {
-      profile = { termsAgreed: false };
+      profile = { termsAgreed: false, introViewed: false };
     }
     return Promise.resolve(profile);
   }

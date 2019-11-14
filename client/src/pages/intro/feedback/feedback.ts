@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AppRoutes } from 'app/routes';
 import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
 import { environment } from 'environments/environment';
+import { IProfileService, PROFILE_SERVICE } from 'services/profile';
 
 @Component({
   selector: 'app-page-intro-feedback',
@@ -11,7 +12,8 @@ import { environment } from 'environments/environment';
 })
 export class IntroFeedbackPageComponent implements AfterViewInit {
   constructor( private router: Router,
-               @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {
+               @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
+               @Inject(PROFILE_SERVICE) private profileService: IProfileService ) {
   }
 
   ngAfterViewInit() {
@@ -22,7 +24,13 @@ export class IntroFeedbackPageComponent implements AfterViewInit {
     if (environment.pages.termsAndPrivacy.enabled) {
       this.router.navigateByUrl(AppRoutes.IntroTermsAndConditions);
     } else {
-      this.router.navigateByUrl(AppRoutes.ImageSource);
+      this.profileService.loadProfile().then(
+        (profile) => {
+          profile.introViewed = true;
+          this.profileService.saveProfile(profile).finally(() => this.router.navigateByUrl(AppRoutes.ImageSource));
+        },
+        () => this.router.navigateByUrl(AppRoutes.ImageSource)
+      );
     }
   }
 }
