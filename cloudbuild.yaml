@@ -122,6 +122,7 @@ steps:
            "../server/build/index.html",
            "../client/dist/ngsw-worker.js",
            "../client/dist/ngsw.json",
+           "../client/dist/manifest.webmanifest",
            "../server/build/static/"]
     dir: "./scripts"
   - id: 'deploy_server'

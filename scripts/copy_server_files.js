@@ -17,7 +17,11 @@ const SERVICE_WORKER_DATA_FILE = process.argv[5];
 if(!SERVICE_WORKER_DATA_FILE) {
     throw new Error('Service worker data file path not set');
 }
-const SERVICE_WORKER_DEST_DIR = process.argv[6];
+const WEBMANIFEST_FILE = process.argv[6];
+if(!WEBMANIFEST_FILE) {
+    throw new Error('Webmanifest file path not set');
+}
+const SERVICE_WORKER_DEST_DIR = process.argv[7];
 if(!SERVICE_WORKER_DEST_DIR) {
     throw new Error('Service worker destination path not set');
 }
@@ -31,3 +35,4 @@ try {
 }
 fs.copyFileSync(path.join(process.cwd(), SERVICE_WORKER_FILE), path.join(serviceWorkerDestDir, path.basename(SERVICE_WORKER_FILE)));
 fs.copyFileSync(path.join(process.cwd(), SERVICE_WORKER_DATA_FILE), path.join(serviceWorkerDestDir, path.basename(SERVICE_WORKER_DATA_FILE)));
+fs.copyFileSync(path.join(process.cwd(), WEBMANIFEST_FILE), path.join(serviceWorkerDestDir, path.basename(WEBMANIFEST_FILE)));
