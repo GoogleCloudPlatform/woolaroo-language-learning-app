@@ -163,7 +163,7 @@ export class CapturePageComponent extends ImageLoaderPageBase implements AfterVi
   }
 
   onOpenMenuClick() {
-    this.sidenavOpen = !this.sidenavOpen;
+    this.sidenavOpen = true;
   }
 
   onSidenavClosed() {

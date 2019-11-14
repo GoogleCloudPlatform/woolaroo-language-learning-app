@@ -88,15 +88,26 @@ export const environment = {
         dropShadowDistance: 1,
         dropShadowColor: 'rgba(0, 0, 0, 0.5)',
         foregroundColor: 'white',
-        transliterationFont: '43px Roboto',
-        transliterationBottom: 270,
-        translationFont: '30px Roboto',
-        translationBottom: 220,
-        originalWordFont: '30px Roboto',
-        originalWordBottom: 80,
-        lineTop: 200,
-        lineHeight: 80,
-        lineWidth: 1
+        transliteration: {
+          font: '43px Roboto',
+          lineHeight: 35,
+          lineSpacing: 10,
+          marginBottom: 25
+        },
+        translation: {
+          font: '30px Roboto',
+          lineHeight: 25,
+          lineSpacing: 10,
+          marginBottom: 25
+        },
+        originalWord: {
+          font: '30px Roboto',
+          lineHeight: 25,
+          lineSpacing: 10,
+          marginBottom: 85
+        },
+        line: { width: 1, height: 80, marginBottom: 20 },
+        padding: 20
       }
     },
     translation: {
