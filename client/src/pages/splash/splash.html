@@ -1,6 +1,6 @@
 <video autoplay muted playsinline (playing)="onVideoPlaying()" (ended)="onVideoEnded()" (timeupdate)="onVideoUpdate($event)"
        [class.hidden]="!videoStarted || videoComplete" oncanplay="this.play()" onloadedmetadata="this.muted=true">
-  <source [src]="'assets/videos/DOTS_05.mp4' | assetUrl" type="video/mp4" />
+  <source [src]="'assets/videos/splash.mp4' | assetUrl" type="video/mp4" />
 </video>
 <app-animation class="logo" #logoAnimation [class.hidden]="!logosVisible" [autoplay]="false"
                [sourcePath]="'assets/animations/logo/data.json' | assetUrl"></app-animation>
