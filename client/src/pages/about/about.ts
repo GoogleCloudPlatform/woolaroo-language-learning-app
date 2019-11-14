@@ -19,7 +19,8 @@ export class AboutPageComponent implements AfterViewInit {
     this.analyticsService.logPageView(this.router.url, 'About');
   }
 
-  onCloseClick() {
+  onCloseClick(ev: MouseEvent) {
+    ev.stopPropagation();
     history.back();
   }
 }

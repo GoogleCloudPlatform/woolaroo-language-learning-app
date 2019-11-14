@@ -110,6 +110,7 @@ export class FeedbackPageComponent implements AfterViewInit {
   }
 
   onCloseClick(ev: Event) {
+    ev.stopPropagation();
     ev.preventDefault();
     history.back();
   }
