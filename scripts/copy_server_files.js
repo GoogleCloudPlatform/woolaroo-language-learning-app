@@ -39,7 +39,26 @@ try {
     console.warn("Error creating service worker dir", err);
 }
 fs.copyFileSync(path.join(process.cwd(), SERVICE_WORKER_FILE), path.join(serviceWorkerDestDir, path.basename(SERVICE_WORKER_FILE)));
-fs.copyFileSync(path.join(process.cwd(), SERVICE_WORKER_DATA_FILE), path.join(serviceWorkerDestDir, path.basename(SERVICE_WORKER_DATA_FILE)));
+
+let serviceWorkerData = SON.parse(fs.readFileSync(path.join(process.cwd(), SERVICE_WORKER_DATA_FILE), 'utf-8'));
+for(const group of serviceWorkerData.assetGroups) {
+    for(let k = 0; k < group.urls.length; k++) {
+        let url = group.urls[k];
+        if(url !== '/index.html' && url !== '/favicon.ico') {
+            groups.urls[k] = (new URL(url, CDN_BASE_URL)).toString();
+        }
+    }
+}
+const newHashTable = {};
+for(const url of Object.keys(serviceWorkerData.hashTable)) {
+    if(url !== '/index.html' && url !== '/favicon.ico') {
+        newHashTable[(new URL(url, CDN_BASE_URL)).toString()] = serviceWorkerData.hashTable[url];
+    } else {
+        newHashTable[url] = serviceWorkerData.hashTable[url];
+    }
+}
+
+fs.writeFileSync(path.join(serviceWorkerDestDir, path.basename(SERVICE_WORKER_DATA_FILE)), JSON.stringify(serviceWorkerData));
 
 let manifest = JSON.parse(fs.readFileSync(path.join(process.cwd(), WEBMANIFEST_FILE), 'utf-8'));
 for(const icon of manifest.icons) {
