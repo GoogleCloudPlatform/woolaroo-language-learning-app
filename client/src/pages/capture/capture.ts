@@ -32,7 +32,7 @@ export class ImageLoaderPageBase {
         correctedImage => this.loadImageDescriptions(correctedImage, loadingPopUp),
         err => {
           console.warn('Error removing image rotation - defaulting to current rotation', err);
-          this.loadImageDescriptions(image, loadingPopUp)
+          this.loadImageDescriptions(image, loadingPopUp);
         }
       );
     });
