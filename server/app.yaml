@@ -7,9 +7,9 @@ handlers:
   - url: /ngsw.json
     static_files: build/static/ngsw.json
     upload: build/static/ngsw.json
-  - url: /manifeset.webmanifest
-    static_files: build/static/manifeset.webmanifest
-    upload: build/static/manifeset.webmanifest
+  - url: /manifest.webmanifest
+    static_files: build/static/manifest.webmanifest
+    upload: build/static/manifest.webmanifest
   - url: /.*
     redirect_http_response_code: 301
     secure: always
