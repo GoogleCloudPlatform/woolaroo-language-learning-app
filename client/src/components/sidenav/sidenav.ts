@@ -16,8 +16,7 @@ export class SidenavComponent {
 
   onAddToHomeScreenClick() {
     this.sessionService.currentSession.installPrompt.prompt();
-    this.sessionService.currentSession.installPrompt.userChoice.then((result: string) => {
-      console.log('User result: ' + result);
+    this.sessionService.currentSession.installPrompt.userChoice.then(() => {
       this.sessionService.currentSession.installPrompt = null;
     });
   }
