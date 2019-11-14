@@ -96,7 +96,7 @@ export class CapturePageComponent extends ImageLoaderPageBase implements AfterVi
       if (loadingPopUp) {
         loadingPopUp.close();
       }
-      history.back();
+      this.router.navigateByUrl(AppRoutes.ImageSource, { replaceUrl: true });
       return;
     }
     if (!loadingPopUp) {
@@ -119,7 +119,7 @@ export class CapturePageComponent extends ImageLoaderPageBase implements AfterVi
         }
         const errorMessage = this.i18n({ id: 'startCameraError', value: 'Unable to start camera' });
         const errorDialog = this.dialog.open(ErrorPopUpComponent, { data: { message: errorMessage } });
-        errorDialog.afterClosed().subscribe({ complete: () => history.back() });
+        errorDialog.afterClosed().subscribe({ complete: () => this.router.navigateByUrl(AppRoutes.ImageSource, { replaceUrl: true }) });
       }
     );
   }
