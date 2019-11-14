@@ -1,27 +1,32 @@
 const fs = require('fs');
 const path = require('path');
 
-const INDEX_FILE = process.argv[2];
+let argIndex = 2;
+const INDEX_FILE = process.argv[argIndex++];
 if(!INDEX_FILE) {
     throw new Error('Index file path not set');
 }
-const DEST_INDEX_FILE = process.argv[3];
+const DEST_INDEX_FILE = process.argv[argIndex++];
 if(!DEST_INDEX_FILE) {
     throw new Error('Destination index file path not set');
 }
-const SERVICE_WORKER_FILE = process.argv[4];
+const SERVICE_WORKER_FILE = process.argv[argIndex++];
 if(!SERVICE_WORKER_FILE) {
     throw new Error('Service worker file path not set');
 }
-const SERVICE_WORKER_DATA_FILE = process.argv[5];
+const SERVICE_WORKER_DATA_FILE = process.argv[argIndex++];
 if(!SERVICE_WORKER_DATA_FILE) {
     throw new Error('Service worker data file path not set');
 }
-const WEBMANIFEST_FILE = process.argv[6];
+const WEBMANIFEST_FILE = process.argv[argIndex++];
 if(!WEBMANIFEST_FILE) {
     throw new Error('Webmanifest file path not set');
 }
-const SERVICE_WORKER_DEST_DIR = process.argv[7];
+const CDN_BASE_URL = process.argv[argIndex++];
+if(!CDN_BASE_URL) {
+    throw new Error('CDN base URL not set');
+}
+const SERVICE_WORKER_DEST_DIR = process.argv[argIndex++];
 if(!SERVICE_WORKER_DEST_DIR) {
     throw new Error('Service worker destination path not set');
 }
@@ -35,4 +40,9 @@ try {
 }
 fs.copyFileSync(path.join(process.cwd(), SERVICE_WORKER_FILE), path.join(serviceWorkerDestDir, path.basename(SERVICE_WORKER_FILE)));
 fs.copyFileSync(path.join(process.cwd(), SERVICE_WORKER_DATA_FILE), path.join(serviceWorkerDestDir, path.basename(SERVICE_WORKER_DATA_FILE)));
-fs.copyFileSync(path.join(process.cwd(), WEBMANIFEST_FILE), path.join(serviceWorkerDestDir, path.basename(WEBMANIFEST_FILE)));
+
+let manifest = JSON.parse(fs.readFileSync(path.join(process.cwd(), WEBMANIFEST_FILE), 'utf-8'));
+for(const icon of manifest.icons) {
+    icon.src = (new URL(icon.src, CDN_BASE_URL)).toString();
+}
+fs.writeFileSync(path.join(serviceWorkerDestDir, path.basename(WEBMANIFEST_FILE)), JSON.stringify(manifest));

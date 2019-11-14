@@ -123,6 +123,7 @@ steps:
            "../client/dist/ngsw-worker.js",
            "../client/dist/ngsw.json",
            "../client/dist/manifest.webmanifest",
+           "https://storage.googleapis.com/${_BUCKET_NAME}/",
            "../server/build/static/"]
     dir: "./scripts"
   - id: 'deploy_server'
