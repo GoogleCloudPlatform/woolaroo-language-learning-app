@@ -38,6 +38,7 @@ export class IntroTermsPageComponent implements AfterViewInit {
     this.profileService.loadProfile().then(
       (profile) => {
         profile.termsAgreed = true;
+        profile.introViewed = true;
         this.profileService.saveProfile(profile).finally(() => this.router.navigateByUrl(AppRoutes.ImageSource));
       },
       () => this.router.navigateByUrl(AppRoutes.ImageSource)

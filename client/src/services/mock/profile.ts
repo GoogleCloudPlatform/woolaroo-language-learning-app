@@ -2,7 +2,7 @@ import { IProfileService } from '../profile';
 import { Profile } from '../entities/profile';
 
 export class MockProfileService implements IProfileService {
-  private profile: Profile = { termsAgreed: false };
+  private profile: Profile = { termsAgreed: false, introViewed: false };
 
   public loadProfile(): Promise<Profile> {
     return new Promise((resolve) => {

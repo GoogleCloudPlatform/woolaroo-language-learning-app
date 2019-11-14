@@ -4,7 +4,6 @@ import { LocalProfileService } from 'services/local-profile';
 import { APIFeedbackService } from 'services/api/feedback';
 import { SafeSearchLikelihood } from 'services/google/image-recognition';
 import { APIImageRecognitionService } from 'services/api/image-recognition';
-import { MockTranslationService } from 'services/mock/translation';
 
 const baseEndpointUrl = 'https://us-central1-barnard-sicilian.cloudfunctions.net';
 const debugImageUrl = '/assets/debug/IMG_20190920_141505.jpg';
@@ -117,7 +116,7 @@ export const environment = {
       }
     },
     translation: {
-      type: MockTranslationService,
+      type: APITranslationService,
       config: {
         endpointURL: `${baseEndpointUrl}/getTranslations`
       }
