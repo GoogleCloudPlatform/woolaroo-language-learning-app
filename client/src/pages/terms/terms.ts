@@ -28,7 +28,8 @@ export class TermsPageComponent implements AfterViewInit {
     this.analyticsService.logPageView(this.router.url, 'Terms & Privacy');
   }
 
-  onCloseClick() {
+  onCloseClick(ev: MouseEvent) {
+    ev.stopPropagation();
     history.back();
   }
 }

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, NgZone, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Inject, NgZone } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -84,6 +84,7 @@ export class AddWordPageComponent implements AfterViewInit {
 
   onCloseClick(ev: Event) {
     ev.preventDefault();
+    ev.stopPropagation();
     history.back();
   }
 }
