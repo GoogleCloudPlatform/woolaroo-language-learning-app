@@ -98,16 +98,6 @@ mat-checkbox {
   }
 }
 
-/*:host-context([dir=rtl]) {
-  .mat-form-field.textarea,
-  .mat-form-field.text {
-
-    .mat-form-field-label-wrapper label {
-      margin-right: 10px;
-    }
-  }
-}*/
-
 .mat-form-field.textarea {
   .mat-form-field-label-wrapper label {
     .mat-placeholder-required {

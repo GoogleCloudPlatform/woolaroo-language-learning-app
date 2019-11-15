@@ -1,5 +1,7 @@
 <mat-sidenav-container>
-  <mat-sidenav mode="over" [opened]="sidenavOpen" (closed)="onSidenavClosed()"><app-sidenav></app-sidenav></mat-sidenav>
+  <mat-sidenav (openedStart)="onSidenavOpenStart()" (closed)="onSidenavClosed()" mode="over" [opened]="sidenavOpen">
+    <app-sidenav></app-sidenav>
+  </mat-sidenav>
   <mat-sidenav-content>
     <app-camera-preview></app-camera-preview>
     <div class="camera-frame"></div>
