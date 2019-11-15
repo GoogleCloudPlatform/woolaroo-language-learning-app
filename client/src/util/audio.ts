@@ -110,6 +110,7 @@ async function startAudioContextRecording(stream: MediaStream, bufferSize: numbe
       }
       streamNode.disconnect();
       processorNode.disconnect();
+      context.close();
       if (recordingStream.onended) {
         recordingStream.onended(audioBuffersToWAV(buffer, sampleRate));
       }
@@ -119,6 +120,7 @@ async function startAudioContextRecording(stream: MediaStream, bufferSize: numbe
   stream.getAudioTracks()[0].onended = () => {
     streamNode.disconnect();
     processorNode.disconnect();
+    context.close();
     if (recordingStream.onended) {
       recordingStream.onended(audioBuffersToWAV(buffer, sampleRate));
     }
