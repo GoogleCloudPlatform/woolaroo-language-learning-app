@@ -162,6 +162,11 @@ export class CapturePageComponent extends ImageLoaderPageBase implements AfterVi
     });
   }
 
+  onSidenavOpenStart() {
+    // HACK: Fix iOS Safari iPhone 7+ hiding sidenav on transition complete
+    (document.getElementsByTagName('mat-sidenav')[0] as HTMLElement).style.transform = 'none';
+  }
+
   onOpenMenuClick() {
     this.sidenavOpen = true;
   }
