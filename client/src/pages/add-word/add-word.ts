@@ -68,6 +68,10 @@ export class AddWordPageComponent implements AfterViewInit {
         const snackbarCssClass = this.prevPageCssClass ? `${this.prevPageCssClass}-snack-bar` : '';
         this.snackBar.open(this.i18n({ id: 'wordSubmitted', value: 'Submitted for review' }), '',
           { duration: environment.components.snackBar.duration, panelClass: snackbarCssClass });
+        // HACK: fix snackbar not closing on some iOS devices
+        setTimeout(() => {
+          (document.getElementsByTagName('snack-bar-container')[0].parentNode as Element).remove();
+        }, environment.components.snackBar.duration + 500);
       },
       err => {
         console.warn('Failed adding word', err);
