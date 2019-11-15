@@ -25,8 +25,12 @@ function getSupportedMimeType(mimeTypes: string[]): string|null {
   return null;
 }
 
+export function audioRecordingIsAvailable(): boolean {
+  return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+}
+
 export async function startRecording(bufferSize: number, mimeTypes?: string[]): Promise<RecordingStream> {
-  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+  if (!audioRecordingIsAvailable()) {
     throw new Error('Browser does not support audio recording');
   }
   return new Promise<RecordingStream>((resolve, reject) => {
