@@ -1,5 +1,5 @@
 import { Component, Inject, InjectionToken, Input, NgZone } from '@angular/core';
-import { AudioStream, play, RecordingStream, startRecording } from 'util/audio';
+import { audioRecordingIsAvailable, AudioStream, play, RecordingStream, startRecording } from 'util/audio';
 import { getOperatingSystem, OperatingSystem } from 'util/platform';
 import { FormGroup } from '@angular/forms';
 
@@ -38,6 +38,8 @@ export class AddWordFieldsetComponent {
   public gboardUrl: string;
   public keymanUrl: string;
 
+  public get audioRecordingIsAvailable(): boolean { return audioRecordingIsAvailable(); }
+
   @Input()
   public formGroup: FormGroup|undefined = undefined;
 
@@ -56,7 +58,9 @@ export class AddWordFieldsetComponent {
     return this.formGroup.controls[field].hasError(error);
   }
 
-  onStartRecordingClick() {
+  onStartRecordingClick(ev: MouseEvent) {
+    ev.preventDefault();
+    ev.stopPropagation();
     console.log('Starting recording');
     this.audioStreamProgress = 0;
     this.recordingState = RecordingState.Recording;
@@ -98,7 +102,9 @@ export class AddWordFieldsetComponent {
     };
   };
 
-  onStopRecordingClick() {
+  onStopRecordingClick(ev: MouseEvent) {
+    ev.preventDefault();
+    ev.stopPropagation();
     console.log('Stopping audio');
     if (this.audioStream) {
       this.audioStream.stop();
@@ -106,7 +112,9 @@ export class AddWordFieldsetComponent {
     this.recordingState = this.recording ? RecordingState.Finished : RecordingState.Idle;
   }
 
-  onPlayRecordingClick() {
+  onPlayRecordingClick(ev: MouseEvent) {
+    ev.preventDefault();
+    ev.stopPropagation();
     console.log('Starting playback');
     if (!this.recording) {
       console.warn('No audio recorded');
