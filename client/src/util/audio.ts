@@ -184,9 +184,7 @@ function writeWAVString(view: DataView, offset: number, str: string) {
   }
 }
 export async function play(buffer: Blob): Promise<PlaybackStream> {
-  return playWithAudioElement(buffer).catch(
-    () => playWithAudioContext(buffer)
-  );
+  return playWithAudioElement(buffer);
 }
 
 export async function playWithAudioElement(buffer: Blob): Promise<PlaybackStream> {
@@ -225,34 +223,4 @@ export async function playWithAudioElement(buffer: Blob): Promise<PlaybackStream
       reject
     );
   });
-}
-
-export async function playWithAudioContext(buffer: Blob): Promise<PlaybackStream> {
-  console.log('Playing with audio context');
-  const audioContextType = (window as any).AudioContext || (window as any).webkitAudioContext;
-  if (!audioContextType) {
-    return Promise.reject(new Error('AudioContext not supported'));
-  }
-  const context = new audioContextType();
-  const arrayBuffer = await new Response(buffer).arrayBuffer();
-  const bufferSource = context.createBufferSource();
-  bufferSource.buffer = await context.decodeAudioData(arrayBuffer);
-  bufferSource.connect(context.destination);
-  bufferSource.start();
-  const stream: PlaybackStream = {
-    onended: null,
-    getCurrentTime: () => {
-      return 1;
-    },
-    getDuration: () => {
-      return 2;
-    },
-    stop: () => {
-      bufferSource.stop();
-      context.close();
-      if (stream.onended) {
-        stream.onended();
-      }
-    }};
-  return stream;
 }
