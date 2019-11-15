@@ -3,5 +3,6 @@ export function downloadFile(fileContent: Blob, fileName: string) {
   a.href = URL.createObjectURL(fileContent);
   a.download = fileName;
   a.click();
-  URL.revokeObjectURL(a.href);
+  // delay revoking URL to avoid error on iOS
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
