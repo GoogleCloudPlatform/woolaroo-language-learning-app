@@ -108,14 +108,14 @@ async function startAudioContextRecording(stream: MediaStream, bufferSize: numbe
       if (stream) {
         stream.getAudioTracks()[0].stop();
       }
+      streamNode.disconnect();
+      processorNode.disconnect();
       if (recordingStream.onended) {
         recordingStream.onended(audioBuffersToWAV(buffer, sampleRate));
       }
     }
   };
   let buffer: Float32Array = new Float32Array();
-  streamNode.connect(processorNode);
-  processorNode.connect(context.destination);
   stream.getAudioTracks()[0].onended = () => {
     streamNode.disconnect();
     processorNode.disconnect();
@@ -130,6 +130,8 @@ async function startAudioContextRecording(stream: MediaStream, bufferSize: numbe
     tmp.set(samples, buffer.length);
     buffer = tmp;
   });
+  streamNode.connect(processorNode);
+  processorNode.connect(context.destination);
   return recordingStream;
 }
 
@@ -176,30 +178,36 @@ function writeWAVString(view: DataView, offset: number, str: string) {
   }
 }
 
-export function play(buffer: Blob): Promise<PlaybackStream> {
-  return new Promise<any>((resolve, reject) => {
-    const audio = new Audio();
-    const stream: PlaybackStream = {
-      onended: null,
-      getCurrentTime: () => {
-        return audio.currentTime;
-      },
-      getDuration: () => {
-        return audio.duration;
-      },
-      stop: () => {
-        audio.pause();
-        if (stream.onended) {
-          stream.onended();
-        }
+export async function play(buffer: Blob): Promise<PlaybackStream> {
+  const audio = new Audio();
+  const stream: PlaybackStream = {
+    onended: null,
+    getCurrentTime: () => {
+      return audio.currentTime;
+    },
+    getDuration: () => {
+      return audio.duration;
+    },
+    stop: () => {
+      audio.pause();
+      if (stream.onended) {
+        stream.onended();
+      }
     }};
-    audio.src = URL.createObjectURL(buffer);
+  return new Promise<any>((resolve, reject) => {
+    audio.addEventListener('error', () => {
+      reject(new Error('Error playing audio'));
+      if (stream.onended) {
+        stream.onended();
+      }
+    });
     audio.addEventListener('ended', () => {
       URL.revokeObjectURL(audio.src);
       if (stream.onended) {
         stream.onended();
       }
     });
+    audio.src = URL.createObjectURL(buffer);
     audio.play().then(
       () => resolve(stream),
       reject

@@ -116,8 +116,8 @@ export class AddWordFieldsetComponent {
     this.recordingState = RecordingState.Playing;
     play(this.recording).then(
       (stream) => {
+        console.log('Playback started');
         const duration = Number.isFinite(stream.getDuration()) ? stream.getDuration() : this.config.maxRecordingDuration * 0.001;
-        console.log(duration);
         this.audioStream = stream;
         const progressInterval = setInterval(() => {
           this.zone.run(() => {
