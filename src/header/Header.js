@@ -5,8 +5,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import { withRouter } from 'react-router-dom';
+import  { Breakpoint } from 'react-socks';
 import './Header.css';
-import NavMenu from '../navmenu/NavMenu';
+import HamburgerNavMenu from '../navmenu/HamburgerNavMenu';
 
 class Header extends React.Component {
   constructor(props) {
@@ -95,7 +96,10 @@ class Header extends React.Component {
     return (
       <div className="header-container">
         <AppBar position="static" className="header">
-          {this.props.signedIn ? <NavMenu /> : null}
+          {/* Only renders the hamburger menu in mobile widths. */}
+          <Breakpoint medium down>
+            {this.props.signedIn ? <HamburgerNavMenu /> : null}
+          </Breakpoint>
           <Toolbar>
             <h1 className={`header-title ${this.props.signedIn && 'signed-in'}`}>
               Barnard
