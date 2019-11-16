@@ -28,9 +28,7 @@ class HamburgerNavMenu extends React.Component {
 
   render() {
     return (
-      <SlideMenu className="slide-menu" isOpen={this.state.menuOpen}
-        onStateChange={this.handleStateChange}
-      >
+      <SlideMenu isOpen={this.state.menuOpen} onStateChange={this.handleStateChange}>
         <NavMenu closeSideMenu={this.closeMenu.bind(this)} />
       </SlideMenu>
     );
