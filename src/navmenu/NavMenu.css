@@ -1,33 +1,3 @@
-/* Position and sizing of burger button */
-.bm-burger-button {
-  position: fixed;
-  width: 20px;
-  height: 20px;
-  top: 22px;
-  left: 24px;
-}
-
-.bm-burger-bars {
-  background: #3c4043;
-}
-
-.bm-burger-bars-hover {
-  opacity: 0.8;
-}
-
-/* General sidebar styles */
-.bm-menu {
-  background: #fff;
-  box-shadow: 0 4px 4px 0 rgba(60,64,67,0.302), 0 8px 12px 6px rgba(60,64,67,0.149);
-  padding-top: 2.5em;
-  font-size: 1.15em;
-}
-
-.bm-overlay {
-  position: absolute;
-  opacity: 1;
-}
-
 .MuiMenuItem-root.nav-menu-item {
   font-size: 16px;
   color: #3c4043;
@@ -35,8 +5,8 @@
   padding-left: 60px;
   padding-right: 48px;
   font-weight: 400;
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 12px;
+  border-top-right-radius: 24px;
+  border-bottom-right-radius: 24px;  
 }
 
 .MuiListItem-root.nav-menu-item.Mui-selected {
@@ -51,6 +21,4 @@
 
 .MuiListItem-button.nav-menu-item:hover {
   background-color: #e9f1fe;
-  border-top-right-radius: 24px;
-  border-bottom-right-radius: 24px;
 }
