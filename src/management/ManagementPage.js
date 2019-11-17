@@ -23,14 +23,11 @@ class ManagementPage extends React.Component {
     this.setState({email: e.target.value});
   }
 
-  async grantAccess_(role, revoke = false) {
+  async updateRole_(email, role, revoke = false) {
     try {
       const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}grant${role}Role`, {
         method: 'POST',
-        body: JSON.stringify({
-          email: this.state.email,
-          revoke,
-        }),
+        body: JSON.stringify({email, revoke}),
         headers: {
           'Authorization': await AuthUtils.getAuthHeader(),
           'Content-Type': 'application/json',
@@ -64,7 +61,7 @@ class ManagementPage extends React.Component {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => this.grantAccess_('Admin')}
+            onClick={() => this.updateRole_(this.state.email, 'Admin')}
             className="access-button"
           >
             Grant Admin Access
@@ -75,13 +72,13 @@ class ManagementPage extends React.Component {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => this.grantAccess_('Moderator')}
+            onClick={() => this.updateRole_(this.state.email, 'Moderator')}
             className="access-button"
           >
             Grant Moderator Access
           </Button>
         </div>
-        <UserTable />
+        <UserTable updateRole={(email, role, revoke) => this.updateRole_(email, role, revoke)} />
       </div>
     );
   }
