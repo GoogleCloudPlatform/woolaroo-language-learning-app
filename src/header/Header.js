@@ -75,8 +75,15 @@ class Header extends React.Component {
     );
   }
 
+  getAuthButtonText_() {
+    if (this.props.authInitializing) {
+      return null;
+    }
+    return this.props.signedIn ? 'Log out' : 'Sign in';
+  }
+
   renderAuthButton_() {
-    if (this.props.hideAuthButton) {
+    if (this.props.authInitializing) {
       return null;
     }
 
@@ -109,7 +116,9 @@ class Header extends React.Component {
               <SearchIcon className="header-search-icon" onClick={this.doSearch_}/>
               {this.renderHeaderSearch_()}
             </div>
-            {this.renderAuthButton_()}
+            <Breakpoint large up>
+              {this.renderAuthButton_()}
+            </Breakpoint>
           </Toolbar>
         </AppBar>
       </div>
