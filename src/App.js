@@ -120,7 +120,7 @@ class App extends React.Component {
           <div className="app-container">
             <Header
               signedIn={!!this.state.email}
-              hideAuthButton={this.state.authInitializing}
+              authInitializing={this.state.authInitializing}
               authAction={() => this.authAction_()}
             />
             {this.renderBody()}
