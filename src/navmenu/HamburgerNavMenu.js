@@ -1,5 +1,6 @@
 import React from 'react';
 import { slide as SlideMenu } from 'react-burger-menu'
+import Button from '@material-ui/core/Button';
 import NavMenu from './NavMenu'
 import './HamburgerNavMenu.css';
 
@@ -29,7 +30,18 @@ class HamburgerNavMenu extends React.Component {
   render() {
     return (
       <SlideMenu isOpen={this.state.menuOpen} onStateChange={this.handleStateChange}>
-        <NavMenu isMobileMenu={true} closeSideMenu={this.closeMenu.bind(this)} />
+        {this.props.signedIn ?
+          <NavMenu isMobileMenu={true} closeSideMenu={this.closeMenu.bind(this)} /> : null
+        }
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={this.props.authAction}
+          className='menu-auth-button'
+          key={1}
+        >
+          {this.props.signedIn ? 'Log out' : 'Sign in'}
+        </Button>
       </SlideMenu>
     );
   }
