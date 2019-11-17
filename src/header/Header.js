@@ -99,7 +99,10 @@ class Header extends React.Component {
         <AppBar position='static' className='header'>
           {/* Only renders the hamburger menu in mobile widths. */}
           <Breakpoint medium down>
-            {this.props.signedIn ? <HamburgerNavMenu /> : null}
+            {/* Hide the menu completely while auth is initializing. Once that is done, but
+              * before the user logs in, the menu will only show the 'Sign in' option. */}
+            {this.props.authInitializing ?
+              null : <HamburgerNavMenu signedIn={this.props.signedIn} authAction={this.props.authAction} />}
           </Breakpoint>
           <Toolbar>
             <h1 className={`header-title ${this.props.signedIn && 'signed-in'}`}>
@@ -110,6 +113,8 @@ class Header extends React.Component {
               <SearchIcon className='header-search-icon' onClick={this.doSearch_}/>
               {this.renderHeaderSearch_()}
             </div>
+            {/* Only renders the logout button for desktop. In mobile widths, the auth button
+              * is part of the nav menu. */}
             <Breakpoint large up>
               {this.renderAuthButton_()}
             </Breakpoint>
