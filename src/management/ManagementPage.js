@@ -99,7 +99,7 @@ class ManagementPage extends React.Component {
               label='Email'
               variant='outlined'
               margin='normal'
-              fullWidth='true'
+              fullWidth={true}
               onChange={this.handleEmailChange_}
               className='email-text-field'
             />
