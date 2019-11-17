@@ -11,7 +11,7 @@ class NavMenu extends React.Component {
   onClick(route) {
     this.props.history.push(route);
     // Close the side menu (only applicable to mobile widths).
-    if (this.props.closeSideMenu) {
+    if (this.props.isMobileMenu) {
       this.props.closeSideMenu();
     }
   }
