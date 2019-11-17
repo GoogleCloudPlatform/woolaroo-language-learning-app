@@ -6,19 +6,16 @@
 .header-title {
   font-size: 24px;
   font-weight: 300;
-}
-
-.header-title.signed-in {
-  left: 36px;
-  position: relative;
+  margin: 0px 16px 0px 36px;
 }
 
 .header-search {
-  margin: auto;
   background: #f1f3f4;
-  padding: 10px;
   border-radius: 5px;
-  width: 640px;
+  display: flex;
+  margin: 8px 0px;
+  padding: 10px;
+  width: 100%;
 }
 
 .header-search.hidden {
@@ -26,10 +23,8 @@
 }
 
 div.header-search-root {
-  width: 610px;
   padding-left: 6px;
-  position: relative;
-  top: -2px;
+  width: 100%;
 }
 
 .MuiInputBase-input.header-search-input {
@@ -44,8 +39,6 @@ div.header-search-root {
 }
 
 svg.header-search-icon {
-  position: relative;
-  top: 4px;
   font-size: 26px;
   color: #5f6368;
   cursor: pointer;
@@ -53,4 +46,9 @@ svg.header-search-icon {
 
 svg.header-search-icon:hover {
   opacity: 0.8;
+}
+
+.auth-button.MuiButton-root {
+  margin-left: 16px;
+  min-width: 96px;
 }

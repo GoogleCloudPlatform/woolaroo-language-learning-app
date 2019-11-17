@@ -62,10 +62,10 @@ class Header extends React.Component {
 
     return (
       <InputBase
-        placeholder="Search"
+        placeholder='Search'
         classes={{
-          root: "header-search-root",
-          input: "header-search-input",
+          root: 'header-search-root',
+          input: 'header-search-input',
         }}
         inputProps={{ 'aria-label': 'search' }}
         value={this.state.search}
@@ -82,9 +82,10 @@ class Header extends React.Component {
 
     return (
       <Button
-        variant="contained"
-        color="primary"
+        variant='contained'
+        color='primary'
         onClick={this.props.authAction}
+        className='auth-button'
         key={1}
       >
         {this.props.signedIn ? 'Log out' : 'Sign in'}
@@ -94,8 +95,8 @@ class Header extends React.Component {
 
   render() {
     return (
-      <div className="header-container">
-        <AppBar position="static" className="header">
+      <div className='header-container'>
+        <AppBar position='static' className='header'>
           {/* Only renders the hamburger menu in mobile widths. */}
           <Breakpoint medium down>
             {this.props.signedIn ? <HamburgerNavMenu /> : null}
@@ -106,7 +107,7 @@ class Header extends React.Component {
             </h1>
             <div
               className={`header-search ${!this.props.signedIn && 'hidden'}`}>
-              <SearchIcon className="header-search-icon" onClick={this.doSearch_}/>
+              <SearchIcon className='header-search-icon' onClick={this.doSearch_}/>
               {this.renderHeaderSearch_()}
             </div>
             <Breakpoint large up>
