@@ -1,7 +1,5 @@
 import React from 'react';
-import { slide as SlideMenu } from 'react-burger-menu'
 import { withRouter } from 'react-router-dom';
-import Paper from '@material-ui/core/Paper';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
 import './NavMenu.css';
@@ -10,10 +8,6 @@ import { ROUTES } from '../App';
 const TRANSLATIONS_LABEL = "Translations";
 
 class NavMenu extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   onClick(route) {
     this.props.history.push(route);
     // Close the side menu (only applicable to mobile widths).

@@ -75,13 +75,6 @@ class Header extends React.Component {
     );
   }
 
-  getAuthButtonText_() {
-    if (this.props.authInitializing) {
-      return null;
-    }
-    return this.props.signedIn ? 'Log out' : 'Sign in';
-  }
-
   renderAuthButton_() {
     if (this.props.authInitializing) {
       return null;
