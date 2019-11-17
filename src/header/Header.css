@@ -3,6 +3,10 @@
   color: #5f6368;
 }
 
+.MuiToolbar-root {
+  justify-content: space-between;
+}
+
 .header-title {
   font-size: 24px;
   font-weight: 300;
@@ -14,6 +18,7 @@
   border-radius: 5px;
   display: flex;
   margin: 8px 0px;
+  max-width: 640px;
   padding: 10px;
   width: 100%;
 }
