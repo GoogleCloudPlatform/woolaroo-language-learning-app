@@ -7,7 +7,6 @@
     "@material-ui/icons": "^4.2.1",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
-    "eslint": "^6.6.0",
     "ffmpeg": "0.0.4",
     "firebase": "^7.1.0",
     "pre-commit": "^1.2.2",
@@ -22,7 +21,7 @@
     "uuid": "^3.3.3"
   },
   "scripts": {
-    "start": "node ./node_modules/react-scripts/bin/react-scripts.js start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
