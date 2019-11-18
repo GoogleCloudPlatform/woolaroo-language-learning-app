@@ -18,8 +18,8 @@ class UserTable extends React.Component {
   constructor(props) {
     super(props);
 
-    // TODO: Wire up real data.
     this.state = { 
+      // TODO: Wire up real data.
       data: makeData(),
       selected: {},
       selectAll: 0,
@@ -74,11 +74,19 @@ class UserTable extends React.Component {
   }
 
   changeRoles_() {
-    this.state.data.forEach(user => {
-      if (this.state.selected[user.uid]) {
-        // TODO: Grant or revoke
-      }
-    });
+    const selectedUsers =this.state.data.filter(
+      user => (this.state.selected[user.uid] && user.role !== this.state.newRole));
+
+    if (this.state.newRole === 'None') {
+      // Revoke the current role for all selected users.
+      selectedUsers.forEach(
+        user => this.props.updateRole(user.email, user.role, true /* revoke*/));
+    } else {
+      // Grant newRole to all selected users.
+      selectedUsers.forEach(
+        user => this.props.updateRole(user.email, this.state.newRole, false /* revoke*/));
+    }
+
     this.closeDialog_();
   }
 
