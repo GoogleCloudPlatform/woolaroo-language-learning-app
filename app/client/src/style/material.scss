@@ -1,0 +1,150 @@
+@import 'components';
+@import 'theme';
+
+button.mat-button-base {
+  flex: 0 0 auto;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  padding: 4px 20px;
+  min-width: 105px;
+  border-radius: 5px;
+  letter-spacing: 0.08rem;
+}
+
+.mat-body-1 {
+  font-size: 1.32rem;
+  line-height: 2.5rem;
+}
+
+.mat-body-2 {
+  font-size: 1.92rem;
+  line-height: 2.48rem;
+}
+
+mat-toolbar.mat-toolbar-single-row {
+  position: fixed;
+  height: 80px;
+  padding: 0 20px;
+  box-shadow: 0 0 10px mat-color(map-get($app-theme, shadow), 500);
+  font-size: 1.7rem;
+  font-weight: 400;
+  white-space: normal;
+  z-index: 1;
+
+  span {
+    margin: 0 10px;
+  }
+
+  .mat-button-base {
+    height: 100%;
+    border-radius: 0;
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+
+  .close {
+    @include icon-button;
+    width: 30px;
+    height: 30px;
+    margin: 0 10px;
+  }
+}
+
+mat-checkbox {
+  .mat-checkbox-inner-container {
+    width: 22px;
+    height: 22px;
+    margin-right: 20px;
+  }
+
+  .mat-checkbox-label {
+    font-size: 1.1rem;
+  }
+}
+
+.mat-form-field.textarea,
+.mat-form-field.text {
+  width: 100%;
+  display: block;
+
+  input,
+  textarea {
+    font-size: 1.2rem;
+    letter-spacing: 0.03rem;
+  }
+
+  .mat-form-field-infix {
+    padding: 18px 10px;
+  }
+
+  .mat-form-field-outline > * {
+    border-width: 2px;
+  }
+
+  .mat-form-field-label-wrapper {
+    overflow: visible;
+
+    label {
+      font-size: 1.2rem;
+      letter-spacing: 0.03rem;
+      margin-top: -8px;
+      margin-left: 10px;
+    }
+  }
+
+  .mat-form-field-subscript-wrapper {
+    font-size: inherit;
+    padding-top: 5px;
+  }
+}
+
+.mat-form-field.textarea {
+  .mat-form-field-label-wrapper label {
+    .mat-placeholder-required {
+      visibility: hidden;
+    }
+  }
+
+  &.ng-touched,
+  &.mat-focused {
+    .mat-form-field-label-wrapper label .mat-placeholder-required {
+      visibility: visible;
+    }
+  }
+}
+
+.mat-form-field.text {
+  .mat-form-field-infix {
+    padding-bottom: 22px;
+  }
+}
+
+
+form {
+  .mat-body-1 {
+    font-size: 1.1rem;
+    line-height: 1.75rem;
+  }
+}
+
+.mat-snack-bar-container.capture-snack-bar {
+  margin-bottom: 130px;
+}
+
+/* Make loading dialogs fullscreen */
+.loading-popup {
+  width: 100%;
+  height: 100%;
+  max-width: none !important;
+
+  .mat-dialog-container {
+    border-radius: 0;
+  }
+
+  .mat-dialog-content {
+    max-height: none;
+    overflow: visible;
+    margin: 0;
+    padding: 0;
+  }
+}

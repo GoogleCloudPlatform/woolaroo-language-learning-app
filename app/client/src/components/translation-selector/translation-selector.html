@@ -1,0 +1,39 @@
+<div class="translation-container" [class.hidden]="!selectedWordVisible" *ngIf="selectedWord && selectedWord.translation">
+  <div class="transliteration">
+    <span class="word">{{ selectedWord.transliteration }}</span>
+    <span class="share">
+      <button *ngIf="selectedWord.transliteration" (click)="onShareClick()">
+        <app-icon icon="share" shadow="true"></app-icon>
+      </button>
+    </span>
+  </div>
+  <div class="translation">
+    <span class="word">{{ selectedWord.translation }}</span>
+    <span class="share">
+      <button *ngIf="!selectedWord.transliteration" (click)="onShareClick()">
+        <app-icon icon="share" shadow="true"></app-icon>
+      </button>
+    </span>
+  </div>
+  <button *ngIf="selectedWord.soundURL" class="play-audio" (click)="onPlayAudioClick()">
+    <app-icon icon="play_audio" shadow="true"></app-icon>
+  </button>
+  <button *ngIf="!selectedWord.soundURL" class="record-audio" (click)="onAddRecordingClick()">
+    <app-icon icon="record_audio" shadow="true"></app-icon>
+  </button>
+  <audio #audioPlayer [src]="selectedWord.soundURL" preload="none"
+         (play)="onAudioPlaying()" (ended)="onAudioStopped()" (pause)="onAudioStopped()"></audio>
+</div>
+<div class="translation-not-found" [class.hidden]="!selectedWordVisible" *ngIf="selectedWord && !selectedWord.translation">
+  <div class="message" (click)="onAddTranslationClick()">
+    <app-icon icon="add" shadow="true"></app-icon>
+    <span i18n="@@addWord">Add word</span>
+  </div>
+  <button *ngIf="!selectedWord.soundURL" class="add-translation" (click)="onAddTranslationClick()">
+    <app-icon icon="record_audio" shadow="true"></app-icon>
+  </button>
+</div>
+<app-selection-line [class.hidden]="!selectedWordVisible" [targetPosition]="lineTargetPosition"></app-selection-line>
+<app-word-scroll-list [translations]="translations" (selectedWordChanged)="onSelectedWordChanged($event)"
+  (targetPositionChanged)="onTargetPositionChanged($event)"
+  (manualEntrySelected)="onManualEntrySelected()"></app-word-scroll-list>
