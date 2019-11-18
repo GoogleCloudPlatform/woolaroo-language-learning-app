@@ -1,0 +1,19 @@
+runtime: nodejs10
+
+handlers:
+  - url: /ngsw-worker.js
+    static_files: build/static/ngsw-worker.js
+    upload: build/static/ngsw-worker.js
+  - url: /ngsw.json
+    static_files: build/static/ngsw.json
+    upload: build/static/ngsw.json
+  - url: /manifest.webmanifest
+    static_files: build/static/manifest.webmanifest
+    upload: build/static/manifest.webmanifest
+  - url: /favicon.ico
+    static_files: build/static/favicon.ico
+    upload: build/static/favicon.ico
+  - url: /.*
+    redirect_http_response_code: 301
+    secure: always
+    script: auto

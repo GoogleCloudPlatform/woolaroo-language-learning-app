@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="dir" datatype="html">
+        <target>ltr</target>
+      </trans-unit>
+      <trans-unit id="introAbout" datatype="html">
+        <target>El proyecto Woolaroo utiliza la tecnología de aprendizaje automático de Google para ofrecer una forma novedosa e interactiva de acercarnos a las lenguas indígenas.</target>
+      </trans-unit>
+      <trans-unit id="next" datatype="html">
+        <target>Siguiente</target>
+      </trans-unit>
+      <trans-unit id="skip" datatype="html">
+        <target>Saltar</target>
+      </trans-unit>
+      <trans-unit id="introFeedback" datatype="html">
+        <target>Es posible que no siempre dé en el clavo, por lo que te pedimos que nos envíes tus comentarios y correcciones para ayudarnos a mejorar esta herramienta.</target>
+      </trans-unit>
+      <trans-unit id="startExploring" datatype="html">
+        <target>Empezar a probar</target>
+      </trans-unit>
+      <trans-unit id="termsAndPrivacyTitle" datatype="html">
+        <target>Términos y Política de Privacidad</target>
+      </trans-unit>
+      <trans-unit id="introTermsAndPrivacy" datatype="html">
+        <target>Al utilizar el proyecto Woolaroo, aceptas sus <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Términos y Condiciones<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>, así como su <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Política de Privacidad<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.</target>
+      </trans-unit>
+      <trans-unit id="accept" datatype="html">
+        <target>Aceptar</target>
+      </trans-unit>
+      <trans-unit id="photoSource" datatype="html">
+        <target>Puedes usar una foto que tengas en el teléfono o hacer una de un objeto de tu entorno</target>
+      </trans-unit>
+      <trans-unit id="pickPhoto" datatype="html">
+        <target>ELEGIR UNA FOTO</target>
+      </trans-unit>
+      <trans-unit id="takePhoto" datatype="html">
+        <target>HACER UNA FOTO</target>
+      </trans-unit>
+      <trans-unit id="errorTitle" datatype="html">
+        <target>Error</target>
+      </trans-unit>
+      <trans-unit id="close" datatype="html">
+        <target>Cerrar</target>
+      </trans-unit>
+      <trans-unit id="imageCaptionLabel" datatype="html">
+        <target>¿Qué es esto?</target>
+      </trans-unit>
+      <trans-unit id="imageCaptionRequired" datatype="html">
+        <target>Debes proporcionar un título para la imagen</target>
+      </trans-unit>
+      <trans-unit id="translationFeedback" datatype="html">
+        <target>Comentarios sobre la traducción</target>
+      </trans-unit>
+      <trans-unit id="feedbackTitle" datatype="html">
+        <target>Enviar comentarios</target>
+      </trans-unit>
+      <trans-unit id="submit" datatype="html">
+        <target>ENVIAR</target>
+      </trans-unit>
+      <trans-unit id="feedbackInstructions" datatype="html">
+        <target>Envíanos tus comentarios sobre las traducciones del proyecto Woolaroo para ayudarnos a mejorarlas</target>
+      </trans-unit>
+      <trans-unit id="incorrectTranslation" datatype="html">
+        <target>Traducción incorrecta</target>
+      </trans-unit>
+      <trans-unit id="offensiveTranslation" datatype="html">
+        <target>Traducción ofensiva</target>
+      </trans-unit>
+      <trans-unit id="alternateTranslation" datatype="html">
+        <target>Traducción alternativa</target>
+      </trans-unit>
+      <trans-unit id="other" datatype="html">
+        <target>Otra opción</target>
+      </trans-unit>
+      <trans-unit id="feedbackTypeRequired" datatype="html">
+        <target>No se ha seleccionado ningún tipo de comentario</target>
+      </trans-unit>
+      <trans-unit id="enterFeedback" datatype="html">
+        <target>Escribe tus comentarios</target>
+      </trans-unit>
+      <trans-unit id="feedbackRequired" datatype="html">
+        <target>Es obligatorio escribir un comentario</target>
+      </trans-unit>
+      <trans-unit id="addWord" datatype="html">
+        <target>Añadir una palabra</target>
+      </trans-unit>
+      <trans-unit id="add" datatype="html">
+        <target>AÑADIR</target>
+      </trans-unit>
+      <trans-unit id="addWordInstructions" datatype="html">
+        <target>Para aportar tu granito de arena a la aplicación, añade palabras nuevas en [idioma amenazado] junto con su traducción.</target>
+      </trans-unit>
+      <trans-unit id="wordInNativeScript" datatype="html">
+        <target>Palabra en idioma nativo</target>
+      </trans-unit>
+      <trans-unit id="nativeWordRequired" datatype="html">
+        <target>Debes incluir una palabra en el idioma nativo;</target>
+      </trans-unit>
+      <trans-unit id="nativeScriptHint" datatype="html">
+        <target>por ejemplo, هتاف للترحيب</target>
+      </trans-unit>
+      <trans-unit id="wordInEnglish" datatype="html">
+        <target>Palabra en inglés</target>
+      </trans-unit>
+      <trans-unit id="englishWordRequired" datatype="html">
+        <target>Debes incluir una palabra en inglés;</target>
+      </trans-unit>
+      <trans-unit id="englishWordHint" datatype="html">
+        <target>por ejemplo, &apos;hello&apos;</target>
+      </trans-unit>
+      <trans-unit id="transliteration" datatype="html">
+        <target>Transliteración (opcional)</target>
+      </trans-unit>
+      <trans-unit id="transliterationHint" datatype="html">
+        <target>Palabra en el alfabeto latino (por ejemplo: &apos;marhaba&apos;)</target>
+      </trans-unit>
+      <trans-unit id="recordPronunciation" datatype="html">
+        <target>Registrar pronunciación</target>
+      </trans-unit>
+      <trans-unit id="saved" datatype="html">
+        <target>Guardado</target>
+      </trans-unit>
+      <trans-unit id="specialCharsInstructions" datatype="html">
+        <target>¿Quieres escribir un carácter especial? Prueba a utilizar <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>GBoard<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> o <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>Keyman<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></target>
+      </trans-unit>
+      <trans-unit id="aboutTitle" datatype="html">
+        <target>Información sobre la aplicación</target>
+      </trans-unit>
+      <trans-unit id="aboutContent1" datatype="html">
+        <target>Te presentamos Woolaroo, un proyecto de Google de código abierto que utiliza la cámara de tu teléfono para identificar objetos y traducirlos rápidamente a la palabra correspondiente en una lengua indígena. </target>
+      </trans-unit>
+      <trans-unit id="aboutContent2" datatype="html">
+        <target>Es muy fácil de usar: solo tienes que hacer una foto de un objeto cotidiano (o subir una que ya tengas) y verás su traducción al <x id="INTERPOLATION" equiv-text="{{endangeredLanguage}}"/> en tiempo real. Puedes guardar la imagen traducida, compartirla o traducir otro objeto.</target>
+      </trans-unit>
+      <trans-unit id="technologyTitle" datatype="html">
+        <target>Información sobre la tecnología</target>
+      </trans-unit>
+      <trans-unit id="technologyContent1" datatype="html">
+        <target>El proyecto Woolaroo cuenta con la tecnología del Traductor de Google y de Cloud Vision, y utiliza el aprendizaje automático para reconocer los objetos fotografiados y traducirlos en tiempo real.</target>
+      </trans-unit>
+      <trans-unit id="technologyContent2" datatype="html">
+        <target>La aplicación proporciona la traducción más probable en una lengua indígena según el objeto principal que aparece en la imagen. Si se detectan varios objetos, puedes ver la traducción de todos y elegir la adecuada.</target>
+      </trans-unit>
+      <trans-unit id="technologyContent3" datatype="html">
+        <target>Aunque el proyecto Woolaroo dispone de la tecnología de inteligencia artificial más puntera, es posible que no siempre acierte. Por eso, seguimos esforzándonos al máximo para mejorarlo. Si quieres aportar tu granito de arena, puedes usar la función para enviar comentarios cuando encuentres una traducción que no sea correcta. </target>
+      </trans-unit>
+      <trans-unit id="logo" datatype="html">
+        <target>Woolaroo</target>
+      </trans-unit>
+      <trans-unit id="addToHomeScreen" datatype="html">
+        <target>Añadir a la pantalla de inicio</target>
+      </trans-unit>
+      <trans-unit id="enterSomethingElse" datatype="html">
+        <target>Introduce otra palabra</target>
+      </trans-unit>
+      <trans-unit id="wordSubmitted" datatype="html">
+        <target>Se ha enviado a revisión</target>
+      </trans-unit>
+      <trans-unit id="addWordError" datatype="html">
+        <target>No se ha podido añadir la palabra</target>
+      </trans-unit>
+      <trans-unit id="startCameraError" datatype="html">
+        <target>No se ha podido iniciar la cámara</target>
+      </trans-unit>
+      <trans-unit id="captureImageError" datatype="html">
+        <target>No se ha podido capturar la imagen</target>
+      </trans-unit>
+      <trans-unit id="feedbackSubmitted" datatype="html">
+        <target>Se han enviado tus comentarios</target>
+      </trans-unit>
+      <trans-unit id="submitFeedbackError" datatype="html">
+        <target>No se han podido guardar tus comentarios</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

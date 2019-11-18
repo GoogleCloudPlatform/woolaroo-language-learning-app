@@ -1,0 +1,50 @@
+@import 'components';
+
+:host {
+  @include centered-page;
+  max-width: 75vh;
+  margin-left: auto;
+  margin-right: auto;
+
+  &:before {
+    flex-basis: 190px;
+  }
+
+  &:after {
+    flex-basis: 175px;
+  }
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+}
+
+app-logo {
+  width: 75%;
+  margin-bottom: 180px;
+}
+
+.partner-logo {
+  width: 65%;
+
+  img {
+    display: block;
+    width: 100%;
+  }
+}
+
+video,
+.logo,
+.partner-logo {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+
+  &.hidden {
+    opacity: 0;
+  }
+}
