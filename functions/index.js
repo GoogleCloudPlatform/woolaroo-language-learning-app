@@ -507,6 +507,38 @@ exports.grantAdminRole = functions.https.onRequest((req, res) => {
   });
 });
 
+exports.getUsers = functions.https.onRequest(async (req, res) => {
+  return cors(req, res, async () => {
+    console.log("Reading settings");
+    try {
+      const hasAccess = await checkAdminAccess_(req, res);
+      if (!hasAccess) {
+        return;
+      }
+      const listUsersResult = await admin.auth().listUsers();
+      return listUsersResult.map((userRecord) => {
+          let role = 'None';
+          if (user.customClaims) {
+            if (user.customClaims.admin) {
+              role = 'Admin';
+            } else if (user.customClaims.moderator) {
+              role = 'Moderator'
+            }
+          }
+          return {
+            uid: userRecord.uid,
+            email: userRecord.email,
+            name: userRecord.displayName,
+            role,
+          };
+      });
+    } catch(err) {
+      res.status(500).send(err);
+      console.log("Error", err);
+    }
+  });
+});
+
 // Auth Methods
 
 exports.onUserCreated = functions.auth.user().onCreate(async (user) => {
