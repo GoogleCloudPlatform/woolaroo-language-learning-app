@@ -1,0 +1,105 @@
+@import 'components';
+@import 'theme';
+
+.mat-drawer-container {
+  background-color: mat-color($app-inverted, 100);
+  height: 100%;
+
+  .mat-sidenav {
+    width: 375px;
+    max-width: 80%;
+  }
+}
+
+app-camera-preview {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.camera-frame {
+  position: absolute;
+  width: 46vw;
+  height: 46vw;
+  max-width: 205px;
+  max-height: 205px;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  background: url(assets/img/camera-frame.svg) no-repeat center center;
+  background-size: contain;
+}
+
+.open-menu {
+  @include icon-button;
+  position: absolute;
+  top: 5px;
+  left: 8px;
+  width: 40px;
+  height: 40px;
+
+  ::ng-deep {
+    app-icon {
+      width: 30px;
+      height: 30px;
+    }
+
+    .mat-icon {
+      color: mat-contrast($app-inverted, 500);
+    }
+  }
+}
+
+.capture {
+  @include icon-button;
+  position: absolute;
+  bottom: 15px;
+  width: 100px;
+  height: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+
+  ::ng-deep {
+    app-icon {
+      width: 80px;
+      height: 80px;
+    }
+
+    .mat-icon {
+      color: mat-contrast($app-inverted, 500);
+    }
+  }
+}
+
+.load-photo {
+  @include icon-button;
+  position: absolute;
+  left: 35px;
+  bottom: 10px;
+  width: 60px;
+  height: 60px;
+
+  ::ng-deep {
+    app-icon {
+      width: 50px;
+      height: 50px;
+    }
+
+    .mat-icon {
+      color: mat-contrast($app-inverted, 500);
+    }
+  }
+}
+
+:host-context([dir=rtl]) {
+  .open-menu {
+    left: auto;
+    right: 8px;
+  }
+
+  .load-photo {
+    left: auto;
+    right: 35px;
+  }
+}

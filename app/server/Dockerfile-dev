@@ -1,0 +1,12 @@
+FROM node:10.16.3
+
+RUN mkdir -p /var/www/server
+COPY ./ /var/www/server/
+
+WORKDIR /var/www/server
+RUN npm install
+
+EXPOSE 3000
+ENV PORT=3000
+
+ENTRYPOINT npm run start-dev

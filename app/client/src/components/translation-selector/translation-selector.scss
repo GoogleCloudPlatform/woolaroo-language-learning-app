@@ -1,0 +1,149 @@
+@import 'components';
+@import 'theme';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-shadow: 1px 1px 2px mat-color(map-get($app-theme, shadow), 500);
+}
+
+.translation-container {
+  flex: 0 0 auto;
+  color: mat-contrast($app-inverted, 500);
+  text-align: center;
+  margin-bottom: 15px;
+  width: 100%;
+
+  .transliteration {
+    font-size: 3.8rem;
+    line-height: 3.8rem;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 2px;
+    font-weight: 500;
+    letter-spacing: 0.2rem;
+    max-width: 75%;
+  }
+
+  .translation {
+    font-size: 2rem;
+    line-height: 2rem;
+    margin-bottom: 12px;
+    position: relative;
+    display: inline-block;
+  }
+
+  .translation,
+  .transliteration {
+    display: flex;
+    max-width: 100%;
+
+    &:before {
+      content: "";
+    }
+
+    .word {
+      flex: 0 1 auto;
+      overflow-wrap: break-word;
+      max-width: calc(100% - 150px);
+    }
+
+    &:before,
+    .share {
+      flex: 1 1 60px;
+      padding-left: 20px;
+      padding-right: 20px;
+      box-sizing: border-box;
+    }
+
+    .share {
+      flex: 1 1 60px;
+      padding-left: 20px;
+      padding-right: 20px;
+      text-align: left;
+      box-sizing: border-box;
+
+      button {
+        @include icon-button;
+        color: mat-contrast($app-inverted, 500);
+        width: 32px;
+        height: 32px;
+      }
+    }
+  }
+
+  .play-audio,
+  .record-audio {
+    @include icon-button;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    color: mat-contrast($app-inverted, 500);
+    width: 45px;
+    height: 45px;
+  }
+}
+
+.translation-not-found {
+  flex: 0 0 auto;
+  color: mat-contrast($app-inverted, 500);
+  text-align: center;
+  margin-bottom: 15px;
+  width: 100%;
+
+  .message {
+    margin-bottom: 20px;
+    font-size: 3rem;
+    line-height: 3rem;
+    cursor: pointer;
+
+    span {
+      vertical-align: middle;
+    }
+
+    app-icon {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+  }
+
+  .add-translation {
+    @include icon-button;
+    color: mat-contrast($app-inverted, 500);
+    width: 45px;
+    height: 45px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+app-selection-line {
+  height: 125px;
+  flex: 0 1 auto;
+}
+
+.translation-container,
+.translation-not-found,
+app-selection-line {
+  transition: opacity 0.3s ease-in-out;
+
+  &.hidden {
+    opacity: 0;
+  }
+}
+
+app-word-scroll-list {
+  flex: 0 0 auto;
+  margin-top: 15px;
+}
+
+
+:host-context([dir=rtl]) {
+  .translation-container .share {
+    text-align: right;
+  }
+}
