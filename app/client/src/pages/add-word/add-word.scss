@@ -1,0 +1,10 @@
+@import 'components';
+
+:host {
+  @include form-page;
+}
+
+.instructions {
+  margin-bottom: 30px;
+}
+

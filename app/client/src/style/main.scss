@@ -1,0 +1,30 @@
+@import 'theme';
+@import 'material';
+@import 'typography';
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  color: mat-color(map-get($app-theme, foreground), text);
+}
+
+button {
+  font-family: $main-font;
+}
+
+.mat-typography h1 {
+  font-size: 2.1rem;
+  font-weight: 500;
+}
+
+a {
+  color: inherit;
+}
