@@ -509,14 +509,13 @@ exports.grantAdminRole = functions.https.onRequest((req, res) => {
 
 exports.getUsers = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
-    console.log("Reading settings");
     try {
       const hasAccess = await checkAdminAccess_(req, res);
       if (!hasAccess) {
         return;
       }
       const listUsersResult = await admin.auth().listUsers();
-      return listUsersResult.map((userRecord) => {
+      const users = listUsersResult.map((userRecord) => {
           let role = 'None';
           if (user.customClaims) {
             if (user.customClaims.admin) {
@@ -532,7 +531,7 @@ exports.getUsers = functions.https.onRequest(async (req, res) => {
             role,
           };
       });
-      res.status(200).send(translations);
+      res.status(200).send(users);
       return "200"
     } catch(err) {
       res.status(500).send(err);
