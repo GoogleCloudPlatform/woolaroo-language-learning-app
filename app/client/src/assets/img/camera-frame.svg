@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="165px" height="165px" viewBox="0 0 165 165" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>camera_lines</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Share-Copy-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-744.000000, -478.000000)">
+        <g id="camera_lines" transform="translate(744.000000, 478.000000)" fill="#ECECEC">
+            <g id="Group-5">
+                <polygon id="Combined-Shape" fill-rule="nonzero" transform="translate(15.500000, 15.500000) rotate(-360.000000) translate(-15.500000, -15.500000) " points="2 2 2 31 1.42108547e-14 29 0 0 29 0 31 2"></polygon>
+                <polygon id="Combined-Shape" fill-rule="nonzero" transform="translate(149.500000, 15.500000) rotate(-630.000000) translate(-149.500000, -15.500000) " points="136 2 136 31 134 29 134 0 163 0 165 2"></polygon>
+                <polygon id="Combined-Shape" fill-rule="nonzero" transform="translate(149.500000, 149.500000) rotate(-540.000000) translate(-149.500000, -149.500000) " points="136 136 136 165 134 163 134 134 163 134 165 136"></polygon>
+                <polygon id="Combined-Shape" fill-rule="nonzero" transform="translate(15.500000, 149.500000) rotate(-810.000000) translate(-15.500000, -149.500000) " points="2 136 2 165 1.42108547e-14 163 0 134 29 134 31 136"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

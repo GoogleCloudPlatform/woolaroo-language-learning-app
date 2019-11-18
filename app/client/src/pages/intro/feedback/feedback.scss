@@ -1,0 +1,27 @@
+@import 'components';
+
+:host {
+  @include centered-page;
+
+  &:before {
+    flex-basis: 300px;
+  }
+
+  &:after {
+    flex-basis: 120px;
+  }
+
+  p {
+    text-align: center;
+    margin: 0 45px 82px 45px;
+  }
+
+  app-pagination-indicator {
+    margin-bottom: 47px;
+  }
+
+  button.mat-button-base {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
