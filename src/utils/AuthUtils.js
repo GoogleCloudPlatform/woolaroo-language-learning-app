@@ -15,7 +15,9 @@ const localFirebaseConfig_ = {
   measurementId: "G-4X4KQ1ZF68"
 };
 
-const firebaseConfig_ = IS_LOCAL ? localFirebaseConfig_ : _CONFIG_PLACEHOLDER_; // eslint-disable-line
+const config = require('../config.json');
+
+const firebaseConfig_ = IS_LOCAL ? localFirebaseConfig_ : config.firebase_config; // eslint-disable-line
 
 class AuthUtils {
   constructor() {

@@ -1,0 +1,75 @@
+@import 'theme';
+
+:host {
+  display: block;
+  height: 32px;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  user-select: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+  list-style-type: none;
+  white-space: nowrap;
+
+  li {
+    margin: 0 10px;
+    padding: 0;
+    color: mat-contrast($app-inverted, 500);
+    font-size: 1.2rem;
+    text-transform: lowercase;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+
+    > * {
+      vertical-align: middle;
+    }
+
+    &.selected,
+    .selected-spacer {
+      font-size: 1.9rem;
+      letter-spacing: 0.1rem;
+    }
+
+    /* Spacer is used to set the dimensions of the element to selected size,
+       so layout is unaffected when selecting/deselecting words */
+    .selected-spacer {
+      visibility: hidden;
+    }
+
+    .word {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: font-size 0.2s ease-in-out;
+    }
+
+    &.manual-entry {
+      border: solid mat-contrast($app-inverted, 500);
+      border-width: 0 0 1px 0;
+      font-style: italic;
+      text-transform: none;
+
+      app-icon {
+        margin-left: 5px;
+      }
+    }
+  }
+}
+
+
+:host-context([dir=rtl]) {
+  ul li.manual-entry app-icon {
+    margin-left: 0;
+    margin-right: 5px;
+  }
+}
