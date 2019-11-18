@@ -1,0 +1,87 @@
+@import 'components';
+@import 'theme';
+
+:host {
+  width: 100%;
+  min-height: 100%;
+  display: block;
+  position: relative;
+}
+
+.background {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.back,
+.add-feedback {
+  @include icon-button;
+  color: mat-contrast($app-inverted, 500);
+  position: absolute;
+  top: 0;
+  width: 70px;
+  height: 50px;
+
+  app-icon {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.back {
+  left: 0;
+}
+
+.add-feedback {
+  right: 0;
+}
+
+form {
+  position: absolute;
+  width: 100%;
+  bottom: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+
+  .mat-form-field.text {
+    color: mat-contrast($app-inverted, 500);
+
+    input::placeholder {
+      color: mat-contrast($app-inverted, 100);
+    }
+
+    ::ng-deep .mat-form-field-outline {
+      display: none;
+    }
+
+    ::ng-deep .mat-form-field-flex:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0.25em;
+      bottom: 0;
+      background-color: mat-color($app-inverted);
+      border-radius: 5px;
+    }
+  }
+}
+
+:host-context([dir=rtl]) {
+  .back {
+    left: auto;
+    right: 0;
+  }
+
+  .add-feedback {
+    right: auto;
+    left: 0;
+  }
+}

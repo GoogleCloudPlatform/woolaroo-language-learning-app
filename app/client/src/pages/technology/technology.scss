@@ -1,0 +1,18 @@
+@import 'components';
+
+:host {
+  @include toolbar-page;
+}
+
+.content {
+  padding-top: 63px;
+
+  .intro {
+    margin-bottom: 38px;
+  }
+
+  .instructions {
+    letter-spacing: -0.025rem;
+    line-height: 2.15rem;
+  }
+}
