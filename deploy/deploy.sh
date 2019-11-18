@@ -1,22 +1,54 @@
 #!/usr/bin/env bash
-
-# Prerequisites: jq is installed, firebase sdk is installed
+# Prerequisites: jq, firebase, gcloud, npm are installed
 set -euxo pipefail
 
+if ! [ -x "$(command -v firebase)" ]; then
+  echo 'Error: firebase is not installed.' >&2
+  exit 1
+fi
+
+if ! [ -x "$(command -v jq)" ]; then
+  echo 'Error: jq is not installed.' >&2
+  exit 1
+fi
+
+if ! [ -x "$(command -v gcloud)" ]; then
+  echo 'Error: gcloud is not installed.' >&2
+  exit 1
+fi
+
+if ! [ -x "$(command -v npm)" ]; then
+  echo 'Error: npm is not installed.' >&2
+  exit 1
+fi
+
 CURRENT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-source "${CURRENT_PATH}/../config/values.sh"
+source "${CURRENT_PATH}/./config.sh"
+
+if [ -d "${CURRENT_PATH}/barnard-language-learning-app" ];
+  then rm -Rf ${CURRENT_PATH}/barnard-language-learning-app; fi
 
 gcloud auth login
 
-gcloud projects create ${GCP_LANGUAGE_PROJECT_NAME} --name ${GCP_LANGUAGE_PROJECT_NAME} --set-as-default \
-  --folder ${GCP_FOLDER_ID}
+if [ -z "${GCP_FOLDER_ID}" ]
+then
+  if [ -z "${GCP_ORG_ID}" ]
+  then
+    gcloud projects create ${GCP_LANGUAGE_PROJECT_ID} \
+      --name ${GCP_LANGUAGE_PROJECT_ID} --set-as-default
+  else
+    gcloud projects create ${GCP_LANGUAGE_PROJECT_ID} \
+      --name ${GCP_LANGUAGE_PROJECT_ID} --set-as-default \
+      --organization ${GCP_ORG_ID}
+  fi
+else
+  gcloud projects create ${GCP_LANGUAGE_PROJECT_ID} \
+    --name ${GCP_LANGUAGE_PROJECT_ID} --set-as-default \
+    --folder ${GCP_FOLDER_ID}
+fi
+
+
 PROJECT_ID="$(gcloud config list --format 'value(core.project)')"
-
-gcloud beta billing projects link ${PROJECT_ID} \
-  --billing-account ${GCP_BILLING_ACCOUNT_ID}
-
-gcloud auth application-default login --client-id-file=$CLIENT_ID_FILE \
-  --scopes="https://www.googleapis.com/auth/cloud-platform, https://www.googleapis.com/auth/firebase"
 
 gcloud services enable cloudresourcemanager.googleapis.com
 gcloud services enable cloudbilling.googleapis.com
@@ -30,11 +62,17 @@ gcloud services enable firebasehosting.googleapis.com
 gcloud services enable sheets.googleapis.com
 gcloud services enable vision.googleapis.com
 
+gcloud beta billing projects link ${PROJECT_ID} \
+  --billing-account ${GCP_BILLING_ACCOUNT_ID}
+
+gcloud auth application-default login --client-id-file=$CLIENT_ID_FILE \
+  --scopes="https://www.googleapis.com/auth/cloud-platform, https://www.googleapis.com/auth/firebase"
+
 BEARER_ACCESS_TOKEN="$(gcloud auth application-default print-access-token)"
 
 curl --request POST -H "Authorization: Bearer $BEARER_ACCESS_TOKEN" \
   "https://firebase.googleapis.com/v1beta1/projects/${PROJECT_ID}:addFirebase"
-sleep 15
+sleep 20
 curl --request POST -H "Authorization: Bearer $BEARER_ACCESS_TOKEN" \
   "https://firebase.googleapis.com/v1beta1/projects/${PROJECT_ID}/defaultLocation:finalize" \
   --header "Content-Type: application/json" \
@@ -42,7 +80,8 @@ curl --request POST -H "Authorization: Bearer $BEARER_ACCESS_TOKEN" \
 
 read -p "Visit \
   https://firebase.corp.google.com/u/0/project/${PROJECT_ID}/database/firestore/indexes \
-  to create the database. Then come back here and press enter to continue."
+  to create the database. Choose start in test mode. \
+  Then come back here and press [Enter] to continue ..."
 
 BUCKET_NAME=${PROJECT_ID}.appspot.com
 git clone $GIT_REPOSITORY
@@ -75,8 +114,8 @@ echo $RESPONSE
 sleep 10
 
 read -p "Add Hosting URL to the app visiting \
-  https://firebase.corp.google.com/u/0/project/${PROJECT_ID}/settings/general/web \
-  .Then come back here and press enter to continue"
+  https://firebase.corp.google.com/u/0/project/${PROJECT_ID}/settings/general/web .\
+  Then come back here and press [Enter] to continue..."
 
 RESPONSE=$(curl \
   -X GET -H "Authorization: Bearer $BEARER_ACCESS_TOKEN" \
@@ -93,9 +132,13 @@ echo $CONFIG
 
 cd ${CURRENT_PATH}/barnard-language-learning-app
 
-sed -i "" -e "s/_CONFIG_PLACEHOLDER_/$(echo $CONFIG | \
-  sed -e 's/\\/\\\\/g; s/\//\\\//g; s/&/\\\&/g')/g" ./src/utils/AuthUtils.js
+sed -i "" -e "s/\"_CONFIG_PLACEHOLDER_\"/$(echo $CONFIG | \
+  sed -e 's/\\/\\\\/g; s/\//\\\//g; s/&/\\\&/g')/g" ./src/config.json
 
 npm install
 npm run build
 firebase deploy
+
+read -p "Deploy completed! Please enable sign-in methods in Firebase by \
+  visiting https://firebase.corp.google.com/u/0/project/${PROJECT_ID}/authentication/providers. \
+  Then press [Enter] to end the deploy script..."
