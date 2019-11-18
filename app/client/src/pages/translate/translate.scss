@@ -1,0 +1,72 @@
+@import 'components';
+@import 'theme';
+
+:host {
+  width: 100%;
+  display: block;
+}
+
+.background {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.back {
+  @include icon-button;
+  color: mat-contrast($app-inverted, 500);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 70px;
+  height: 50px;
+
+  app-icon {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+app-translation-selector {
+  position: absolute;
+  bottom: 18%;
+  max-height: 75%;
+}
+
+.submit-feedback {
+  text-shadow: 1px 1px 2px mat-color(map-get($app-theme, shadow), 500);
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: mat-contrast($app-inverted, 500);
+  padding-left: 7px;
+  letter-spacing: 0.09rem;
+
+  app-icon {
+    margin-right: 10px;
+  }
+}
+
+:host-context([dir=rtl]) {
+  .back {
+    left: auto;
+    right: 0;
+  }
+
+  .submit-feedback {
+    padding-left: 20px;
+    padding-right: 7px;
+
+    app-icon {
+      margin-right: 0;
+      margin-left: 10px;
+    }
+  }
+}
