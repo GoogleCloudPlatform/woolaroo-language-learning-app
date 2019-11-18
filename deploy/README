@@ -1,0 +1,14 @@
+1) Configure GCP_BILLING_ACCOUNT_ID in config.sh
+2) Run deploy_admin_project.sh to create the GCP admin projects
+3) Create an OAuth client ID in the admin project and download the secret
+4) In config.sh, configure CLIENT_ID_FILE with the local path to the secret and
+  configure also GCP_LANGUAGE_PROJECT_NAME with the unique GCP project ID.
+  If this is not unique, the script will generate an error.
+  Configure also GCP_ORG_ID and optionally GCP_FOLDER_ID.
+  If GCP_FOLDER_ID, the project will be created under that folder.
+  If GCP_FOLDER_ID is empty and GCP_ORG_ID is not empty, the project will be
+  created under the org node.
+  Otherwise it will not be attached to a parent.
+5) Run deploy.sh to create the GCP language projects
+
+If you want to create another language project, repeat steps 4-5
