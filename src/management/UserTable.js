@@ -20,7 +20,6 @@ class UserTable extends React.Component {
   }
 
   async fetchUsers_() {
-
     this.abortController.abort();
     this.abortController = new AbortController();
     try {
@@ -48,13 +47,11 @@ class UserTable extends React.Component {
 
   toggleSelectAll() {
     let newSelected = {};
-
     if (this.state.selectAll === 0) {
       this.state.data.forEach(x => {
         newSelected[x.uid] = true;
       });
     }
-
     this.setState({
       selected: newSelected,
       selectAll: this.state.selectAll === 0 ? 1 : 0,
@@ -132,14 +129,3 @@ class UserTable extends React.Component {
 }
 
 export default UserTable;
-
-function makeData() {
-  return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21].map(i => {
-    return {
-      uid: i,
-      name: 'Dimsum' + i,
-      email: i + '@dimsum.com',
-      role: 'Admin',
-    }
-  });
-}
