@@ -1,0 +1,48 @@
+@import "~@angular/material/theming";
+
+:host {
+  display: block;
+  padding-top: 45px;
+  box-sizing: border-box;
+}
+
+.brand-logo {
+  display: block;
+  width: 200px;
+  margin: 0 22px 45px 22px;
+}
+
+mat-list {
+  padding-top: 0;
+  margin-bottom: 6px;
+
+  mat-list-item {
+    height: auto;
+    font-size: 1.1rem;
+    font-weight: 500;
+
+    ::ng-deep .mat-list-item-content {
+      padding: 0;
+    }
+
+    a {
+      text-decoration: none;
+      padding: 20px 20px;
+      display: block;
+      width: 100%;
+    }
+  }
+}
+
+button.home-screen {
+  text-transform: none;
+  letter-spacing: 0;
+  width: 100%;
+  text-align: left;
+  padding-left: 24px;
+  border-radius: 0;
+
+  app-icon {
+    margin-right: 30px;
+  }
+}
