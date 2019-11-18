@@ -13,14 +13,15 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import TextField from '@material-ui/core/TextField';
 import 'react-table/react-table.css'
 import './UserTable.css';
+import ApiUtils from '../utils/ApiUtils';
+import AuthUtils from '../utils/AuthUtils';
 
 class UserTable extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { 
-      // TODO: Wire up real data.
-      data: makeData(),
+    this.state = {
+      data: [],
       selected: {},
       selectAll: 0,
       changeRoleDialogIsOpen: false,
@@ -34,7 +35,29 @@ class UserTable extends React.Component {
     this.handleRoleSelected_ = this.handleRoleSelected_.bind(this);
     this.changeRoles_ = this.changeRoles_.bind(this);
 
+    this.abortController = new AbortController();
     this.toggleRow = this.toggleRow.bind(this);
+  }
+
+  async componentDidMount() {
+    await this.fetchUsers_();
+  }
+
+  async fetchUsers_() {
+    this.abortController.abort();
+    this.abortController = new AbortController();
+    try {
+      const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}getUsers`, {
+        headers: {
+          'Authorization': await AuthUtils.getAuthHeader(),
+        },
+        signal: this.abortController.signal,
+      });
+      const data = await resp.json();
+      this.setState({data});
+    } catch(err) {
+      console.error(err);
+    }
   }
 
   toggleRow(uid) {
@@ -48,13 +71,11 @@ class UserTable extends React.Component {
 
   toggleSelectAll() {
     let newSelected = {};
-
     if (this.state.selectAll === 0) {
       this.state.data.forEach(x => {
         newSelected[x.uid] = true;
       });
     }
-
     this.setState({
       selected: newSelected,
       selectAll: this.state.selectAll === 0 ? 1 : 0,
@@ -204,14 +225,3 @@ class UserTable extends React.Component {
 }
 
 export default UserTable;
-
-function makeData() {
-  return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21].map(i => {
-    return {
-      uid: i,
-      name: 'Dimsum' + i,
-      email: i + '@dimsum.com',
-      role: 'Admin',
-    }
-  });
-}
