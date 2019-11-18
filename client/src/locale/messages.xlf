@@ -9,7 +9,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit><trans-unit id="introAbout" datatype="html">
-        <source>Powered by Google Machine Learning Project Barnard
+        <source>Powered by Google Machine Learning Project Woolaroo
   provides a new and interactive way to access indigenous languages.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/pages/intro/about/about.html</context>
@@ -55,7 +55,7 @@
           <context context-type="linenumber">9</context>
         </context-group>
       </trans-unit><trans-unit id="introTermsAndPrivacy" datatype="html">
-        <source>By using the Project Barnard you are accepting the
+        <source>By using the Project Woolaroo you are accepting the
   <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Terms and Conditions<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> and <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Privacy Policy<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/pages/intro/terms/terms.html</context>
@@ -214,7 +214,7 @@
           <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit><trans-unit id="aboutContent1" datatype="html">
-        <source>Introducing Barnard, an open source Google Project
+        <source>Introducing Woolaroo, an open source Google Project
     that uses the camera in your phone to instantly translate objects into indigenous languages.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/pages/about/about.html</context>
