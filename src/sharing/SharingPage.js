@@ -23,7 +23,7 @@ function SharingPage() {
     <div>
       <h2>Share with friends</h2>
 
-      <div>
+      {/* <div>
         <TextField
           id="share-emails"
           label="Invite people to contribute"
@@ -36,9 +36,9 @@ function SharingPage() {
             shrink: true
           }}
         />
-      </div>
+      </div> */}
 
-      <div>
+      {/* <div>
         <TextField
           id="optional-message"
           multiline="multiline"
@@ -53,9 +53,9 @@ function SharingPage() {
           Send Invite
         </Button>
         </div>
-      </div>
+      </div> */}
 
-      <div className={classes.newSection}>
+      <div>
         <TextField
           id="app-link"
           label="App URL"

@@ -1,0 +1,30 @@
+@import '~@angular/material/theming';
+@import 'theme';
+
+:host {
+  display: block;
+  text-align: center;
+}
+
+ul {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+}
+
+li {
+  flex: 0 0 auto;
+  padding: 0;
+  margin: 0 10px;
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  background-color: mat-color($app-nav, 100);
+
+  &.selected {
+    background-color: mat-color($app-nav);
+  }
+}
