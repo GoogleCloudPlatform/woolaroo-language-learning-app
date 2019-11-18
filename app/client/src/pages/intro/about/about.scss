@@ -1,0 +1,33 @@
+@import 'components';
+@import 'dimensions';
+
+:host {
+  @include centered-page;
+
+  &:before {
+    flex-basis: 270px;
+  }
+
+  &:after {
+    flex-basis: 30px;
+  }
+
+  p {
+    text-align: center;
+    margin: 0 45px 67px 45px;
+  }
+
+  app-pagination-indicator {
+    margin-bottom: 47px;
+  }
+
+  button {
+    &.next {
+      margin-bottom: 27px;
+    }
+
+    &.skip {
+      font-size: 1.4rem;
+    }
+  }
+}
