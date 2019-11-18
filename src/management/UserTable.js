@@ -82,6 +82,38 @@ class UserTable extends React.Component {
     this.closeDialog_();
   }
 
+  renderChangeRoleDialog_() {
+    return (
+      <Dialog open={this.state.changeRoleDialogIsOpen} aria-labelledby='form-dialog-title'>
+        <DialogTitle id='form-dialog-title' className='role-dialog-title'>Change roles</DialogTitle>
+        <DialogContent>
+          <FormControl component='fieldset'>
+            <RadioGroup aria-label='role' value={this.state.newRole} onChange={this.handleRoleSelected_}>
+              <FormControlLabel value='Moderator' control={<Radio />} label='Moderator' />
+              <FormHelperText className='role-text'>Can review user contributions</FormHelperText>
+              <FormControlLabel value='Admin' control={<Radio />} label='Admin' />
+              <FormHelperText className='role-text'>
+                Can review user contributions and manage app and user settings
+              </FormHelperText>
+              <FormControlLabel value='None' control={<Radio />} label='None' />
+              <FormHelperText className='role-text'>
+                Remove roles for the user. Can no longer review user contributions or manage settings
+              </FormHelperText>                
+            </RadioGroup>
+          </FormControl>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.closeDialog_} color='primary'>
+            Cancel
+          </Button>
+          <Button onClick={() => this.changeRoles_()} color='primary'>
+            Change
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  }
+
   render() {
     const columns = [
       {
@@ -157,34 +189,7 @@ class UserTable extends React.Component {
           defaultSorted={[{ id: 'name', desc: false }]}
           className='user-table'
         />
-        {/* Dialog to change user roles. */}
-        <Dialog open={this.state.changeRoleDialogIsOpen} aria-labelledby='form-dialog-title'>
-          <DialogTitle id='form-dialog-title' className='role-dialog-title'>Change roles</DialogTitle>
-          <DialogContent>
-            <FormControl component='fieldset'>
-              <RadioGroup aria-label='role' value={this.state.newRole} onChange={this.handleRoleSelected_}>
-                <FormControlLabel value='Moderator' control={<Radio />} label='Moderator' />
-                <FormHelperText className='role-text'>Can review user contributions</FormHelperText>
-                <FormControlLabel value='Admin' control={<Radio />} label='Admin' />
-                <FormHelperText className='role-text'>
-                  Can review user contributions and manage app and user settings
-                </FormHelperText>
-                <FormControlLabel value='None' control={<Radio />} label='None' />
-                <FormHelperText className='role-text'>
-                  Remove roles for the user. Can no longer review user contributions or manage settings
-                </FormHelperText>                
-              </RadioGroup>
-            </FormControl>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.closeDialog_} color='primary'>
-              Cancel
-            </Button>
-            <Button onClick={() => this.changeRoles_()} color='primary'>
-              Change
-            </Button>
-          </DialogActions>
-        </Dialog>        
+        {this.renderChangeRoleDialog_()}
       </div>
     );
   }

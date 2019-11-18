@@ -12,10 +12,11 @@
 
 .user-table-header {
   display: flex;
+  font-weight: 500;
   flex-direction: row;
 }
 
 .user-table-header-spacer {
-  width: 48px;
+  width: 60px;
   flex-shrink: 2;
 }
