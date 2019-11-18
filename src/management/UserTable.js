@@ -2,15 +2,39 @@ import React from 'react';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css'
 import './UserTable.css';
+import ApiUtils from '../utils/ApiUtils';
+import AuthUtils from '../utils/AuthUtils';
 
 class UserTable extends React.Component {
   constructor(props) {
     super(props);
 
-    // TODO: Wire up real data.
-    this.state = { selected: {}, selectAll: 0, data: makeData() };
+    this.state = { selected: {}, selectAll: 0, data: [] };
 
+    this.abortController = new AbortController();
     this.toggleRow = this.toggleRow.bind(this);
+  }
+
+  async componentDidMount() {
+    await this.fetchUsers_();
+  }
+
+  async fetchUsers_() {
+
+    this.abortController.abort();
+    this.abortController = new AbortController();
+    try {
+      const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}getUsers`, {
+        headers: {
+          'Authorization': await AuthUtils.getAuthHeader(),
+        },
+        signal: this.abortController.signal,
+      });
+      const data = await resp.json();
+      this.setState({data});
+    } catch(err) {
+      console.error(err);
+    }
   }
 
   toggleRow(uid) {

@@ -532,6 +532,8 @@ exports.getUsers = functions.https.onRequest(async (req, res) => {
             role,
           };
       });
+      res.status(200).send(translations);
+      return "200"
     } catch(err) {
       res.status(500).send(err);
       console.log("Error", err);
