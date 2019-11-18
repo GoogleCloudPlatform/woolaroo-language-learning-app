@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="dir" datatype="html">
+        <target>ltr</target>
+      </trans-unit>
+      <trans-unit id="introAbout" datatype="html">
+        <target>Powered by Google Machine Learning Project Woolaroo
+  provides a new and interactive way to access indigenous languages.</target>
+        </trans-unit>
+      <trans-unit id="next" datatype="html">
+        <target>Next</target>
+      </trans-unit>
+      <trans-unit id="skip" datatype="html">
+        <target>Skip</target>
+      </trans-unit>
+      <trans-unit id="introFeedback" datatype="html">
+        <target>It may not get it right every time, so please help improve it by providing feedback and corrections.</target>
+      </trans-unit>
+      <trans-unit id="startExploring" datatype="html">
+        <target>Start exploring</target>
+      </trans-unit>
+      <trans-unit id="termsAndPrivacyTitle" datatype="html">
+        <target>Terms &amp; Privacy</target>
+      </trans-unit>
+      <trans-unit id="introTermsAndPrivacy" datatype="html">
+        <target>By using the Project Woolaroo you are accepting the
+  <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Terms and Conditions<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> and <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Privacy Policy<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.</target>
+      </trans-unit>
+      <trans-unit id="accept" datatype="html">
+        <target>Accept</target>
+      </trans-unit>
+      <trans-unit id="photoSource" datatype="html">
+        <target>You can use a photo from your phone or take a photo of something around you</target>
+      </trans-unit>
+      <trans-unit id="pickPhoto" datatype="html">
+        <target>Pick Photo</target>
+      </trans-unit>
+      <trans-unit id="takePhoto" datatype="html">
+        <target>Take Photo</target>
+      </trans-unit>
+      <trans-unit id="errorTitle" datatype="html">
+        <target>Error</target>
+      </trans-unit>
+      <trans-unit id="close" datatype="html">
+        <target>Close</target>
+      </trans-unit>
+      <trans-unit id="imageCaptionLabel" datatype="html">
+        <target>What&apos;s this?</target>
+      </trans-unit>
+      <trans-unit id="imageCaptionRequired" datatype="html">
+        <target>Image caption is required</target>
+      </trans-unit>
+      <trans-unit id="translationFeedback" datatype="html">
+        <target>Translation Feedback</target>
+      </trans-unit>
+      <trans-unit id="feedbackTitle" datatype="html">
+        <target>Feedback</target>
+      </trans-unit>
+      <trans-unit id="submit" datatype="html">
+        <target>Submit</target>
+      </trans-unit>
+      <trans-unit id="feedbackInstructions" datatype="html">
+        <target>Help us improve Project Woolaroo&apos;s translations by sharing your feedback with us</target>
+      </trans-unit>
+      <trans-unit id="incorrectTranslation" datatype="html">
+        <target>Incorrect translation</target>
+      </trans-unit>
+      <trans-unit id="offensiveTranslation" datatype="html">
+        <target>Offensive translation</target>
+      </trans-unit>
+      <trans-unit id="alternateTranslation" datatype="html">
+        <target>Alternate translation</target>
+      </trans-unit>
+      <trans-unit id="other" datatype="html">
+        <target>Other</target>
+      </trans-unit>
+      <trans-unit id="feedbackTypeRequired" datatype="html">
+        <target>No feedback type selected</target>
+      </trans-unit>
+      <trans-unit id="enterFeedback" datatype="html">
+        <target>Enter feedback</target>
+      </trans-unit>
+      <trans-unit id="feedbackRequired" datatype="html">
+        <target>Feedback required</target>
+      </trans-unit>
+      <trans-unit id="addWord" datatype="html">
+        <target>Add word</target>
+      </trans-unit>
+      <trans-unit id="add" datatype="html">
+        <target>Add</target>
+      </trans-unit>
+      <trans-unit id="addWordInstructions" datatype="html">
+        <target>Contribute to the app by adding new words in <x id="INTERPOLATION" equiv-text="{{endangeredLanguage}}"/> and their translations</target>
+      </trans-unit>
+      <trans-unit id="wordInNativeScript" datatype="html">
+        <target>Word in native script</target>
+      </trans-unit>
+      <trans-unit id="nativeWordRequired" datatype="html">
+        <target>Word in native script is required</target>
+      </trans-unit>
+      <trans-unit id="nativeScriptHint" datatype="html">
+        <target>e.g. هتاف للترحيب</target>
+      </trans-unit>
+      <trans-unit id="wordInEnglish" datatype="html">
+        <target>Word in English</target>
+      </trans-unit>
+      <trans-unit id="englishWordRequired" datatype="html">
+        <target>English word is required</target>
+      </trans-unit>
+      <trans-unit id="englishWordHint" datatype="html">
+        <target>e.g. &apos;hello&apos;</target>
+      </trans-unit>
+      <trans-unit id="transliteration" datatype="html">
+        <target>Transliteration (optional)</target>
+      </trans-unit>
+      <trans-unit id="transliterationHint" datatype="html">
+        <target>Word in Latin alphabet (e.g. &apos;marhaba&apos;)</target>
+      </trans-unit>
+      <trans-unit id="recordPronunciation" datatype="html">
+        <target>Record pronunciation</target>
+      </trans-unit>
+      <trans-unit id="saved" datatype="html">
+        <target>Saved</target>
+      </trans-unit>
+      <trans-unit id="specialCharsInstructions" datatype="html">
+        <target>Want to type special characters? Try <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>GBoard<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> or <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>Keyman<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></target>
+      </trans-unit>
+      <trans-unit id="aboutTitle" datatype="html">
+        <target>About the app</target>
+      </trans-unit>
+      <trans-unit id="aboutContent1" datatype="html">
+        <target>Introducing Woolaroo, an open source Google Project that uses the camera in your phone to instantly translate objects into indigenous languages.</target>
+      </trans-unit>
+      <trans-unit id="aboutContent2" datatype="html">
+        <target>It&apos;s really easy to use — just take a photo of  an everyday object
+              (or upload your own) and see it translated into <x id="INTERPOLATION" equiv-text="{{endangeredLanguage}}"/> in real time. You can save the translated
+              image, share it or have another go.</target>
+      </trans-unit>
+      <trans-unit id="technologyTitle" datatype="html">
+        <target>The technology</target>
+      </trans-unit>
+      <trans-unit id="technologyContent1" datatype="html">
+        <target>Built with Google Translate and Cloud Vision technology,
+                Project Woolaroo uses advanced Machine Learning to understand the objects in your photos and translate them,
+                in real time.</target>
+      </trans-unit>
+      <trans-unit id="technologyContent2" datatype="html">
+        <target>It serves up the most likely indigenous translation based on
+                the key object in an image. If multiple objects are detected, you can scroll through and select the correct
+                translation.</target>
+      </trans-unit>
+      <trans-unit id="technologyContent3" datatype="html">
+        <target>Project Woolaroo relies on the latest AI technology so it may
+                not get it right every time, but we&apos;re working hard to improve it. You can help us by using the Translation
+                Feedback feature to log any translations that don&apos;t seem right.</target>
+      </trans-unit>
+      <trans-unit id="logo" datatype="html">
+        <target>Woolaroo</target>
+      </trans-unit>
+      <trans-unit id="addToHomeScreen" datatype="html">
+        <target>Add to home screen</target>
+      </trans-unit>
+      <trans-unit id="enterSomethingElse" datatype="html">
+        <target>Enter something else</target>
+      </trans-unit>
+      <trans-unit id="wordSubmitted" datatype="html">
+        <target>Submitted for review</target>
+      </trans-unit>
+      <trans-unit id="addWordError" datatype="html">
+        <target>Unable to add word</target>
+      </trans-unit>
+      <trans-unit id="startCameraError" datatype="html">
+        <target>Unable to start camera</target>
+      </trans-unit>
+      <trans-unit id="captureImageError" datatype="html">
+        <target>Unable to capture image</target>
+      </trans-unit>
+      <trans-unit id="feedbackSubmitted" datatype="html">
+        <target>Feedback submitted</target>
+      </trans-unit>
+      <trans-unit id="submitFeedbackError" datatype="html">
+        <target>Unable to save feedback</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
