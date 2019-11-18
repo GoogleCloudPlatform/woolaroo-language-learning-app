@@ -28,7 +28,6 @@ class UserTable extends React.Component {
       newRole: 'None',
     };
 
-    // Invite dialog button actions.
     // TODO: Refactor shared code between invite & change role dialogs.
     this.openDialog_ = this.openDialog_.bind(this);
     this.closeDialog_ = this.closeDialog_.bind(this);
@@ -101,11 +100,11 @@ class UserTable extends React.Component {
     if (this.state.newRole === 'None') {
       // Revoke the current role for all selected users.
       selectedUsers.forEach(
-        user => this.props.updateRole(user.email, user.role, true /* revoke*/));
+        user => this.props.updateRole(user.email, user.role, true /* revoke */));
     } else {
       // Grant newRole to all selected users.
       selectedUsers.forEach(
-        user => this.props.updateRole(user.email, this.state.newRole, false /* revoke*/));
+        user => this.props.updateRole(user.email, this.state.newRole, false /* revoke */));
     }
 
     this.closeDialog_();
