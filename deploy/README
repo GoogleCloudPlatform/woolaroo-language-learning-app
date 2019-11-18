@@ -9,6 +9,7 @@
   If GCP_FOLDER_ID is empty and GCP_ORG_ID is not empty, the project will be
   created under the org node.
   Otherwise it will not be attached to a parent.
-5) Run deploy.sh to create the GCP language projects
+5) Run ./create_project.sh to create the GCP language projects or
+  ./update_project.sh to update it.
 
-If you want to create another language project, repeat steps 4-5
+If you want to create another language project, repeat steps 4-5.
