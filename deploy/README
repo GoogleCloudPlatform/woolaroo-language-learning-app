@@ -1,8 +1,14 @@
 1) Configure GCP_BILLING_ACCOUNT_ID in config.sh
 2) Run deploy_admin_project.sh to create the GCP admin projects
-3) Create an OAuth client ID in the admin project and download the secret
+3) Create an OAuth client ID (Web Client) in the admin project.
+  Add {GCP_LANGUAGE_PROJECT_ID}.firebaseapp.com as Authorised domain.
+  Add https://{GCP_LANGUAGE_PROJECT_ID}.firebaseapp.com as Authorised JavaScript
+  origin.
+  Add https://{GCP_LANGUAGE_PROJECT_ID}.firebaseapp.com/__/auth/handler as
+  Authorised redirect URIs.
+  Download the secret.
 4) In config.sh, configure CLIENT_ID_FILE with the local path to the secret and
-  configure also GCP_LANGUAGE_PROJECT_NAME with the unique GCP project ID.
+  configure also GCP_LANGUAGE_PROJECT_ID with the unique GCP project ID.
   If this is not unique, the script will generate an error.
   Configure also GCP_ORG_ID and optionally GCP_FOLDER_ID.
   If GCP_FOLDER_ID, the project will be created under that folder.
