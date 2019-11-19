@@ -8,8 +8,8 @@
 }
 
 .MuiListItem-root.nav-menu-item.Mui-selected {
-  background-color: #fbe5c7;
-  color: #de6838;
+  background-color: #D5EEE2;
+  color: #2CAB6F;
   font-weight: 500;
 }
 
@@ -18,5 +18,5 @@
 }
 
 .MuiListItem-button.nav-menu-item:hover {
-  background-color: #fdf0de;
+  background-color: #D5EEE2;
 }
