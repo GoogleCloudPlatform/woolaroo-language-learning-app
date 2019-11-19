@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import  { Breakpoint, BreakpointProvider } from 'react-socks';
 import './App.css';
 import AddWordsPage from './addWords/AddWordsPage';
 import { TranslationsPageWithRouter } from './translations/TranslationsPage';
@@ -9,6 +10,7 @@ import AuthUtils from './utils/AuthUtils';
 import SharingPage from './sharing/SharingPage';
 import ManagementPage from './management/ManagementPage';
 import Header from './header/Header';
+import NavMenu from './navmenu/NavMenu';
 
 const ROUTES = {
   ADD_WORDS: '/add-words',
@@ -93,6 +95,10 @@ class App extends React.Component {
 
     return (
       <div className="body-container">
+        {/* Only renders the permanent side menu in desktop widths. */}
+        <Breakpoint large up>
+          {!!this.state.email ? <NavMenu /> : null}
+        </Breakpoint>     
         <div className="body-margin" />
         <div className="page-container">
           <Route path={ROUTES.ADD_WORDS} component={AddWordsPage} />
@@ -110,14 +116,16 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <div className="app-container">
-          <Header
-            signedIn={!!this.state.email}
-            hideAuthButton={this.state.authInitializing}
-            authAction={() => this.authAction_()}
-          />
-          {this.renderBody()}
-        </div>
+        <BreakpointProvider>
+          <div className="app-container">
+            <Header
+              signedIn={!!this.state.email}
+              authInitializing={this.state.authInitializing}
+              authAction={() => this.authAction_()}
+            />
+            {this.renderBody()}
+          </div>
+        </BreakpointProvider>
       </Router>
     );
   }

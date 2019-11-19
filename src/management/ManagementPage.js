@@ -105,7 +105,7 @@ class ManagementPage extends React.Component {
               className='email-text-field'
             />
             <br/>
-            <br/>            
+            <br/>
             <FormControl component='fieldset'>
               <FormLabel component='legend'>Assign role</FormLabel>
               <RadioGroup aria-label='role' value={this.state.inviteRole} onChange={this.handleRoleSelected_}>
@@ -128,6 +128,16 @@ class ManagementPage extends React.Component {
           </DialogActions>
         </Dialog>
         <UserTable />
+        <div>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => this.grantAccess_('Moderator')}
+            className="access-button"
+          >
+            Grant Moderator Access
+          </Button>
+        </div>
       </div>
     );
   }
