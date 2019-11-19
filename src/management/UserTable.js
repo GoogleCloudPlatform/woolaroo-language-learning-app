@@ -22,6 +22,7 @@ class UserTable extends React.Component {
 
     this.state = {
       data: [],
+      loading: true,
       selected: {},
       selectAll: 0,
       changeRoleDialogIsOpen: false,
@@ -53,7 +54,7 @@ class UserTable extends React.Component {
         signal: this.abortController.signal,
       });
       const data = await resp.json();
-      this.setState({data});
+      this.setState({data, loading: false});
     } catch(err) {
       console.error(err);
     }
@@ -215,6 +216,7 @@ class UserTable extends React.Component {
           data={this.state.data}
           columns={columns}
           defaultSorted={[{ id: 'name', desc: false }]}
+          loading={this.state.loading}
           className='user-table'
         />
         {this.renderChangeRoleDialog_()}
