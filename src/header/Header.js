@@ -106,7 +106,7 @@ class Header extends React.Component {
           </Breakpoint>
           <Toolbar>
             <h1 className={`header-title ${this.props.signedIn && 'signed-in'}`}>
-              Barnard
+              Woolaroo
             </h1>
             <div
               className={`header-search ${!this.props.signedIn && 'hidden'}`}>
