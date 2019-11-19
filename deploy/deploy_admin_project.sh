@@ -22,5 +22,6 @@ gcloud services enable credentials.googleapis.com
 gcloud services enable firestore.googleapis.com
 gcloud services enable appengine.googleapis.com
 gcloud services enable firebasehosting.googleapis.com
+gcloud services enable identitytoolkit.googleapis.com 
 
 # create client ID manually, download it and save the path in CLIENT_ID_FILE

@@ -41,9 +41,9 @@ class NavMenu extends React.Component {
         {this.renderMenuItem("Add Words", ROUTES.ADD_WORDS)}
         {this.renderMenuItem(TRANSLATIONS_LABEL, ROUTES.TRANSLATIONS)}
         {this.renderMenuItem("User Contributions", ROUTES.CONTRIBUTIONS)}
-        {this.renderMenuItem("Theme Customization", ROUTES.THEME)}
         {this.renderMenuItem("Sharing Links", ROUTES.SHARING)}
         {this.renderMenuItem("User Management", ROUTES.MANAGEMENT)}
+        {this.renderMenuItem("Settings", ROUTES.THEME)}
       </MenuList>
     );
   }
