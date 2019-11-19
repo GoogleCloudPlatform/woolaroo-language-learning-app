@@ -1,3 +1,7 @@
 .ReactTable.user-table .rt-tr {
   text-align: left;
 }
+
+.user-table .-loading-inner {
+  font-weight: 500;
+}
