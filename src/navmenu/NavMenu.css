@@ -5,20 +5,18 @@
   padding-left: 60px;
   padding-right: 48px;
   font-weight: 400;
-  border-top-right-radius: 24px;
-  border-bottom-right-radius: 24px;  
 }
 
 .MuiListItem-root.nav-menu-item.Mui-selected {
-  background-color: #e9f1fe;
-  color: #1967d2;
+  background-color: #fbe5c7;
+  color: #de6838;
   font-weight: 500;
 }
 
 .MuiListItem-root.nav-menu-item.Mui-selected:hover {
-  background-color: #abc7f2;
+  background-color: #fbe5c7;
 }
 
 .MuiListItem-button.nav-menu-item:hover {
-  background-color: #e9f1fe;
+  background-color: #fdf0de;
 }
