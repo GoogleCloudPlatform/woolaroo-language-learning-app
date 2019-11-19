@@ -45,6 +45,7 @@ gcloud services enable appengine.googleapis.com
 gcloud services enable firebasehosting.googleapis.com
 gcloud services enable sheets.googleapis.com
 gcloud services enable vision.googleapis.com
+gcloud services enable identitytoolkit.googleapis.com
 
 gcloud beta billing projects link ${PROJECT_ID} \
   --billing-account ${GCP_BILLING_ACCOUNT_ID}
@@ -104,3 +105,16 @@ sed -i "" -e "s/\"_CONFIG_PLACEHOLDER_\"/$(echo $CONFIG | \
 npm install
 npm run build
 firebase deploy
+
+CLIENT_ID="$(cat $CLIENT_ID_FILE | jq '.installed .client_id' | sed 's/\"//g')"
+CLIENT_SECRET="$(cat $CLIENT_ID_FILE | jq '.installed .client_secret' | sed 's/\"//g')"
+
+RESPONSE=$(curl \
+  -X PATCH -H "Authorization: Bearer $BEARER_ACCESS_TOKEN" \
+  https://identitytoolkit.googleapis.com/v2/projects/${PROJECT_ID}/defaultSupportedIdpConfigs/google.com \
+  --header "Content-Type: application/json" \
+  --data '{"name": "'projects/${PROJECT_ID}/defaultSupportedIdpConfigs/google.com'" ,
+          "enabled": true ,
+          "clientId": "'${CLIENT_ID}'" ,
+          "clientSecret": "'${CLIENT_SECRET}'"
+          }')
