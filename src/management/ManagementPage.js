@@ -119,7 +119,7 @@ class ManagementPage extends React.Component {
             <Button onClick={this.closeDialog_} color='primary'>
               Cancel
             </Button>
-            <Button onClick={() => this.grantAccess_()} color='primary'>
+            <Button onClick={() => this.updateRole_(this.state.email, this.state.inviteRole)} color='primary'>
               Invite
             </Button>
           </DialogActions>
