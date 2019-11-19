@@ -82,8 +82,8 @@ class Header extends React.Component {
 
     return (
       <Button
-        variant='contained'
-        color='primary'
+        variant="contained"
+        color="secondary"
         onClick={this.props.authAction}
         className='auth-button'
         key={1}
