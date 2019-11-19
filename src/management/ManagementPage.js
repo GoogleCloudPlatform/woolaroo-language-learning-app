@@ -78,6 +78,24 @@ class ManagementPage extends React.Component {
     this.closeDialog_();
   }
 
+  renderModeratorAccessButton_() {
+    // button not working correctly, hiding for now.
+    return null;
+
+    // return (
+    //   <div>
+    //     <Button
+    //       variant="contained"
+    //       color="primary"
+    //       onClick={() => this.grantAccess_('Moderator')}
+    //       className="access-button"
+    //     >
+    //       Grant Moderator Access
+    //     </Button>
+    //   </div>
+    // );
+  }
+
   render() {
     return (
       <div>
@@ -128,16 +146,8 @@ class ManagementPage extends React.Component {
           </DialogActions>
         </Dialog>
         <UserTable />
-        <div>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => this.grantAccess_('Moderator')}
-            className="access-button"
-          >
-            Grant Moderator Access
-          </Button>
-        </div>
+        <br/>
+        {this.renderModeratorAccessButton_()}
       </div>
     );
   }
