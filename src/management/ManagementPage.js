@@ -14,6 +14,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import TextField from '@material-ui/core/TextField';
 import ApiUtils from '../utils/ApiUtils';
 import AuthUtils from '../utils/AuthUtils';
+import UserTable from './UserTable';
 import './ManagementPage.css';
 
 class ManagementPage extends React.Component {
@@ -126,6 +127,7 @@ class ManagementPage extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
+        <UserTable />
       </div>
     );
   }
