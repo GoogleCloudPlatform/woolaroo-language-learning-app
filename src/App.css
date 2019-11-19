@@ -1,3 +1,7 @@
+body {
+  font-family: "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
 .body-container {
   display: flex;
   flex-direction: row;
@@ -20,4 +24,12 @@
 
 .landing-page-img {
   width: 100%;
+}
+
+.MuiButton-containedPrimary:enabled, .MuiChip-colorPrimary {
+  background-color: #61b985 !important;
+}
+
+.MuiButton-containedSecondary:enabled, .MuiChip-colorSecondary {
+  background-color: #eda14f !important;
 }
