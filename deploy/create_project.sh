@@ -139,6 +139,18 @@ npm install
 npm run build
 firebase deploy
 
-read -p "Deploy completed! Please enable sign-in methods in Firebase by \
-  visiting https://firebase.corp.google.com/u/0/project/${PROJECT_ID}/authentication/providers. \
-  Then press [Enter] to end the deploy script..."
+CLIENT_ID="$(cat $CLIENT_ID_FILE | jq '.installed .client_id')"
+CLIENT_SECRET="$(cat $CLIENT_ID_FILE | jq '.installed .client_secret')"
+
+CLIENT_ID="$(cat $CLIENT_ID_FILE | jq '.installed .client_id' | sed 's/\"//g')"
+CLIENT_SECRET="$(cat $CLIENT_ID_FILE | jq '.installed .client_secret' | sed 's/\"//g')"
+
+RESPONSE=$(curl \
+  -X PATCH -H "Authorization: Bearer $BEARER_ACCESS_TOKEN" \
+  https://identitytoolkit.googleapis.com/v2/projects/${PROJECT_ID}/defaultSupportedIdpConfigs/google.com \
+  --header "Content-Type: application/json" \
+  --data '{"name": "'projects/${PROJECT_ID}/defaultSupportedIdpConfigs/google.com'" ,
+          "enabled": true ,
+          "clientId": "'${CLIENT_ID}'" ,
+          "clientSecret": "'${CLIENT_SECRET}'"
+          }')
