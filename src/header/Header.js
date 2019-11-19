@@ -82,8 +82,8 @@ class Header extends React.Component {
 
     return (
       <Button
-        variant='contained'
-        color='primary'
+        variant="contained"
+        color="secondary"
         onClick={this.props.authAction}
         className='auth-button'
         key={1}
@@ -106,7 +106,7 @@ class Header extends React.Component {
           </Breakpoint>
           <Toolbar>
             <h1 className={`header-title ${this.props.signedIn && 'signed-in'}`}>
-              Barnard
+              Woolaroo
             </h1>
             <div
               className={`header-search ${!this.props.signedIn && 'hidden'}`}>
