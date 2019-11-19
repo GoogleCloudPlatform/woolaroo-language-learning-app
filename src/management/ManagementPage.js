@@ -53,15 +53,12 @@ class ManagementPage extends React.Component {
     this.setState({email: e.target.value});
   }
 
-  async grantAccess_(revoke = false) {
+  async updateRole_(email, role, revoke = false) {
     // TODO: Parse & validate emails.
     try {
-      const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}grant${this.state.inviteRole}Role`, {
+      const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}grant${role}Role`, {
         method: 'POST',
-        body: JSON.stringify({
-          email: this.state.email,
-          revoke,
-        }),
+        body: JSON.stringify({email, revoke}),
         headers: {
           'Authorization': await AuthUtils.getAuthHeader(),
           'Content-Type': 'application/json',
@@ -122,12 +119,12 @@ class ManagementPage extends React.Component {
             <Button onClick={this.closeDialog_} color='primary'>
               Cancel
             </Button>
-            <Button onClick={() => this.grantAccess_()} color='primary'>
+            <Button onClick={() => this.updateRole_(this.state.email, this.state.inviteRole)} color='primary'>
               Invite
             </Button>
           </DialogActions>
         </Dialog>
-        <UserTable />
+        <UserTable updateRole={(email, role, revoke) => this.updateRole_(email, role, revoke)} />
       </div>
     );
   }

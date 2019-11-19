@@ -415,6 +415,9 @@ exports.grantModeratorRole = functions.https.onRequest((req, res) => {
           res.status(200).send(JSON.stringify("Already a moderator."));
           return;
         }
+        // Clears any existing role before granting moderator role. A user can
+        // have at most one role at a time.
+        admin.auth().setCustomUserClaims(user.uid, {});
       }
 
       admin.auth().setCustomUserClaims(user.uid, {
@@ -494,6 +497,9 @@ exports.grantAdminRole = functions.https.onRequest((req, res) => {
           res.status(200).send(JSON.stringify("Already an admin."));
           return;
         }
+        // Clears any existing role before granting admin role. A user can
+        // have at most one role at a time.
+        admin.auth().setCustomUserClaims(user.uid, {});    
       }
 
       admin.auth().setCustomUserClaims(user.uid, {
@@ -559,6 +565,7 @@ async function setFirstUserAsAdmin() {
       listUsersResult.users.forEach((user) => {
         admin.auth().setCustomUserClaims(user.uid, {
           admin: true,
+          moderator: false,
         });
       });
     }

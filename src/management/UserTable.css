@@ -2,6 +2,25 @@
   text-align: left;
 }
 
+.role-text.MuiFormHelperText-root {
+  margin: -8px 0 8px 32px;
+}
+
+.role-dialog-title.MuiDialogTitle-root {
+  padding-bottom: 0;
+}
+
+.user-table-header {
+  display: flex;
+  font-weight: 500;
+  flex-direction: row;
+}
+
+.user-table-header-spacer {
+  width: 60px;
+  flex-shrink: 2;
+}
+
 .user-table .-loading-inner {
   font-weight: 500;
 }
