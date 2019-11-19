@@ -180,7 +180,7 @@ function ThemePage() {
         type="file"
         />
         <label htmlFor="contained-button-file">
-          <Button variant="contained" component="span" className={classes.lastSection}>
+          <Button variant="contained" component="span" color="primary" className={classes.lastSection}>
             Upload new
           </Button>
         </label>

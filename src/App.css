@@ -26,10 +26,10 @@ body {
   width: 100%;
 }
 
-.MuiButton-containedPrimary:enabled, .MuiChip-colorPrimary {
+.MuiButton-containedPrimary:enabled, .MuiChip-colorPrimary, span.MuiButton-containedPrimary {
   background-color: #61b985 !important;
 }
 
-.MuiButton-containedSecondary:enabled, .MuiChip-colorSecondary {
+.MuiButton-containedSecondary:enabled, .MuiChip-colorSecondary, span.MuiButton-containedSecondary {
   background-color: #eda14f !important;
 }
