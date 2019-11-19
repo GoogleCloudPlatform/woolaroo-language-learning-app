@@ -8,6 +8,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -46,6 +47,12 @@ const useStyles = makeStyles(theme => ({
   },
   newSection: {
     marginTop: theme.spacing(12)
+  },
+  input: {
+    display: 'none',
+  },
+  lastSection: {
+    marginBottom: theme.spacing(12)
   },
 }));
 
@@ -165,7 +172,18 @@ function ThemePage() {
             title="App logo"
           />
         </Card>
-        Upload new logo: <input type="file" name="myFile" />
+        <input
+        accept="image/*"
+        className={classes.input}
+        id="contained-button-file"
+        multiple
+        type="file"
+        />
+        <label htmlFor="contained-button-file">
+          <Button variant="contained" component="span" className={classes.lastSection}>
+            Upload new
+          </Button>
+        </label>
       </div>
     </div>
   );
