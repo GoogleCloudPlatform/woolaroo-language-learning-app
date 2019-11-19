@@ -75,6 +75,14 @@ function ThemePage() {
           className={classes.textField}
           margin="normal"
         />
+        <br/>
+        <TextField
+          id="organization-website"
+          label="Organization website"
+          defaultValue=""
+          className={classes.textField}
+          margin="normal"
+        />
       </div>
       <div className={classes.newSection}>
         <h2> Language information </h2>
@@ -136,12 +144,24 @@ function ThemePage() {
             </Select>
           </FormControl>
         </form>
+        <TextField
+          id="optional-message"
+          multiline="multiline"
+          rows="6"
+          placeholder="Terms and Conditions (optional)"
+          className={classes.textField}
+          margin="normal"
+        />
+        <FormHelperText>
+          Your own terms and conditions for people using your app
+        </FormHelperText>
+
         <h3> Logo </h3>
         <Card className={classes.card}>
           <CardMedia
             className={classes.media}
             image="https://storage.googleapis.com/barnard-public-assets/Barnard%20lock%20up%202.1.png"
-            title="Paella dish"
+            title="App logo"
           />
         </Card>
         Upload new logo: <input type="file" name="myFile" />
