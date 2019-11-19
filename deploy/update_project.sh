@@ -118,3 +118,9 @@ RESPONSE=$(curl \
           "clientId": "'${CLIENT_ID}'" ,
           "clientSecret": "'${CLIENT_SECRET}'"
           }')
+
+if ! [ -z "${TRANSLATION_SPREADSHEET_ID}" ]
+  then
+    python ./functions/trix2firestore.py \
+    $TRANSLATION_SPREADSHEET_ID $PROJECT_ID $CLIENT_ID_FILE
+fi
