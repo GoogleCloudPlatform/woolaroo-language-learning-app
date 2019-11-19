@@ -37,7 +37,8 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(2)
   },
   card: {
-    maxWidth: 345
+    maxWidth: 345,
+    boxShadow: "none"
   },
   media: {
     height: 0,
