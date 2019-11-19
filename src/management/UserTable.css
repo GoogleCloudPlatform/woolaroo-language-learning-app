@@ -20,3 +20,7 @@
   width: 60px;
   flex-shrink: 2;
 }
+
+.user-table .-loading-inner {
+  font-weight: 500;
+}
