@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { shallow } from 'enzyme';
 import { App } from './App';
 import Header from './header/Header';
-import NavMenu from './navmenu/NavMenu';
+// import NavMenu from './navmenu/NavMenu';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
@@ -22,3 +22,16 @@ it('renders only a header and a landing image if user is not signed in', () => {
   expect(wrapper.containsMatchingElement(<Header/>)).toEqual(true);
   expect(wrapper.containsMatchingElement(<img/>)).toEqual(true);
 });
+
+// it('renders a <NavMenu/> when user has signed in', () => {
+//     const wrapper = shallow(<App/>);
+//     wrapper.setState({email: "fake@email.com"});
+
+//     expect(wrapper.containsMatchingElement(<NavMenu/>)).toEqual(true);
+// });
+
+// it('does not renders a <NavMenu/> when user is not signed in', () => {
+//     const wrapper = shallow(<App/>);
+
+//     expect(wrapper.containsMatchingElement(<NavMenu/>)).toEqual(false);
+// });

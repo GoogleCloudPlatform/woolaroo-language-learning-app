@@ -5,8 +5,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import { withRouter } from 'react-router-dom';
+import  { Breakpoint } from 'react-socks';
 import './Header.css';
-import NavMenu from '../navmenu/NavMenu';
+import HamburgerNavMenu from '../navmenu/HamburgerNavMenu';
 
 class Header extends React.Component {
   constructor(props) {
@@ -61,10 +62,10 @@ class Header extends React.Component {
 
     return (
       <InputBase
-        placeholder="Search"
+        placeholder='Search'
         classes={{
-          root: "header-search-root",
-          input: "header-search-input",
+          root: 'header-search-root',
+          input: 'header-search-input',
         }}
         inputProps={{ 'aria-label': 'search' }}
         value={this.state.search}
@@ -75,15 +76,16 @@ class Header extends React.Component {
   }
 
   renderAuthButton_() {
-    if (this.props.hideAuthButton) {
+    if (this.props.authInitializing) {
       return null;
     }
 
     return (
       <Button
         variant="contained"
-        color="primary"
+        color="secondary"
         onClick={this.props.authAction}
+        className='auth-button'
         key={1}
       >
         {this.props.signedIn ? 'Log out' : 'Sign in'}
@@ -93,19 +95,29 @@ class Header extends React.Component {
 
   render() {
     return (
-      <div className="header-container">
-        <AppBar position="static" className="header">
-          {this.props.signedIn ? <NavMenu /> : null}
+      <div className='header-container'>
+        <AppBar position='static' className='header'>
+          {/* Only renders the hamburger menu in mobile widths. */}
+          <Breakpoint medium down>
+            {/* Hide the menu completely while auth is initializing. Once that is done, but
+              * before the user logs in, the menu will only show the 'Sign in' option. */}
+            {this.props.authInitializing ?
+              null : <HamburgerNavMenu signedIn={this.props.signedIn} authAction={this.props.authAction} />}
+          </Breakpoint>
           <Toolbar>
             <h1 className={`header-title ${this.props.signedIn && 'signed-in'}`}>
-              Barnard
+              Woolaroo
             </h1>
             <div
               className={`header-search ${!this.props.signedIn && 'hidden'}`}>
-              <SearchIcon className="header-search-icon" onClick={this.doSearch_}/>
+              <SearchIcon className='header-search-icon' onClick={this.doSearch_}/>
               {this.renderHeaderSearch_()}
             </div>
-            {this.renderAuthButton_()}
+            {/* Only renders the logout button for desktop. In mobile widths, the auth button
+              * is part of the nav menu. */}
+            <Breakpoint large up>
+              {this.renderAuthButton_()}
+            </Breakpoint>
           </Toolbar>
         </AppBar>
       </div>
