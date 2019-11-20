@@ -53,15 +53,12 @@ class ManagementPage extends React.Component {
     this.setState({email: e.target.value});
   }
 
-  async grantAccess_(revoke = false) {
+  async updateRole_(email, role, revoke = false) {
     // TODO: Parse & validate emails.
     try {
-      const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}grant${this.state.inviteRole}Role`, {
+      const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}grant${role}Role`, {
         method: 'POST',
-        body: JSON.stringify({
-          email: this.state.email,
-          revoke,
-        }),
+        body: JSON.stringify({email, revoke}),
         headers: {
           'Authorization': await AuthUtils.getAuthHeader(),
           'Content-Type': 'application/json',
@@ -78,24 +75,6 @@ class ManagementPage extends React.Component {
     this.closeDialog_();
   }
 
-  renderModeratorAccessButton_() {
-    // button not working correctly, hiding for now.
-    return null;
-
-    // return (
-    //   <div>
-    //     <Button
-    //       variant="contained"
-    //       color="primary"
-    //       onClick={() => this.grantAccess_('Moderator')}
-    //       className="access-button"
-    //     >
-    //       Grant Moderator Access
-    //     </Button>
-    //   </div>
-    // );
-  }
-
   render() {
     return (
       <div>
@@ -106,7 +85,7 @@ class ManagementPage extends React.Component {
             color='primary'
             onClick={this.openDialog_}
           >
-            Invite moderators
+            Invite users
           </Button>
         </div>
         <br/>
@@ -140,14 +119,12 @@ class ManagementPage extends React.Component {
             <Button onClick={this.closeDialog_} color='primary'>
               Cancel
             </Button>
-            <Button onClick={() => this.grantAccess_()} color='primary'>
+            <Button onClick={() => this.updateRole_(this.state.email, this.state.inviteRole)} color='primary'>
               Invite
             </Button>
           </DialogActions>
         </Dialog>
-        <UserTable />
-        <br/>
-        {this.renderModeratorAccessButton_()}
+        <UserTable updateRole={(email, role, revoke) => this.updateRole_(email, role, revoke)} />
       </div>
     );
   }
