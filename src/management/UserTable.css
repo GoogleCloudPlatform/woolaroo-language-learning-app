@@ -16,6 +16,10 @@
   flex-direction: row;
 }
 
+.user-table-header:hover {
+  opacity: 0.5;
+}
+
 .user-table-header-spacer {
   width: 60px;
   flex-shrink: 2;
