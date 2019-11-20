@@ -139,14 +139,11 @@ npm install
 npm run build
 firebase deploy
 
-CLIENT_ID="$(cat $CLIENT_ID_FILE | jq '.installed .client_id')"
-CLIENT_SECRET="$(cat $CLIENT_ID_FILE | jq '.installed .client_secret')"
-
 CLIENT_ID="$(cat $CLIENT_ID_FILE | jq '.installed .client_id' | sed 's/\"//g')"
 CLIENT_SECRET="$(cat $CLIENT_ID_FILE | jq '.installed .client_secret' | sed 's/\"//g')"
 
 RESPONSE=$(curl \
-  -X PATCH -H "Authorization: Bearer $BEARER_ACCESS_TOKEN" \
+  -X POST -H "Authorization: Bearer $BEARER_ACCESS_TOKEN" \
   https://identitytoolkit.googleapis.com/v2/projects/${PROJECT_ID}/defaultSupportedIdpConfigs/google.com \
   --header "Content-Type: application/json" \
   --data '{"name": "'projects/${PROJECT_ID}/defaultSupportedIdpConfigs/google.com'" ,
@@ -154,3 +151,9 @@ RESPONSE=$(curl \
           "clientId": "'${CLIENT_ID}'" ,
           "clientSecret": "'${CLIENT_SECRET}'"
           }')
+
+if ! [ -z "${TRANSLATION_SPREADSHEET_ID}" ]
+  then
+    python ./functions/trix2firestore.py \
+    $TRANSLATION_SPREADSHEET_ID $PROJECT_ID $CLIENT_ID_FILE
+fi
