@@ -85,7 +85,7 @@ class ManagementPage extends React.Component {
             color='primary'
             onClick={this.openDialog_}
           >
-            Invite moderators
+            Invite users
           </Button>
         </div>
         <br/>
