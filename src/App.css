@@ -33,3 +33,11 @@ body {
 .MuiButton-containedSecondary:enabled, .MuiChip-colorSecondary, span.MuiButton-containedSecondary {
   background-color: #eda14f !important;
 }
+
+.MuiFab-root {
+  background-color: #ffffff !important;
+}
+
+.MuiFab-root:hover {
+  background-color: #D5EEE2 !important;
+}
