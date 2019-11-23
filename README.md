@@ -1,4 +1,4 @@
-![alt text](https://storage.googleapis.com/barnard-public-assets/Barnard%20lock%20up%202.1.png)
+![alt text](https://storage.googleapis.com/barnard-public-assets/woolaroo_logo.png)
 
 ## Project Woolaroo - Exploring Indigenous language through photos.
 
