@@ -14,9 +14,9 @@
 }
 
 .MuiListItem-root.nav-menu-item.Mui-selected:hover {
-  background-color: #fbe5c7;
+  background-color: #D5EEE2;
 }
 
 .MuiListItem-button.nav-menu-item:hover {
-  background-color: #D5EEE2;
+  background-color: #e7f5ef;
 }
