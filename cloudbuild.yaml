@@ -12,7 +12,7 @@ steps:
   args:
   - '-c'
   - |
-    sed -i "" -e "s/barnard-project/${PROJECT_ID}/g" ./src/utils/ApiUtils.js
+    sed -i "s/barnard-project/${PROJECT_ID}/g" ./src/utils/ApiUtils.js
     
 - id: 'change-code-3'
   name: ubuntu
