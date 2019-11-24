@@ -1,0 +1,56 @@
+steps:
+- id: 'change-code'
+  name: node:10.16.3
+  entrypoint: bash
+  args:
+  - '-c'
+  - |
+    sed -i "" -e "s/barnard-project/${PROJECT_ID}/g" .firebaserc &&
+    sed -i "" -e "s/barnard-project/${PROJECT_ID}/g" ./src/utils/ApiUtils.js &&
+    sed -i "" -e "s/\"_CONFIG_PLACEHOLDER_\"/$(echo ${CONFIG} | sed -e 's/\\/\\\\/g; s/\//\\\//g; s/&/\\\&/g')/g" ./src/config.json
+ 
+
+# gcloud builds submit . --config=cloudbuild.yaml --substitutions=_PROJECT_NAME=my-company-dev
+# https://thecloudfunction.com/blog/firebase-cloud-functions-continuous-deploying-with-cloud-build/
+- name: 'gcr.io/$PROJECT_ID/firebase'
+  args: [ 'use', '${PROJECT_ID}', '--token', '${_FIREBASE_TOKEN}']
+
+# - name: 'gcr.io/$PROJECT_ID/firebase'
+#   args: [ 'init', 'firestore', '--token', '${_FIREBASE_TOKEN}']
+
+# # Deploy firestore secutiry rules
+# - name: 'gcr.io/$PROJECT_ID/firebase'
+#   args: [ 'deploy', '--only', 'firestore:rules', '--token', '${_FIREBASE_TOKEN}']
+  
+# # Deploy firestore indexes
+# - name: 'gcr.io/$PROJECT_ID/firebase'
+#   args: [ 'deploy', '--only', 'firestore:indexes', '--token', '${_FIREBASE_TOKEN}']
+
+# - name: 'gcr.io/$PROJECT_ID/firebase'
+#   args: [ 'init', 'storage', '--token', '${_FIREBASE_TOKEN}']
+
+# - name: 'gcr.io/$PROJECT_ID/firebase'
+#   args: [ 'init', 'hosting', '--token', '${_FIREBASE_TOKEN}']
+
+# - name: 'gcr.io/$PROJECT_ID/firebase'
+#   args: [ 'init', 'functions', '--token', '${_FIREBASE_TOKEN}']
+
+- name: 'gcr.io/cloud-builders/npm'
+  dir: 'functions'
+  args: ['install']
+
+- name: 'gcr.io/$PROJECT_ID/firebase'
+  dir: 'functions'
+  args: [ 'deploy', '--only', 'functions', '--token', '${_FIREBASE_TOKEN}']
+
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['install']
+
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['run', 'build']
+
+- id: 'deploy-firebase'
+  name: 'gcr.io/$PROJECT_ID/firebase'
+  args: ['deploy', '--token', '${_FIREBASE_TOKEN}']
+
+# gcloud builds submit . --config cloudbuild.yaml --substitutions _FIREBASE_TOKEN=ya29.ImSyB7dJ2C_GD66lawH50F9aVmQWQTXrpDTuHo8j5xqAzUK3y95TIQZ24ALSuTeV-bht1-m15S6pdNs-2sK_dNuaJw9U3Bc_bcg0R_oBD94e8X1cYXAaDjJ2yrkAJvMIb6-HXVW5
