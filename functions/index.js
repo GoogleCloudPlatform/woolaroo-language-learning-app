@@ -7,232 +7,15 @@ const cors = require('cors')({origin: true});
 const vision = require('@google-cloud/vision');
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 const ffmpeg = require('fluent-ffmpeg');
-const request = require('request');
+const request = require('request-promise');
 ffmpeg.setFfmpegPath(ffmpegPath);
-
 const {google} = require('googleapis');
-const gmail = google.gmail('v1');
+
+
 admin.initializeApp();
 const projectId = admin.instanceId().app.options.projectId;
 const bucketName = `${projectId}.appspot.com`;
 const visionClient = new vision.v1p3beta1.ImageAnnotatorClient();
-
-const repoName = "bitbucket_rushdigital_google-barnard"
-
-const buildTrigger = {
-  "description": "Auto deployment of App",
-  "name": "uat-barnard",
-  "triggerTemplate": {
-    "projectId": projectId,
-    "repoName": repoName,
-    "tagName": "uat-*"
-  },
-  "disabled": false,
-  "substitutions": {
-    "_API_URL": "https://us-central1-barnard-project.cloudfunctions.net",
-    "_BUCKET_LOCATION": "asia",
-    "_BUCKET_NAME": "barnard-project",
-    "_ENDANGERED_LANGUAGE": "Sicilian",
-    "_LANGUAGE": "en",
-    "_TERRAFORM_BUCKET_NAME": "barnard-project-terraform",
-    "_THEME": "red"
-  },
-  "filename": "cloudbuild.yaml"
-}
-
-const repoSource = {
-  "projectId": projectId,
-  "repoName": repoName,
-  "dir": "./",
-  "substitutions": {
-    "_API_URL": "https://us-central1-barnard-project.cloudfunctions.net",
-    "_BUCKET_LOCATION": "asia",
-    "_BUCKET_NAME": "barnard-project",
-    "_ENDANGERED_LANGUAGE": "Sicilian",
-    "_LANGUAGE": "en",
-    "_TERRAFORM_BUCKET_NAME": "barnard-project-terraform",
-    "_THEME": "red"
-  },
-  "tagName": "uat-v0.02.11" // Change this
-}
-
-// https://us-central1-barnard-project.cloudfunctions.net/oauth2init
-// Retrieve OAuth2 config
-const clientSecretJson = JSON.parse(fs.readFileSync('./client_secret.json'));
-const oauth2Client = new google.auth.OAuth2(
-  clientSecretJson.web.client_id,
-  clientSecretJson.web.client_secret,
-  `https://us-central1-${projectId}.cloudfunctions.net/oauth2callback`
-);
-
-function parseCookies(rc) {
-    var list = {};
-
-    rc && rc.split(';').forEach(function( cookie ) {
-        var parts = cookie.split('=');
-        list[parts.shift().trim()] = decodeURI(parts.join('='));
-    });
-
-    return list;
-}
-
-exports.oauth2init = functions.https.onRequest(async (req, res) => {
-  // Parse session cookie
-  // Note: this presumes 'token' is the only value in the cookie
-  console.log('start oath2init');
-  console.log(req.headers)
-  const cookieStr = (req.headers.cookie || '').split('=')[1];
-  console.log(cookieStr)
-  console.log(decodeURIComponent(cookieStr))
-  const token = cookieStr ? decodeURIComponent(cookieStr) : null;
-  console.log(token)
-
-  // If the current OAuth token hasn't expired yet, go to /listlabels
-  if (token && token.expiry_date && token.expiry_date >= Date.now() + 60000) {
-    return res.redirect('/listlabels');
-  }
-
-  // // Define OAuth2 scopes
-  const scopes = [
-    'https://www.googleapis.com/auth/gmail.readonly',
-    'https://www.googleapis.com/auth/cloud-platform'
-  ];
-
-  // Generate + redirect to OAuth2 consent form URL
-  const authUrl = oauth2Client.generateAuthUrl({
-    access_type: 'online',
-    scope: scopes
-  });
-  console.log(authUrl);
-  res.redirect(authUrl);
-});
-
-/**
- * Get an access token from the authorization code and store token in a cookie
- */
-exports.oauth2callback = functions.https.onRequest(async (req, res) => {
-  // Get authorization code from request
-  const code = req.query.code;
-
-  return new Promise((resolve, reject) => {
-    // OAuth2: Exchange authorization code for access token
-    oauth2Client.getToken(code, (err, token) => {
-      if (err) {
-        return reject(err);
-      }
-      return resolve(token);
-    });
-  })
-    .then((token) => {
-      // Respond with OAuth token stored as a cookie
-      res.cookie('token', JSON.stringify(token));
-      res.redirect('/deployApp');
-    })
-    .catch((err) => {
-      // Handle error
-      console.error(err);
-      res.status(500).send('Something went wrong; check the logs.');
-    });
-});
-
-exports.deployApp = functions.https.onRequest(async (req, res) => {
-  // Parse session cookie
-  // Note: this presumes 'token' is the only value in the cookie
-  const cookie = parseCookies(req.headers.cookie)
-  const cookieStr = cookie.token;
-  const token = cookieStr ? JSON.parse(decodeURIComponent(cookieStr)) : null;
-
-  // If the stored OAuth 2.0 access token has expired, request a new one
-  if (!token || !token.expiry_date || token.expiry_date < Date.now() + 60000) {
-    return res.redirect('/oauth2init').end();
-  }
-  oauth2Client.credentials = token;
-  var createTriggerPostContent = {
-    headers: {
-      'content-type': 'application/json',
-      'accept': 'application/json',
-      'authorization': `Bearer ${token.access_token}` 
-    },
-    url: `https://cloudbuild.googleapis.com/v1/projects/${projectId}/triggers?alt=json`,
-    body: JSON.stringify(buildTrigger)
-  }
-  request.post(createTriggerPostContent, function(error, response, body) {
-    if (error) {
-      console.log(error);
-    } 
-    else {
-      var triggerId = JSON.parse(body).id;
-      console.log(triggerId);
-      var runTriggerPostContent = {
-        headers: {
-          'content-type': 'application/json',
-          'accept': 'application/json',
-          'authorization': `Bearer ${token.access_token}` 
-        },
-        url: `https://cloudbuild.googleapis.com/v1/projects/${projectId}/triggers/${triggerId}:run`,
-        body: JSON.stringify(repoSource)
-      };
-      console.log(runTriggerPostContent);
-      request.post(runTriggerPostContent, function(error, response, body) {
-        if (error) {
-          console.log(error);
-        } 
-        else {
-          console.log('success')
-          res.status(200).send(JSON.parse(body));
-        }
-      });
-    }
-  });
-});
-
-
-
-exports.listlabels = functions.https.onRequest(async (req, res) => {
-  // Parse session cookie
-  // Note: this presumes 'token' is the only value in the cookie
-  console.log(req.headers.cookie)
-  const cookie = parseCookies(req.headers.cookie)
-  console.log(cookie)
-  const cookieStr = cookie.token;
-  console.log(cookieStr)
-  //const cookieStr = (req.headers.cookie || '').split('=')[1];
-  const token = cookieStr ? JSON.parse(decodeURIComponent(cookieStr)) : null;
-  console.log('listlabels1')
-  console.log(token)
-
-  // If the stored OAuth 2.0 access token has expired, request a new one
-  if (!token || !token.expiry_date || token.expiry_date < Date.now() + 60000) {
-    return res.redirect('/oauth2init').end();
-  }
-  console.log('listlabels2')
-
-  // Get Gmail labels
-  oauth2Client.credentials = token;
-  console.log('listlabels3')
-  return new Promise((resolve, reject) => {
-    gmail.users.labels.list({ auth: oauth2Client, userId: 'me' }, (err, response) => {
-      if (err) {
-        return reject(err);
-      }
-      console.log(response);
-      return resolve(response.data.labels);
-    });
-  })
-    .then((labels) => {
-      // Respond to request
-      console.log(labels);
-      res.set('Content-Type', 'text/html');
-      res.write(`${labels.length} label(s) found:`);
-      labels.forEach(label => res.write(`<br>${label.name}`));
-      res.status(200).end();
-    })
-    .catch((err) => {
-      // Handle error
-      console.error(err);
-      res.status(500).send('Something went wrong; check the logs.');
-    });
-});
 
 // Makes an ffmpeg command return a promise.
 function promisifyCommand(command) {
@@ -240,7 +23,6 @@ function promisifyCommand(command) {
     command.on('end', resolve).on('error', reject).run();
   });
 }
-
 
 
 const SETTINGS = {
@@ -904,5 +686,331 @@ exports.testEndpoint = functions.https.onRequest((req, res) => {
     res.send({ 'a': 'hello from firebase'});
   });
 });
+
+
+const newProjectId = "final-test-woolaroo"
+const currentProjectId = admin.instanceId().app.options.projectId;
+const repoName = "bitbucket_rushdigital_google-barnard"
+const wizardRepoName = "github_googlecloudplatform_barnard-language-learning-app"
+
+// API calls & Resources
+const cloudResourceManager = google.cloudresourcemanager('v1');
+const serviceusage = google.serviceusage('v1');
+
+// resources
+const projectResource = {
+  "projectId": newProjectId,
+  "name": newProjectId
+}
+const clientSecretJson = JSON.parse(fs.readFileSync('./client_secret.json'));
+const oauth2Client = new google.auth.OAuth2(
+  clientSecretJson.web.client_id,
+  clientSecretJson.web.client_secret,
+  `https://us-central1-${currentProjectId}.cloudfunctions.net/oauth2callback`
+);
+
+
+
+
+
+function parseCookies(rc) {
+    var list = {};
+
+    rc && rc.split(';').forEach(function( cookie ) {
+        var parts = cookie.split('=');
+        list[parts.shift().trim()] = decodeURI(parts.join('='));
+    });
+
+    return list;
+}
+
+function postOptions(token, uri, body){
+  var option = {};
+  option.method = 'POST';
+  option.headers = {
+      'content-type': 'application/json',
+      'accept': 'application/json',
+      'authorization': `Bearer ${token.access_token}` 
+    };
+  option.uri = uri;
+  if (Object.keys(body).length > 0) {
+    option.body = JSON.stringify(body);
+  }
+  return option;
+}
+
+
+exports.oauth2init = functions.https.onRequest(async (req, res) => {
+  // Parse session cookie
+  // Note: this presumes 'token' is the only value in the cookie
+  const cookieStr = parseCookies(req.headers.cookie)
+  console.log(cookieStr)
+  const token = cookieStr ? decodeURIComponent(cookieStr) : null;
+  // If the current OAuth token hasn't expired yet, go to /listlabels
+  if (token && token.expiry_date && token.expiry_date >= Date.now() + 60000) {
+    return res.redirect('/createProject');
+  }
+  // Define OAuth2 scopes
+  const scopes = [
+    'https://www.googleapis.com/auth/cloud-platform'
+  ];
+  // Generate + redirect to OAuth2 consent form URL
+  const authUrl = oauth2Client.generateAuthUrl({
+    access_type: 'online',
+    scope: scopes
+  });
+  res.redirect(authUrl);
+});
+
+/**
+ * Get an access token from the authorization code and store token in a cookie
+ */
+exports.oauth2callback = functions.https.onRequest(async (req, res) => {
+  // Get authorization code from request
+  const code = req.query.code;
+
+  return new Promise((resolve, reject) => {
+    // OAuth2: Exchange authorization code for access token
+    oauth2Client.getToken(code, (err, token) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(token);
+    });
+  })
+    .then((token) => {
+      // Respond with OAuth token stored as a cookie
+      res.cookie('token', JSON.stringify(token));
+      res.redirect('/createProject');
+    })
+    .catch((err) => {
+      // Handle error
+      console.error(err);
+      res.status(500).send('Something went wrong; check the logs.');
+    });
+});
+
+exports.createProject = functions.runWith({timeoutSeconds: 540 ,memory: '1GB'}).https.onRequest(async (req, res) => {
+  //Create new project, 
+  //This works: http://cloud.google.com/resource-manager/reference/rest/v1/projects/create
+  const cookie = parseCookies(req.headers.cookie)
+  const cookieStr = cookie.token;
+  const token = cookieStr ? JSON.parse(decodeURIComponent(cookieStr)) : null;
+  console.log('token!')
+  console.log(token)
+  // If the stored OAuth 2.0 access token has expired, request a new one
+  if (!token || !token.expiry_date || token.expiry_date < Date.now() + 60000) {
+    return res.redirect('/oauth2init').end();
+  }
+  oauth2Client.credentials = token;
+
+  //Create project
+  console.log('creating project.')
+  function createNewProject() {
+    return new Promise((resolve, reject) => {
+      cloudResourceManager.projects.create({auth: oauth2Client, resource: projectResource}, (err, response) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(response);
+      });
+    });
+  }
+  var response = await createNewProject();
+  console.log(response);
+  console.log('created project.');
+
+  //Scary clown waiting
+  function scaryClown() {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve('🤡');
+      }, 5000);
+    });
+  }
+  var msg = await scaryClown();
+  console.log('Message:', msg);
+
+  //Add firebase
+  console.log('adding firebase');
+  var addFirebaseOptions = postOptions(token, 
+    `https://firebase.googleapis.com/v1beta1/projects/${newProjectId}:addFirebase`,{});
+  var msg = await request(addFirebaseOptions);
+  console.log('Message:', msg);
+  console.log('added firebase');
+
+  var msg = await scaryClown();
+  console.log('Message:', msg);
+
+  console.log('enabling services');
+  var services = [
+    // "serviceusage.googleapis.com",
+    "cloudresourcemanager.googleapis.com",
+    "cloudbilling.googleapis.com",
+    "iam.googleapis.com",
+    "firebase.googleapis.com",
+    //"credentials.googleapis.com",
+    "firestore.googleapis.com",
+    "appengine.googleapis.com",
+    "firebasehosting.googleapis.com",
+    "sheets.googleapis.com",
+    "vision.googleapis.com",
+    "cloudbuild.googleapis.com"
+    // "cloudtrigger.googleapis.com"
+    ];
+
+  console.log('Message:', msg);
+  for (var i in services) {
+    var url = `https://serviceusage.googleapis.com/v1/projects/${newProjectId}/services/${services[i]}:enable`;
+    console.log(`enbaling service with ${url}`);
+    var enableServiceOptions = postOptions(token, url, {});
+    var msg = await request(enableServiceOptions);
+    console.log('essage:', msg);
+  }
+  console.log('finished enabling all services');
+
+
+  console.log('finished adding firebase to project')
+  //Set default location
+  var setDefaultLocationOptions = postOptions(token, 
+    `https://firebase.googleapis.com/v1beta1/projects/${newProjectId}/defaultLocation:finalize`, {"locationId":"us-central"});
+  await request(setDefaultLocationOptions);
+  res.status(200).send('Finished everything.');
+});
+
+exports.deployWizard = functions.https.onRequest(async (req, res) => {
+  const cookie = parseCookies(req.headers.cookie)
+  const cookieStr = cookie.token;
+  const token = cookieStr ? JSON.parse(decodeURIComponent(cookieStr)) : null;
+  console.log('token!')
+  console.log(token)
+  // If the stored OAuth 2.0 access token has expired, request a new one
+  if (!token || !token.expiry_date || token.expiry_date < Date.now() + 60000) {
+    return res.redirect('/oauth2init').end();
+  }
+  oauth2Client.credentials = token;
+  //Set default location
+
+  // Get firebase config object
+  var getWebAppsOptions = {
+    method: 'GET',
+    headers: {
+      'content-type': 'application/json',
+      'accept': 'application/json',
+      'authorization': `Bearer ${token.access_token}` 
+    },
+    uri: `https://firebase.googleapis.com/v1beta1/projects/${newProjectId}/webApps`,
+  }
+  var webApps = await request(getWebAppsOptions);
+  const appId = JSON.parse(decodeURIComponent(webApps)).apps[0].appId;
+  console.log(appId);
+  var getFirebaseConfigOptions = {
+    method: 'GET',
+    headers: {
+      'content-type': 'application/json',
+      'accept': 'application/json',
+      'authorization': `Bearer ${token.access_token}` 
+    },
+    uri: `https://firebase.googleapis.com/v1beta1/projects/${newProjectId}/webApps/${appId}/config`,
+  }
+  var firebaseConfig = await request(getFirebaseConfigOptions);
+  console.log(firebaseConfig);
+  var projectNumber = JSON.parse(decodeURIComponent(firebaseConfig)).messagingSenderId;
+  console.log(`Current project number is ${projectNumber}`);
+
+
+  // Create Wizard Trigger & Run Trigger
+  const wizardRepoSource = {
+    "projectId": newProjectId,
+    "repoName": wizardRepoName,
+    "dir": "./",
+    "substitutions": {
+      "_FIREBASE_CONFIG_OBJECT": firebaseConfig,
+      "_PROJECT_NAME": newProjectId
+    },
+    "branchName": "^master$" 
+  }
+  const wizardBuildTrigger = {
+    "description": "Auto deployment of Wizard",
+    "name": "wizard-trigger",
+    "triggerTemplate": wizardRepoSource,
+    "disabled": false,
+    "substitutions": {
+      "_FIREBASE_CONFIG_OBJECT": firebaseConfig,
+      "_PROJECT_NAME": newProjectId
+    },
+    "filename": "cloudbuild.yaml"
+  }
+  var createWizardTriggerOptions = postOptions(token, 
+    `https://cloudbuild.googleapis.com/v1/projects/${newProjectId}/triggers`, wizardBuildTrigger);
+  var response = await request(createWizardTriggerOptions);
+
+  //Run trigger
+  var triggerId = JSON.parse(response).id;
+  console.log("Run trigger")
+  console.log(triggerId);
+
+  var runWizardTriggerOptions = postOptions(token, `https://cloudbuild.googleapis.com/v1/projects/${newProjectId}/triggers/${triggerId}:run`,wizardRepoSource);
+  var response = await request(runWizardTriggerOptions);
+  console.log("Finished running trigger")
+  console.log(response);
+  res.status(200).send(firebaseConfig);
+});
+
+// Create Trigger & Run Trigger
+exports.deployApp = functions.https.onRequest(async (req, res) => {
+  // Parse session cookie
+  const cookie = parseCookies(req.headers.cookie)
+  const cookieStr = cookie.token;
+  const token = cookieStr ? JSON.parse(decodeURIComponent(cookieStr)) : null;
+  console.log('token!');
+  console.log(token);
+  //Create trigger and run the trigger
+  console.log("Create trigger and run")
+  const buildTrigger = {
+    "description": "Auto deployment of App",
+    "name": "uat-barnard",
+    "triggerTemplate": {
+      "projectId": newProjectId,
+      "repoName": repoName,
+      "tagName": "uat-*"
+    },
+    "disabled": false,
+    "substitutions": {
+      "_API_URL": "https://us-central1-barnard-project.cloudfunctions.net",
+      "_BUCKET_LOCATION": "asia",
+      "_BUCKET_NAME": "barnard-project",
+      "_ENDANGERED_LANGUAGE": "Sicilian",
+      "_LANGUAGE": "en",
+      "_TERRAFORM_BUCKET_NAME": "barnard-project-terraform",
+      "_THEME": "red"
+    },
+    "filename": "cloudbuild.yaml"
+  }
+  var createAppTriggerOptions = postOptions(token, 
+    `https://cloudbuild.googleapis.com/v1/projects/${newProjectId}/triggers`,buildTrigger);
+  var trigger = await request(createAppTriggerOptions);
+  var triggerId = JSON.parse(trigger).id;
+  const repoSource = {
+    "projectId": newProjectId,
+    "repoName": repoName,
+    "dir": "./",
+    "substitutions": {
+      "_API_URL": "https://us-central1-barnard-project.cloudfunctions.net",
+      "_BUCKET_LOCATION": "asia",
+      "_BUCKET_NAME": "barnard-project",
+      "_ENDANGERED_LANGUAGE": "Sicilian",
+      "_LANGUAGE": "en",
+      "_TERRAFORM_BUCKET_NAME": "barnard-project-terraform",
+      "_THEME": "red"
+    },
+    "tagName": "uat-v0.02.11" // Change this
+  };
+  var runAppTriggerOptions = postOptions(token, 
+    `https://cloudbuild.googleapis.com/v1/projects/${newProjectId}/triggers/${triggerId}:run`,repoSource);
+  var build = await request(runAppTriggerOptions);
+  res.status(200).send(JSON.parse(build));
+});
+
 
 
