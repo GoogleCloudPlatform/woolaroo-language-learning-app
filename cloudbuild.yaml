@@ -1,6 +1,6 @@
 steps:
 - id: 'change-code'
-  name: node:10.16.3
+  name: ubuntu
   entrypoint: bash
   args:
   - '-c'
