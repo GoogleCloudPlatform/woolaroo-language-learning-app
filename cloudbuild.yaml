@@ -4,7 +4,8 @@ steps:
   entrypoint: bash
   args:
   - '-c'
-  - sed -i "" -e "s/barnard-project/${PROJECT_ID}/g" .firebaserc
+  - sed -i "s/barnard-project/${_PROJECT_NAME}/g" .firebaserc
+
     
 - id: 'change-code-2'
   name: ubuntu
