@@ -21,7 +21,7 @@ const ROUTES = {
   MANAGEMENT: '/management',
 };
 
-const LANDING_IMG = "../logo2200.png";
+const LANDING_IMG = "https://storage.googleapis.com/barnard-public-assets/woolaroo_logo.png";
 
 class App extends React.Component {
   constructor(props) {
