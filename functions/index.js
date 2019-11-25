@@ -702,7 +702,7 @@ const projectResource = {
   "projectId": newProjectId,
   "name": newProjectId
 }
-const clientSecretJson = JSON.parse(fs.readFileSync('./client_secret.json'));
+const clientSecretJson = JSON.parse(fs.readFileSync('client_secret.json'));
 const oauth2Client = new google.auth.OAuth2(
   clientSecretJson.web.client_id,
   clientSecretJson.web.client_secret,
