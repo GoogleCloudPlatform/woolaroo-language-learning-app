@@ -9,6 +9,8 @@ import  { Breakpoint } from 'react-socks';
 import './Header.css';
 import HamburgerNavMenu from '../navmenu/HamburgerNavMenu';
 
+const LOGO_IMG = "../logo512.png";
+
 class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -105,9 +107,11 @@ class Header extends React.Component {
               null : <HamburgerNavMenu signedIn={this.props.signedIn} authAction={this.props.authAction} />}
           </Breakpoint>
           <Toolbar>
-            <h1 className={`header-title ${this.props.signedIn && 'signed-in'}`}>
-              Woolaroo
-            </h1>
+          <img
+            src={LOGO_IMG}
+            alt="Woolaroo"
+            className="header-logo"
+          />
             <div
               className={`header-search ${!this.props.signedIn && 'hidden'}`}>
               <SearchIcon className='header-search-icon' onClick={this.doSearch_}/>

@@ -43,7 +43,8 @@ const useStyles = makeStyles(theme => ({
   },
   media: {
     height: 0,
-    paddingTop: "56.25%" // 16:9
+    paddingTop: "56.25%", // 16:9
+    backgroundSize: "100%"
   },
   newSection: {
     marginTop: theme.spacing(12)
@@ -168,7 +169,7 @@ function ThemePage() {
         <Card className={classes.card}>
           <CardMedia
             className={classes.media}
-            image="https://storage.googleapis.com/barnard-public-assets/Barnard%20lock%20up%202.1.png"
+            image="../logo512.png"
             title="App logo"
           />
         </Card>
