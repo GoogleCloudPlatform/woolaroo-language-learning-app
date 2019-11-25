@@ -376,7 +376,7 @@ exports.getEntireFeedbackCollection = functions.https.onRequest(async (req, res)
   if (!hasAccess) {
     return;
   }
-  var docRef = admin.firestore().collection("suggestions");
+  var docRef = admin.firestore().collection("feedback");
     let querySnapshot;
     querySnapshot = await docRef.get();
     docRef.get().then(querySnapshot => { 
