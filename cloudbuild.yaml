@@ -21,11 +21,8 @@ steps:
   - '-c'
   - echo "{"firebase_config" : ${_FIREBASE_CONFIG_OBJECT}}" > ./src/config.json
   
-  #'FROM gcr.io/cloud-builders/docker\nRUN apt-get install make\nENTRYPOINT [\"/usr/bin/make\"]' > Dockerfile.build
-  
-  #sed -i 's/\"_CONFIG_PLACEHOLDER_\"/$(echo ${_FIREBASE_CONFIG_OBJECT} | sed -e 's/\\/\\\\/g; s/\//\\\//g; s/&/\\\&/g')/g' ./src/config.json
-
-
+#'FROM gcr.io/cloud-builders/docker\nRUN apt-get install make\nENTRYPOINT [\"/usr/bin/make\"]' > Dockerfile.build  
+#sed -i 's/\"_CONFIG_PLACEHOLDER_\"/$(echo ${_FIREBASE_CONFIG_OBJECT} | sed -e 's/\\/\\\\/g; s/\//\\\//g; s/&/\\\&/g')/g' ./src/config.json
 # gcloud builds submit . --config=cloudbuild.yaml --substitutions=_PROJECT_NAME=my-company-dev
 # https://thecloudfunction.com/blog/firebase-cloud-functions-continuous-deploying-with-cloud-build/
 - name: 'gcr.io/$PROJECT_ID/firebase'
