@@ -1,0 +1,132 @@
+steps:
+  # Terraform
+  - id: 'configure_terraform'
+    name: node:10.16.3
+    entrypoint: "node"
+    args: ["./create_terraform_config.js",
+           "../terraform/override.tf",
+           "${_TERRAFORM_BUCKET_NAME}",
+           "${_TERRAFORM_BUCKET_PATH}"]
+    dir: "app/scripts"
+  - id: 'init_terraform'
+    name: hashicorp/terraform:light
+    args: ["init"]
+    dir: "app/terraform"
+  - id: 'run_terraform'
+    name: hashicorp/terraform:light
+    args: ["apply", "-auto-approve",
+           "-var", "google_project=$PROJECT_ID",
+           "-var", "bucket_name=${_BUCKET_NAME}",
+           "-var", "bucket_location=${_BUCKET_LOCATION}",
+           "-var", "app_location=${_APP_LOCATION}"]
+    dir: "app/terraform"
+  # Client
+  - id: 'install_client_dependencies'
+    waitFor: ['run_terraform']
+    name: node:10.16.3
+    entrypoint: "npm"
+    args: ["install"]
+    dir: "app/client"
+  - id: 'download_partner_logo'
+    name: gcr.io/cloud-builders/gsutil
+    waitFor: ['-']
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - |
+      if [ "${_PARTNER_LOGO_URL}" != "" ]
+      then
+        gsutil cp ${_PARTNER_LOGO_URL} ./src/assets/img/partner_logo.png
+      else
+        true
+      fi
+    dir: "app/client"
+  - id: 'configure_client'
+    waitFor: ['install_client_dependencies', 'download_partner_logo']
+    name: node:10.16.3
+    entrypoint: "node"
+    args: ["./configure_client.js",
+           "../client/src/environments/environment.prod.params.ts",
+           "${_API_URL}",
+           "https://storage.googleapis.com/${_BUCKET_NAME}/",
+           "${_GOOGLE_API_KEY}",
+           "${_GOOGLE_TRACKER_ID}",
+           "${_ENDANGERED_LANGUAGE}",
+           "${_TERMS_AND_CONDITIONS}",
+           "../client/src/locale/messages.${_LANGUAGE}.xlf",
+           "/assets/img/partner_logo.png",
+           "../client/src/style/theme-config.scss",
+           "${_THEME}"]
+    dir: "app/scripts"
+  - id: 'build_client'
+    waitFor: ['configure_client']
+    name: node:10.16.3
+    entrypoint: "npm"
+    args: ["run", "build", "--", "-c", "production", "--output-path=./dist",
+           "--i18n-file=./src/locale/messages.${_LANGUAGE}.xlf", "--i18n-locale=${_LANGUAGE}",
+           "--deploy-url=https://storage.googleapis.com/${_BUCKET_NAME}/"]
+    dir: "app/client"
+  - id: 'fix_client_asset_paths'
+    waitFor: ['build_client']
+    name: node:10.16.3
+    entrypoint: "node"
+    args: ["./fix_asset_paths.js", "../client/dist/index.html", "https://storage.googleapis.com/${_BUCKET_NAME}"]
+    dir: "app/scripts"
+  - id: 'deploy_client'
+    waitFor: ['fix_client_asset_paths']
+    name: gcr.io/cloud-builders/gsutil
+    args: ["-m", "rsync", "-r", "-c", "-d", "./dist", "gs://${_BUCKET_NAME}"]
+    dir: "app/client"
+  - id: 'fix_client_content_types'
+    waitFor: ['deploy_client']
+    name: gcr.io/cloud-builders/gsutil
+    args: ["-m", "setmeta", "-h", "Content-Type:text/javascript", "gs://${_BUCKET_NAME}/**/*.js"]
+  - id: 'create_client_cors_config'
+    waitFor: ['deploy_client']
+    name: node:10.16.3
+    entrypoint: "node"
+    args: ["./create_client_cors_config.js", "../client_cors.json", "$PROJECT_ID", "${_APP_SERVICE}", "${_APP_URL}"]
+    dir: "app/scripts"
+  - id: 'set_client_cors'
+    waitFor: ['create_client_cors_config']
+    name: gcr.io/cloud-builders/gsutil
+    args: ["cors", "set", "./client_cors.json", "gs://${_BUCKET_NAME}"]
+    dir: "app/"
+  # Server
+  - id: 'install_server_dependencies'
+    waitFor: ['run_terraform']
+    name: node:10.16.3
+    entrypoint: "npm"
+    args: ["install"]
+    dir: "app/server"
+  - id: 'configure_server'
+    waitFor: ['run_terraform']
+    name: node:10.16.3
+    entrypoint: "node"
+    args: ["./configure_server.js", "${_APP_SERVICE}", "../server/app.yaml"]
+    dir: "app/scripts"
+  - id: 'build_server'
+    waitFor: ['install_server_dependencies', 'configure_server']
+    name: node:10.16.3
+    entrypoint: "npm"
+    args: ["run", "build"]
+    dir: "app/server"
+  - id: 'copy_server_files'
+    waitFor: ['build_server', 'build_client']
+    name: node:10.16.3
+    entrypoint: "node"
+    args: ["./copy_server_files.js",
+           "../client/dist/index.html",
+           "../server/build/index.html",
+           "../client/dist/ngsw-worker.js",
+           "../client/dist/ngsw.json",
+           "../client/dist/manifest.webmanifest",
+           "../client/dist/favicon.ico",
+           "https://storage.googleapis.com/${_BUCKET_NAME}/",
+           "../server/build/static/"]
+    dir: "app/scripts"
+  - id: 'deploy_server'
+    waitFor: ['copy_server_files']
+    name: gcr.io/cloud-builders/gcloud
+    args: ["-q", "app", "deploy"]
+    dir: "app/server"

@@ -17,7 +17,7 @@ const localFirebaseConfig_ = {
 
 const config = require('../config.json');
 
-const firebaseConfig_ = IS_LOCAL ? localFirebaseConfig_ : config.firebase_config; // eslint-disable-line
+const firebaseConfig_ = IS_LOCAL ? localFirebaseConfig_ : config; // eslint-disable-line
 
 class AuthUtils {
   constructor() {
