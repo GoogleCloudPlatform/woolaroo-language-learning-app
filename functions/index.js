@@ -629,7 +629,8 @@ async function checkAccess_(req, res) {
 
     return true;
   } catch(err) {
-    console.log('error', err);
+    res.status(403).send(JSON.stringify("Permission Denied."));
+    return false;
   }
 }
 
