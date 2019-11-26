@@ -15,6 +15,7 @@ Originally launched in New Zealand, as ‘Kupu’, in collaboration with Spark a
 Our hope is that by enabling more people to share their language, users will be able to explore the indigenous languages around them, and ultimately be inspired to engage with them on a deeper level.
 
 ## To deploy
+- Update src/config.json with the config of the project you are deploying (this can be obtained manually from the Firebase console). 
 - `npm run build`
 - `firebase deploy` (`-m "release message"`)
 
