@@ -372,41 +372,26 @@ exports.addFeedback = functions.https.onRequest(async (req, res) => {
 });
 
 exports.getEntireFeedbackCollection = functions.https.onRequest(async (req, res) => {
-  const hasAccess = await checkAccess_(req, res);
-  if (!hasAccess) {
-    return;
-  }
-  var docRef = admin.firestore().collection("suggestions");
-    let querySnapshot;
-    querySnapshot = await docRef.get();
+  return cors(req, res, async () => {
+    const hasAccess = await checkAccess_(req, res);
+    if (!hasAccess) {
+      return;
+    }
+    const docRef = admin.firestore().collection("feedback");
     docRef.get().then(querySnapshot => { 
       if (querySnapshot.empty) {
-          res.status(404).send("NO translations");
+        res.status(404).send("No feedback");
       } else {
-          var docs = querySnapshot.docs.map(doc => doc.data())
-          var translations_json = JSON.stringify({data: docs})
-          res.status(200).send(translations_json)
+        const docs = querySnapshot.docs.map(doc => doc.data())
+        const feedback_json = JSON.stringify(docs)
+        res.status(200).send(feedback_json)
       }
       return "200"
     }).catch(error => {
       console.log("Error getting document:", error);
       res.status(500).send(error);
-  });  
-
-
-
-  return cors(req, res, async () => {
-    var snapshot = await admin.firestore().collection('feedback').add({
-      english_word: req.body.english_word,
-      translation: req.body.translation,
-      transliteration: req.body.transliteration,
-      sound_link: req.body.sound_link,
-      types: req.body.types,
-      content: req.body.content,
-      timestamp: admin.firestore.FieldValue.serverTimestamp(),
     });
-    res.status(200).send("feedback saved.");
-  });
+  });  
 });
 
 exports.deleteRow = functions.https.onRequest(async (req, res) => {
@@ -644,8 +629,7 @@ async function checkAccess_(req, res) {
 
     return true;
   } catch(err) {
-    res.status(403).send(JSON.stringify("Permission Denied."));
-    return false;
+    console.log('error', err);
   }
 }
 
@@ -702,16 +686,12 @@ const projectResource = {
   "projectId": newProjectId,
   "name": newProjectId
 }
-const clientSecretJson = JSON.parse(fs.readFileSync('./client_secret.json'));
+const clientSecretJson = JSON.parse(fs.readFileSync('client_secret.json'));
 const oauth2Client = new google.auth.OAuth2(
   clientSecretJson.web.client_id,
   clientSecretJson.web.client_secret,
   `https://us-central1-${currentProjectId}.cloudfunctions.net/oauth2callback`
 );
-
-
-
-
 
 function parseCookies(rc) {
     var list = {};
