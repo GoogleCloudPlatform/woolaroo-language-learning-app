@@ -68,9 +68,15 @@ class ListPageBase extends React.Component {
     }
 
     try {
-      const qs = `?collectionName=${collectionName}`;
+      let endpoint = `${ApiUtils.origin}${ApiUtils.path}`;
+      if (collectionName === 'feedback') {
+        endpoint += 'getEntireFeedbackCollection';
+      } else {
+        const qs = `?collectionName=${collectionName}`;
+        endpoint += `getEntireCollection${qs}${additionalParams}`;
+      }
       const resp = await
-        fetch(`${ApiUtils.origin}${ApiUtils.path}getEntireCollection${qs}${additionalParams}`, {
+        fetch(endpoint, {
           headers: {
             'Authorization': await AuthUtils.getAuthHeader(),
           },
