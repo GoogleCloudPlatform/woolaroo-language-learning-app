@@ -20,9 +20,13 @@ class ContributionListItem extends ListItemBase {
 
   saveContribution_ = async (e) => {
     try {
-      const { english_word, sound_link, translation,
+      let { english_word, primary_word, sound_link, translation,
         transliteration } = this.state;
-
+      english_word = (""+english_word).trim();
+      primary_word = (""+primary_word).trim();
+      translation = (""+translation).trim();
+      transliteration = (""+transliteration).trim();
+      
       if (!translation) {
         this.setState({
           // todo(parikshiv) - add visible error state, also
@@ -36,6 +40,7 @@ class ContributionListItem extends ListItemBase {
         method: 'POST',
         body: JSON.stringify({
           english_word,
+          primary_word,
           translation,
           sound_link: sound_link || '',
           transliteration: transliteration || '',
