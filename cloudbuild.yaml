@@ -20,7 +20,7 @@ steps:
   entrypoint: bash
   args:
   - '-c'
-  - sed -i "" -e "s/\"_CONFIG_PLACEHOLDER_\"/${_FIREBASE_CONFIG_OBJECT}/g" ./src/config.json 
+  - sed -i "s/\"_CONFIG_PLACEHOLDER_\"/${_FIREBASE_CONFIG_OBJECT}/g" ./src/config.json 
 
 # gcloud builds submit . --config=cloudbuild.yaml --substitutions=_PROJECT_NAME=my-company-dev
 # https://thecloudfunction.com/blog/firebase-cloud-functions-continuous-deploying-with-cloud-build/
