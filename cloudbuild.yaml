@@ -21,7 +21,9 @@ steps:
   args:
   - '-c'
   - |
-    sed -i "s/\"_CONFIG_PLACEHOLDER_\"/$(echo ${_FIREBASE_CONFIG_OBJECT} | sed -e 's/\\/\\\\/g; s/\//\\\//g; s/&/\\\&/g')/g" ./src/config.json
+    CONFIG=$(echo ${_FIREBASE_CONFIG_OBJECT} | sed -e 's/\\/\\\\/g; s/\//\\\//g; s/&/\\\&/g')
+    echo ${CONFIG}
+    sed -i "s/\"_CONFIG_PLACEHOLDER_\"/${CONFIG}/g" ./src/config.json
  
 
 # gcloud builds submit . --config=cloudbuild.yaml --substitutions=_PROJECT_NAME=my-company-dev
