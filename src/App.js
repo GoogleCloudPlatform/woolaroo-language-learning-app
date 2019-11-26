@@ -21,7 +21,7 @@ const ROUTES = {
   MANAGEMENT: '/management',
 };
 
-const LANDING_IMG = "https://storage.googleapis.com/barnard-public-assets/Barnard%20lock%20up%202.1.png";
+const LANDING_IMG = "../logo2200.png";
 
 class App extends React.Component {
   constructor(props) {
@@ -98,7 +98,7 @@ class App extends React.Component {
         {/* Only renders the permanent side menu in desktop widths. */}
         <Breakpoint large up>
           {!!this.state.email ? <NavMenu /> : null}
-        </Breakpoint>     
+        </Breakpoint>
         <div className="body-margin" />
         <div className="page-container">
           <Route path={ROUTES.ADD_WORDS} component={AddWordsPage} />
