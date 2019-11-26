@@ -23,7 +23,10 @@ body {
 }
 
 .landing-page-img {
-  width: 100%;
+  width: 80%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .MuiButton-containedPrimary:enabled, .MuiChip-colorPrimary, span.MuiButton-containedPrimary {
