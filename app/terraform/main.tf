@@ -16,7 +16,7 @@ output "bucket_url" {
 
 terraform {
   backend "gcs" {
-    bucket  = "${var.bucket_name}-terraform"
+    bucket  = "dfdfdfdfue-terraform"
     prefix  = "state"
   }
 }
