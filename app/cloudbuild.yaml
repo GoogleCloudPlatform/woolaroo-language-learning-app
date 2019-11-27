@@ -4,7 +4,7 @@ steps:
     name: node:10.16.3
     entrypoint: "node"
     args: ["./create_terraform_config.js",
-           "../terraform/override.tf",
+           "../app/terraform/override.tf",
            "${_TERRAFORM_BUCKET_NAME}",
            "${_TERRAFORM_BUCKET_PATH}"]
     dir: "./app/scripts"
