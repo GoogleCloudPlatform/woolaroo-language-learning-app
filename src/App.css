@@ -34,9 +34,17 @@ body {
 }
 
 .MuiButton-containedPrimary:enabled, .MuiChip-colorPrimary, span.MuiButton-containedPrimary {
-  background-color: #61b985 !important;
+  background-color: #2CAB6F !important;
 }
 
 .MuiButton-containedSecondary:enabled, .MuiChip-colorSecondary, span.MuiButton-containedSecondary {
   background-color: #eda14f !important;
+}
+
+.MuiFab-root {
+  background-color: #ffffff !important;
+}
+
+.MuiFab-root:hover {
+  background-color: #D5EEE2 !important;
 }

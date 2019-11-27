@@ -7,6 +7,7 @@ import ApiUtils from '../utils/ApiUtils';
 import AuthUtils from '../utils/AuthUtils';
 import Snackbar from '@material-ui/core/Snackbar';
 
+
 class ThemePage extends React.Component {
   constructor(props) {
     super(props);
@@ -53,6 +54,7 @@ class ThemePage extends React.Component {
         return;
       }
       const result = await resp.json();
+
 
         
       this.setState({
@@ -124,6 +126,7 @@ class ThemePage extends React.Component {
           'Authorization': await AuthUtils.getAuthHeader(),
         }
       });
+
 
       if (resp.status === 403) {
         await AuthUtils.signOut();
