@@ -11,6 +11,7 @@ import SharingPage from './sharing/SharingPage';
 import ManagementPage from './management/ManagementPage';
 import Header from './header/Header';
 import NavMenu from './navmenu/NavMenu';
+import Button from "@material-ui/core/Button";
 
 const ROUTES = {
   ADD_WORDS: '/add-words',
@@ -20,8 +21,10 @@ const ROUTES = {
   SHARING: '/sharing',
   MANAGEMENT: '/management',
 };
-
-const LANDING_IMG = "../logo2200.png";
+const SIGNIN_ASSET = "https://developers.google.com/identity/images/btn_google_signin_light_normal_web.png";
+const WOOLAROO_URL = "https://experiments.withgoogle.com/woolaroo"
+const WOOLAROO_IMG = "https://storage.googleapis.com/barnard-public-assets/woolaroo_logo.png";
+const LANDING_IMG = "https://storage.googleapis.com/barnard-public-assets/Barnard%20lock%20up%202.1.png"; //need to update this in 
 
 class App extends React.Component {
   constructor(props) {
@@ -32,7 +35,11 @@ class App extends React.Component {
     this.state = {
       email: null,
       authInitializing: true,
+      organization_name: "",
+      organization_url: "",
+      newuseremail: ""
     };
+    
   }
 
   componentDidMount() {
@@ -43,11 +50,30 @@ class App extends React.Component {
       }
 
       const idTokenResult = await user.getIdTokenResult();
+      const mainApp = this;
       if (idTokenResult.claims.admin || idTokenResult.claims.moderator) {
+        if (idTokenResult.claims.admin){
+            AuthUtils.setUserType("admin");
+        }else if (idTokenResult.claims.moderator){
+            AuthUtils.setUserType("moderator");
+        }
         AuthUtils.setUser(user);
-        this.setState({email: user.email, authInitializing: false});
+        AuthUtils.fsdb.collection("app_settings").doc("default").get().then((querySnapshot) => {
+            const app_settings = querySnapshot.data();
+            AuthUtils.setAppSettings(app_settings);
+            mainApp.setState({email: user.email, authInitializing: false, newuser: false, newuseremail:""});
+        })
       } else {
-        this.logOut_();
+        //Other User Not Yet Authorized as admin/moderator
+        const newuseremail = (user.email)?user.email:"";
+        AuthUtils.fsdb.collection("app_settings").doc("default").get().then((querySnapshot) => {
+            const app_settings = querySnapshot.data();
+            AuthUtils.setAppSettings(app_settings);
+            mainApp.logOut_();
+        }).catch((err)=>{
+            mainApp.logOut_();
+        });
+        mainApp.setState({newuser: true, newuseremail:newuseremail});
       }
     });
   }
@@ -62,7 +88,9 @@ class App extends React.Component {
 
   async logOut_() {
     try {
+        console.log("Signing Out");
       await AuthUtils.signOut();
+      AuthUtils.setUser("");      
     } catch(err) {
       console.error(err);
     }
@@ -79,32 +107,74 @@ class App extends React.Component {
   renderBody() {
     if (this.state.authInitializing) {
       return null;
+    } else if (this.state.newuser===true){
+      let contactmessage = "";
+      if (this.state.organization_url!=="" && this.state.organization_name!==""){
+        contactmessage = "Contact <a href="+this.state.organization_url+">"+this.state.organization_name+"</a> to get access";
+      }else if (this.state.organization_name!==""){
+        contactmessage = "Contact "+this.state.organization_name+" to get access";
+      }
+      return (
+        <div className = "body-container">
+          <div className = "page-container centralize logged-out">
+            <br />
+            <h2>Interested to join us?</h2>
+            <br /><br />
+            {this.state.newuseremail} is currently not associated with an account.
+            <br />{contactmessage}
+            <br />
+            <br />
+            <span style={{margin:8}}>
+              <Button href={WOOLAROO_URL} variant="outlined" color="secondary">
+               Back to Woolaroo
+              </Button>
+            </span>
+            
+            <span style={{margin:8}}>
+              <Button variant="contained" 
+                color="secondary"
+                onClick={() => this.authAction_()}
+              >
+               Try again
+              </Button>
+            </span>
+          </div>
+        </div>
+      );
     } else if (!this.state.email) {
       return (
         <div className = "body-container">
-          <div className = "page-container logged-out">
+          <div className = "page-container centralize logged-out">
+        
             <img
               src={LANDING_IMG}
               alt=""
               className="landing-page-img"
             />
+            <br />
+            <span style={{margin:8}}>
+              <Button 
+                onClick={() => this.authAction_()}
+              >
+                <img src={SIGNIN_ASSET} alt="Sign in with Google" />
+              </Button>
+            </span>
           </div>
         </div>
       );
     }
-
     return (
       <div className="body-container">
         {/* Only renders the permanent side menu in desktop widths. */}
         <Breakpoint large up>
           {!!this.state.email ? <NavMenu /> : null}
-        </Breakpoint>
+        </Breakpoint>     
         <div className="body-margin" />
         <div className="page-container">
           <Route path={ROUTES.ADD_WORDS} component={AddWordsPage} />
           <Route exact path={[ROUTES.TRANSLATIONS, "/translations/:pageNum"]} component={TranslationsPageWithRouter} />
           <Route path={ROUTES.CONTRIBUTIONS} component={ContributionsPage} />
-          <Route path={ROUTES.THEME} component={ThemePage} />
+          <Route path={ROUTES.THEME} render={(props) => <ThemePage {...props} landing_image={LANDING_IMG}/>} />
           <Route path={ROUTES.SHARING} component={SharingPage} />
           <Route path={ROUTES.MANAGEMENT} component={ManagementPage} />
         </div>
@@ -119,6 +189,8 @@ class App extends React.Component {
         <BreakpointProvider>
           <div className="app-container">
             <Header
+              woolarooURL={WOOLAROO_URL}
+              logoURL={WOOLAROO_IMG}
               signedIn={!!this.state.email}
               authInitializing={this.state.authInitializing}
               authAction={() => this.authAction_()}

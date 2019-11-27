@@ -9,8 +9,6 @@ import  { Breakpoint } from 'react-socks';
 import './Header.css';
 import HamburgerNavMenu from '../navmenu/HamburgerNavMenu';
 
-const LOGO_IMG = "../logo512.png";
-
 class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -82,17 +80,23 @@ class Header extends React.Component {
       return null;
     }
 
-    return (
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={this.props.authAction}
-        className='auth-button'
-        key={1}
-      >
-        {this.props.signedIn ? 'Log out' : 'Sign in'}
-      </Button>
-    );
+    if (this.props.signedIn){
+        return (
+            // Only show button after logging in. Before logging in, landing page should have login button in the middle of the page.
+            
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={this.props.authAction}
+            className='auth-button'
+            key={1}
+          >
+            {this.props.signedIn ? 'Log out' : 'Sign in'}
+          </Button>
+        );
+    }else{
+        return null;;
+    }
   }
 
   render() {
@@ -107,11 +111,9 @@ class Header extends React.Component {
               null : <HamburgerNavMenu signedIn={this.props.signedIn} authAction={this.props.authAction} />}
           </Breakpoint>
           <Toolbar>
-          <img
-            src={LOGO_IMG}
-            alt="Woolaroo"
-            className="header-logo"
-          />
+            <h1 className={`header-title ${this.props.signedIn && 'signed-in'}`}>
+              <a href={this.props.woolarooURL}><img src={this.props.logoURL} alt="Woolaroo" style={{height:18}} /></a>
+            </h1>
             <div
               className={`header-search ${!this.props.signedIn && 'hidden'}`}>
               <SearchIcon className='header-search-icon' onClick={this.doSearch_}/>
