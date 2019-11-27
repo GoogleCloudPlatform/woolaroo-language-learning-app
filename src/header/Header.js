@@ -80,17 +80,23 @@ class Header extends React.Component {
       return null;
     }
 
-    return (
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={this.props.authAction}
-        className='auth-button'
-        key={1}
-      >
-        {this.props.signedIn ? 'Log out' : 'Sign in'}
-      </Button>
-    );
+    if (this.props.signedIn){
+        return (
+            // Only show button after logging in. Before logging in, landing page should have login button in the middle of the page.
+            
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={this.props.authAction}
+            className='auth-button'
+            key={1}
+          >
+            {this.props.signedIn ? 'Log out' : 'Sign in'}
+          </Button>
+        );
+    }else{
+        return null;;
+    }
   }
 
   render() {
@@ -106,7 +112,7 @@ class Header extends React.Component {
           </Breakpoint>
           <Toolbar>
             <h1 className={`header-title ${this.props.signedIn && 'signed-in'}`}>
-              Woolaroo
+              <a href={this.props.woolarooURL}><img src={this.props.logoURL} alt="Woolaroo" style={{height:18}} /></a>
             </h1>
             <div
               className={`header-search ${!this.props.signedIn && 'hidden'}`}>

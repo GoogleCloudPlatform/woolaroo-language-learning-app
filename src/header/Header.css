@@ -57,3 +57,7 @@ svg.header-search-icon:hover {
   margin-left: 16px;
   min-width: 96px;
 }
+
+.header-logo {
+  width: 200px;
+}
