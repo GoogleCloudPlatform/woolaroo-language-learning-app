@@ -133,7 +133,7 @@ echo $CONFIG
 cd ${CURRENT_PATH}/barnard-language-learning-app
 
 sed -i "" -e "s/\"_CONFIG_PLACEHOLDER_\"/$(echo $CONFIG | \
-sed -e 's/\\/\\\\/g; s/\//\\\//g; s/&/\\\&/g')/g" ./src/config.json
+  sed -e 's/\\/\\\\/g; s/\//\\\//g; s/&/\\\&/g')/g" ./src/config.json
 
 npm install
 npm run build
@@ -157,16 +157,3 @@ if ! [ -z "${TRANSLATION_SPREADSHEET_ID}" ]
     python ./functions/trix2firestore.py \
     $TRANSLATION_SPREADSHEET_ID $PROJECT_ID $CLIENT_ID_FILE
 fi
-
-
-# gcloud alpha builds triggers create cloud-source-repositories \
-#   --repo="github_googlecloudplatform_barnard-language-learning-app" --branch-pattern="^master$" \
-#   --build-config="cloudbuild.yaml" --substitutions _FIREBASE_TOKEN=1//0gVe3UJK7cYziCgYIARAAGBASNwF-L9IroNX0z7hJkuLXBpJTVyeyDkEUgBcpimZTVJTeFaH-UFkjQ6QcALTpn5hlM95Sd-xcg30,_PROJECT_NAME='final-test-woolaroo'
-
-# # https://help.github.com/en/github/setting-up-and-managing-your-github-user-account/requesting-organization-approval-for-oauth-apps
-
-# gcloud alpha builds triggers create cloud-source-repositories \
-#   --repo="github_googlecloudplatform_barnard-language-learning-app" --branch-pattern="^master$" \
-#   --build-config="app/cloudbuild.yaml" --substitutions _API_URL=https://us-central1-barnard-project.cloudfunctions.net,_BUCKET_LOCATION=asia,_BUCKET_NAME=barnard-project,_ENDANGERED_LANGUAGE=Sicilian,_LANGUAGE=en,_TERRAFORM_BUCKET_NAME=barnard-project-terraform,_THEME=red
-
-# gcloud alpha builds triggers run --branch=master a2c2a7e8-57df-4eb5-9360-71a5650ca350
