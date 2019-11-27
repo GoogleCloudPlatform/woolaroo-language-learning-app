@@ -13,8 +13,6 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import TextField from '@material-ui/core/TextField';
 import 'react-table/react-table.css'
 import './UserTable.css';
-import ApiUtils from '../utils/ApiUtils';
-import AuthUtils from '../utils/AuthUtils';
 
 class UserTable extends React.Component {
   constructor(props) {
@@ -35,29 +33,14 @@ class UserTable extends React.Component {
     this.handleRoleSelected_ = this.handleRoleSelected_.bind(this);
     this.changeRoles_ = this.changeRoles_.bind(this);
 
-    this.abortController = new AbortController();
     this.toggleRow = this.toggleRow.bind(this);
   }
 
-  async componentDidMount() {
-    await this.fetchUsers_();
-  }
-
-  async fetchUsers_() {
-    this.abortController.abort();
-    this.abortController = new AbortController();
-    try {
-      const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}getUsers`, {
-        headers: {
-          'Authorization': await AuthUtils.getAuthHeader(),
-        },
-        signal: this.abortController.signal,
-      });
-      const data = await resp.json();
-      this.setState({data, loading: false});
-    } catch(err) {
-      console.error(err);
-    }
+  static getDerivedStateFromProps(nextProps, prevState) {
+   return {
+    data: nextProps.data,
+    loading: nextProps.loading,
+   };
   }
 
   toggleRow(uid) {
@@ -215,7 +198,7 @@ class UserTable extends React.Component {
         <ReactTable
           data={this.state.data}
           columns={columns}
-          defaultSorted={[{ id: 'name', desc: false }]}
+          defaultSorted={[{ id: 'role', desc: false }]}
           loading={this.state.loading}
           className='user-table'
         />

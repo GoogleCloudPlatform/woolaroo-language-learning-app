@@ -32,9 +32,36 @@ class ManagementPage extends React.Component {
 
     this.state = {
       email: '',
+      emailIsValid: false,
       inviteDialogIsOpen: false,
       inviteRole: 'Moderator',
+      inviteInProgress: false,
+      data: [],
+      loading: true,
     };
+
+    this.abortController = new AbortController();
+  }
+
+  async componentDidMount() {
+    await this.fetchUsers_();
+  }
+
+  async fetchUsers_() {
+    this.abortController.abort();
+    this.abortController = new AbortController();
+    try {
+      const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}getUsers`, {
+        headers: {
+          'Authorization': await AuthUtils.getAuthHeader(),
+        },
+        signal: this.abortController.signal,
+      });
+      const data = await resp.json();
+      this.setState({data, loading: false});
+    } catch(err) {
+      console.error(err);
+    }
   }
 
   openDialog_() {
@@ -50,28 +77,33 @@ class ManagementPage extends React.Component {
   }
 
   handleEmailChange_(e) {
-    this.setState({email: e.target.value});
+    this.setState({
+      emailIsValid: this.validateEmail_(e.target.value),
+      email: e.target.value,
+    });
   }
 
-  async updateRole_(email, role, revoke = false) {
-    // TODO: Parse & validate emails.
+  validateEmail_(email) {
+    return /\S+@\S+\.\S+/.test(email);
+  }
+
+  async updateRole_(email, role, revoke = false, forceCreate = false) {
     try {
+      this.setState({inviteInProgress: true});
       const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}grant${role}Role`, {
         method: 'POST',
-        body: JSON.stringify({email, revoke}),
+        body: JSON.stringify({email, revoke, forceCreate}),
         headers: {
           'Authorization': await AuthUtils.getAuthHeader(),
           'Content-Type': 'application/json',
         }
       });
-
-      const respMsg = await resp.json();
-      if (respMsg) {
-        alert(respMsg.message || respMsg);
-      }
+      // Reload users after updating role.
+      this.fetchUsers_();
     } catch(err) {
       console.error(err);
     }
+    this.setState({inviteInProgress: false});
     this.closeDialog_();
   }
 
@@ -95,6 +127,8 @@ class ManagementPage extends React.Component {
             <DialogContentText>Add people</DialogContentText>
             <TextField
               label='Email'
+              error={!this.state.emailIsValid}
+              helperText={this.state.emailIsValid ? '' : 'Please enter a valid email address'}
               variant='outlined'
               margin='normal'
               fullWidth={true}
@@ -119,12 +153,21 @@ class ManagementPage extends React.Component {
             <Button onClick={this.closeDialog_} color='primary'>
               Cancel
             </Button>
-            <Button onClick={() => this.updateRole_(this.state.email, this.state.inviteRole)} color='primary'>
+            {/* This UI is used for inviting users, so revoke=false and forceCreate=true */}
+            <Button
+              onClick={() => this.updateRole_(this.state.email, this.state.inviteRole, false, true)}
+              disabled={!this.state.emailIsValid || this.state.inviteInProgress}
+              color='primary'
+            >
               Invite
             </Button>
           </DialogActions>
         </Dialog>
-        <UserTable updateRole={(email, role, revoke) => this.updateRole_(email, role, revoke)} />
+        <UserTable
+          updateRole={(email, role, revoke) => this.updateRole_(email, role, revoke)}
+          data={this.state.data}
+          loading={this.state.loading}
+        />
       </div>
     );
   }
