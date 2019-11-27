@@ -3,6 +3,7 @@ variable "google_credentials" {
     default = ""
 }
 variable "bucket_name" {}
+variable "google_region" {}
 variable "bucket_location" {
   default = ""
 }

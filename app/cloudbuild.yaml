@@ -1,5 +1,9 @@
 steps:
   # Terraform
+  - id: 'create_terraform_state_storage'
+    name: gcr.io/cloud-builders/gsutil
+    entrypoint: "gsutil"
+    args: ["mb", "gs://${_TERRAFORM_BUCKET_NAME}/"]
   - id: 'configure_terraform'
     name: node:10.16.3
     entrypoint: "node"
@@ -7,17 +11,18 @@ steps:
            "../terraform/override.tf",
            "${_TERRAFORM_BUCKET_NAME}",
            "${_TERRAFORM_BUCKET_PATH}"]
-    dir: "app/scripts"
+    dir: "./app/scripts"
   - id: 'init_terraform'
     name: hashicorp/terraform:light
     args: ["init"]
-    dir: "app/terraform"
+    dir: "./app/terraform"
   - id: 'run_terraform'
     name: hashicorp/terraform:light
     args: ["apply", "-auto-approve",
            "-var", "google_project=$PROJECT_ID",
            "-var", "bucket_name=${_BUCKET_NAME}",
            "-var", "bucket_location=${_BUCKET_LOCATION}",
+           "-var", "google_region=${_GOOGLE_REGION}",
            "-var", "app_location=${_APP_LOCATION}"]
     dir: "./app/terraform"
   # Client
