@@ -32,10 +32,12 @@ const SETTINGS = {
   PRIVACY_POLICY : "privacy_policy",
   APP_NAME : "app_name",
   APP_URL : "app_url",
-  PRIMARY_LANGUAGE : "primary_language",
+  PRIMARY_LANGUAGE : "French",
   TRANSLATION_LANGUAGE : "translation_language",
   LOGO_IMAGE_ID : "logo_image_id",
 }
+
+const primary_language_field = `${PRIMARY_LANGUAGE}_word`;
 
 
 exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
@@ -164,6 +166,7 @@ exports.addSuggestions = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
     var snapshot = await admin.firestore().collection('suggestions').add({
       english_word: req.body.english_word,
+      primary_word: req.body.primary_word,
       translation: req.body.translation,
       transliteration: req.body.transliteration,
       sound_link: req.body.sound_link,
@@ -254,6 +257,7 @@ exports.getTranslations = functions.https.onRequest(async (req, res) => {
   const createResponse = (res) => {
     var data = {
         english_word: (res === undefined) ? '' : res.english_word ,
+        primary_word: (res === undefined) ? '' : res.primary_word ,
         translation: (res === undefined) ? '' : res.translation ,
         transliteration: (res === undefined) ? '' : res.transliteration,
         sound_link: (res === undefined) ? '' : res.sound_link
@@ -393,6 +397,7 @@ exports.addFeedback = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
     var snapshot = await admin.firestore().collection('feedback').add({
       english_word: req.body.english_word,
+      primary_word: req.body.primary_word,
       translation: req.body.translation,
       transliteration: req.body.transliteration,
       sound_link: req.body.sound_link,
@@ -425,12 +430,10 @@ exports.getEntireFeedbackCollection = functions.https.onRequest(async (req, res)
       console.log("Error getting document:", error);
       res.status(500).send(error);
   });  
-
-
-
   return cors(req, res, async () => {
     var snapshot = await admin.firestore().collection('feedback').add({
       english_word: req.body.english_word,
+      primary_word: req.body.primary_word,
       translation: req.body.translation,
       transliteration: req.body.transliteration,
       sound_link: req.body.sound_link,
