@@ -1,6 +1,12 @@
 body {
   font-family: "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
+.centralize{
+    text-align: center;
+}
+.centralize button{
+    margin: 20px;
+}
 
 .body-container {
   display: flex;
@@ -24,6 +30,7 @@ body {
 
 .landing-page-img {
   width: 100%;
+  max-width: 800px;
 }
 
 .MuiButton-containedPrimary:enabled, .MuiChip-colorPrimary, span.MuiButton-containedPrimary {

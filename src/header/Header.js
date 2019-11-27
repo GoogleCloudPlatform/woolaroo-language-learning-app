@@ -18,19 +18,25 @@ class Header extends React.Component {
     this.doSearch_ = this.doSearch_.bind(this);
 
     const queryStringParams = new URLSearchParams(props.location.search);
+    const needsRecording = queryStringParams.get('needsRecording');
+    const top500 = queryStringParams.get('top500');
 
     this.state = {
       search: queryStringParams.get('search') || '',
-      top500: queryStringParams.get('top500') !== '0',
+      top500: top500 !== '0',
+      needsRecording: !!(needsRecording && needsRecording !== '0'),
     };
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
       const queryStringParams = new URLSearchParams(this.props.location.search);
+      const needsRecording = queryStringParams.get('needsRecording');
+      const top500 = queryStringParams.get('top500');
       this.setState({
-        search: queryStringParams.get('search') || '',
-        top500: queryStringParams.get('top500') !== '0',
+          search: queryStringParams.get('search') || '',
+          top500: top500 !== '0',
+          needsRecording: !!(needsRecording && needsRecording !== '0'),
       });
     }
   }
@@ -49,10 +55,16 @@ class Header extends React.Component {
 
   doSearch_() {
     let nextHistory = `/?search=${this.state.search}`;
-    if (!this.state.top500) {
-      nextHistory += '&top500=0';
-    }
+    
+    // clear filters when doing a fresh search
+    //if (!this.state.top500) {
+    //  nextHistory += `&top500=0`;
+    //}
+    //if (this.state.needsRecording) {
+    //  nextHistory += `&needsRecording=1`;
+    //}
     this.props.history.push(nextHistory);
+    console.log(nextHistory);
   }
 
   renderHeaderSearch_() {
@@ -80,17 +92,23 @@ class Header extends React.Component {
       return null;
     }
 
-    return (
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={this.props.authAction}
-        className='auth-button'
-        key={1}
-      >
-        {this.props.signedIn ? 'Log out' : 'Sign in'}
-      </Button>
-    );
+    if (this.props.signedIn){
+        return (
+            // Only show button after logging in. Before logging in, landing page should have login button in the middle of the page.
+            
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={this.props.authAction}
+            className='auth-button'
+            key={1}
+          >
+            {this.props.signedIn ? 'Log out' : 'Sign in'}
+          </Button>
+        );
+    }else{
+        return null;;
+    }
   }
 
   render() {
@@ -106,7 +124,7 @@ class Header extends React.Component {
           </Breakpoint>
           <Toolbar>
             <h1 className={`header-title ${this.props.signedIn && 'signed-in'}`}>
-              Woolaroo
+              <img src={this.props.logoURL} alt="Woolaroo" style={{height:18}} />
             </h1>
             <div
               className={`header-search ${!this.props.signedIn && 'hidden'}`}>
