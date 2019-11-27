@@ -6,7 +6,7 @@ steps:
     args:
     - '-c'
     - |
-      if [ 0 -eq $(gsutil ls | grep -c "gs://${_TERRAFORM_BUCKET_NAME}") ]; then
+      if [ 0 -eq $(gsutil ls -p "${PROJECT_ID}" | grep -c "gs://${_TERRAFORM_BUCKET_NAME}") ]; then
         gsutil mb -p "${PROJECT_ID}" "gs://${_TERRAFORM_BUCKET_NAME}/"
       else
         echo "terraform state bucket named ${_TERRAFORM_BUCKET_NAME} already exists, skipping gsutil mb"
