@@ -1,62 +1,99 @@
+import {makeStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import React from "react";
 import TextField from "@material-ui/core/TextField";
-import AuthUtils from '../utils/AuthUtils';
 
-class SharingPage extends React.Component {
-  copytext(target){
-    target.select();
-    document.execCommand('copy');
-    }
-  render(){
-    return (
+const useStyles = makeStyles(theme => ({
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 350
+  },
+  button: {
+    margin: theme.spacing(1),
+  },
+  newSection: {
+    marginTop: theme.spacing(12)
+  },
+}));
+
+function SharingPage() {
+  const classes = useStyles();
+  return (
+    <div>
+      <h2>Share with friends</h2>
+
+      {/* <div>
+        <TextField
+          id="share-emails"
+          label="Invite people to contribute"
+          style={{
+            margin: 8
+          }}
+          placeholder="Enter comma separated emails"
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true
+          }}
+        />
+      </div> */}
+
+      {/* <div>
+        <TextField
+          id="optional-message"
+          multiline="multiline"
+          rows="4"
+          placeholder="Write message (optional)"
+          className={classes.textField}
+          margin="normal"
+        />
+
         <div>
-          <h2>Share with friends</h2>
-
-            <div>
-                <TextField
-                  id="app-link"
-                  label="App URL"
-                  style={{
-                    marginBottom: 8,
-                    width: '100%'
-                  }}
-                  value={AuthUtils.app_url}
-                  placeholder="ladino.appspot.com"
-                />
-                <div>
-                    <Button variant="contained" color="primary" 
-                        onClick={() => this.copytext(document.getElementById('app-link'))}
-                    >
-                      Copy link
-                    </Button>
-                </div>
-                <br /><br />
-                <div>
-                    <TextField
-                      id="contributor-app-link"
-                      label="Contributor app URL"
-                      style={{
-                        marginBottom: 8,
-                        width: '100%'
-                      }}
-                      value={AuthUtils.app_url_contributor}
-                      placeholder="ladino.appspot.com/contribute"
-                    />
-                    <div>
-                        <Button variant="contained" color="primary" 
-                            onClick={() => this.copytext(document.getElementById('contributor-app-link'))}
-                        >
-                          Copy link
-                        </Button>
-                    </div>
-                </div>
-            </div>
-    
+        <Button variant="contained" color="primary" className={classes.button}>
+          Send Invite
+        </Button>
         </div>
-      );
-  }
+      </div> */}
 
+      <div>
+        <TextField
+          id="app-link"
+          label="App URL"
+          style={{
+            margin: 8
+          }}
+          placeholder="ladino.appspot.com"
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true
+          }}
+        />
+<div>
+        <Button variant="contained" color="primary" className={classes.button}>
+          Copy link
+        </Button></div>
+      </div>
+
+      <div className={classes.newSection}>
+        <TextField
+          id="contributor-app-link"
+          label="Contributor app URL"
+          style={{
+            margin: 8
+          }}
+          placeholder="ladino.appspot.com/contribute"
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true
+          }}
+        />
+<div>
+        <Button variant="contained" color="primary" className={classes.button}>
+          Copy link
+        </Button></div>
+      </div>
+    </div>
+  );
 }
 
 export default SharingPage;
