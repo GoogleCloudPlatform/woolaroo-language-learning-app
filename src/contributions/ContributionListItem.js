@@ -18,7 +18,7 @@ class ContributionListItem extends ListItemBase {
     }
   }
 
-  saveContribution = async (e) => {
+  saveContribution_ = async (e) => {
     try {
       const { english_word, sound_link, translation,
         transliteration } = this.state;
@@ -63,7 +63,7 @@ class ContributionListItem extends ListItemBase {
         aria-label="save"
         className="save-contribution"
         key={0}
-        onClick={this.saveContribution}
+        onClick={this.saveContribution_}
       >
         <SaveIcon />
       </IconButton>,
