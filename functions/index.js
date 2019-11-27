@@ -414,10 +414,11 @@ exports.getEntireFeedbackCollection = functions.https.onRequest(async (req, res)
   if (!hasAccess) {
     return;
   }
-  var docRef = admin.firestore().collection("suggestions");
-    let querySnapshot;
-    querySnapshot = await docRef.get();
-    docRef.get().then(querySnapshot => { 
+  var docRef = admin.firestore().collection("feedback");
+
+  let querySnapshot;
+  querySnapshot = await docRef.get();
+  docRef.get().then(querySnapshot => { 
       if (querySnapshot.empty) {
           res.status(404).send("NO translations");
       } else {
@@ -429,7 +430,7 @@ exports.getEntireFeedbackCollection = functions.https.onRequest(async (req, res)
     }).catch(error => {
       console.log("Error getting document:", error);
       res.status(500).send(error);
-  });  
+    });  
   return cors(req, res, async () => {
     var snapshot = await admin.firestore().collection('feedback').add({
       english_word: req.body.english_word,
@@ -723,7 +724,6 @@ exports.testEndpoint = functions.https.onRequest((req, res) => {
   });
 });
 
-
 const currentProjectId = admin.instanceId().app.options.projectId;
 const repoName = "bitbucket_rushdigital_google-barnard"
 const wizardRepoName = "github_googlecloudplatform_barnard-language-learning-app"
@@ -731,18 +731,12 @@ const wizardRepoName = "github_googlecloudplatform_barnard-language-learning-app
 // API calls & Resources
 const cloudResourceManager = google.cloudresourcemanager('v1');
 const serviceusage = google.serviceusage('v1');
-
-
-const clientSecretJson = JSON.parse(fs.readFileSync('./client_secret.json'));
+clientSecretJson = JSON.parse(fs.readFileSync('./client_secret.json'));
 const oauth2Client = new google.auth.OAuth2(
   clientSecretJson.web.client_id,
   clientSecretJson.web.client_secret,
   `https://us-central1-${currentProjectId}.cloudfunctions.net/oauth2callback`
 );
-
-
-
-
 
 function parseCookies(rc) {
     var list = {};
@@ -825,7 +819,6 @@ exports.createProject = functions.runWith({timeoutSeconds: 540 ,memory: '1GB'}).
   //Create new project, 
   //This works: http://cloud.google.com/resource-manager/reference/rest/v1/projects/create
   const newProjectId = req.query.newProjectId; //`/createProject?newProjectId=${newProjectId}`
-
   const cookie = parseCookies(req.headers.cookie);
   const cookieStr = cookie.token;
   const token = cookieStr ? JSON.parse(decodeURIComponent(cookieStr)) : null;
@@ -839,11 +832,11 @@ exports.createProject = functions.runWith({timeoutSeconds: 540 ,memory: '1GB'}).
 
   //Create project
   console.log('creating project.')
-  // resources
   const projectResource = {
     "projectId": newProjectId,
     "name": newProjectId
   }
+  
   function createNewProject() {
     return new Promise((resolve, reject) => {
       cloudResourceManager.projects.create({auth: oauth2Client, resource: projectResource}, (err, response) => {
@@ -907,12 +900,12 @@ exports.createProject = functions.runWith({timeoutSeconds: 540 ,memory: '1GB'}).
   }
   console.log('finished enabling all services');
 
-
   // console.log('finished adding firebase to project') //Cannot finalize default location to [us-central] because project is not found: ProjectNumber 121435670342.
   // //Set default location
   // var setDefaultLocationOptions = postOptions(token, 
   //   `https://firebase.googleapis.com/v1beta1/projects/${newProjectId}/defaultLocation:finalize`, {"locationId":"us-central"});
   // await request(setDefaultLocationOptions);
+
   res.status(200).send('Finished everything.');
 });
 
@@ -923,7 +916,6 @@ exports.deployWizard = functions.https.onRequest(async (req, res) => {
   const token = cookieStr ? JSON.parse(decodeURIComponent(cookieStr)) : null;
   console.log(`Token ${token.access_token} with expiry date ${token.expiry_date} found in cookie`)
   // If the stored OAuth 2.0 access token has expired, request a new one
-  // TODO: Cannot read property 'end' of undefined.
   if (!token || !token.expiry_date || token.expiry_date < Date.now() + 60000) {
     return res.redirect('/oauth2init').end();
   }
@@ -971,7 +963,7 @@ exports.deployWizard = functions.https.onRequest(async (req, res) => {
   }
   const wizardBuildTrigger = {
     "description": "Auto deployment of Wizard",
-    "name": "wizard-trigger-tt",
+    "name": "wizard-trigger",
     "triggerTemplate": wizardRepoSource,
     "disabled": false,
     "substitutions": {
@@ -1051,8 +1043,3 @@ exports.deployApp = functions.https.onRequest(async (req, res) => {
   var build = await request(runAppTriggerOptions);
   res.status(200).send(JSON.parse(build));
 });
-
-
-
-
-
