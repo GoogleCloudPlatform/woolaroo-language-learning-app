@@ -27,6 +27,7 @@ const EMPTY_APP_SETTINGS = {
   privacy_policy: "",
   translation_language: ""
 };
+
 class AuthUtils {
   constructor() {
     // to be overwritten by firestore values
