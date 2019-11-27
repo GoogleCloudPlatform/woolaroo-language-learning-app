@@ -14,13 +14,6 @@ output "bucket_url" {
   value = "gs://${var.bucket_name}"
 }
 
-terraform {
-  backend "gcs" {
-    bucket  = "dfdfdfdfue-terraform"
-    prefix  = "state"
-  }
-}
-
 provider "google" {
   credentials = var.google_credentials
   project = var.google_project
