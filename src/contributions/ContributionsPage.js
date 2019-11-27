@@ -14,36 +14,39 @@ class ContributionsPage extends ListPageBase {
   constructor(props) {
     super(props);
     const initialTab = 'new';
-    this.setState({
+    this.state = {
+      ...this.state,
+      pageTitle: 'User Contributions',
       tab: initialTab,
       listItemTag: TAB_TO_ITEM[initialTab].listItemTag,
       collectionName: TAB_TO_ITEM[initialTab].collectionName,
-    });
+    };
   }
 
   async handleTabClick_(e, nextTab) {
     e.preventDefault();
-    this.setState({
+    await this.setState({
       tab: nextTab,
       listItemTag: TAB_TO_ITEM[nextTab].listItemTag,
       collectionName: TAB_TO_ITEM[nextTab].collectionName,
+      loading: true,
     });
     await this.fetchItems();
   }
 
   renderTabSelection_() {
     return (
-      <div className="state-selection">
+      <div className="state-selection contribution-tabs">
         <ul>
           <li
             className={this.state.tab === 'new' ? 'selected' : null}
-            onClick={(e) => this.handleTabClick_(e, 'new')}
+            onClick={this.state.loading ? null : (e) => this.handleTabClick_(e, 'new')}
           >
             <a href='#'>New additions</a>
           </li>
           <li
             className={this.state.tab === 'flagged' ? 'selected' : null}
-            onClick={(e) => this.handleTabClick_(e, 'flagged')}
+            onClick={this.state.loading ? null : (e) => this.handleTabClick_(e, 'flagged')}
           >
             <a href='#'>Flagged by user</a>
           </li>
