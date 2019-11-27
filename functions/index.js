@@ -32,10 +32,12 @@ const SETTINGS = {
   PRIVACY_POLICY : "privacy_policy",
   APP_NAME : "app_name",
   APP_URL : "app_url",
-  PRIMARY_LANGUAGE : "primary_language",
+  PRIMARY_LANGUAGE : "French",
   TRANSLATION_LANGUAGE : "translation_language",
   LOGO_IMAGE_ID : "logo_image_id",
 }
+
+const primary_language_field = `${PRIMARY_LANGUAGE}_word`;
 
 
 exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
@@ -164,6 +166,7 @@ exports.addSuggestions = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
     var snapshot = await admin.firestore().collection('suggestions').add({
       english_word: req.body.english_word,
+      primary_word: req.body.primary_word,
       translation: req.body.translation,
       transliteration: req.body.transliteration,
       sound_link: req.body.sound_link,
@@ -254,6 +257,7 @@ exports.getTranslations = functions.https.onRequest(async (req, res) => {
   const createResponse = (res) => {
     var data = {
         english_word: (res === undefined) ? '' : res.english_word ,
+        primary_word: (res === undefined) ? '' : res.primary_word ,
         translation: (res === undefined) ? '' : res.translation ,
         transliteration: (res === undefined) ? '' : res.transliteration,
         sound_link: (res === undefined) ? '' : res.sound_link
@@ -393,6 +397,7 @@ exports.addFeedback = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
     var snapshot = await admin.firestore().collection('feedback').add({
       english_word: req.body.english_word,
+      primary_word: req.body.primary_word,
       translation: req.body.translation,
       transliteration: req.body.transliteration,
       sound_link: req.body.sound_link,
@@ -410,9 +415,10 @@ exports.getEntireFeedbackCollection = functions.https.onRequest(async (req, res)
     return;
   }
   var docRef = admin.firestore().collection("feedback");
-    let querySnapshot;
-    querySnapshot = await docRef.get();
-    docRef.get().then(querySnapshot => { 
+
+  let querySnapshot;
+  querySnapshot = await docRef.get();
+  docRef.get().then(querySnapshot => { 
       if (querySnapshot.empty) {
           res.status(404).send("NO translations");
       } else {
@@ -424,13 +430,11 @@ exports.getEntireFeedbackCollection = functions.https.onRequest(async (req, res)
     }).catch(error => {
       console.log("Error getting document:", error);
       res.status(500).send(error);
-  });  
-
-
-
+    });  
   return cors(req, res, async () => {
     var snapshot = await admin.firestore().collection('feedback').add({
       english_word: req.body.english_word,
+      primary_word: req.body.primary_word,
       translation: req.body.translation,
       transliteration: req.body.transliteration,
       sound_link: req.body.sound_link,
@@ -727,16 +731,12 @@ const wizardRepoName = "github_googlecloudplatform_barnard-language-learning-app
 // API calls & Resources
 const cloudResourceManager = google.cloudresourcemanager('v1');
 const serviceusage = google.serviceusage('v1');
-const clientSecretJson = JSON.parse(fs.readFileSync('client_secret.json'));
+clientSecretJson = JSON.parse(fs.readFileSync('./client_secret.json'));
 const oauth2Client = new google.auth.OAuth2(
   clientSecretJson.web.client_id,
   clientSecretJson.web.client_secret,
   `https://us-central1-${currentProjectId}.cloudfunctions.net/oauth2callback`
 );
-
-
-
-
 
 function parseCookies(rc) {
     var list = {};
@@ -818,7 +818,7 @@ exports.oauth2callback = functions.https.onRequest(async (req, res) => {
 exports.createProject = functions.runWith({timeoutSeconds: 540 ,memory: '1GB'}).https.onRequest(async (req, res) => {
   //Create new project, 
   //This works: http://cloud.google.com/resource-manager/reference/rest/v1/projects/create
-  const newProjectId = req.query.newProjectId; 
+  const newProjectId = req.query.newProjectId; //`/createProject?newProjectId=${newProjectId}`
   const cookie = parseCookies(req.headers.cookie);
   const cookieStr = cookie.token;
   const token = cookieStr ? JSON.parse(decodeURIComponent(cookieStr)) : null;
@@ -836,7 +836,7 @@ exports.createProject = functions.runWith({timeoutSeconds: 540 ,memory: '1GB'}).
     "projectId": newProjectId,
     "name": newProjectId
   }
-
+  
   function createNewProject() {
     return new Promise((resolve, reject) => {
       cloudResourceManager.projects.create({auth: oauth2Client, resource: projectResource}, (err, response) => {
@@ -899,6 +899,7 @@ exports.createProject = functions.runWith({timeoutSeconds: 540 ,memory: '1GB'}).
     console.log('essage:', msg);
   }
   console.log('finished enabling all services');
+
   // console.log('finished adding firebase to project') //Cannot finalize default location to [us-central] because project is not found: ProjectNumber 121435670342.
   // //Set default location
   // var setDefaultLocationOptions = postOptions(token, 
@@ -915,7 +916,6 @@ exports.deployWizard = functions.https.onRequest(async (req, res) => {
   const token = cookieStr ? JSON.parse(decodeURIComponent(cookieStr)) : null;
   console.log(`Token ${token.access_token} with expiry date ${token.expiry_date} found in cookie`)
   // If the stored OAuth 2.0 access token has expired, request a new one
-  // TODO yilliu: Fix error cannot read property 'end' of undefined.
   if (!token || !token.expiry_date || token.expiry_date < Date.now() + 60000) {
     return res.redirect('/oauth2init').end();
   }
