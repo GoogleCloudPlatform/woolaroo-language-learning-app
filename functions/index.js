@@ -167,7 +167,6 @@ exports.addSuggestions = functions.https.onRequest(async (req, res) => {
       translation: req.body.translation,
       transliteration: req.body.transliteration,
       sound_link: req.body.sound_link,
-      primary_word: req.body.primary_word,
       timestamp: admin.firestore.FieldValue.serverTimestamp(),
     });
     console.log('Translation suggestions saved.');
@@ -175,42 +174,10 @@ exports.addSuggestions = functions.https.onRequest(async (req, res) => {
   });
 });
 
-exports.approveSuggestions = functions.https.onRequest(async (req, res) => {
-  return cors(req, res, async () => {
-    const hasAccess = await checkAccess_(req, res);
-    if (!hasAccess) {
-      return;
-    }
-    const suggestion = {
-      english_word: req.body.english_word,
-      primary_word: req.body.primary_word,
-      translation: req.body.translation,
-      transliteration: req.body.transliteration,
-      sound_link: req.body.sound_link,
-      frequency: Number(req.body.frequency) || 11,
-      timestamp: admin.firestore.FieldValue.serverTimestamp(),
-    }
-    const doc_suggestion = admin.firestore().collection('translations')
-        .doc(req.body.english_word)
-    const doc = admin.firestore().collection('suggestions')
-      .doc(req.body.english_word);
-    try {
-      await doc_suggestion.set(suggestion);
-      await doc.delete();
-      console.log("saved in translations and deleted from suggestions.");
-      res.status(200).send(JSON.stringify("Row deleted."));
-    } catch(err) {
-      console.log("Error saving in translations and deleted from suggestions.:", err);
-    }
-  });
-});
-
-
 exports.addTranslations = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
     var snapshot = await admin.firestore().collection('translations').doc(req.body.english_word).set({
       english_word: req.body.english_word,
-      primary_word: req.body.primary_word,
       translation: req.body.translation,
       transliteration: req.body.transliteration,
       sound_link: req.body.sound_link,
@@ -720,6 +687,8 @@ exports.testEndpoint = functions.https.onRequest((req, res) => {
   });
 });
 
+
+const newProjectId = "final-test-woolaroo"
 const currentProjectId = admin.instanceId().app.options.projectId;
 const repoName = "bitbucket_rushdigital_google-barnard"
 const wizardRepoName = "github_googlecloudplatform_barnard-language-learning-app"
@@ -727,6 +696,12 @@ const wizardRepoName = "github_googlecloudplatform_barnard-language-learning-app
 // API calls & Resources
 const cloudResourceManager = google.cloudresourcemanager('v1');
 const serviceusage = google.serviceusage('v1');
+
+// resources
+const projectResource = {
+  "projectId": newProjectId,
+  "name": newProjectId
+}
 const clientSecretJson = JSON.parse(fs.readFileSync('client_secret.json'));
 const oauth2Client = new google.auth.OAuth2(
   clientSecretJson.web.client_id,
@@ -768,12 +743,12 @@ function postOptions(token, uri, body){
 exports.oauth2init = functions.https.onRequest(async (req, res) => {
   // Parse session cookie
   // Note: this presumes 'token' is the only value in the cookie
-  const cookieStr = parseCookies(req.headers.cookie);
+  const cookieStr = parseCookies(req.headers.cookie)
   console.log(cookieStr)
   const token = cookieStr ? decodeURIComponent(cookieStr) : null;
   // If the current OAuth token hasn't expired yet, go to /listlabels
   if (token && token.expiry_date && token.expiry_date >= Date.now() + 60000) {
-    return res.redirect(`/createProject`);
+    return res.redirect('/createProject');
   }
   // Define OAuth2 scopes
   const scopes = [
@@ -818,8 +793,7 @@ exports.oauth2callback = functions.https.onRequest(async (req, res) => {
 exports.createProject = functions.runWith({timeoutSeconds: 540 ,memory: '1GB'}).https.onRequest(async (req, res) => {
   //Create new project, 
   //This works: http://cloud.google.com/resource-manager/reference/rest/v1/projects/create
-  const newProjectId = req.query.newProjectId; 
-  const cookie = parseCookies(req.headers.cookie);
+  const cookie = parseCookies(req.headers.cookie)
   const cookieStr = cookie.token;
   const token = cookieStr ? JSON.parse(decodeURIComponent(cookieStr)) : null;
   console.log('token!')
@@ -832,11 +806,6 @@ exports.createProject = functions.runWith({timeoutSeconds: 540 ,memory: '1GB'}).
 
   //Create project
   console.log('creating project.')
-  const projectResource = {
-    "projectId": newProjectId,
-    "name": newProjectId
-  }
-
   function createNewProject() {
     return new Promise((resolve, reject) => {
       cloudResourceManager.projects.create({auth: oauth2Client, resource: projectResource}, (err, response) => {
@@ -877,17 +846,17 @@ exports.createProject = functions.runWith({timeoutSeconds: 540 ,memory: '1GB'}).
   var services = [
     // "serviceusage.googleapis.com",
     "cloudresourcemanager.googleapis.com",
-    "cloudbilling.googleapis.com", //https://cloud.google.com/billing/reference/rest/v1/projects/updateBillingInfo
+    "cloudbilling.googleapis.com",
     "iam.googleapis.com",
-    "firebase.googleapis.com"
-    // //"credentials.googleapis.com",
-    // // "firestore.googleapis.com", FAILED_PRECONDITION
-    // "appengine.googleapis.com",
-    // "firebasehosting.googleapis.com",
-    // "sheets.googleapis.com",
-    // // "vision.googleapis.com",
-    // "cloudbuild.googleapis.com"
-    // // "cloudtrigger.googleapis.com"
+    "firebase.googleapis.com",
+    //"credentials.googleapis.com",
+    "firestore.googleapis.com",
+    "appengine.googleapis.com",
+    "firebasehosting.googleapis.com",
+    "sheets.googleapis.com",
+    "vision.googleapis.com",
+    "cloudbuild.googleapis.com"
+    // "cloudtrigger.googleapis.com"
     ];
 
   console.log('Message:', msg);
@@ -899,23 +868,23 @@ exports.createProject = functions.runWith({timeoutSeconds: 540 ,memory: '1GB'}).
     console.log('essage:', msg);
   }
   console.log('finished enabling all services');
-  // console.log('finished adding firebase to project') //Cannot finalize default location to [us-central] because project is not found: ProjectNumber 121435670342.
-  // //Set default location
-  // var setDefaultLocationOptions = postOptions(token, 
-  //   `https://firebase.googleapis.com/v1beta1/projects/${newProjectId}/defaultLocation:finalize`, {"locationId":"us-central"});
-  // await request(setDefaultLocationOptions);
 
+
+  console.log('finished adding firebase to project')
+  //Set default location
+  var setDefaultLocationOptions = postOptions(token, 
+    `https://firebase.googleapis.com/v1beta1/projects/${newProjectId}/defaultLocation:finalize`, {"locationId":"us-central"});
+  await request(setDefaultLocationOptions);
   res.status(200).send('Finished everything.');
 });
 
 exports.deployWizard = functions.https.onRequest(async (req, res) => {
-  var newProjectId = req.query.newProjectId;
   const cookie = parseCookies(req.headers.cookie)
   const cookieStr = cookie.token;
   const token = cookieStr ? JSON.parse(decodeURIComponent(cookieStr)) : null;
-  console.log(`Token ${token.access_token} with expiry date ${token.expiry_date} found in cookie`)
+  console.log('token!')
+  console.log(token)
   // If the stored OAuth 2.0 access token has expired, request a new one
-  // TODO yilliu: Fix error cannot read property 'end' of undefined.
   if (!token || !token.expiry_date || token.expiry_date < Date.now() + 60000) {
     return res.redirect('/oauth2init').end();
   }
@@ -945,7 +914,7 @@ exports.deployWizard = functions.https.onRequest(async (req, res) => {
     uri: `https://firebase.googleapis.com/v1beta1/projects/${newProjectId}/webApps/${appId}/config`,
   }
   var firebaseConfig = await request(getFirebaseConfigOptions);
-  console.log(JSON.parse(decodeURIComponent(firebaseConfig)));
+  console.log(firebaseConfig);
   var projectNumber = JSON.parse(decodeURIComponent(firebaseConfig)).messagingSenderId;
   console.log(`Current project number is ${projectNumber}`);
 
@@ -990,7 +959,6 @@ exports.deployWizard = functions.https.onRequest(async (req, res) => {
 
 // Create Trigger & Run Trigger
 exports.deployApp = functions.https.onRequest(async (req, res) => {
-  var newProjectId = req.query.newProjectId;
   // Parse session cookie
   const cookie = parseCookies(req.headers.cookie)
   const cookieStr = cookie.token;
@@ -1043,3 +1011,6 @@ exports.deployApp = functions.https.onRequest(async (req, res) => {
   var build = await request(runAppTriggerOptions);
   res.status(200).send(JSON.parse(build));
 });
+
+
+
