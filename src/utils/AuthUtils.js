@@ -1,6 +1,5 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import 'firebase/firestore';
 
 const IS_LOCAL = process.env.NODE_ENV === 'development' ||
   process.env.NODE_ENV === 'test';
@@ -18,34 +17,17 @@ const localFirebaseConfig_ = {
 
 const config = require('../config.json');
 
-const firebaseConfig_ = IS_LOCAL ? localFirebaseConfig_ : config.firebase_config; // eslint-disable-line
+const firebaseConfig_ = IS_LOCAL ? localFirebaseConfig_ : config; // eslint-disable-line
 
 class AuthUtils {
   constructor() {
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig_);
-      AuthUtils.fsdb = firebase.firestore();
-      AuthUtils.app_url = "https://"+firebaseConfig_.projectId+".appspot.com";
-      AuthUtils.app_url_contributor = "https://"+firebaseConfig_.projectId+".firebaseapp.com";
     }
 
     this.provider_ = new firebase.auth.GoogleAuthProvider();
   }
 
-  static setAppSettings(app_settings){
-    AuthUtils.app_settings = app_settings;
-  }
-  static getAppSettings(){
-    const appSettings = AuthUtils.getAppSettings();
-    if (appSettings.primary_language && appSettings.organization_url && appSettings.organization_name){
-        return AuthUtils.app_settings;
-    }else{
-        return null;
-    }
-  }
-  static getPrimaryLanguage(){
-    return AuthUtils.app_settings.primary_language;
-  }
   async signInWithPopup() {
     return await firebase.auth().signInWithPopup(this.provider_);
   }
@@ -60,12 +42,6 @@ class AuthUtils {
 
   static setUser(user) {
     AuthUtils.user = user;
-  }
-  static getUserType(user) {
-    return AuthUtils.usertype;
-  }
-  static setUserType(user) {
-    AuthUtils.usertype = user;
   }
 
   static async getAuthHeader() {
