@@ -4,14 +4,14 @@ steps:
     name: node:10.16.3
     entrypoint: "node"
     args: ["./create_terraform_config.js",
-           "../app/terraform/override.tf",
+           "../terraform/override.tf",
            "${_TERRAFORM_BUCKET_NAME}",
            "${_TERRAFORM_BUCKET_PATH}"]
-    dir: "app/scripts"
+    dir: "./app/scripts"
   - id: 'init_terraform'
     name: hashicorp/terraform:light
     args: ["init"]
-    dir: "app/terraform"
+    dir: "./app/terraform"
   - id: 'run_terraform'
     name: hashicorp/terraform:light
     args: ["apply", "-auto-approve",
