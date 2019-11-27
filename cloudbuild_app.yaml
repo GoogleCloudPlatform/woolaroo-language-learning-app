@@ -3,3 +3,4 @@ steps:
   - id: 'init_terraform'
     name: hashicorp/terraform:light
     args: ["init"]
+    dir: "app/terraform"
