@@ -29,7 +29,7 @@ class AudioRecorder extends React.Component {
       </Fab>;
 
     return <div className="audio-buttons">
-        {this.state.isRecording ? stopRecording : record}
+        {this.props.disableRecord ? null : (this.state.isRecording ? stopRecording : record)}
         {(this.state.recordedBlob || this.props.audioUrl) && play}
     </div>;
   }

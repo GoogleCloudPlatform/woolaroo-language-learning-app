@@ -22,8 +22,12 @@ class ListItemBase extends React.Component {
     this.handleDeleteConfirm_ = this.handleDeleteConfirm_.bind(this);
     this.showDeleteConfirm_ = this.showDeleteConfirm_.bind(this);
 
-    const { english_word, sound_link, translation,
-      transliteration, id, frequency } = this.props.item;
+    const {
+      english_word, id, frequency,
+      sound_link, translation, transliteration,
+      // For flagged items only.
+      curr_sound_link, curr_translation, curr_transliteration, content,
+    } = this.props.item;
 
     this.state = {
       id,
@@ -32,6 +36,10 @@ class ListItemBase extends React.Component {
       translation,
       transliteration,
       frequency,
+      content,
+      curr_sound_link,
+      curr_translation,
+      curr_transliteration,
       promo_message: null,
       promo_open: false,
       deleted: false,
@@ -146,7 +154,7 @@ class ListItemBase extends React.Component {
     this.setState({promo_open: false});
   }
 
-  renderPromoMessage_() {
+  renderPromoMessage() {
     if (!this.state.promo_message || !this.state.promo_open) {
       return null;
     }
@@ -171,7 +179,7 @@ class ListItemBase extends React.Component {
     this.setState({showDeleteConfirm: false});
   }
 
-  renderDeleteConfirmAlert_() {
+  renderDeleteConfirmAlert() {
     if (!this.state.showDeleteConfirm) {
       return;
     }
@@ -209,8 +217,8 @@ class ListItemBase extends React.Component {
         {this.renderTransliteration()}
         {this.renderAudioRecorder()}
         {this.renderEndOfRow()}
-        {this.renderPromoMessage_()}
-        {this.renderDeleteConfirmAlert_()}
+        {this.renderPromoMessage()}
+        {this.renderDeleteConfirmAlert()}
       </li>
     );
   }
