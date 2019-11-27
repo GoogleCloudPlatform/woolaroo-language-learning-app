@@ -1,6 +1,29 @@
 steps:
-  # Terraform
-  - id: 'init_terraform'
-    name: hashicorp/terraform:light
+  - name: hashicorp/terraform:light
     args: ["init"]
-    dir: "app/terraform"
+    dir: "./app/terraform"
+  - name: hashicorp/terraform:light
+    args: ["apply", "--auto-approve",
+           "-var", "google_project=$PROJECT_ID",
+           "-var", "google_region=${_GOOGLE_REGION}",
+           "-var", "bucket_name=${_BUCKET_NAME}",
+           "-var", "bucket_location=${_BUCKET_LOCATION}"]
+    dir: "./app/terraform"
+  - name: node:10.16.3
+    entrypoint: "npm"
+    args: ["install"]
+    dir: "./app/app"
+  - name: node:10.16.3
+    entrypoint: "node"
+    args: ["./create_app_config.js", "${_GOOGLE_API_KEY}", "${_THEME}"]
+    dir: "./app/scripts"
+  - name: node:10.16.3
+    entrypoint: "npm"
+    args: ["run", "build", "--", "-c", "production", "--output-path=./dist",
+           "--i18n-file=./src/locale/messages.${_LANGUAGE}.xlf", "--i18n-locale=${_LANGUAGE}"]
+    dir: "./app/app"
+  - name: gcr.io/cloud-builders/gsutil
+    args: ["-m", "rsync", "-r", "-c", "-d", "./dist", "gs://${_BUCKET_NAME}"]
+    dir: "./app/app"
+  - name: gcr.io/cloud-builders/gsutil
+    args: ["-m", "setmeta", "-h", "Content-Type:text/javascript", "gs://${_BUCKET_NAME}/**/*.js"]
