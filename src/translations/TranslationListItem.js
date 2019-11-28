@@ -29,7 +29,7 @@ class TranslationListItem extends ListItemBase {
   }
 
   handleTranslationChange = (e) => {
-    const newTranslation = e.target.value;
+    const newTranslation = e.target.value.trim();
     this.setState({
       translation: newTranslation,
       disabled: newTranslation === this.savedData.translation,
@@ -37,7 +37,7 @@ class TranslationListItem extends ListItemBase {
   }
 
   handleTransliterationChange = (e) => {
-    const newTransliteration = e.target.value;
+    const newTransliteration = e.target.value.trim();
     this.setState({
       transliteration: newTransliteration,
       disabled: newTransliteration === this.savedData.transliteration,
@@ -58,13 +58,9 @@ class TranslationListItem extends ListItemBase {
     }
     // Then, call endpoint to update the translation.
     try {
-      let { english_word, primary_word, sound_link, translation,
+      const { english_word, sound_link, translation,
         transliteration, frequency } = this.state;
-      english_word = (""+english_word).trim();
-      primary_word = (""+primary_word).trim();
-      translation = (""+translation).trim();
-      transliteration = (""+transliteration).trim();
-      
+
       // If we have no data for this entry, show an error.
       if (!sound_link && !translation && !transliteration) {
         this.setState({
@@ -80,7 +76,6 @@ class TranslationListItem extends ListItemBase {
         method: 'POST',
         body: JSON.stringify({
           english_word,
-          primary_word,
           sound_link,
           translation,
           transliteration,
@@ -102,11 +97,10 @@ class TranslationListItem extends ListItemBase {
       };
 
       await this.showPopup('Saved!');
-      
+
       this.setState({
         disabled: true,
       });
-      this.actionaftersaving();
     } catch(err) {
       console.error(err);
     }
@@ -132,10 +126,7 @@ class TranslationListItem extends ListItemBase {
       console.error(err);
     }
   }
-  actionaftersaving(){
-    //do nothing. to be overwritten in other functions to do things like remove the row
-    return;
-  }
+
   renderEndOfRow() {
     const endOfRow = [
       <Button
