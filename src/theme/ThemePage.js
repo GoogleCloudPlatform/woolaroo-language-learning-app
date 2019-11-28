@@ -54,9 +54,6 @@ class ThemePage extends React.Component {
         return;
       }
       const result = await resp.json();
-
-
-        
       this.setState({
         data:result.data,
         loading: false,
@@ -126,8 +123,6 @@ class ThemePage extends React.Component {
           'Authorization': await AuthUtils.getAuthHeader(),
         }
       });
-
-
       if (resp.status === 403) {
         await AuthUtils.signOut();
         return;
