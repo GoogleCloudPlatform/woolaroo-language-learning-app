@@ -18,7 +18,7 @@ const localFirebaseConfig_ = {
 
 const config = require('../config.json');
 
-const firebaseConfig_ = IS_LOCAL ? localFirebaseConfig_ : config.firebase_config; // eslint-disable-line
+const firebaseConfig_ = IS_LOCAL ? localFirebaseConfig_ : config; // eslint-disable-line
 
 const EMPTY_APP_SETTINGS = {
   organization_name: "",

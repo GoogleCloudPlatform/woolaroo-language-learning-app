@@ -1,6 +1,6 @@
-![alt text](https://storage.googleapis.com/barnard-public-assets/Barnard%20lock%20up%202.1.png)
+![alt text](public/logo2200.png)
 
-## Project Barnard - Exploring Indigenous language through photos.
+## Project Woolaroo - Exploring Indigenous language through photos.
 
 > ###  “A picture is worth a thousand words.”
 > ### - Old english adage, commonly attributed to copywriter Fred R. Barnard
@@ -15,6 +15,7 @@ Originally launched in New Zealand, as ‘Kupu’, in collaboration with Spark a
 Our hope is that by enabling more people to share their language, users will be able to explore the indigenous languages around them, and ultimately be inspired to engage with them on a deeper level.
 
 ## To deploy
+- Update src/config.json with the config of the project you are deploying (this can be obtained manually from the Firebase console).
 - `npm run build`
 - `firebase deploy` (`-m "release message"`)
 
