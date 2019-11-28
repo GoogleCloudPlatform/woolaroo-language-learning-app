@@ -18,7 +18,6 @@ it('renders a <MenuItem/> nav link for each of the routes specified in App.js',
     const NavMenuWrapper = mount(<Router><NavMenu /></Router>);
 
     const numRoutes = Object.keys(ROUTES).length;
-    //-2 for moderator. Future To Do: add separate test for admin vs moderator
-    expect(NavMenuWrapper.find('li.nav-menu-item').length)    
-      .toEqual(numRoutes-2);
+    expect(NavMenuWrapper.find('li.nav-menu-item').length)
+      .toEqual(numRoutes);
 });

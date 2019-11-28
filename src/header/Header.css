@@ -2,9 +2,7 @@
   background: #fff;
   color: #5f6368;
 }
-.header-logo {
-  height: 18px
-}
+
 .MuiToolbar-root {
   justify-content: space-between;
 }
@@ -58,4 +56,8 @@ svg.header-search-icon:hover {
 .auth-button.MuiButton-root {
   margin-left: 16px;
   min-width: 96px;
+}
+
+.header-logo {
+  width: 200px;
 }
