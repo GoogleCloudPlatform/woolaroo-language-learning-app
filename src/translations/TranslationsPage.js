@@ -19,6 +19,7 @@ class TranslationsPage extends ListPageBase {
     const queryStringParams = new URLSearchParams(props.location.search);
     const needsRecording = queryStringParams.get('needsRecording');
     const top500 = queryStringParams.get('top500');
+    
     let pageNum;
     if (props.match && props.match.params) {
       pageNum = +props.match.params.pageNum;
@@ -26,6 +27,7 @@ class TranslationsPage extends ListPageBase {
 
     this.state = {
       ...this.state,
+      justinitialized: true,
       listItemTag: TranslationListItem,
       collectionName: 'translations',
       pageSize: 25,
@@ -38,12 +40,29 @@ class TranslationsPage extends ListPageBase {
   }
 
   async componentDidUpdate(prevProps) {
-    if (this.props.location !== prevProps.location) {
+    if (this.state.justinitialized==true){
+      //to handle and clear filter when searching a new word directly from another page
+      const queryStringParams = new URLSearchParams(this.props.location.search);
+      const newSearch = queryStringParams.get('search') || '';
+      if ((newSearch + "").length>0){
+        this.setState({
+          search: newSearch,
+          top500: false,            //clear filters when doing a fresh search
+          needsRecording: false,    //clear filters when doing a fresh search
+          justinitialized: false,
+          pageNum: 1,
+        });
+      }
+    }else if (this.props.location !== prevProps.location) {
+      //clear filter when searching a new word from translation page
       const queryStringParams = new URLSearchParams(this.props.location.search);
       const newSearch = queryStringParams.get('search') || '';
       if (newSearch !== this.state.search) {
         await this.setState({
           search: newSearch,
+          top500: false,            //clear filters when doing a fresh search
+          needsRecording: false,    //clear filters when doing a fresh search
+          justinitialized: false,
           pageNum: 1,
         });
         await this.fetchItems();
@@ -81,6 +100,9 @@ class TranslationsPage extends ListPageBase {
     if (nextNeedsRecording) {
       nextHistory += `&needsRecording=1`;
     }
+    if (this.state.search && (this.state.search+"").length>0){      //to avoid resetting search query after filtering
+      nextHistory += `&search=`+encodeURIComponent(this.state.search);
+    }
     this.props.history.push(nextHistory);
     await this.setState({needsRecording: nextNeedsRecording, loading: true, pageNum: 1});
     await this.fetchItems();
@@ -93,6 +115,9 @@ class TranslationsPage extends ListPageBase {
     }
     if (!nextTop500) {
       nextHistory += `&top500=0`;
+    }
+    if (this.state.search && (this.state.search+"").length>0){     //to avoid resetting search query after filtering
+      nextHistory += `&search=`+encodeURIComponent(this.state.search);
     }
     this.props.history.push(nextHistory);
     await this.setState({top500: nextTop500, loading: true, pageNum: 1});

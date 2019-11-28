@@ -29,3 +29,17 @@
   text-decoration: none;
   color: #5f6368;
 }
+
+
+.state-selection button {
+  color: #5f6368;
+  font-weight: bold;
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  font-size: 18px;
+  /*optional*/
+  /*input has OS specific font-family*/
+  text-decoration: none;
+  cursor: pointer;
+}

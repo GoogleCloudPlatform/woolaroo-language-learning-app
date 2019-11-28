@@ -2,6 +2,23 @@ body {
   font-family: "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
+.centralize {
+  text-align: center;
+}
+
+.centralize .margin-button {
+  margin: 8px;
+}
+
+.centralize button {
+  margin: 20px;
+}
+
+.textblock {
+  display: inline-block;
+  max-width: 500px;  
+}
+
 .body-container {
   display: flex;
   flex-direction: row;
@@ -24,12 +41,21 @@ body {
 
 .landing-page-img {
   width: 100%;
+  max-width: 800px;
 }
 
 .MuiButton-containedPrimary:enabled, .MuiChip-colorPrimary, span.MuiButton-containedPrimary {
-  background-color: #61b985 !important;
+  background-color: #2CAB6F !important;
 }
 
 .MuiButton-containedSecondary:enabled, .MuiChip-colorSecondary, span.MuiButton-containedSecondary {
   background-color: #eda14f !important;
+}
+
+.MuiFab-root {
+  background-color: #ffffff !important;
+}
+
+.MuiFab-root:hover {
+  background-color: #D5EEE2 !important;
 }
