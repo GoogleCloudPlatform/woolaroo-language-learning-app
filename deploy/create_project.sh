@@ -61,6 +61,7 @@ gcloud services enable appengine.googleapis.com
 gcloud services enable firebasehosting.googleapis.com
 gcloud services enable sheets.googleapis.com
 gcloud services enable vision.googleapis.com
+gcloud services enable cloudbuild.googleapis.com
 
 gcloud beta billing projects link ${PROJECT_ID} \
   --billing-account ${GCP_BILLING_ACCOUNT_ID}
@@ -157,3 +158,22 @@ if ! [ -z "${TRANSLATION_SPREADSHEET_ID}" ]
     python ./functions/trix2firestore.py \
     $TRANSLATION_SPREADSHEET_ID $PROJECT_ID $CLIENT_ID_FILE
 fi
+
+
+# Grant build service account owner access
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+  --member serviceAccount:${APP_ID}@cloudbuild.gserviceaccount.com \
+  --role roles/editor
+
+# Link project to mirror github (last option)
+read -p "Link your project to mirror github https://source.cloud.google.com/repo/ \
+  Then come back here and press [Enter] to continue ..."
+
+
+#PROJECT_ID=woolaroo-yiddish
+#LANGUAGE_NAME=Yiddish
+gcloud beta builds triggers create cloud-source-repositories \
+  --repo="github_googlecloudplatform_barnard-language-learning-app" \
+  --branch-pattern="^master$" \
+  --build-config="app/cloudbuild.yaml" \
+  --substitutions _API_URL=https://us-central1-${PROJECT_ID}.cloudfunctions.net,_BUCKET_LOCATION=us,_BUCKET_NAME=${PROJECT_ID}-dev5,_GOOGLE_API_KEY=placeholder,_GOOGLE_REGION=en,_ENDANGERED_LANGUAGE=${LANGUAGE_NAME},_LANGUAGE=en,_TERRAFORM_BUCKET_NAME=${PROJECT_ID}-terraform,_THEME=red
