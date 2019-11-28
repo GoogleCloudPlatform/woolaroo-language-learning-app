@@ -10,7 +10,6 @@ import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import TextField from '@material-ui/core/TextField';
 import 'react-table/react-table.css'
 import './UserTable.css';
 import ApiUtils from '../utils/ApiUtils';
