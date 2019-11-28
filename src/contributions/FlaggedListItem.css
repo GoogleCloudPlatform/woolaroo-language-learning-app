@@ -1,0 +1,22 @@
+.flagged-reason {
+  background-color: #fff2cc;
+  display: flex;
+  align-items: center;
+}
+
+.flagged-list-item .translation-list-item {
+  margin-bottom: 36px;
+}
+
+.warning-icon {
+  margin: 8px 8px 8px 12px;
+}
+
+.empty-field {
+  opacity: 0.5;
+}
+
+.MuiGrid-item .base-word {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}

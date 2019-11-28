@@ -191,25 +191,28 @@ exports.addTranslations = functions.https.onRequest(async (req, res) => {
 
 
 exports.getTranslation = functions.https.onRequest(async (req, res) => {
-  const hasAccess = await checkAccess_(req, res);
-  if (!hasAccess) {
-    return;
-  }
-  var docRef = admin.firestore().collection("translations").doc(req.body);
-  try {
-    const doc = await docRef.get();
-    if (doc.exists) {
-        console.log("Document data:", doc.data());
-        res.status(200).send(doc.data());
-        return doc.data()
-    } else {
-        console.log("No such document!");
-        res.status(404).send("404");
-        return "404"
+  return cors(req, res, async () => {
+    const hasAccess = await checkAccess_(req, res);
+    if (!hasAccess) {
+      return;
     }
-  } catch(err) {
-    console.log("Error getting document:", err);
-  }
+    const docRef = admin.firestore().collection("translations").doc(req.body);
+    try {
+      const doc = await docRef.get();
+      if (doc.exists) {
+          console.log("Document data:", doc.data());
+          res.status(200).send(doc.data());
+          return createTranslationResponse(doc.data())
+      } else {
+          console.log("No such document!");
+          res.status(404).send("404");
+          return "404"
+      }
+    } catch(err) {
+      console.log("Error getting document:", err);
+      return "500";
+    }
+  });
 });
 
 // For App, which will be used by app users
@@ -218,20 +221,11 @@ exports.getTranslations = functions.https.onRequest(async (req, res) => {
   const english_words = req.body.english_words || [];
   console.log(english_words);
   const collectionRef = admin.firestore().collection("translations");
-  const createResponse = (res) => {
-    var data = {
-        english_word: (res === undefined) ? '' : res.english_word ,
-        translation: (res === undefined) ? '' : res.translation ,
-        transliteration: (res === undefined) ? '' : res.transliteration,
-        sound_link: (res === undefined) ? '' : res.sound_link
-    }
-    return data;
-  }
   const promises = english_words.map(async english_word => {
     return collectionRef.doc(english_word).get()
   })
   Promise.all(promises).then(docs => {
-    var translations = docs.map(x => createResponse(x.data()))
+    const translations = docs.map(x => createTranslationResponse(x.data()))
     console.log(translations);
     res.set('Access-Control-Allow-Origin', "*");
     res.set('Access-Control-Allow-Methods', 'GET, POST');
@@ -243,6 +237,15 @@ exports.getTranslations = functions.https.onRequest(async (req, res) => {
       res.status(500).send(error)
   });
 });
+
+function createTranslationResponse(data) {
+  return {
+    english_word: (data === undefined) ? '' : data.english_word,
+    translation: (data === undefined) ? '' : data.translation,
+    transliteration: (data === undefined) ? '' : data.transliteration,
+    sound_link: (data === undefined) ? '' : data.sound_link,
+  };
+}
 
 // For translation page, which will be used by admin & moderators.
 // https://us-central1-barnard-project.cloudfunctions.net/translations?limit=2&reverse=true&first500=true
@@ -372,41 +375,26 @@ exports.addFeedback = functions.https.onRequest(async (req, res) => {
 });
 
 exports.getEntireFeedbackCollection = functions.https.onRequest(async (req, res) => {
-  const hasAccess = await checkAccess_(req, res);
-  if (!hasAccess) {
-    return;
-  }
-  var docRef = admin.firestore().collection("feedback");
-    let querySnapshot;
-    querySnapshot = await docRef.get();
+  return cors(req, res, async () => {
+    const hasAccess = await checkAccess_(req, res);
+    if (!hasAccess) {
+      return;
+    }
+    const docRef = admin.firestore().collection("feedback");
     docRef.get().then(querySnapshot => { 
       if (querySnapshot.empty) {
-          res.status(404).send("NO translations");
+        res.status(404).send("No feedback");
       } else {
-          var docs = querySnapshot.docs.map(doc => doc.data())
-          var translations_json = JSON.stringify({data: docs})
-          res.status(200).send(translations_json)
+        const docs = querySnapshot.docs.map(doc => doc.data())
+        const feedback_json = JSON.stringify(docs)
+        res.status(200).send(feedback_json)
       }
       return "200"
     }).catch(error => {
       console.log("Error getting document:", error);
       res.status(500).send(error);
-  });  
-
-
-
-  return cors(req, res, async () => {
-    var snapshot = await admin.firestore().collection('feedback').add({
-      english_word: req.body.english_word,
-      translation: req.body.translation,
-      transliteration: req.body.transliteration,
-      sound_link: req.body.sound_link,
-      types: req.body.types,
-      content: req.body.content,
-      timestamp: admin.firestore.FieldValue.serverTimestamp(),
     });
-    res.status(200).send("feedback saved.");
-  });
+  });  
 });
 
 exports.deleteRow = functions.https.onRequest(async (req, res) => {
@@ -708,10 +696,6 @@ const oauth2Client = new google.auth.OAuth2(
   clientSecretJson.web.client_secret,
   `https://us-central1-${currentProjectId}.cloudfunctions.net/oauth2callback`
 );
-
-
-
-
 
 function parseCookies(rc) {
     var list = {};
