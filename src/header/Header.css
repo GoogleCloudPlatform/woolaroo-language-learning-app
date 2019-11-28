@@ -2,7 +2,9 @@
   background: #fff;
   color: #5f6368;
 }
-
+.header-logo {
+  height: 18px
+}
 .MuiToolbar-root {
   justify-content: space-between;
 }
