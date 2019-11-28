@@ -21,7 +21,13 @@ const ROUTES = {
   MANAGEMENT: '/management',
 };
 
-const LANDING_IMG = "../logo2200.png";
+//Note: When SIGNIN_ASSET is an external URL, it may not show up on browsers in content blocking mode (tracking protection) 
+const SIGNIN_ASSET = "https://developers.google.com/identity/images/btn_google_signin_light_normal_web.png";
+const WOOLAROO_URL = "https://experiments.withgoogle.com/woolaroo"
+const WOOLAROO_IMG = "https://storage.googleapis.com/barnard-public-assets/woolaroo_logo.png";
+const LANDING_IMG = "https://storage.googleapis.com/barnard-public-assets/Barnard%20lock%20up%202.1.png"; //need to update this in 
+//const LANDING_IMG = "../logo2200.png";
+
 
 class App extends React.Component {
   constructor(props) {
