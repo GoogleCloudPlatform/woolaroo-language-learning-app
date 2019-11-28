@@ -702,7 +702,7 @@ const projectResource = {
   "projectId": newProjectId,
   "name": newProjectId
 }
-const clientSecretJson = JSON.parse(fs.readFileSync('client_secret.json'));
+const clientSecretJson = JSON.parse(fs.readFileSync('{"web":{"client_id":"929114075380-c2csr93icen7igh6qquhhf047l8esnin.apps.googleusercontent.com","project_id":"barnard-project","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"xxxxxx","javascript_origins":["https://us-central1.cloudfunctions.net"]}}');
 const oauth2Client = new google.auth.OAuth2(
   clientSecretJson.web.client_id,
   clientSecretJson.web.client_secret,
