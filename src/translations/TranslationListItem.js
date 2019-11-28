@@ -29,7 +29,7 @@ class TranslationListItem extends ListItemBase {
   }
 
   handleTranslationChange = (e) => {
-    const newTranslation = e.target.value.trim();
+    const newTranslation = e.target.value;
     this.setState({
       translation: newTranslation,
       disabled: newTranslation === this.savedData.translation,
@@ -37,7 +37,7 @@ class TranslationListItem extends ListItemBase {
   }
 
   handleTransliterationChange = (e) => {
-    const newTransliteration = e.target.value.trim();
+    const newTransliteration = e.target.value;
     this.setState({
       transliteration: newTransliteration,
       disabled: newTransliteration === this.savedData.transliteration,
@@ -58,9 +58,13 @@ class TranslationListItem extends ListItemBase {
     }
     // Then, call endpoint to update the translation.
     try {
-      const { english_word, sound_link, translation,
+      let { english_word, primary_word, sound_link, translation,
         transliteration, frequency } = this.state;
-
+      english_word = (""+english_word).trim();
+      primary_word = (""+primary_word).trim();
+      translation = (""+translation).trim();
+      transliteration = (""+transliteration).trim();
+      
       // If we have no data for this entry, show an error.
       if (!sound_link && !translation && !transliteration) {
         this.setState({
@@ -76,6 +80,7 @@ class TranslationListItem extends ListItemBase {
         method: 'POST',
         body: JSON.stringify({
           english_word,
+          primary_word,
           sound_link,
           translation,
           transliteration,
@@ -90,17 +95,23 @@ class TranslationListItem extends ListItemBase {
         await AuthUtils.signOut();
         return;
       }
-
-      this.savedData = {
-        translation,
-        transliteration
-      };
-
-      await this.showPopup('Saved!');
-
-      this.setState({
-        disabled: true,
-      });
+      if (resp.status === 200) {
+        await this.showPopup('Saved!');
+        this.savedData = {
+          translation,
+          transliteration
+        };
+        
+        this.setState({
+          disabled: true,
+        });  
+        await this.actionaftersaving();
+      } else {
+        await this.showPopup('Failed to Save. Please try again!');
+        await this.setStateAsync({disabled: false});
+      }
+      
+      
     } catch(err) {
       console.error(err);
     }
@@ -126,7 +137,10 @@ class TranslationListItem extends ListItemBase {
       console.error(err);
     }
   }
-
+  actionaftersaving(){
+    //do nothing. to be overwritten in other functions to do things like remove the row
+    return;
+  }
   renderEndOfRow() {
     const endOfRow = [
       <Button

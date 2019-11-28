@@ -1,5 +1,41 @@
+html { 
+  height:100%; 
+}
+
 body {
+  height:100%;
   font-family: "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+#root, .app-container { 
+  height: 100%;
+}
+
+.centralize {
+  text-align: center;
+}
+
+.centralize .margin-button {
+  margin: 8px;
+}
+
+.centralize button {
+  margin: 20px;
+}
+
+.textblock {
+  display: inline-block;
+  max-width: 500px;  
+}
+
+.body-container-banner {
+  height: calc(100% - 100px);
+  overflow: auto;
+  min-height: 400px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24px;
 }
 
 .body-container {
@@ -23,10 +59,8 @@ body {
 }
 
 .landing-page-img {
-  width: 80%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
+  max-width: 800px;
 }
 
 .MuiButton-containedPrimary:enabled, .MuiChip-colorPrimary, span.MuiButton-containedPrimary {
