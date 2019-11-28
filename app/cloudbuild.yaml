@@ -1,5 +1,16 @@
 steps:
   # Terraform
+  - id: 'create_terraform_state_storage'
+    name: gcr.io/cloud-builders/gsutil
+    entrypoint: "bash"
+    args:
+    - '-c'
+    - |
+      if [ 0 -eq $(gsutil ls -p "${PROJECT_ID}" | grep -c "gs://${_TERRAFORM_BUCKET_NAME}") ]; then
+        gsutil mb -p "${PROJECT_ID}" "gs://${_TERRAFORM_BUCKET_NAME}/"
+      else
+        echo "terraform state bucket named ${_TERRAFORM_BUCKET_NAME} already exists, skipping gsutil mb"
+      fi
   - id: 'configure_terraform'
     name: node:10.16.3
     entrypoint: "node"
@@ -7,27 +18,27 @@ steps:
            "../terraform/override.tf",
            "${_TERRAFORM_BUCKET_NAME}",
            "${_TERRAFORM_BUCKET_PATH}"]
-    dir: "./scripts"
+    dir: "./app/scripts"
   - id: 'init_terraform'
     name: hashicorp/terraform:light
     args: ["init"]
-    dir: "./terraform"
+    dir: "./app/terraform"
   - id: 'run_terraform'
     name: hashicorp/terraform:light
     args: ["apply", "-auto-approve",
            "-var", "google_project=$PROJECT_ID",
            "-var", "bucket_name=${_BUCKET_NAME}",
            "-var", "bucket_location=${_BUCKET_LOCATION}",
+           "-var", "google_region=${_GOOGLE_REGION}",
            "-var", "app_location=${_APP_LOCATION}"]
-    dir: "./terraform"
-
+    dir: "./app/terraform"
   # Client
   - id: 'install_client_dependencies'
     waitFor: ['run_terraform']
     name: node:10.16.3
     entrypoint: "npm"
     args: ["install"]
-    dir: "./client"
+    dir: "./app/client"
   - id: 'download_partner_logo'
     name: gcr.io/cloud-builders/gsutil
     waitFor: ['-']
@@ -41,7 +52,7 @@ steps:
       else
         true
       fi
-    dir: "./client"
+    dir: "./app/client"
   - id: 'configure_client'
     waitFor: ['install_client_dependencies', 'download_partner_logo']
     name: node:10.16.3
@@ -58,7 +69,7 @@ steps:
            "/assets/img/partner_logo.png",
            "../client/src/style/theme-config.scss",
            "${_THEME}"]
-    dir: "./scripts"
+    dir: "./app/scripts"
   - id: 'build_client'
     waitFor: ['configure_client']
     name: node:10.16.3
@@ -66,18 +77,18 @@ steps:
     args: ["run", "build", "--", "-c", "production", "--output-path=./dist",
            "--i18n-file=./src/locale/messages.${_LANGUAGE}.xlf", "--i18n-locale=${_LANGUAGE}",
            "--deploy-url=https://storage.googleapis.com/${_BUCKET_NAME}/"]
-    dir: "./client"
+    dir: "./app/client"
   - id: 'fix_client_asset_paths'
     waitFor: ['build_client']
     name: node:10.16.3
     entrypoint: "node"
     args: ["./fix_asset_paths.js", "../client/dist/index.html", "https://storage.googleapis.com/${_BUCKET_NAME}"]
-    dir: "./scripts"
+    dir: "./app/scripts"
   - id: 'deploy_client'
     waitFor: ['fix_client_asset_paths']
     name: gcr.io/cloud-builders/gsutil
     args: ["-m", "rsync", "-r", "-c", "-d", "./dist", "gs://${_BUCKET_NAME}"]
-    dir: "./client"
+    dir: "./app/client"
   - id: 'fix_client_content_types'
     waitFor: ['deploy_client']
     name: gcr.io/cloud-builders/gsutil
@@ -87,32 +98,31 @@ steps:
     name: node:10.16.3
     entrypoint: "node"
     args: ["./create_client_cors_config.js", "../client_cors.json", "$PROJECT_ID", "${_APP_SERVICE}", "${_APP_URL}"]
-    dir: "./scripts"
+    dir: "./app/scripts"
   - id: 'set_client_cors'
     waitFor: ['create_client_cors_config']
     name: gcr.io/cloud-builders/gsutil
     args: ["cors", "set", "./client_cors.json", "gs://${_BUCKET_NAME}"]
-    dir: "./"
-
+    dir: "./app/"
   # Server
   - id: 'install_server_dependencies'
     waitFor: ['run_terraform']
     name: node:10.16.3
     entrypoint: "npm"
     args: ["install"]
-    dir: "./server"
+    dir: "./app/server"
   - id: 'configure_server'
     waitFor: ['run_terraform']
     name: node:10.16.3
     entrypoint: "node"
     args: ["./configure_server.js", "${_APP_SERVICE}", "../server/app.yaml"]
-    dir: "./scripts"
+    dir: "./app/scripts"
   - id: 'build_server'
     waitFor: ['install_server_dependencies', 'configure_server']
     name: node:10.16.3
     entrypoint: "npm"
     args: ["run", "build"]
-    dir: "./server"
+    dir: "./app/server"
   - id: 'copy_server_files'
     waitFor: ['build_server', 'build_client']
     name: node:10.16.3
@@ -126,9 +136,9 @@ steps:
            "../client/dist/favicon.ico",
            "https://storage.googleapis.com/${_BUCKET_NAME}/",
            "../server/build/static/"]
-    dir: "./scripts"
+    dir: "./app/scripts"
   - id: 'deploy_server'
     waitFor: ['copy_server_files']
     name: gcr.io/cloud-builders/gcloud
     args: ["-q", "app", "deploy"]
-    dir: "./server"
+    dir: "./app/server"
