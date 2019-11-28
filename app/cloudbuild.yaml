@@ -2,8 +2,15 @@ steps:
   # Terraform
   - id: 'create_terraform_state_storage'
     name: gcr.io/cloud-builders/gsutil
-    entrypoint: "gsutil"
-    args: ["mb", "gs://${_TERRAFORM_BUCKET_NAME}/"]
+    entrypoint: "bash"
+    args:
+    - '-c'
+    - |
+      if [ 0 -eq $(gsutil ls -p "${PROJECT_ID}" | grep -c "gs://${_TERRAFORM_BUCKET_NAME}") ]; then
+        gsutil mb -p "${PROJECT_ID}" "gs://${_TERRAFORM_BUCKET_NAME}/"
+      else
+        echo "terraform state bucket named ${_TERRAFORM_BUCKET_NAME} already exists, skipping gsutil mb"
+      fi
   - id: 'configure_terraform'
     name: node:10.16.3
     entrypoint: "node"

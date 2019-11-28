@@ -1,5 +1,6 @@
-const IS_LOCAL = process.env.NODE_ENV === 'development'
-  || process.env.NODE_ENV === 'test';
+const IS_LOCAL = false;
+//process.env.NODE_ENV === 'development'
+//  || process.env.NODE_ENV === 'test';
 
 export default {
   origin: IS_LOCAL ? 'http://localhost:5000' :
