@@ -2,23 +2,6 @@ body {
   font-family: "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
-.centralize {
-  text-align: center;
-}
-
-.centralize .margin-button {
-  margin: 8px;
-}
-
-.centralize button {
-  margin: 20px;
-}
-
-.textblock {
-  display: inline-block;
-  max-width: 500px;  
-}
-
 .body-container {
   display: flex;
   flex-direction: row;
@@ -40,8 +23,10 @@ body {
 }
 
 .landing-page-img {
-  width: 100%;
-  max-width: 800px;
+  width: 80%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .MuiButton-containedPrimary:enabled, .MuiChip-colorPrimary, span.MuiButton-containedPrimary {
