@@ -12,10 +12,10 @@ class ThemePage extends React.Component {
   constructor(props) {
     super(props);
     //this.props.landing_image gets the image from App.js
-    
+
     this.handleClose_ = this.handleClose_.bind(this);
     this.abortController = new AbortController();
-    
+
     this.state = {
       loading: true,
       data: {},
@@ -24,7 +24,7 @@ class ThemePage extends React.Component {
       promo_open: false,
       disabled: true,
     }
-    
+
     this.savedData = {}
   }
   async componentDidMount() {
@@ -36,11 +36,11 @@ class ThemePage extends React.Component {
     if (!this.state.loadaction) {
       return;
     }
-    
+
     this.abortController.abort();
     this.abortController = new AbortController();
     this.setState({ loading: true });
-    
+
     try {
       const resp = await
         fetch(`${ApiUtils.origin}${ApiUtils.path}${this.state.loadaction}`, {
@@ -60,11 +60,11 @@ class ThemePage extends React.Component {
       });
       const { organization_name, organization_url, privacy_policy } = this.state.data;
       this.savedData = {
-          organization_name: organization_name, 
-          organization_url: organization_url, 
+          organization_name: organization_name,
+          organization_url: organization_url,
           privacy_policy: privacy_policy
       };
-      
+
     } catch(err) {
       console.error(err);
     }
@@ -75,7 +75,7 @@ class ThemePage extends React.Component {
         data: {
             ...prevState.data,
             organization_name:newvalue,
-        }        
+        }
     }));
     this.setState({disabled:(newvalue === this.savedData.organization_name)});
   };
@@ -85,7 +85,7 @@ class ThemePage extends React.Component {
         data: {
             ...prevState.data,
             organization_url:newvalue
-        }        
+        }
     }));
     this.setState({disabled:(newvalue === this.savedData.organization_url)});
   };
@@ -95,7 +95,7 @@ class ThemePage extends React.Component {
         data: {
             ...prevState.data,
             privacy_policy:newvalue
-        }        
+        }
     }));
     this.setState({disabled:(newvalue === this.savedData.privacy_policy)});
   };
@@ -108,14 +108,14 @@ class ThemePage extends React.Component {
     try {
       // prevent the button from being clicked again.
       await this.setStateAsync({disabled: true});
-      
+
       const { organization_name, organization_url, privacy_policy } = this.state.data;
 
       const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}updateSettings`, {
         method: 'POST',
         body: JSON.stringify({
-          organization_name: organization_name, 
-          organization_url: organization_url, 
+          organization_name: organization_name,
+          organization_url: organization_url,
           privacy_policy: privacy_policy
         }),
         headers: {
@@ -128,10 +128,10 @@ class ThemePage extends React.Component {
         return;
       }
       await this.showPopup('Saved!');
-      
+
       this.savedData = {
-          organization_name: organization_name, 
-          organization_url: organization_url, 
+          organization_name: organization_name,
+          organization_url: organization_url,
           privacy_policy: privacy_policy
       };
     } catch(err) {
@@ -139,7 +139,7 @@ class ThemePage extends React.Component {
     }
   };
   renderItems(){
-    
+
     const classes = makeStyles(theme => ({
       root: {
         display: "flex",
@@ -221,7 +221,7 @@ class ThemePage extends React.Component {
 
                 <br/><br/>
                 <div>
-                    <Button variant="contained" color="primary" 
+                    <Button variant="contained" color="primary"
                         onClick={this.savechanges}
                         disabled={this.state.disabled}
                     >
@@ -230,8 +230,8 @@ class ThemePage extends React.Component {
                 </div>
                 <br/><br/>
             </div>
-           
-            
+
+
             <br/><br/>
             <div className={classes.newSection}>
                 <h2> Logo </h2>
@@ -255,7 +255,7 @@ class ThemePage extends React.Component {
                   </Button>
                 </label>
             </div>
-            
+
             <br/><br/>
             <div className="newSection">
                 <h2>Language Settings</h2>
@@ -275,17 +275,17 @@ class ThemePage extends React.Component {
                   value={this.state.data.primary_language}
                 />
                 <br/>
-                
+
             </div>
 
              <br/>
              <br/>
         </div>
       );
-  
+
   }
-  
-  
+
+
   handleClose_() {
     this.setState({promo_open: false});
   }
@@ -309,7 +309,7 @@ class ThemePage extends React.Component {
   render(){
     return (
         <div>
-            <h2> Theme Customization </h2>
+            <h2> Settings </h2>
             {this.state.loading ? <div>Loading...</div> : this.renderItems()}
             <br/><br/>
             {this.renderPromoMessage_()}
