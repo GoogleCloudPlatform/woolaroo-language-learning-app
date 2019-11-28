@@ -27,7 +27,7 @@ const ROUTES = {
 const SIGNIN_ASSET = "https://developers.google.com/identity/images/btn_google_signin_light_normal_web.png";
 const WOOLAROO_URL = "https://experiments.withgoogle.com/woolaroo"
 const WOOLAROO_IMG = "https://storage.googleapis.com/barnard-public-assets/woolaroo_logo.png";
-const LANDING_IMG = "https://storage.googleapis.com/barnard-public-assets/Barnard%20lock%20up%202.1.png"; //need to update this in 
+const LANDING_IMG = WOOLAROO_IMG; //"https://storage.googleapis.com/barnard-public-assets/Barnard%20lock%20up%202.1.png"; //need to update this in 
 //const LANDING_IMG = "../logo2200.png";
 
 
@@ -119,7 +119,7 @@ class App extends React.Component {
         contactmessage = "Contact "+this.state.organization_name+" to get access";
       }
       return (
-        <div className = "body-container">
+        <div className = "body-container-banner">
           <div className = "page-container centralize logged-out">
             <br/>
             <h2>Interested to join us?</h2>
@@ -144,14 +144,14 @@ class App extends React.Component {
       );
     } else if (!this.state.email) {
       return (
-        <div className = "body-container">
+        <div className = "body-container-banner">
           <div className = "page-container centralize logged-out">
             <img
               src={LANDING_IMG}
               alt=""
               className="landing-page-img"
             />
-            <br/><br/>
+            <br/><br/><br />
             <div className="textblock">Woolaroo is an open-source Google platform that helps indigenous language organizations build their own photo-translation web-apps
             </div><br/>
             <Button 

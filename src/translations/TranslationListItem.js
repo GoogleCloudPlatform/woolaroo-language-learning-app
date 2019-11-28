@@ -95,18 +95,23 @@ class TranslationListItem extends ListItemBase {
         await AuthUtils.signOut();
         return;
       }
-
-      this.savedData = {
-        translation,
-        transliteration
-      };
-
-      await this.showPopup('Saved!');
+      if (resp.status === 200) {
+        await this.showPopup('Saved!');
+        this.savedData = {
+          translation,
+          transliteration
+        };
+        
+        this.setState({
+          disabled: true,
+        });  
+        await this.actionaftersaving();
+      } else {
+        await this.showPopup('Failed to Save. Please try again!');
+        await this.setStateAsync({disabled: false});
+      }
       
-      this.setState({
-        disabled: true,
-      });
-      this.actionaftersaving();
+      
     } catch(err) {
       console.error(err);
     }
