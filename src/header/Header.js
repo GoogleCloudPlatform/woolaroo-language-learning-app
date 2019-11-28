@@ -9,8 +9,6 @@ import  { Breakpoint } from 'react-socks';
 import './Header.css';
 import HamburgerNavMenu from '../navmenu/HamburgerNavMenu';
 
-const LOGO_IMG = "../logo512.png";
-
 class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -20,19 +18,25 @@ class Header extends React.Component {
     this.doSearch_ = this.doSearch_.bind(this);
 
     const queryStringParams = new URLSearchParams(props.location.search);
+    const needsRecording = queryStringParams.get('needsRecording');
+    const top500 = queryStringParams.get('top500');
 
     this.state = {
       search: queryStringParams.get('search') || '',
-      top500: queryStringParams.get('top500') !== '0',
+      top500: top500 !== '0',
+      needsRecording: !!(needsRecording && needsRecording !== '0'),
     };
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
       const queryStringParams = new URLSearchParams(this.props.location.search);
+      const needsRecording = queryStringParams.get('needsRecording');
+      const top500 = queryStringParams.get('top500');
       this.setState({
-        search: queryStringParams.get('search') || '',
-        top500: queryStringParams.get('top500') !== '0',
+          search: queryStringParams.get('search') || '',
+          top500: top500 !== '0',
+          needsRecording: !!(needsRecording && needsRecording !== '0'),
       });
     }
   }
@@ -51,9 +55,7 @@ class Header extends React.Component {
 
   doSearch_() {
     let nextHistory = `/?search=${this.state.search}`;
-    if (!this.state.top500) {
-      nextHistory += '&top500=0';
-    }
+    
     this.props.history.push(nextHistory);
   }
 
@@ -82,17 +84,22 @@ class Header extends React.Component {
       return null;
     }
 
-    return (
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={this.props.authAction}
-        className='auth-button'
-        key={1}
-      >
-        {this.props.signedIn ? 'Log out' : 'Sign in'}
-      </Button>
-    );
+    if (this.props.signedIn){
+        return (
+          // Only show button after logging in. Before logging in, landing page should have login button in the middle of the page.
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={this.props.authAction}
+            className='auth-button'
+            key={1}
+          >
+            {this.props.signedIn ? 'Log out' : 'Sign in'}
+          </Button>
+        );
+    }else{
+        return null;;
+    }
   }
 
   render() {
@@ -107,8 +114,9 @@ class Header extends React.Component {
               null : <HamburgerNavMenu signedIn={this.props.signedIn} authAction={this.props.authAction} />}
           </Breakpoint>
           <Toolbar>
+
           <img
-            src={LOGO_IMG}
+            src={this.props.logoURL}
             alt="Woolaroo"
             className="header-logo"
           />

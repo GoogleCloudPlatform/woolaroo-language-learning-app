@@ -1,0 +1,17 @@
+.fullwidth {
+  width: 100%;
+}
+
+.button-margin {
+  margin: 8px;
+}
+
+.app-logo {
+  width: 100%;
+  max-width: 400px;
+  box-shadow: none;
+}
+
+#contained-button-file {
+  display: none;
+}

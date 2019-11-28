@@ -7,6 +7,7 @@ import { shallow } from 'enzyme';
 
 const stubbedTranslation = {
   english_word: "dog",
+  primary_word: "狗",
   sound_link: "https://gcs/efwfefxs.mp3",
   translation: "狗",
   transliteration: "gau",
