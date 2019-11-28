@@ -114,12 +114,13 @@ class Header extends React.Component {
               null : <HamburgerNavMenu signedIn={this.props.signedIn} authAction={this.props.authAction} />}
           </Breakpoint>
           <Toolbar>
+          <h1 className={`header-title ${this.props.signedIn && 'signed-in'}`}>
           <img
             src={this.props.logoURL}
-
             alt="Woolaroo"
             className="header-logo"
           />
+          </h1>
             <div
               className={`header-search ${!this.props.signedIn && 'hidden'}`}>
               <SearchIcon className='header-search-icon' onClick={this.doSearch_}/>
