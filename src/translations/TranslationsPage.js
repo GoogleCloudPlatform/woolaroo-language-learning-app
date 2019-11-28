@@ -10,7 +10,6 @@ import './TranslationsPage.css';
 class TranslationsPage extends ListPageBase {
   constructor(props) {
     super(props);
-
     this.updatePageNum = this.updatePageNum.bind(this);
     this.updateCompleteState = this.updateCompleteState.bind(this);
     this.updateNeedsRecording = this.updateNeedsRecording.bind(this);
@@ -19,41 +18,43 @@ class TranslationsPage extends ListPageBase {
     const queryStringParams = new URLSearchParams(props.location.search);
     const needsRecording = queryStringParams.get('needsRecording');
     const top500 = queryStringParams.get('top500');
+    const search = queryStringParams.get('search');
     
     let pageNum;
     if (props.match && props.match.params) {
       pageNum = +props.match.params.pageNum;
     }
 
-    this.state = {
-      ...this.state,
-      justinitialized: true,
-      listItemTag: TranslationListItem,
-      collectionName: 'translations',
-      pageSize: 25,
-      completeState: queryStringParams.get('state'),
-      needsRecording: !!(needsRecording && needsRecording !== '0'),
-      top500: top500 !== '0',
-      pageNum: pageNum || 1,
-      search: queryStringParams.get('search'),
-    };
+    //Handle search when coming from another page
+    if (search){
+      this.state = {
+        ...this.state,
+        listItemTag: TranslationListItem,
+        collectionName: 'translations',
+        pageSize: 25,
+        completeState: queryStringParams.get('state'),
+        needsRecording: false,
+        top500: false,
+        pageNum: pageNum || 1,
+        search: queryStringParams.get('search'),
+      };
+    }else{
+      this.state = {
+        ...this.state,
+        listItemTag: TranslationListItem,
+        collectionName: 'translations',
+        pageSize: 25,
+        completeState: queryStringParams.get('state'),
+        needsRecording: !!(needsRecording && needsRecording !== '0'),
+        top500: top500 !== '0',
+        pageNum: pageNum || 1,
+        search: queryStringParams.get('search'),
+      };
+    }
   }
 
   async componentDidUpdate(prevProps) {
-    if (this.state.justinitialized==true){
-      //to handle and clear filter when searching a new word directly from another page
-      const queryStringParams = new URLSearchParams(this.props.location.search);
-      const newSearch = queryStringParams.get('search') || '';
-      if ((newSearch + "").length>0){
-        this.setState({
-          search: newSearch,
-          top500: false,            //clear filters when doing a fresh search
-          needsRecording: false,    //clear filters when doing a fresh search
-          justinitialized: false,
-          pageNum: 1,
-        });
-      }
-    }else if (this.props.location !== prevProps.location) {
+    if (this.props.location !== prevProps.location) {
       //clear filter when searching a new word from translation page
       const queryStringParams = new URLSearchParams(this.props.location.search);
       const newSearch = queryStringParams.get('search') || '';
@@ -62,7 +63,7 @@ class TranslationsPage extends ListPageBase {
           search: newSearch,
           top500: false,            //clear filters when doing a fresh search
           needsRecording: false,    //clear filters when doing a fresh search
-          justinitialized: false,
+
           pageNum: 1,
         });
         await this.fetchItems();
