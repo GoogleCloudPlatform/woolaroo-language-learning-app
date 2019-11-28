@@ -22,12 +22,13 @@ class ListItemBase extends React.Component {
     this.handleDeleteConfirm_ = this.handleDeleteConfirm_.bind(this);
     this.showDeleteConfirm_ = this.showDeleteConfirm_.bind(this);
 
-    const { english_word, sound_link, translation,
+    const { english_word, primary_word, sound_link, translation,
       transliteration, id, frequency } = this.props.item;
 
     this.state = {
       id,
       english_word,
+      primary_word,
       sound_link,
       translation,
       transliteration,
@@ -51,14 +52,14 @@ class ListItemBase extends React.Component {
   }
 
   handleTranslationChange = (e) => {
-    const newTranslation = e.target.value.trim();
+    const newTranslation = e.target.value;
     this.setState({
       translation: newTranslation,
     });
   }
 
   handleTransliterationChange = (e) => {
-    const newTransliteration = e.target.value.trim();
+    const newTransliteration = e.target.value;
     this.setState({
       transliteration: newTransliteration,
     });
@@ -89,13 +90,28 @@ class ListItemBase extends React.Component {
   }
 
   renderBaseWord() {
-    return (
-      <div className="base-word">
-        {this.state.english_word}
-      </div>
-    );
+  
+    if (AuthUtils.getPrimaryLanguage()==="English"){
+        return (
+          <div className="base-word">
+            {this.state.english_word}
+          </div>
+        );
+    }else{
+        const primary_word = (!this.state.primary_word || this.state.primary_word==="")?this.state.english_word:this.state.primary_word;
+        return (
+          <div className="base-word">{primary_word}
+            <div className="english-word-small">{this.state.english_word} </div>
+          </div>
+        );
+    }
   }
 
+  renderPrimaryWord() {
+    //placeholder for TranslationItemBase to overwrite
+    return;
+  }
+  
   renderTranslation() {
     return (
       <TextField
@@ -205,6 +221,7 @@ class ListItemBase extends React.Component {
     return (
       <li className="translation-list-item">
         {this.renderBaseWord()}
+        {this.renderPrimaryWord()}
         {this.renderTranslation()}
         {this.renderTransliteration()}
         {this.renderAudioRecorder()}
