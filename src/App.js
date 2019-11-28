@@ -21,7 +21,7 @@ const ROUTES = {
   SHARING: '/sharing',
   MANAGEMENT: '/management',
 };
-//Note: When SIGNIN_ASSET is an external URL, it may not show up on browsers in content blocking mode (tracking protection)
+//Note: When SIGNIN_ASSET is an external URL, it may not show up on browsers in content blocking mode (tracking protection) 
 const SIGNIN_ASSET = "https://developers.google.com/identity/images/btn_google_signin_light_normal_web.png";
 const WOOLAROO_URL = "https://experiments.withgoogle.com/woolaroo"
 const WOOLAROO_IMG = "https://storage.googleapis.com/barnard-public-assets/woolaroo_logo.png";
