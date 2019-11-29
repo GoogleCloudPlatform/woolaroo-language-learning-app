@@ -338,7 +338,11 @@ exports.getEntireFeedbackCollection = functions.https.onRequest(async (req, res)
         if (querySnapshot.empty) {
           res.status(404).send("No feedback");
         } else {
-          const docs = querySnapshot.docs.map(doc => doc.data())
+          const docs = querySnapshot.docs.map(doc => { 
+            var feedback = doc.data(); 
+            feedback.id = doc.id;
+            return feedback;
+          });
           const feedback_json = JSON.stringify(docs)
           res.status(200).send(feedback_json)
         }
