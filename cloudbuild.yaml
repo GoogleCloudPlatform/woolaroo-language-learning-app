@@ -8,7 +8,6 @@ steps:
   args: [ 'services', 'enable', 'https://github.com/GoogleCloudPlatform/barnard-language-learning-app.git']
 
 
-
 - id: 'change-code'
   name: ubuntu
   entrypoint: bash
