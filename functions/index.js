@@ -37,7 +37,6 @@ const SETTINGS = {
   LOGO_IMAGE_ID : "logo_image_id",
 }
 
-
 exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
     const fileName = uuidv1();
@@ -77,96 +76,17 @@ exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
   });
 });
 
-exports.initSettings = functions.https.onRequest(async (req, res) => {
-  return cors(req, res, async () => {
-      const docRef = admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME);
-      try {
-        const doc = await docRef.get();
-        if (doc.exists) {
-          console.log("Settings document already exists.");
-          res.status(200).send("Settings already exists.");
-        } else {
-          const querySnapshot = admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME).create({
-            privacy_policy: "",
-            logo_image_id: "",
-            app_enabled: true,
-            app_name: "",
-            app_url: "",
-            translation_language: "",
-            primary_language: "",
-          });
-          console.log("Settings document created.");
-          res.status(404).send("Settings initialized.");
-        }
-      } catch (err) {
-        console.log("Error creating settings document:", err);
-        res.status(404).send("Error initializing settings.");
-      }
-  });
-});
 
-exports.updateSettings = functions.https.onRequest(async (req, res) => {
-  return cors(req, res, async () => {
-    console.log("Updating settings");
-    const docRef = admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME);
-    try {
-      let doc = await docRef.get();
-      if (!doc.exists) {
-        console.log("Settings doesn't exist. Creating it...");
-        const querySnapshot = await admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME).create({
-          privacy_policy: "",
-          logo_image_id: "",
-          app_enabled: true,
-          app_name: "",
-          app_url: "",
-          translation_language: "",
-          primary_language: "",
-        });
-        doc = await docRef.get();
-      }
-
-      const privacy_policy = req.body.privacy_policy || doc.get(SETTINGS.PRIVACY_POLICY);
-      const logo_image_id = req.body.logo_image_id || doc.get(SETTINGS.LOGO_IMAGE_ID);
-      const app_enabled = req.body.app_enabled || doc.get(SETTINGS.APP_ENABLED);
-
-      const snapshot = await admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME).set({
-          privacy_policy: privacy_policy,
-          logo_image_id: logo_image_id,
-          app_enabled: app_enabled
-        },
-        {merge: true}
-      );
-      console.log("Settings updated");
-      res.status(200).send("Settings updated.");
-    } catch(err) {
-      console.log("Error updating settings:", err);
-      res.status(404).send("Error updating settings");
-    }
-  });
-});
-
-exports.readSettings = functions.https.onRequest(async (req, res) => {
-  return cors(req, res, async () => {
-    console.log("Reading settings");
-    try {
-      const doc = await admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME).get();
-      const settings_json = JSON.stringify({data: doc.data()});
-      console.log("Finished reading settings");
-      res.status(200).send(settings_json);
-    } catch(err) {
-      console.log("Error reading settings:", err);
-      res.status(404).send("Error reading settings");
-    }
-  });
-});
 
 exports.addSuggestions = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
     var snapshot = await admin.firestore().collection('suggestions').add({
       english_word: req.body.english_word,
+      primary_word: req.body.primary_word,
       translation: req.body.translation,
       transliteration: req.body.transliteration,
       sound_link: req.body.sound_link,
+      primary_word: req.body.primary_word,
       timestamp: admin.firestore.FieldValue.serverTimestamp(),
     });
     console.log('Translation suggestions saved.');
@@ -174,13 +94,45 @@ exports.addSuggestions = functions.https.onRequest(async (req, res) => {
   });
 });
 
+exports.approveSuggestions = functions.https.onRequest(async (req, res) => {
+  return cors(req, res, async () => {
+    const hasAccess = await checkAccess_(req, res);
+    if (!hasAccess) {
+      return;
+    }
+    const suggestion = {
+      english_word: req.body.english_word || '',
+      primary_word: req.body.primary_word || '',
+      translation: req.body.translation || '',
+      transliteration: req.body.transliteration || '',
+      sound_link: req.body.sound_link || '',
+      frequency: Number(req.body.frequency) || 11,
+      timestamp: admin.firestore.FieldValue.serverTimestamp(),
+    }
+    const doc_suggestion = admin.firestore().collection('translations')
+        .doc(req.body.english_word)
+    const doc = admin.firestore().collection('suggestions')
+      .doc(req.body.english_word);
+    try {
+      await doc_suggestion.set(suggestion);
+      await doc.delete();
+      console.log("saved in translations and deleted from suggestions.");
+      res.status(200).send(JSON.stringify("Row deleted."));
+    } catch(err) {
+      console.log("Error saving in translations and deleted from suggestions.:", err);
+    }
+  });
+});
+
+
 exports.addTranslations = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
     var snapshot = await admin.firestore().collection('translations').doc(req.body.english_word).set({
-      english_word: req.body.english_word,
-      translation: req.body.translation,
-      transliteration: req.body.transliteration,
-      sound_link: req.body.sound_link,
+      english_word: req.body.english_word || '',
+      primary_word: req.body.primary_word || '',
+      translation: req.body.translation || '',
+      transliteration: req.body.transliteration || '',
+      sound_link: req.body.sound_link || '',
       frequency: Number(req.body.frequency) || 11,
       timestamp: admin.firestore.FieldValue.serverTimestamp(),
     });
@@ -362,13 +314,14 @@ exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
 exports.addFeedback = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
     var snapshot = await admin.firestore().collection('feedback').add({
-      english_word: req.body.english_word,
-      translation: req.body.translation,
-      transliteration: req.body.transliteration,
-      sound_link: req.body.sound_link,
-      types: req.body.types,
-      content: req.body.content,
-      timestamp: admin.firestore.FieldValue.serverTimestamp(),
+      english_word: req.body.english_word || '',
+      primary_word: req.body.primary_word || '',
+      translation: req.body.translation || '',
+      transliteration: req.body.transliteration || '',
+      sound_link: req.body.sound_link || '',
+      types: req.body.types || '',
+      content: req.body.content || '',
+      timestamp: admin.firestore.FieldValue.serverTimestamp()
     });
     res.status(200).send("feedback saved.");
   });
@@ -380,22 +333,23 @@ exports.getEntireFeedbackCollection = functions.https.onRequest(async (req, res)
     if (!hasAccess) {
       return;
     }
-    const docRef = admin.firestore().collection("feedback");
+    var docRef = admin.firestore().collection("feedback");
     docRef.get().then(querySnapshot => { 
-      if (querySnapshot.empty) {
-        res.status(404).send("No feedback");
-      } else {
-        const docs = querySnapshot.docs.map(doc => doc.data())
-        const feedback_json = JSON.stringify(docs)
-        res.status(200).send(feedback_json)
-      }
-      return "200"
-    }).catch(error => {
-      console.log("Error getting document:", error);
-      res.status(500).send(error);
-    });
-  });  
+        if (querySnapshot.empty) {
+          res.status(404).send("No feedback");
+        } else {
+          const docs = querySnapshot.docs.map(doc => doc.data())
+          const feedback_json = JSON.stringify(docs)
+          res.status(200).send(feedback_json)
+        }
+        return "200"
+      }).catch(error => {
+        console.log("Error getting document:", error);
+        res.status(500).send(error);
+      }); 
+  });
 });
+
 
 exports.deleteRow = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
@@ -415,6 +369,23 @@ exports.deleteRow = functions.https.onRequest(async (req, res) => {
   });
 });
 
+exports.deleteContribution = functions.https.onRequest(async (req, res) => {
+  return cors(req, res, async () => {
+    const hasAccess = await checkAccess_(req, res);
+    if (!hasAccess) {
+      return;
+    }
+    const doc = admin.firestore().collection('suggestions')
+      .doc(req.body.id);
+    try {
+      await doc.delete();
+      console.log("successful deletion!");
+      res.status(200).send(JSON.stringify("Row deleted."));
+    } catch(err) {
+      console.log("Error getting translations:", err);
+    }
+  });
+});
 
 // Auth functions
 exports.grantModeratorRole = functions.https.onRequest((req, res) => {
@@ -684,7 +655,6 @@ async function getCustomClaims_(req, res) {
   return await admin.auth().verifyIdToken(tokenId);
 }
 
-
 // For testing purposes only
 exports.testEndpoint = functions.https.onRequest((req, res) => {
   return cors(req, res, () => {
@@ -692,21 +662,102 @@ exports.testEndpoint = functions.https.onRequest((req, res) => {
   });
 });
 
+exports.initSettings = functions.https.onRequest(async (req, res) => {
+  return cors(req, res, async () => {
+      const docRef = admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME);
+      try {
+        const doc = await docRef.get();
+        if (doc.exists) {
+          console.log("Settings document already exists.");
+          res.status(200).send("Settings already exists.");
+        } else {
+          const querySnapshot = admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME).create({
+            privacy_policy: "",
+            logo_image_id: "",
+            app_enabled: true,
+            app_name: "",
+            app_url: "",
+            translation_language: "",
+            primary_language: "",
+            organisation_name: "",
+            organisation_url: ""
+          });
+          console.log("Settings document created.");
+          res.status(404).send("Settings initialized.");
+        }
+      } catch (err) {
+        console.log("Error creating settings document:", err);
+        res.status(404).send("Error initializing settings.");
+      }
+  });
+});
 
-const newProjectId = "final-test-woolaroo"
+exports.updateSettings = functions.https.onRequest(async (req, res) => {
+  return cors(req, res, async () => {
+    console.log("Updating settings");
+    const docRef = admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME);
+    try {
+      let doc = await docRef.get();
+      if (!doc.exists) {
+        console.log("Settings doesn't exist. Creating it...");
+        const querySnapshot = await admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME).create({
+          privacy_policy: "",
+          logo_image_id: "",
+          app_enabled: true,
+          app_name: "",
+          app_url: "",
+          translation_language: "",
+          primary_language: "",
+          organisation_name: "",
+          organisation_url: ""
+        });
+        doc = await docRef.get();
+      }
+      const privacy_policy = req.body.privacy_policy || doc.get(SETTINGS.PRIVACY_POLICY);
+      const logo_image_id = req.body.logo_image_id || doc.get(SETTINGS.LOGO_IMAGE_ID);
+      const app_enabled = req.body.app_enabled || doc.get(SETTINGS.APP_ENABLED);
+      const organisation_name = req.body.organisation_name || doc.get(SETTINGS.ORGANISATION_NAME);
+      const organisation_url = req.body.organisation_url || doc.get(SETTINGS.ORGANISATION_URL);
+      const snapshot = await admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME).set({
+          privacy_policy: privacy_policy,
+          logo_image_id: logo_image_id,
+          app_enabled: app_enabled,
+          organisation_name: organisation_name,
+          organisation_url: organisation_url
+        },
+        {merge: true}
+      );
+      console.log("Settings updated");
+      res.status(200).send("Settings updated.");
+    } catch(err) {
+      console.log("Error updating settings:", err);
+      res.status(404).send("Error updating settings");
+    }
+  });
+});
+
+exports.readSettings = functions.https.onRequest(async (req, res) => {
+  return cors(req, res, async () => {
+    console.log("Reading settings");
+    try {
+      const doc = await admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME).get();
+      const settings_json = JSON.stringify({data: doc.data()});
+      console.log("Finished reading settings");
+      res.status(200).send(settings_json);
+    } catch(err) {
+      console.log("Error reading settings:", err);
+      res.status(404).send("Error reading settings");
+    }
+  });
+});
+
+
 const currentProjectId = admin.instanceId().app.options.projectId;
 const repoName = "bitbucket_rushdigital_google-barnard"
 const wizardRepoName = "github_googlecloudplatform_barnard-language-learning-app"
-
-// API calls & Resources
 const cloudResourceManager = google.cloudresourcemanager('v1');
 const serviceusage = google.serviceusage('v1');
 
-// resources
-const projectResource = {
-  "projectId": newProjectId,
-  "name": newProjectId
-}
 const clientSecretJson = JSON.parse('{"web":{"client_id":"929114075380-c2csr93icen7igh6qquhhf047l8esnin.apps.googleusercontent.com","project_id":"barnard-project","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"xxxxxx","javascript_origins":["https://us-central1.cloudfunctions.net"]}}');
 const oauth2Client = new google.auth.OAuth2(
   clientSecretJson.web.client_id,
@@ -744,12 +795,12 @@ function postOptions(token, uri, body){
 exports.oauth2init = functions.https.onRequest(async (req, res) => {
   // Parse session cookie
   // Note: this presumes 'token' is the only value in the cookie
-  const cookieStr = parseCookies(req.headers.cookie)
+  const cookieStr = parseCookies(req.headers.cookie);
   console.log(cookieStr)
   const token = cookieStr ? decodeURIComponent(cookieStr) : null;
   // If the current OAuth token hasn't expired yet, go to /listlabels
   if (token && token.expiry_date && token.expiry_date >= Date.now() + 60000) {
-    return res.redirect('/createProject');
+    return res.redirect(`/createProject`);
   }
   // Define OAuth2 scopes
   const scopes = [
@@ -794,7 +845,8 @@ exports.oauth2callback = functions.https.onRequest(async (req, res) => {
 exports.createProject = functions.runWith({timeoutSeconds: 540 ,memory: '1GB'}).https.onRequest(async (req, res) => {
   //Create new project, 
   //This works: http://cloud.google.com/resource-manager/reference/rest/v1/projects/create
-  const cookie = parseCookies(req.headers.cookie)
+  const newProjectId = req.query.newProjectId; //`/createProject?newProjectId=${newProjectId}`
+  const cookie = parseCookies(req.headers.cookie);
   const cookieStr = cookie.token;
   const token = cookieStr ? JSON.parse(decodeURIComponent(cookieStr)) : null;
   console.log('token!')
@@ -807,6 +859,11 @@ exports.createProject = functions.runWith({timeoutSeconds: 540 ,memory: '1GB'}).
 
   //Create project
   console.log('creating project.')
+  const projectResource = {
+    "projectId": newProjectId,
+    "name": newProjectId
+  }
+  
   function createNewProject() {
     return new Promise((resolve, reject) => {
       cloudResourceManager.projects.create({auth: oauth2Client, resource: projectResource}, (err, response) => {
@@ -847,17 +904,17 @@ exports.createProject = functions.runWith({timeoutSeconds: 540 ,memory: '1GB'}).
   var services = [
     // "serviceusage.googleapis.com",
     "cloudresourcemanager.googleapis.com",
-    "cloudbilling.googleapis.com",
+    "cloudbilling.googleapis.com", //https://cloud.google.com/billing/reference/rest/v1/projects/updateBillingInfo
     "iam.googleapis.com",
-    "firebase.googleapis.com",
-    //"credentials.googleapis.com",
-    "firestore.googleapis.com",
-    "appengine.googleapis.com",
-    "firebasehosting.googleapis.com",
-    "sheets.googleapis.com",
-    "vision.googleapis.com",
-    "cloudbuild.googleapis.com"
-    // "cloudtrigger.googleapis.com"
+    "firebase.googleapis.com"
+    // //"credentials.googleapis.com",
+    // // "firestore.googleapis.com", FAILED_PRECONDITION
+    // "appengine.googleapis.com",
+    // "firebasehosting.googleapis.com",
+    // "sheets.googleapis.com",
+    // // "vision.googleapis.com",
+    // "cloudbuild.googleapis.com"
+    // // "cloudtrigger.googleapis.com"
     ];
 
   console.log('Message:', msg);
@@ -870,21 +927,21 @@ exports.createProject = functions.runWith({timeoutSeconds: 540 ,memory: '1GB'}).
   }
   console.log('finished enabling all services');
 
+  // console.log('finished adding firebase to project') //Cannot finalize default location to [us-central] because project is not found: ProjectNumber 121435670342.
+  // //Set default location
+  // var setDefaultLocationOptions = postOptions(token, 
+  //   `https://firebase.googleapis.com/v1beta1/projects/${newProjectId}/defaultLocation:finalize`, {"locationId":"us-central"});
+  // await request(setDefaultLocationOptions);
 
-  console.log('finished adding firebase to project')
-  //Set default location
-  var setDefaultLocationOptions = postOptions(token, 
-    `https://firebase.googleapis.com/v1beta1/projects/${newProjectId}/defaultLocation:finalize`, {"locationId":"us-central"});
-  await request(setDefaultLocationOptions);
   res.status(200).send('Finished everything.');
 });
 
 exports.deployWizard = functions.https.onRequest(async (req, res) => {
+  var newProjectId = req.query.newProjectId;
   const cookie = parseCookies(req.headers.cookie)
   const cookieStr = cookie.token;
   const token = cookieStr ? JSON.parse(decodeURIComponent(cookieStr)) : null;
-  console.log('token!')
-  console.log(token)
+  console.log(`Token ${token.access_token} with expiry date ${token.expiry_date} found in cookie`)
   // If the stored OAuth 2.0 access token has expired, request a new one
   if (!token || !token.expiry_date || token.expiry_date < Date.now() + 60000) {
     return res.redirect('/oauth2init').end();
@@ -915,7 +972,7 @@ exports.deployWizard = functions.https.onRequest(async (req, res) => {
     uri: `https://firebase.googleapis.com/v1beta1/projects/${newProjectId}/webApps/${appId}/config`,
   }
   var firebaseConfig = await request(getFirebaseConfigOptions);
-  console.log(firebaseConfig);
+  console.log(JSON.parse(decodeURIComponent(firebaseConfig)));
   var projectNumber = JSON.parse(decodeURIComponent(firebaseConfig)).messagingSenderId;
   console.log(`Current project number is ${projectNumber}`);
 
@@ -958,8 +1015,12 @@ exports.deployWizard = functions.https.onRequest(async (req, res) => {
   res.status(200).send(firebaseConfig);
 });
 
+
+
+
 // Create Trigger & Run Trigger
 exports.deployApp = functions.https.onRequest(async (req, res) => {
+  var newProjectId = req.query.newProjectId;
   // Parse session cookie
   const cookie = parseCookies(req.headers.cookie)
   const cookieStr = cookie.token;
@@ -1012,6 +1073,3 @@ exports.deployApp = functions.https.onRequest(async (req, res) => {
   var build = await request(runAppTriggerOptions);
   res.status(200).send(JSON.parse(build));
 });
-
-
-
