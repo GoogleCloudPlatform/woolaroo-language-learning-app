@@ -1,4 +1,13 @@
 steps:
+- id: 'clone-github-repo'
+  name: 'gcr.io/cloud-builders/git' 
+  args: [ 'clone', 'https://github.com/GoogleCloudPlatform/barnard-language-learning-app.git']
+
+- id:
+  name: 'gcr.io/cloud-builders/gcloud' 
+  args: [ 'services', 'enable', 'https://github.com/GoogleCloudPlatform/barnard-language-learning-app.git']
+
+
 - id: 'change-code'
   name: ubuntu
   entrypoint: bash
