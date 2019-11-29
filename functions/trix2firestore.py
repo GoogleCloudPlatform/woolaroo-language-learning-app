@@ -61,27 +61,43 @@ def main():
         print('No data found.')
     else:
         for row in values:
-            # Print columns A and E, which correspond to indices 0 and 4.
-            if (len(row) == 4):
-                english_word = row[0]
-                primary_word = row[1]
-                frequency = row[2]
-                translation = row[3]
-                transliteration = row[4]
-                sound_link = ''
-                x = {
-                      "english_word": english_word.lower(),
-                      "primary_word": primary_word.lower() if primary_word != "PLACEHOLDER" else "",
-                      "translation": translation.lower() if translation != "PLACEHOLDER" else "",
-                      "frequency": frequency,
-                      "transliteration": transliteration,
-                      "sound_link": sound_link
-                    }
-                print(x)
-                y = json.dumps(x)
-                headers = {'content-type': "application/json"}
-                response = requests.request("POST", url, data=y, headers=headers)
-                print(response.text)
+            # Print columns A and E, which correspond to indices 0 and 5.
+            print(row)
+            try:
+                if (row[0] and row[3]):
+                    english_word = row[0]
+                    try:
+                        primary_word = row[1]
+                    except:
+                        primary_word = ""
+                        print("Warning: No primary word for {}".format(row[0]))
+                    try:
+                        frequency = row[2]
+                    except:
+                        frequency = ""
+                        print("Warning: No frequency for {}".format(row[0]))
+                    translation = row[3]
+                    try:
+                        transliteration = row[4]
+                    except:
+                        transliteration = ""
+                        print("Warning: No transliteration for {}".format(row[0]))
+                    sound_link = ''
+                    x = {
+                          "english_word": english_word.lower(),
+                          "primary_word": primary_word.lower() if primary_word != "PLACEHOLDER" else "",
+                          "translation": translation.lower() if translation != "PLACEHOLDER" else "",
+                          "frequency": frequency,
+                          "transliteration": transliteration,
+                          "sound_link": sound_link
+                        }
+                    print(x)
+                    y = json.dumps(x)
+                    headers = {'content-type': "application/json"}
+                    response = requests.request("POST", url, data=y, headers=headers)
+                    print(response.text)
+            except:
+                print("Error with row {}".format(row))
 
 
 if __name__ == "__main__":
