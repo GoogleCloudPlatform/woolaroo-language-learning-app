@@ -3,7 +3,7 @@ steps:
   name: 'gcr.io/cloud-builders/git' 
   args: [ 'clone', 'https://github.com/GoogleCloudPlatform/barnard-language-learning-app.git']
 
-- id: 'change-code'
+- id: 'replace-code'
   name: ubuntu
   entrypoint: bash
   args:
@@ -22,3 +22,31 @@ steps:
            "${_APP_ID}"]
   dir: "./deploy"
 
+- name: 'gcr.io/$PROJECT_ID/firebase'
+  args: [ 'use', '${PROJECT_ID}', '--token', '${_FIREBASE_TOKEN}']
+
+- name: 'gcr.io/cloud-builders/npm'
+  dir: 'functions'
+  args: ['install']
+  
+- name: 'gcr.io/$PROJECT_ID/firebase'
+  dir: 'functions'
+  args: [ 'deploy', '--only', 'functions', '--token', '${_FIREBASE_TOKEN}'] 
+
+- name: 'gcr.io/cloud-builders/npm'
+  dir: 'functions'
+  args: ['install']
+
+- name: 'gcr.io/$PROJECT_ID/firebase'
+  dir: 'functions'
+  args: [ 'deploy', '--only', 'functions', '--token', '${_FIREBASE_TOKEN}']
+
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['install']
+
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['run', 'build']
+
+- id: 'deploy-firebase'
+  name: 'gcr.io/$PROJECT_ID/firebase'
+  args: ['deploy', '--token', '${_FIREBASE_TOKEN}']
