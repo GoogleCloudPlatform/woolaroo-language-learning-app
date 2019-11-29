@@ -43,6 +43,7 @@ class AuthUtils {
   static setAppSettings(app_settings){
     AuthUtils.app_settings = app_settings;
   }
+  
   static getAppSettings(){
     const appSettings = AuthUtils.app_settings;
     if (appSettings.primary_language && appSettings.organization_url && appSettings.organization_name){
@@ -73,9 +74,11 @@ class AuthUtils {
   static setUser(user) {
     AuthUtils.user = user;
   }
+  
   static getUserType(user) {
     return AuthUtils.usertype;
   }
+  
   static setUserType(user) {
     AuthUtils.usertype = user;
   }
@@ -84,14 +87,7 @@ class AuthUtils {
     if (!AuthUtils.user) {
       return 'Bearer ';
     }
-
-    if (AuthUtils.idToken) {
-      return `Bearer ${AuthUtils.idToken}`;
-    }
-
     const idToken = await AuthUtils.user.getIdToken();
-    AuthUtils.idToken = idToken;
-
     return `Bearer ${idToken}`;
   }
 
@@ -99,6 +95,5 @@ class AuthUtils {
     return firebase.auth();
   }
 }
-
 
 export default AuthUtils;
