@@ -24,4 +24,8 @@ const configContent =
 }`;
 
 const configFilePath = path.join(process.cwd(), OVERRIDES_FILE_PATH);
+<<<<<<< HEAD
 fs.writeFileSync(configFilePath, configContent);
+=======
+fs.writeFileSync(configFilePath, configContent);
+>>>>>>> 17d7e66... create auto deploy trigger for wizard
