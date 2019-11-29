@@ -55,8 +55,12 @@ class ContributionListItem extends ListItemBase {
         await AuthUtils.signOut();
         return;
       }
-
-      this.deleteContribution_(e);
+      if (resp.status === 200) {
+        this.deleteContribution_(e);
+      } else {
+        await this.showPopup('Failed to Save. Please try again!');
+      }
+      
     } catch(err) {
       console.error(err);
     }

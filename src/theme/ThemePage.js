@@ -141,14 +141,14 @@ class ThemePage extends React.Component {
     try {
       // prevent the button from being clicked again.
       await this.setStateAsync({disabled: true});
-
+      
       const { organization_name, organization_url, privacy_policy } = this.state.data;
 
       const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}updateSettings`, {
         method: 'POST',
         body: JSON.stringify({
-          organization_name: organization_name,
-          organization_url: organization_url,
+          organization_name: organization_name, 
+          organization_url: organization_url, 
           privacy_policy: privacy_policy
         }),
         headers: {
@@ -160,13 +160,17 @@ class ThemePage extends React.Component {
         await AuthUtils.signOut();
         return;
       }
-      await this.showPopup('Saved!');
-
-      this.savedData = {
-          organization_name: organization_name,
-          organization_url: organization_url,
+      if (resp.status === 200) {
+        this.savedData = {
+          organization_name: organization_name, 
+          organization_url: organization_url, 
           privacy_policy: privacy_policy
-      };
+        };      
+        await this.showPopup('Saved!');
+      }else {
+        await this.showPopup('Something went wrong. Please try again!');
+        await this.setStateAsync({disabled: false});
+      }
     } catch(err) {
       console.error(err);
     }
