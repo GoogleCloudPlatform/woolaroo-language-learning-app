@@ -620,19 +620,15 @@ async function setFirstUserAsAdmin() {
 async function checkAccess_(req, res) {
   try {
     const customClaims = await getCustomClaims_(req, res);
-    if (!customClaims) {
-      res.status(403).send(JSON.stringify("Permission Denied."));
-      return false;
-    }
-
-    if (!(customClaims.moderator || customClaims.admin)) {
-      res.status(403).send(JSON.stringify("Permission Denied."));
+    if (!customClaims || !(customClaims.moderator || customClaims.admin)) {
+      res.status(403).send(JSON.stringify(
+        'Permission denied. User is nether a moderator nor an admin.'));
       return false;
     }
 
     return true;
   } catch(err) {
-    res.status(403).send(JSON.stringify("Permission Denied."));
+    res.status(403).send(JSON.stringify(err));
     return false;
   }
 }
@@ -640,19 +636,14 @@ async function checkAccess_(req, res) {
 async function checkAdminAccess_(req, res) {
   try {
     const customClaims = await getCustomClaims_(req, res);
-    if (!customClaims) {
-      res.status(403).send(JSON.stringify("Permission Denied."));
+    if (!customClaims !! !customClaims.admin) {
+      res.status(403).send(JSON.stringify(
+        'Permission denied. User is not an admin.'));
       return false;
     }
-
-    if (!customClaims.admin) {
-      res.status(403).send(JSON.stringify("Permission Denied."));
-      return false;
-    }
-
     return true;
   } catch(err) {
-    res.status(403).send(JSON.stringify("Permission Denied."));
+    res.status(403).send(JSON.stringify(err));
     return false;
   }
 }
@@ -660,7 +651,8 @@ async function checkAdminAccess_(req, res) {
 async function getCustomClaims_(req, res) {
   const authHeader = req.get('Authorization');
   if (!authHeader) {
-    res.status(403).send(JSON.stringify("Permission Denied."));
+    res.status(403).send(JSON.stringify(
+      'Permission denied. Invalid authorization header.'));
     return false;
   }
   const tokenId = req.get('Authorization').split('Bearer ')[1];
