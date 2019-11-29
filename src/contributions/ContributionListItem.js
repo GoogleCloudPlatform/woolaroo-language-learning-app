@@ -53,7 +53,17 @@ class ContributionListItem extends ListItemBase {
       });
 
       if (resp.status === 200) {
-        this.deleteItem(e);
+        if (this.state.collectionName === 'suggestions') {
+          this.deleteItem(e);
+          return;
+        }
+        // Flagged items use the 'approveSuggestions' endpoint, which already
+        // includes deleting the feedback, so there's no need to send another BE
+        // request to delete.
+        this.setState({
+          deleted: true,
+        });       
+
       } else {
         await this.showPopup('Failed to save. Please try again!');
         console.error(resp.text());
