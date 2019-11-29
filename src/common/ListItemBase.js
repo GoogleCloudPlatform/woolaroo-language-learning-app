@@ -2,14 +2,15 @@ import React from 'react';
 import AudioRecorder from '../audio/AudioRecorder';
 import ApiUtils from '../utils/ApiUtils';
 import AuthUtils from '../utils/AuthUtils';
-import TextField from '@material-ui/core/TextField';
-import Snackbar from '@material-ui/core/Snackbar';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogActions from '@material-ui/core/DialogActions';
+import Snackbar from '@material-ui/core/Snackbar';
+import TextField from '@material-ui/core/TextField';
+import Tooltip from '@material-ui/core/Tooltip';
 import './ListItemBase.css';
 
 class ListItemBase extends React.Component {
@@ -98,28 +99,35 @@ class ListItemBase extends React.Component {
   }
 
   renderBaseWord() {
-  
+
     if (AuthUtils.getPrimaryLanguage()==="English"){
         return (
-          <div className="base-word">
-            {this.state.english_word}
-          </div>
+          <Tooltip title={this.state.english_word} placement="bottom">
+            <div className="base-word">
+              {this.state.english_word}
+            </div>
+          </Tooltip>
         );
     }else{
         const primary_word = (!this.state.primary_word || this.state.primary_word==="")?this.state.english_word:this.state.primary_word;
         return (
-          <div className="base-word">{primary_word}
-            <div className="english-word-small">{this.state.english_word} </div>
-          </div>
+          <Tooltip title={primary_word} placement="bottom">
+            <div className="base-word">{primary_word}
+              <div className="english-word-small">{this.state.english_word} </div>
+            </div>
+          </Tooltip>
         );
     }
   }
+
+
+
 
   renderPrimaryWord() {
     //placeholder for TranslationItemBase to overwrite
     return;
   }
-  
+
   renderTranslation() {
     return (
       <TextField
