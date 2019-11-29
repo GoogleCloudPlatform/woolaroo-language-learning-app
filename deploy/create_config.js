@@ -24,4 +24,4 @@ const configContent =
 }`;
 
 const configFilePath = path.join(process.cwd(), OVERRIDES_FILE_PATH);
-fs.writeFileSync(configFilePath, configContent
+fs.writeFileSync(configFilePath, configContent);
