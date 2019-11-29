@@ -103,14 +103,14 @@ class TranslationListItem extends ListItemBase {
         });  
         await this.actionaftersaving();
       } else {
-        const errMsg = (resp.status === 403) ?
-          'Permission denied' : 'Failed to Save. Please try again!'; 
-        await this.showPopup(errMsg);
+        await this.showPopup('Failed to save. Please try again!');
+        console.errpr(resp.text());
         await this.setStateAsync({disabled: false});
       }
       
       
     } catch(err) {
+      await this.showPopup('Failed to save. Please try again!');
       console.error(err);
     }
   }
@@ -127,11 +127,13 @@ class TranslationListItem extends ListItemBase {
         }
       });
       if (res.status === 403) {
-        await AuthUtils.signOut();
+        await this.showPopup('Failed to save. Please try again!');
+        console.error(resp.text());
         return;
       }
       return await res.text();
     } catch(err) {
+      await this.showPopup('Failed to save. Please try again!');
       console.error(err);
     }
   }
