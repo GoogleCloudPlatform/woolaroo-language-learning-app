@@ -91,10 +91,6 @@ class TranslationListItem extends ListItemBase {
           'Content-Type': 'application/json',
         }
       });
-      if (resp.status === 403) {
-        await AuthUtils.signOut();
-        return;
-      }
       if (resp.status === 200) {
         await this.showPopup('Saved!');
         this.savedData = {
@@ -107,12 +103,14 @@ class TranslationListItem extends ListItemBase {
         });  
         await this.actionaftersaving();
       } else {
-        await this.showPopup('Failed to Save. Please try again!');
+        await this.showPopup('Failed to save. Please try again!');
+        console.errpr(resp.text());
         await this.setStateAsync({disabled: false});
       }
       
       
     } catch(err) {
+      await this.showPopup('Failed to save. Please try again!');
       console.error(err);
     }
   }
@@ -129,11 +127,13 @@ class TranslationListItem extends ListItemBase {
         }
       });
       if (res.status === 403) {
-        await AuthUtils.signOut();
+        await this.showPopup('Failed to save. Please try again!');
+        console.error(resp.text());
         return;
       }
       return await res.text();
     } catch(err) {
+      await this.showPopup('Failed to save. Please try again!');
       console.error(err);
     }
   }
