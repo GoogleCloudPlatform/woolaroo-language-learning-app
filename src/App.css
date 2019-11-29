@@ -24,7 +24,7 @@ body {
 
 .textblock {
   display: inline-block;
-  max-width: 500px;  
+  max-width: 500px;
 }
 
 .body-container-banner {
@@ -77,4 +77,8 @@ body {
 
 .MuiFab-root:hover {
   background-color: #D5EEE2 !important;
+}
+
+.MuiInput-underline:after {
+  border-bottom: 2px solid #2CAB6F!important;
 }

@@ -175,7 +175,7 @@ class ListPageBase extends React.Component {
   render() {
     return (
       <div>
-        <h2>{this.state.pageTitle}</h2>
+        <h1>{this.state.pageTitle}</h1>
         {this.state.loading ? <div>Loading...</div> : this.renderItems()}
       </div>
     );
