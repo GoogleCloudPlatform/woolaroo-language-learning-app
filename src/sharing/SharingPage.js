@@ -12,7 +12,7 @@ class SharingPage extends React.Component {
   render(){
     return (
         <div>
-          <h2>Share with friends</h2>
+          <h1>Share with friends</h1>
 
             <div>
                 <TextField
@@ -23,7 +23,7 @@ class SharingPage extends React.Component {
                   placeholder="ladino.appspot.com"
                 />
                 <div className="button-margin" >
-                    <Button variant="contained" color="primary" 
+                    <Button variant="contained" color="primary"
                         onClick={() => this.copytext(document.getElementById('app-link'))}
                     >
                       Copy link
@@ -39,7 +39,7 @@ class SharingPage extends React.Component {
                       placeholder="ladino.appspot.com/contribute"
                     />
                     <div className="button-margin" >
-                        <Button variant="contained" color="primary" 
+                        <Button variant="contained" color="primary"
                             onClick={() => this.copytext(document.getElementById('contributor-app-link'))}
                         >
                           Copy link
@@ -47,7 +47,7 @@ class SharingPage extends React.Component {
                     </div>
                 </div>
             </div>
-    
+
         </div>
       );
   }
