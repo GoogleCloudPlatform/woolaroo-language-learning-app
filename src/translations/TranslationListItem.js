@@ -128,7 +128,7 @@ class TranslationListItem extends ListItemBase {
       });
       if (res.status === 403) {
         await this.showPopup('Failed to save. Please try again!');
-        console.error(resp.text());
+        console.error(res.text());
         return;
       }
       return await res.text();
