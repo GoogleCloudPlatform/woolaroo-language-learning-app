@@ -1,27 +1,5 @@
 steps:
-- id: 'clone-github-repo'
-  name: 'gcr.io/cloud-builders/git' 
-  args: [ 'clone', 'https://github.com/GoogleCloudPlatform/barnard-language-learning-app.git']
 
-- id: 'test'
-  name: ubuntu
-  entrypoint: bash
-  args:
-  - '-c'
-  - |
-    echo $(pwd)
-    echo $(ls)
-    
-- id: 'test2'
-  name: ubuntu
-  entrypoint: bash
-  dir: 'barnard-language-learning-app'
-  args:
-  - '-c'
-  - |
-    echo $(pwd)
-    echo $(ls)
-  
 - id: 'replace-code'
   name: ubuntu
   entrypoint: bash
@@ -30,6 +8,7 @@ steps:
   - |
     sed -i "s/barnard-project/${PROJECT_ID}/g" .firebaserc
     sed -i "s/barnard-project/${PROJECT_ID}/g" ./src/utils/ApiUtils.js
+    cat .firebaserc
   
 - id: 'configure_firebase_object'
   name: node:10.16.3
@@ -40,6 +19,13 @@ steps:
            "${_PROJECT_NUMBER}",
            "${_APP_ID}"]
   dir: "./deploy"
+  
+- id: 'check-object'
+  name: ubuntu
+  entrypoint: bash
+  args:
+  - '-c'
+  - cat ./src/config.json
 
 - name: 'gcr.io/$PROJECT_ID/firebase'
   args: [ 'use', '${PROJECT_ID}', '--token', '${_FIREBASE_TOKEN}']
