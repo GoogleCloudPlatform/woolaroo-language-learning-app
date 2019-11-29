@@ -36,7 +36,8 @@ class ContributionListItem extends ListItemBase {
         return;
       }
 
-      const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}addTranslations`, {
+      const endpoint = this.state.collectionName === 'feedback' ? 'approveSuggesions' : 'addTranslations';
+      const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}${endpoint}`, {
         method: 'POST',
         body: JSON.stringify({
           english_word,
@@ -52,6 +53,7 @@ class ContributionListItem extends ListItemBase {
       });
 
       if (resp.status === 200) {
+        // TODO: function doesn't exist???
         this.deleteContribution_(e);
       } else {
         await this.showPopup('Failed to save. Please try again!');
