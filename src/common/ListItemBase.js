@@ -26,7 +26,7 @@ class ListItemBase extends React.Component {
       english_word, primary_word, id, frequency,
       sound_link, translation, transliteration,
       // For flagged items only.
-      curr_sound_link, curr_translation, curr_transliteration, content,
+      curr_sound_link, curr_translation, curr_transliteration, content, types,
     } = this.props.item;
 
     this.state = {
@@ -38,6 +38,7 @@ class ListItemBase extends React.Component {
       transliteration,
       frequency,
       content,
+      types,
       curr_sound_link,
       curr_translation,
       curr_transliteration,

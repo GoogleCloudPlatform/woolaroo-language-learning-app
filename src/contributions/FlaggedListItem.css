@@ -2,6 +2,7 @@
   background-color: #fff2cc;
   display: flex;
   align-items: center;
+  margin-bottom: 12px;
 }
 
 .flagged-list-item .translation-list-item {
@@ -14,6 +15,10 @@
 
 .empty-field {
   opacity: 0.5;
+}
+
+.current-saved-value {
+  padding-left: 22px;
 }
 
 .MuiGrid-item .base-word {
