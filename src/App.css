@@ -67,12 +67,26 @@ body {
   background-color: #2CAB6F !important;
 }
 
+.MuiRadio-colorPrimary.Mui-checked {
+  color: #2CAB6F !important;
+}
+
+
+.MuiButton-textPrimary:not(.Mui-disabled) {
+  color: #2CAB6F !important;
+}
+
+.MuiButton-textPrimary:hover,
+.MuiIconButton-colorPrimary:hover {
+  background-color: #D5EEE2 !important;
+}
+
 .MuiButton-containedSecondary:enabled, .MuiChip-colorSecondary, span.MuiButton-containedSecondary {
-  background-color: #eda14f !important;
+  background-color: #EDA14F !important;
 }
 
 .MuiFab-root {
-  background-color: #ffffff !important;
+  background-color: #FFF !important;
 }
 
 .MuiFab-root:hover {
