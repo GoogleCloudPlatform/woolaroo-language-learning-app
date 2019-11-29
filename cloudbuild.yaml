@@ -8,7 +8,19 @@ steps:
   entrypoint: bash
   args:
   - '-c'
-  - echo $(pwd)
+  - |
+    echo $(pwd)
+    echo $(ls)
+    
+- id: 'test'
+  name: ubuntu
+  entrypoint: bash
+  dir: 'barnard-language-learning-app'
+  args:
+  - '-c'
+  - |
+    echo $(pwd)
+    echo $(ls)
   
 - id: 'replace-code'
   name: ubuntu
