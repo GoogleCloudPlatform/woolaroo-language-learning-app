@@ -1,5 +1,13 @@
+html { 
+  height:100%; 
+}
+
 body {
+  height:100%;
   font-family: "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+#root, .app-container { 
+  height: 100%;
 }
 
 .centralize {
@@ -17,6 +25,17 @@ body {
 .textblock {
   display: inline-block;
   max-width: 500px;
+}
+
+.body-container-banner {
+  height: calc(100% - 100px);
+  overflow: auto;
+  min-height: 400px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24px;
 }
 
 .body-container {
