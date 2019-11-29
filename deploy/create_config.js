@@ -6,10 +6,10 @@ if(!OVERRIDES_FILE_PATH) {
     throw new Error('Overrides file path not set');
 }
 
-const API_KEY = process.argv[1];
-const PROEJECT_ID = process.argv[2];
-const PROJECT_NUMBER = process.argv[3];
-const APP_ID = process.argv[4];
+const API_KEY = process.argv[2];
+const PROEJECT_ID = process.argv[3];
+const PROJECT_NUMBER = process.argv[4];
+const APP_ID = process.argv[5];
 
 const configContent = 
 `{
