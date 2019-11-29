@@ -55,7 +55,7 @@ class AddWordsPage extends ListPageBase {
     return (
       <div ref={this.individualWordsContainer_}>
         <div className="title-row">
-          <h2>Add individual words</h2>
+          <h1>Add individual words</h1>
           <Button
             variant="contained"
             color="primary"
