@@ -102,7 +102,7 @@ class ListItemBase extends React.Component {
 
     if (AuthUtils.getPrimaryLanguage()==="English"){
         return (
-          <Tooltip title={this.state.english_word} placement="bottom">
+          <Tooltip title={this.state.english_word} placement="bottom-start">
             <div className="base-word">
               {this.state.english_word}
             </div>
@@ -111,7 +111,7 @@ class ListItemBase extends React.Component {
     }else{
         const primary_word = (!this.state.primary_word || this.state.primary_word==="")?this.state.english_word:this.state.primary_word;
         return (
-          <Tooltip title={primary_word} placement="bottom">
+          <Tooltip title={primary_word} placement="bottom-start">
             <div className="base-word">{primary_word}
               <div className="english-word-small">{this.state.english_word} </div>
             </div>
