@@ -15,7 +15,7 @@ import pickle
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 # The ID and range of a sample spreadsheet.
 SAMPLE_SPREADSHEET_ID = sys.argv[1] # '1JZ-DHyl8D-RbudM8J0fZADXTElWvw6ilQTyncGDPEbs'
-SAMPLE_RANGE_NAME = 'xsr!A6:C'
+SAMPLE_RANGE_NAME = 'xsr!A6:D'
 url = "https://us-central1-%s.cloudfunctions.net/addTranslations" % sys.argv[2]
 client_secret = sys.argv[3]
 
@@ -62,19 +62,22 @@ def main():
     else:
         for row in values:
             # Print columns A and E, which correspond to indices 0 and 4.
-            if (len(row) == 3):
+            if (len(row) == 4):
                 english_word = row[0]
-                frequency = row[1]
-                translation = row[2]
+                primary_word = row[1]
+                frequency = row[2]
+                translation = row[3]  
                 transliteration = ''
                 sound_link = ''
                 x = {
-                      "english_word": english_word,
-                      "translation": translation,
+                      "english_word": english_word.lower(),
+                      "primary_word": primary_word.lower() if primary_word != "PLACEHOLDER" else '',
+                      "translation": translation.lower(),
                       "frequency": frequency,
                       "transliteration": transliteration,
                       "sound_link": sound_link
                     }
+                print(x)
                 y = json.dumps(x)
                 headers = {'content-type': "application/json"}
                 response = requests.request("POST", url, data=y, headers=headers)
