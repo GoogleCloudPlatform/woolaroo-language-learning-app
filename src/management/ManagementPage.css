@@ -5,3 +5,7 @@
 .email-text-field.MuiFormControl-root {
   margin-top: 0;
 }
+
+legend.MuiFormLabel-root.Mui-focused {
+  color: rgba(0, 0, 0, 0.54) !important;
+}

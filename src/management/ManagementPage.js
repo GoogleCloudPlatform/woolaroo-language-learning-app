@@ -140,9 +140,9 @@ class ManagementPage extends React.Component {
             <FormControl component='fieldset'>
               <FormLabel component='legend'>Assign role</FormLabel>
               <RadioGroup aria-label='role' value={this.state.inviteRole} onChange={this.handleRoleSelected_}>
-                <FormControlLabel value='Moderator' control={<Radio />} label='Moderator' />
+                <FormControlLabel value='Moderator' control={<Radio color="primary"/>} label='Moderator'/>
                 <FormHelperText className='role-text'>Can review user contributions</FormHelperText>
-                <FormControlLabel value='Admin' control={<Radio />} label='Admin' />
+                <FormControlLabel value='Admin' control={<Radio color="primary"/>} label='Admin' />
                 <FormHelperText className='role-text'>
                   Can review user contributions and manage app and user settings
                 </FormHelperText>
@@ -150,7 +150,7 @@ class ManagementPage extends React.Component {
             </FormControl>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.closeDialog_} color='primary'>
+            <Button onClick={this.closeDialog_}>
               Cancel
             </Button>
             {/* This UI is used for inviting users, so revoke=false and forceCreate=true */}
