@@ -81,13 +81,13 @@ exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
 exports.addSuggestions = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
     var snapshot = await admin.firestore().collection('suggestions').add({
-      english_word: req.body.english_word,
-      primary_word: req.body.primary_word,
-      translation: req.body.translation,
-      transliteration: req.body.transliteration,
-      sound_link: req.body.sound_link,
-      primary_word: req.body.primary_word,
-      timestamp: admin.firestore.FieldValue.serverTimestamp(),
+      english_word: req.body.english_word || '',
+      primary_word: req.body.primary_word || '',
+      translation: req.body.translation || '',
+      transliteration: req.body.transliteration || '',
+      sound_link: req.body.sound_link || '',
+      primary_word: req.body.primary_word || '',
+      timestamp: admin.firestore.FieldValue.serverTimestamp()
     });
     console.log('Translation suggestions saved.');
     res.status(200).send("Translation suggestions saved.");
