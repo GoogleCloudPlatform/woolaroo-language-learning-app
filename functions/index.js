@@ -624,7 +624,7 @@ async function checkAccess_(req, res) {
 async function checkAdminAccess_(req, res) {
   try {
     const customClaims = await getCustomClaims_(req, res);
-    if (!customClaims !! !customClaims.admin) {
+    if (!customClaims || !customClaims.admin) {
       res.status(403).send(JSON.stringify(
         'Permission denied. User is not an admin.'));
       return false;
