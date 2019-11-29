@@ -91,10 +91,6 @@ class TranslationListItem extends ListItemBase {
           'Content-Type': 'application/json',
         }
       });
-      if (resp.status === 403) {
-        await AuthUtils.signOut();
-        return;
-      }
       if (resp.status === 200) {
         await this.showPopup('Saved!');
         this.savedData = {
@@ -107,7 +103,9 @@ class TranslationListItem extends ListItemBase {
         });  
         await this.actionaftersaving();
       } else {
-        await this.showPopup('Failed to Save. Please try again!');
+        const errMsg = (resp.status === 403) ?
+          'Permission denied' : 'Failed to Save. Please try again!'; 
+        await this.showPopup(errMsg);
         await this.setStateAsync({disabled: false});
       }
       
