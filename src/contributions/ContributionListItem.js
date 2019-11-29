@@ -51,17 +51,16 @@ class ContributionListItem extends ListItemBase {
         }
       });
 
-      if (resp.status === 403) {
-        await AuthUtils.signOut();
-        return;
-      }
       if (resp.status === 200) {
         this.deleteContribution_(e);
       } else {
-        await this.showPopup('Failed to Save. Please try again!');
+        await this.showPopup('Failed to save. Please try again!');
+        console.error(resp.text());
+        return;
       }
       
     } catch(err) {
+      await this.showPopup('Failed to save. Please try again!');
       console.error(err);
     }
   }

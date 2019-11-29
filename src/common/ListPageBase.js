@@ -82,7 +82,8 @@ class ListPageBase extends React.Component {
           signal: this.abortController.signal,
         });
       if (resp.status === 403) {
-        await AuthUtils.signOut();
+        await this.showPopup('Failed to fetch data. Please try again!');
+        console.error(resp.text());
         return;
       }
 
@@ -93,6 +94,7 @@ class ListPageBase extends React.Component {
         loading: false,
       });
     } catch(err) {
+      await this.showPopup('Failed to fetch data. Please try again!');
       console.error(err);
     }
   }
@@ -108,7 +110,8 @@ class ListPageBase extends React.Component {
           signal: this.abortController.signal,
         });
       if (resp.status === 403) {
-        await AuthUtils.signOut();
+        await this.showPopup('Failed to fetch data. Please try again!');
+        console.error(resp.text());
         return;
       }
 
@@ -123,7 +126,8 @@ class ListPageBase extends React.Component {
           }
         });
         if (itemResp.status === 403) {
-          await AuthUtils.signOut();
+          await this.showPopup('Failed to fetch data. Please try again!');
+          console.error(resp.text());
           return;
         }
         const currentItem = await itemResp.json();
@@ -141,6 +145,7 @@ class ListPageBase extends React.Component {
         });
       });
     } catch(err) {
+      await this.showPopup('Failed to fetch data. Please try again!');
       console.error(err);
     }
   }

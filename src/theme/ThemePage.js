@@ -156,10 +156,6 @@ class ThemePage extends React.Component {
           'Authorization': await AuthUtils.getAuthHeader(),
         }
       });
-      if (resp.status === 403) {
-        await AuthUtils.signOut();
-        return;
-      }
       if (resp.status === 200) {
         this.savedData = {
           organization_name: organization_name, 
@@ -169,9 +165,11 @@ class ThemePage extends React.Component {
         await this.showPopup('Saved!');
       }else {
         await this.showPopup('Something went wrong. Please try again!');
+        console.error(resp.text());
         await this.setStateAsync({disabled: false});
       }
     } catch(err) {
+      await this.showPopup('Something went wrong. Please try again!');     
       console.error(err);
     }
   };
