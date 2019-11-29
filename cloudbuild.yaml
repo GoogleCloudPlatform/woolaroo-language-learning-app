@@ -13,3 +13,14 @@ steps:
     sed -i "s/barnard-project/${PROJECT_ID}/g" ./src/utils/ApiUtils.js
   
   
+- id: 'configure_firebase_object'
+    name: node:10.16.3
+    entrypoint: "node"
+    args: ["./create_config.js",
+           "${_API_KEY}",
+           "${PROJECT_ID}",
+           "${_PROJECT_NUMBER}",
+           "${_APP_ID}"
+         ]
+    dir: "./deploy"
+
