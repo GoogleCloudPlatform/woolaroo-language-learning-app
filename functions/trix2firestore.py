@@ -71,8 +71,8 @@ def main():
                 sound_link = ''
                 x = {
                       "english_word": english_word.lower(),
-                      "primary_word": primary_word.lower() if primary_word != "PLACEHOLDER" else '',
-                      "translation": translation.lower(),
+                      "primary_word": primary_word.lower() if primary_word != "PLACEHOLDER" else "",
+                      "translation": translation.lower() if translation != "PLACEHOLDER" else "",
                       "frequency": frequency,
                       "transliteration": transliteration,
                       "sound_link": sound_link
