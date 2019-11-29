@@ -424,15 +424,23 @@ exports.grantModeratorRole = functions.https.onRequest((req, res) => {
       if (!hasAccess) {
         return;
       }
-      const revoke = Boolean(req.body.revoke);
-      const user = await admin.auth().getUserByEmail(req.body.email);
-
-      if (!user) {
-        res.status(404);
-        return;
+      let user;
+      try {
+        user = await admin.auth().getUserByEmail(req.body.email);
+      } catch (err) {
+        if (err.errorInfo.code === 'auth/user-not-found') {
+          if (!req.body.forceCreate) {
+            res.status(404).send(err);
+            return;
+          }
+          user = await admin.auth().createUser({
+            email: req.body.email,
+            emailVerified: false,
+          });
+        }
       }
 
-      console.log(revoke);
+      const revoke = Boolean(req.body.revoke);
       if (revoke) {
         if (!(user.customClaims && user.customClaims.moderator)) {
           res.status(200).send(JSON.stringify("Already not a moderator."));
@@ -507,14 +515,23 @@ exports.grantAdminRole = functions.https.onRequest((req, res) => {
       if (!hasAccess) {
         return;
       }
-      const revoke = Boolean(req.body.revoke);
-      const user = await admin.auth().getUserByEmail(req.body.email); // 1
-
-      if (!user) {
-        res.status(404);
-        return;
+      let user;
+      try {
+        user = await admin.auth().getUserByEmail(req.body.email);
+      } catch (err) {
+        if (err.errorInfo.code === 'auth/user-not-found') {
+          if (!req.body.forceCreate) {
+            res.status(404).send(err);
+            return;
+          }
+          user = await admin.auth().createUser({
+            email: req.body.email,
+            emailVerified: false,
+          });
+        }
       }
 
+      const revoke = Boolean(req.body.revoke);
       if (revoke) {
         if (!(user.customClaims && user.customClaims.admin)) {
           res.status(200).send(JSON.stringify("Already not an admin."));
