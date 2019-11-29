@@ -12,7 +12,7 @@ steps:
     echo $(pwd)
     echo $(ls)
     
-- id: 'test'
+- id: 'test2'
   name: ubuntu
   entrypoint: bash
   dir: 'barnard-language-learning-app'
