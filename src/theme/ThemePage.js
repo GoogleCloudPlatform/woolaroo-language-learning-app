@@ -179,7 +179,6 @@ class ThemePage extends React.Component {
             <div>
                 <h2> Organization information </h2>
                 <TextField
-                  required
                   id="organization-name"
                   label="Organization name"
                   value={this.state.data.organization_name}
@@ -249,6 +248,7 @@ class ThemePage extends React.Component {
             <div className="newSection">
                 <h2>Language Settings</h2>
                 <TextField
+                  disabled
                   id="endangered-language-helper"
                   label="Endangered&nbsp;language&nbsp;(read&nbsp;only)"
                   className={classes.textField}
@@ -257,6 +257,7 @@ class ThemePage extends React.Component {
                 />
                 <br/>
                 <TextField
+                  disabled
                   id="primary-language-helper"
                   label="Primary&nbsp;language&nbsp;(read&nbsp;only)"
                   className={classes.textField}
