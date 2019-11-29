@@ -1,12 +1,44 @@
 import React from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import { withStyles } from '@material-ui/core/styles';
 import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
+import CardMedia from "@material-ui/core/CardMedia";
 import Button from '@material-ui/core/Button';
 import ApiUtils from '../utils/ApiUtils';
 import AuthUtils from '../utils/AuthUtils';
 import Snackbar from '@material-ui/core/Snackbar';
+import FormHelperText from "@material-ui/core/FormHelperText";
 import './ThemePage.css';
+
+const styles = theme => ({
+  textField: {
+    width: "100%"
+  },
+  dense: {
+    marginTop: 19
+  },
+  menu: {
+    width: 200
+  },
+  card: {
+    maxWidth: 345,
+    boxShadow: "none"
+  },
+  media: {
+    height: 0,
+    paddingTop: "56.25%", // 16:9
+    backgroundSize: "contain"
+  },
+  newSection: {
+    marginTop: theme.spacing(12)
+  },
+  input: {
+    display: 'none',
+  },
+  lastSection: {
+    marginBottom: theme.spacing(12)
+  },
+});
 
 class ThemePage extends React.Component {
   constructor(props) {
@@ -27,6 +59,7 @@ class ThemePage extends React.Component {
 
     this.savedData = {}
   }
+
   async componentDidMount() {
     if (this.state.loading === true){
         await this.fetchData();
@@ -138,63 +171,19 @@ class ThemePage extends React.Component {
       console.error(err);
     }
   };
-  renderItems(){
 
-    const classes = makeStyles(theme => ({
-      root: {
-        display: "flex",
-        flexWrap: "wrap"
-      },
-      container: {
-        display: "flex",
-        flexWrap: "wrap"
-      },
-      textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-      },
-      dense: {
-        marginTop: 19
-      },
-      menu: {
-        width: 200
-      },
-      formControl: {
-        margin: theme.spacing(1),
-        minWidth: 350
-      },
-      selectEmpty: {
-        marginTop: theme.spacing(2)
-      },
-      card: {
-        maxWidth: 345,
-        boxShadow: "none"
-      },
-      media: {
-        height: 0,
-        paddingTop: "56.25%" // 16:9
-      },
-      newSection: {
-        marginTop: theme.spacing(12)
-      },
-      input: {
-        display: 'none',
-      },
-      lastSection: {
-        marginBottom: theme.spacing(12)
-      },
-    }));
+  renderItems(classes) {
+
     return (
-        <div>
-            <div className={classes.newSection}>
-
-
+      <div>
+            <div>
+                <h2> Organization information </h2>
                 <TextField
                   required
                   id="organization-name"
                   label="Organization name"
                   value={this.state.data.organization_name}
-                  className={[classes.textField, 'fullwidth'].join(' ')}
+                  className={classes.textField}
                   margin="normal"
                   onChange={this.handleChange_organization_name}
                 />
@@ -203,7 +192,7 @@ class ThemePage extends React.Component {
                   id="organization-website"
                   label="Organization website"
                   value={this.state.data.organization_url}
-                  className={[classes.textField, 'fullwidth'].join(' ')}
+                  className={classes.textField}
                   margin="normal"
                   onChange={this.handleChange_organization_url}
                 />
@@ -214,12 +203,14 @@ class ThemePage extends React.Component {
                   rows="6"
                   value={this.state.data.privacy_policy}
                   placeholder="Terms and Conditions (optional)"
-                  className={[classes.textField, 'fullwidth'].join(' ')}
+                  className={classes.textField}
                   margin="normal"
                   onChange={this.handleChange_privacy_policy}
                 />
-
-                <br/><br/>
+                <FormHelperText>
+                  Your own terms and conditions for people using your app
+                </FormHelperText>
+                <br/>
                 <div>
                     <Button variant="contained" color="primary"
                         onClick={this.savechanges}
@@ -228,18 +219,16 @@ class ThemePage extends React.Component {
                       Save Changes
                     </Button>
                 </div>
-                <br/><br/>
             </div>
 
-
-            <br/><br/>
             <div className={classes.newSection}>
                 <h2> Logo </h2>
                 <Card className={classes.card}>
-                  <img src={this.props.landing_image}
-                    title="App Logo"
+                  <CardMedia
+                    className={classes.media}
+                    image={this.props.landing_image}
+                    title="App logo"
                     alt="App Logo"
-                    className="app-logo"
                   />
                 </Card>
                 <input
@@ -275,12 +264,8 @@ class ThemePage extends React.Component {
                   value={this.state.data.primary_language}
                 />
                 <br/>
-
+              </div>
             </div>
-
-             <br/>
-             <br/>
-        </div>
       );
 
   }
@@ -307,14 +292,15 @@ class ThemePage extends React.Component {
     );
   }
   render(){
+    const {classes} = this.props;
     return (
         <div>
-            <h2> Settings </h2>
-            {this.state.loading ? <div>Loading...</div> : this.renderItems()}
+            <h1> Settings </h1>
+            {this.state.loading ? <div>Loading...</div> : this.renderItems(classes)}
             <br/><br/>
             {this.renderPromoMessage_()}
         </div>
       );
   }
 }
-export default ThemePage;
+export default withStyles(styles)(ThemePage);
