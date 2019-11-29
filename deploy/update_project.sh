@@ -159,14 +159,20 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID} \
  --role roles/editor
 
 # Link project to mirror github
-read -p "Visit https://console.cloud.google.com/cloud-build/triggers \
+read -p "Visit https://console.cloud.google.com/cloud-build/triggers?project=${PROJECT_ID} \
   and connect repository choosing Github mirrored.  \
  Then come back here and press [Enter] to continue ..."
 
-#PROJECT_ID=woolaroo-yiddish
-#LANGUAGE_NAME=Yiddish
-gcloud beta builds triggers create cloud-source-repositories \
- --repo="github_googlecloudplatform_barnard-language-learning-app" \
- --branch-pattern="^master$" \
- --build-config="app/cloudbuild.yaml" \
- --substitutions _API_URL=https://us-central1-${PROJECT_ID}.cloudfunctions.net,_BUCKET_LOCATION=us,_BUCKET_NAME=${PROJECT_ID}-dev5,_GOOGLE_API_KEY=placeholder,_GOOGLE_REGION=en,_ENDANGERED_LANGUAGE=${LANGUAGE_NAME},_LANGUAGE=en,_TERRAFORM_BUCKET_NAME=${PROJECT_ID}-terraform-dev5,_THEME=red
+ RESPONSE="$(gcloud beta builds triggers list)"
+
+ if [[ $RESPONSE == *"createTime"* ]]; then
+   echo "Trigger already added. Skipping creation..."
+ else
+   gcloud beta builds triggers create cloud-source-repositories \
+    --repo="github_googlecloudplatform_barnard-language-learning-app" \
+    --branch-pattern="^master$" \
+    --build-config="app/cloudbuild.yaml" \
+    --substitutions _API_URL=https://us-central1-${PROJECT_ID}.cloudfunctions.net,_BUCKET_LOCATION=us,_BUCKET_NAME=${PROJECT_ID}-dev5,_GOOGLE_API_KEY=placeholder,_GOOGLE_REGION=en,_ENDANGERED_LANGUAGE=${LANGUAGE_NAME},_LANGUAGE=en,_TERRAFORM_BUCKET_NAME=${PROJECT_ID}-terraform-dev5,_THEME=red
+ fi
+
+ echo "UPDATE COMPLETE!"
