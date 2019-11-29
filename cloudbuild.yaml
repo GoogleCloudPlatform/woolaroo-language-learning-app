@@ -9,6 +9,7 @@ steps:
     sed -i "s/barnard-project/${PROJECT_ID}/g" .firebaserc
     sed -i "s/barnard-project/${PROJECT_ID}/g" ./src/utils/ApiUtils.js
     cat .firebaserc
+    cat ./src/utils/ApiUtils.js
   
 - id: 'configure_firebase_object'
   name: node:10.16.3
