@@ -22,6 +22,9 @@ if ! [ -x "$(command -v npm)" ]; then
   exit 1
 fi
 
+gcloud auth revoke
+firebase logout
+
 CURRENT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "${CURRENT_PATH}/./config.sh"
 
@@ -29,22 +32,37 @@ if [ -d "${CURRENT_PATH}/barnard-language-learning-app" ];
   then rm -Rf ${CURRENT_PATH}/barnard-language-learning-app; fi
 
 gcloud auth login
+gcloud components update
 
-PROJECT_ID=${GCP_LANGUAGE_PROJECT_ID}
+if [ -z "${GCP_FOLDER_ID}" ]
+then
+  if [ -z "${GCP_ORG_ID}" ]
+  then
+    gcloud projects create ${GCP_LANGUAGE_PROJECT_ID} \
+      --name ${GCP_LANGUAGE_PROJECT_ID} --set-as-default
+  else
+    gcloud projects create ${GCP_LANGUAGE_PROJECT_ID} \
+      --name ${GCP_LANGUAGE_PROJECT_ID} --set-as-default \
+      --organization ${GCP_ORG_ID}
+  fi
+else
+  gcloud projects create ${GCP_LANGUAGE_PROJECT_ID} \
+    --name ${GCP_LANGUAGE_PROJECT_ID} --set-as-default \
+    --folder ${GCP_FOLDER_ID}
+fi
 
-gcloud config set project ${PROJECT_ID}
+
+PROJECT_ID="$(gcloud config list --format 'value(core.project)')"
 
 gcloud beta billing projects link ${PROJECT_ID} \
   --billing-account ${GCP_BILLING_ACCOUNT_ID}
-  
-PROJECT_ID="$(gcloud config list --format 'value(core.project)')"
 
 gcloud services enable cloudresourcemanager.googleapis.com
 gcloud services enable cloudbilling.googleapis.com
 gcloud services enable iam.googleapis.com
 gcloud services enable serviceusage.googleapis.com
 gcloud services enable firebase.googleapis.com
-gcloud services enable credentials.googleapis.com
+# gcloud services enable credentials.googleapis.com
 gcloud services enable firestore.googleapis.com
 gcloud services enable appengine.googleapis.com
 gcloud services enable firebasehosting.googleapis.com
@@ -53,11 +71,12 @@ gcloud services enable vision.googleapis.com
 gcloud services enable cloudbuild.googleapis.com
 
 
-
 gcloud auth application-default login --client-id-file=$CLIENT_ID_FILE \
   --scopes="https://www.googleapis.com/auth/cloud-platform, https://www.googleapis.com/auth/firebase"
 
 BEARER_ACCESS_TOKEN="$(gcloud auth application-default print-access-token)"
+
+firebase login
 
 curl --request POST -H "Authorization: Bearer $BEARER_ACCESS_TOKEN" \
   "https://firebase.googleapis.com/v1beta1/projects/${PROJECT_ID}:addFirebase"
@@ -131,18 +150,6 @@ npm install
 npm run build
 firebase deploy
 
-CLIENT_ID="$(cat $CLIENT_ID_FILE | jq '.installed .client_id' | sed 's/\"//g')"
-CLIENT_SECRET="$(cat $CLIENT_ID_FILE | jq '.installed .client_secret' | sed 's/\"//g')"
-
-RESPONSE=$(curl \
-  -X POST -H "Authorization: Bearer $BEARER_ACCESS_TOKEN" \
-  https://identitytoolkit.googleapis.com/v2/projects/${PROJECT_ID}/defaultSupportedIdpConfigs/google.com \
-  --header "Content-Type: application/json" \
-  --data '{"name": "'projects/${PROJECT_ID}/defaultSupportedIdpConfigs/google.com'" ,
-          "enabled": true ,
-          "clientId": "'${CLIENT_ID}'" ,
-          "clientSecret": "'${CLIENT_SECRET}'"
-          }')
 
 if ! [ -z "${TRANSLATION_SPREADSHEET_ID}" ]
   then
@@ -150,21 +157,25 @@ if ! [ -z "${TRANSLATION_SPREADSHEET_ID}" ]
     $TRANSLATION_SPREADSHEET_ID $PROJECT_ID $CLIENT_ID_FILE
 fi
 
+# Enable sign-in methods
+read -p "Enable Google and email/password sign-in by visiting \
+  https://firebase.corp.google.com/u/0/project/${PROJECT_ID}/authentication/providers. \
+ Then come back here and press [Enter] to continue ..."
 
 # Grant build service account owner access
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
-  --member serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com \
-  --role roles/editor
+ --member serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com \
+ --role roles/editor
 
-# Link project to mirror github (last option)
-read -p "Link your project to mirror github https://source.cloud.google.com/repo/ \
-  Then come back here and press [Enter] to continue ..."
-
+# Link project to mirror github (last option
+read -p "Visit https://console.cloud.google.com/cloud-build/triggers \
+  and connect repository choosing Github mirrored.  \
+ Then come back here and press [Enter] to continue ..."
 
 #PROJECT_ID=woolaroo-yiddish
 #LANGUAGE_NAME=Yiddish
 gcloud beta builds triggers create cloud-source-repositories \
-  --repo="github_googlecloudplatform_barnard-language-learning-app" \
-  --branch-pattern="^master$" \
-  --build-config="app/cloudbuild.yaml" \
-  --substitutions _API_URL=https://us-central1-${PROJECT_ID}.cloudfunctions.net,_BUCKET_LOCATION=us,_BUCKET_NAME=${PROJECT_ID}-dev5,_GOOGLE_API_KEY=placeholder,_GOOGLE_REGION=en,_ENDANGERED_LANGUAGE=${LANGUAGE_NAME},_LANGUAGE=en,_TERRAFORM_BUCKET_NAME=${PROJECT_ID}-terraform,_THEME=red
+ --repo="github_googlecloudplatform_barnard-language-learning-app" \
+ --branch-pattern="^master$" \
+ --build-config="app/cloudbuild.yaml" \
+ --substitutions _API_URL=https://us-central1-${PROJECT_ID}.cloudfunctions.net,_BUCKET_LOCATION=us,_BUCKET_NAME=${PROJECT_ID}-dev5,_GOOGLE_API_KEY=placeholder,_GOOGLE_REGION=en,_ENDANGERED_LANGUAGE=${LANGUAGE_NAME},_LANGUAGE=en,_TERRAFORM_BUCKET_NAME=${PROJECT_ID}-terraform-dev5,_THEME=red
