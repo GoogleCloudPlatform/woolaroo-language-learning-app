@@ -53,8 +53,7 @@ class ContributionListItem extends ListItemBase {
       });
 
       if (resp.status === 200) {
-        // TODO: function doesn't exist???
-        this.deleteContribution_(e);
+        this.deleteItem(e);
       } else {
         await this.showPopup('Failed to save. Please try again!');
         console.error(resp.text());
