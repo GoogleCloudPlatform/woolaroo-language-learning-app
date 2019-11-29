@@ -141,14 +141,14 @@ class ThemePage extends React.Component {
     try {
       // prevent the button from being clicked again.
       await this.setStateAsync({disabled: true});
-      
+
       const { organization_name, organization_url, privacy_policy } = this.state.data;
 
       const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}updateSettings`, {
         method: 'POST',
         body: JSON.stringify({
-          organization_name: organization_name, 
-          organization_url: organization_url, 
+          organization_name: organization_name,
+          organization_url: organization_url,
           privacy_policy: privacy_policy
         }),
         headers: {
@@ -158,10 +158,10 @@ class ThemePage extends React.Component {
       });
       if (resp.status === 200) {
         this.savedData = {
-          organization_name: organization_name, 
-          organization_url: organization_url, 
+          organization_name: organization_name,
+          organization_url: organization_url,
           privacy_policy: privacy_policy
-        };      
+        };
         await this.showPopup('Saved!');
       }else {
         await this.showPopup('Something went wrong. Please try again!');
@@ -169,7 +169,7 @@ class ThemePage extends React.Component {
         await this.setStateAsync({disabled: false});
       }
     } catch(err) {
-      await this.showPopup('Something went wrong. Please try again!');     
+      await this.showPopup('Something went wrong. Please try again!');
       console.error(err);
     }
   };
@@ -245,8 +245,7 @@ class ThemePage extends React.Component {
                   </Button>
                 </label>
             </div>
-
-            <br/><br/>
+            
             <div className="newSection">
                 <h2>Language Settings</h2>
                 <TextField
