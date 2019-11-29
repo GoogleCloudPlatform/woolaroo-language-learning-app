@@ -4,7 +4,7 @@ import AddWordsListItem from './AddWordsListItem';
 import Button from '@material-ui/core/Button';
 import './AddWordsPage.css';
 
-const BASE_NUM_ROWS = 10;
+const BASE_NUM_ROWS = 5;
 
 class AddWordsPage extends ListPageBase {
   constructor(props) {
@@ -27,6 +27,7 @@ class AddWordsPage extends ListPageBase {
       items.push({
         id: this.state.items.length + i,
         english_word: '',
+        primary_word: '',
         sound_link: '',
         translation: '',
         transliteration: '',
@@ -54,7 +55,7 @@ class AddWordsPage extends ListPageBase {
     return (
       <div ref={this.individualWordsContainer_}>
         <div className="title-row">
-          <h2>Add individual words</h2>
+          <h1>Add individual words</h1>
           <Button
             variant="contained"
             color="primary"
@@ -73,6 +74,7 @@ class AddWordsPage extends ListPageBase {
         >
           + Add more words
         </Button>
+        <br/><br/>
       </div>
     );
   }

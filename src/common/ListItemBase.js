@@ -22,16 +22,25 @@ class ListItemBase extends React.Component {
     this.handleDeleteConfirm_ = this.handleDeleteConfirm_.bind(this);
     this.showDeleteConfirm_ = this.showDeleteConfirm_.bind(this);
 
-    const { english_word, sound_link, translation,
-      transliteration, id, frequency } = this.props.item;
+    const {
+      english_word, primary_word, id, frequency,
+      sound_link, translation, transliteration,
+      // For flagged items only.
+      curr_sound_link, curr_translation, curr_transliteration, content,
+    } = this.props.item;
 
     this.state = {
       id,
       english_word,
+      primary_word,
       sound_link,
       translation,
       transliteration,
       frequency,
+      content,
+      curr_sound_link,
+      curr_translation,
+      curr_transliteration,
       promo_message: null,
       promo_open: false,
       deleted: false,
@@ -51,14 +60,14 @@ class ListItemBase extends React.Component {
   }
 
   handleTranslationChange = (e) => {
-    const newTranslation = e.target.value.trim();
+    const newTranslation = e.target.value;
     this.setState({
       translation: newTranslation,
     });
   }
 
   handleTransliterationChange = (e) => {
-    const newTransliteration = e.target.value.trim();
+    const newTransliteration = e.target.value;
     this.setState({
       transliteration: newTransliteration,
     });
@@ -89,13 +98,28 @@ class ListItemBase extends React.Component {
   }
 
   renderBaseWord() {
-    return (
-      <div className="base-word">
-        {this.state.english_word}
-      </div>
-    );
+  
+    if (AuthUtils.getPrimaryLanguage()==="English"){
+        return (
+          <div className="base-word">
+            {this.state.english_word}
+          </div>
+        );
+    }else{
+        const primary_word = (!this.state.primary_word || this.state.primary_word==="")?this.state.english_word:this.state.primary_word;
+        return (
+          <div className="base-word">{primary_word}
+            <div className="english-word-small">{this.state.english_word} </div>
+          </div>
+        );
+    }
   }
 
+  renderPrimaryWord() {
+    //placeholder for TranslationItemBase to overwrite
+    return;
+  }
+  
   renderTranslation() {
     return (
       <TextField
@@ -146,7 +170,7 @@ class ListItemBase extends React.Component {
     this.setState({promo_open: false});
   }
 
-  renderPromoMessage_() {
+  renderPromoMessage() {
     if (!this.state.promo_message || !this.state.promo_open) {
       return null;
     }
@@ -171,7 +195,7 @@ class ListItemBase extends React.Component {
     this.setState({showDeleteConfirm: false});
   }
 
-  renderDeleteConfirmAlert_() {
+  renderDeleteConfirmAlert() {
     if (!this.state.showDeleteConfirm) {
       return;
     }
@@ -205,12 +229,13 @@ class ListItemBase extends React.Component {
     return (
       <li className="translation-list-item">
         {this.renderBaseWord()}
+        {this.renderPrimaryWord()}
         {this.renderTranslation()}
         {this.renderTransliteration()}
         {this.renderAudioRecorder()}
         {this.renderEndOfRow()}
-        {this.renderPromoMessage_()}
-        {this.renderDeleteConfirmAlert_()}
+        {this.renderPromoMessage()}
+        {this.renderDeleteConfirmAlert()}
       </li>
     );
   }

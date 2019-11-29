@@ -18,19 +18,19 @@ class StateSelection extends React.Component {
             className={!completeState || completeState === 'all' ? 'selected' : null}
             onClick={(e) => this.handleClick_(e, null)}
           >
-            <a href='#'>All</a>
+            <button>All</button>
           </li>
           <li
             className={completeState === 'incomplete' ? 'selected' : null}
             onClick={(e) => this.handleClick_(e, 'incomplete')}
           >
-            <a href='#'>Incomplete</a>
+            <button>Incomplete</button>
           </li>
           <li
             className={completeState === 'complete' ? 'selected' : null}
             onClick={(e) => this.handleClick_(e, 'complete')}
           >
-            <a href='#'>Complete</a>
+            <button>Complete</button>
           </li>
         </ul>
       </div>

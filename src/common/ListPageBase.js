@@ -36,6 +36,11 @@ class ListPageBase extends React.Component {
     this.abortController.abort();
     this.abortController = new AbortController();
     this.setState({ loading: true });
+
+    if (this.state.collectionName === 'feedback') {
+      return this.fetchFlaggedItems_();
+    }
+
     const {
       pageNum,
       pageSize,
@@ -92,6 +97,55 @@ class ListPageBase extends React.Component {
     }
   }
 
+  async fetchFlaggedItems_() {
+    try {
+      const authHeader = await AuthUtils.getAuthHeader();
+      const resp = await
+        fetch(`${ApiUtils.origin}${ApiUtils.path}getEntireFeedbackCollection`, {
+          headers: {
+            'Authorization': authHeader,
+          },
+          signal: this.abortController.signal,
+        });
+      if (resp.status === 403) {
+        await AuthUtils.signOut();
+        return;
+      }
+
+      const items = await resp.json();
+      // Also fetches the current translation for each flagged item.
+      const promises = items.map(async (item) => {
+        const itemResp = await fetch(`${ApiUtils.origin}${ApiUtils.path}getTranslation`, {
+          method: 'POST',
+          body: item.english_word,
+          headers: {
+            'Authorization': authHeader,
+          }
+        });
+        if (itemResp.status === 403) {
+          await AuthUtils.signOut();
+          return;
+        }
+        const currentItem = await itemResp.json();
+        Object.assign(item, {
+          curr_translation: currentItem.translation,
+          curr_transliteration: currentItem.transliteration,
+          curr_sound_link: currentItem.sound_link,
+        });
+      });
+
+      Promise.all(promises).then(() =>{
+        this.setState({
+          items,
+          loading: false,
+        });
+      });
+    } catch(err) {
+      console.error(err);
+    }
+  }
+
+
   renderItems() {
     if (this.state.items.length === 0) {
       return (
@@ -121,7 +175,7 @@ class ListPageBase extends React.Component {
   render() {
     return (
       <div>
-        <h2>{this.state.pageTitle}</h2>
+        <h1>{this.state.pageTitle}</h1>
         {this.state.loading ? <div>Loading...</div> : this.renderItems()}
       </div>
     );
