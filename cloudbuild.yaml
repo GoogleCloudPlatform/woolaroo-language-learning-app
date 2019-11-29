@@ -3,6 +3,13 @@ steps:
   name: 'gcr.io/cloud-builders/git' 
   args: [ 'clone', 'https://github.com/GoogleCloudPlatform/barnard-language-learning-app.git']
 
+- id: 'test'
+  name: ubuntu
+  entrypoint: bash
+  args:
+  - '-c'
+  - echo $(pwd)
+  
 - id: 'replace-code'
   name: ubuntu
   entrypoint: bash
