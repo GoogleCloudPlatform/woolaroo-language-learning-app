@@ -16,6 +16,20 @@ class FlaggedListItem extends ContributionListItem {
     }
   }
 
+  getFlaggedTypeStr_() {
+    if (this.state.types.length === 2) {
+      return 'Marked as incorrect and offensive';
+    }
+    if (this.state.types.includes('IncorrectTranslation')) {
+      return 'Marked as incorrect';
+    }
+    if (this.state.types.includes('OffensiveTranslation')) {
+      return 'Marked as offensive';
+    }
+    // Shouldn't actually happen.
+    return 'Marked for unknown reason'
+  }
+
   render() {
     if (this.state.deleted) {
       return null;
@@ -27,7 +41,7 @@ class FlaggedListItem extends ContributionListItem {
       <li className='flagged-list-item'>
         <div className='flagged-reason'>
           <WarningIcon className='warning-icon' />
-          Marked as [incorrect/offensive]: "{this.state.content}"
+          {this.getFlaggedTypeStr_()}: "{this.state.content}"
         </div>
         <div className="translation-list-item">
           <Grid container spacing={1} direction='column'>
@@ -36,10 +50,10 @@ class FlaggedListItem extends ContributionListItem {
                 <Grid item xs={2}>
                   <div>{this.renderBaseWord()}</div>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={3} className='current-saved-value'>
                   {this.state.curr_translation || emptyTranslation}
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={3} className='current-saved-value'>
                   {this.state.curr_transliteration || emptyTransliteration}
                 </Grid>
                 <Grid item xs={1}>
