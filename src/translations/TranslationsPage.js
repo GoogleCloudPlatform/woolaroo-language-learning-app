@@ -19,7 +19,7 @@ class TranslationsPage extends ListPageBase {
     const needsRecording = queryStringParams.get('needsRecording');
     const top500 = queryStringParams.get('top500');
     const search = queryStringParams.get('search');
-    
+
     let pageNum;
     if (props.match && props.match.params) {
       pageNum = +props.match.params.pageNum;
@@ -171,7 +171,7 @@ class TranslationsPage extends ListPageBase {
   render() {
     return (
       <div>
-        <h2>Translations</h2>
+        <h1>Translations</h1>
         {this.renderStateSelection_()}
         {this.renderFilterChips_()}
         {this.state.loading ? <div>Loading...</div> : this.renderItems()}
