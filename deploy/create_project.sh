@@ -95,7 +95,6 @@ BUCKET_NAME=${PROJECT_ID}.appspot.com
 git clone $GIT_REPOSITORY
 cd ${CURRENT_PATH}/barnard-language-learning-app
 
-firebase login
 firebase use ${PROJECT_ID}
 sed -i "" -e "s/barnard-project/${PROJECT_ID}/g" .firebaserc
 sed -i "" -e "s/barnard-project/${PROJECT_ID}/g" ./src/utils/ApiUtils.js
@@ -132,14 +131,14 @@ RESPONSE=$(curl \
 APP_ID="$(echo $RESPONSE | jq '.apps[0] .appId' | sed 's/\"//g')"
 echo $APP_ID
 
-PROJECT_NUMBER="$(echo $RESPONSE | jq '.apps[0] .messagingSenderId' | sed 's/\"//g')"
-echo $PROJECT_NUMBER
-
 CONFIG=$(curl \
   -X GET -H "Authorization: Bearer $BEARER_ACCESS_TOKEN" \
   https://firebase.googleapis.com/v1beta1/projects/${PROJECT_ID}/webApps/${APP_ID}/config)
 
 echo $CONFIG
+
+PROJECT_NUMBER="$(echo $CONFIG | jq '.messagingSenderId' | sed 's/\"//g')"
+echo $PROJECT_NUMBER
 
 cd ${CURRENT_PATH}/barnard-language-learning-app
 
@@ -167,7 +166,7 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID} \
  --member serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com \
  --role roles/editor
 
-# Link project to mirror github (last option
+# Link project to mirror github
 read -p "Visit https://console.cloud.google.com/cloud-build/triggers \
   and connect repository choosing Github mirrored.  \
  Then come back here and press [Enter] to continue ..."

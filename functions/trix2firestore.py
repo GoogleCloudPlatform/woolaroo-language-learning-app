@@ -15,7 +15,7 @@ import pickle
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 # The ID and range of a sample spreadsheet.
 SAMPLE_SPREADSHEET_ID = sys.argv[1] # '1JZ-DHyl8D-RbudM8J0fZADXTElWvw6ilQTyncGDPEbs'
-SAMPLE_RANGE_NAME = 'xsr!A6:D'
+SAMPLE_RANGE_NAME = 'xsr!A6:E'
 url = "https://us-central1-%s.cloudfunctions.net/addTranslations" % sys.argv[2]
 client_secret = sys.argv[3]
 
@@ -66,8 +66,8 @@ def main():
                 english_word = row[0]
                 primary_word = row[1]
                 frequency = row[2]
-                translation = row[3]  
-                transliteration = ''
+                translation = row[3]
+                transliteration = row[4]
                 sound_link = ''
                 x = {
                       "english_word": english_word.lower(),

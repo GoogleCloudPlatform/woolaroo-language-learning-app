@@ -52,24 +52,36 @@ gcloud services enable appengine.googleapis.com
 gcloud services enable firebasehosting.googleapis.com
 gcloud services enable sheets.googleapis.com
 gcloud services enable vision.googleapis.com
-gcloud services enable identitytoolkit.googleapis.com
+gcloud services enable cloudbuild.googleapis.com
+
 
 gcloud auth application-default login --client-id-file=$CLIENT_ID_FILE \
   --scopes="https://www.googleapis.com/auth/cloud-platform, https://www.googleapis.com/auth/firebase"
 
 BEARER_ACCESS_TOKEN="$(gcloud auth application-default print-access-token)"
 
+firebase login
+
+curl --request POST -H "Authorization: Bearer $BEARER_ACCESS_TOKEN" \
+  "https://firebase.googleapis.com/v1beta1/projects/${PROJECT_ID}:addFirebase"
+sleep 20
 curl --request POST -H "Authorization: Bearer $BEARER_ACCESS_TOKEN" \
   "https://firebase.googleapis.com/v1beta1/projects/${PROJECT_ID}/defaultLocation:finalize" \
   --header "Content-Type: application/json" \
   --data '{"locationId":"us-central"}'
 
+read -p "Visit \
+  https://firebase.corp.google.com/u/0/project/${PROJECT_ID}/database/firestore/indexes \
+  to create the database if you haven't already. Choose start in test mode. \
+  Then come back here and press [Enter] to continue ..."
+
 BUCKET_NAME=${PROJECT_ID}.appspot.com
 git clone $GIT_REPOSITORY
 cd ${CURRENT_PATH}/barnard-language-learning-app
 
-firebase login
 firebase use ${PROJECT_ID}
+sed -i "" -e "s/barnard-project/${PROJECT_ID}/g" .firebaserc
+sed -i "" -e "s/barnard-project/${PROJECT_ID}/g" ./src/utils/ApiUtils.js
 
 # Initiate firestore & storage & functions
 firebase init firestore
@@ -80,23 +92,36 @@ cd  ./functions
 npm install
 firebase deploy --only functions
 
-RESPONSE=$(curl \
-  -X POST -H "Authorization: Bearer $BEARER_ACCESS_TOKEN" \
-  https://firebase.googleapis.com/v1beta1/projects/${PROJECT_ID}/webApps \
-  --header "Content-Type: application/json" \
-  --data '{"displayName": "'${PROJECT_ID}'"}')
-
-echo $RESPONSE
-
-RESPONSE=$(curl \
+RESPONSE_GET=$(curl \
   -X GET -H "Authorization: Bearer $BEARER_ACCESS_TOKEN" \
   https://firebase.googleapis.com/v1beta1/projects/${PROJECT_ID}/webApps)
 
-APP_ID="$(echo $RESPONSE | jq '.apps[0] .appId' | sed 's/\"//g')"
+APP_ID="$(echo $RESPONSE_GET | jq '.apps[0] .appId' | sed 's/\"//g')"
 echo $APP_ID
 
-PROJECT_NUMBER="$(echo $RESPONSE | jq '.apps[0] .messagingSenderId' | sed 's/\"//g')"
-echo $PROJECT_NUMBER
+if [ "${APP_ID}" == "null" ] || [ -z "${APP_ID}" ]
+  then
+  RESPONSE_POST=$(curl \
+    -X POST -H "Authorization: Bearer $BEARER_ACCESS_TOKEN" \
+    https://firebase.googleapis.com/v1beta1/projects/${PROJECT_ID}/webApps \
+    --header "Content-Type: application/json" \
+    --data '{"displayName": "'${PROJECT_ID}'"}')
+
+  echo $RESPONSE_POST
+
+  sleep 10
+
+  read -p "Add Hosting URL to the app visiting \
+    https://firebase.corp.google.com/u/0/project/${PROJECT_ID}/settings/general/web .\
+    Then come back here and press [Enter] to continue..."
+
+  RESPONSE_GET=$(curl \
+    -X GET -H "Authorization: Bearer $BEARER_ACCESS_TOKEN" \
+    https://firebase.googleapis.com/v1beta1/projects/${PROJECT_ID}/webApps)
+
+  APP_ID="$(echo $RESPONSE_GET | jq '.apps[0] .appId' | sed 's/\"//g')"
+  echo $APP_ID
+fi
 
 CONFIG=$(curl \
   -X GET -H "Authorization: Bearer $BEARER_ACCESS_TOKEN" \
@@ -116,18 +141,6 @@ npm install
 npm run build
 firebase deploy
 
-CLIENT_ID="$(cat $CLIENT_ID_FILE | jq '.installed .client_id' | sed 's/\"//g')"
-CLIENT_SECRET="$(cat $CLIENT_ID_FILE | jq '.installed .client_secret' | sed 's/\"//g')"
-
-RESPONSE=$(curl \
-  -X PATCH -H "Authorization: Bearer $BEARER_ACCESS_TOKEN" \
-  https://identitytoolkit.googleapis.com/v2/projects/${PROJECT_ID}/defaultSupportedIdpConfigs/google.com \
-  --header "Content-Type: application/json" \
-  --data '{"name": "'projects/${PROJECT_ID}/defaultSupportedIdpConfigs/google.com'" ,
-          "enabled": true ,
-          "clientId": "'${CLIENT_ID}'" ,
-          "clientSecret": "'${CLIENT_SECRET}'"
-          }')
 
 if ! [ -z "${TRANSLATION_SPREADSHEET_ID}" ]
   then
@@ -145,10 +158,10 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID} \
  --member serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com \
  --role roles/editor
 
- # Link project to mirror github (last option
- read -p "Visit https://console.cloud.google.com/cloud-build/triggers \
-   and connect repository choosing Github mirrored.  \
-  Then come back here and press [Enter] to continue ..."
+# Link project to mirror github
+read -p "Visit https://console.cloud.google.com/cloud-build/triggers \
+  and connect repository choosing Github mirrored.  \
+ Then come back here and press [Enter] to continue ..."
 
 #PROJECT_ID=woolaroo-yiddish
 #LANGUAGE_NAME=Yiddish
