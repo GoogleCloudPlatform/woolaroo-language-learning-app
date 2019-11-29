@@ -110,7 +110,7 @@ class ManagementPage extends React.Component {
   render() {
     return (
       <div>
-        <h2>User Management</h2>
+        <h1>User Management</h1>
         <div>
           <Button
             variant='contained'

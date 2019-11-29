@@ -4,6 +4,7 @@ import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
 import './NavMenu.css';
 import { ROUTES } from '../App';
+import AuthUtils from '../utils/AuthUtils';
 
 const TRANSLATIONS_LABEL = "Translations";
 
@@ -36,16 +37,27 @@ class NavMenu extends React.Component {
   }
 
   render() {
-    return (
-      <MenuList>
-        {this.renderMenuItem("Add Words", ROUTES.ADD_WORDS)}
-        {this.renderMenuItem(TRANSLATIONS_LABEL, ROUTES.TRANSLATIONS)}
-        {this.renderMenuItem("User Contributions", ROUTES.CONTRIBUTIONS)}
-        {this.renderMenuItem("Sharing Links", ROUTES.SHARING)}
-        {this.renderMenuItem("User Management", ROUTES.MANAGEMENT)}
-        {this.renderMenuItem("Settings", ROUTES.THEME)}
-      </MenuList>
-    );
+    if (AuthUtils.getUserType()==="admin"){
+        return (
+          <MenuList>
+            {this.renderMenuItem("Add Words", ROUTES.ADD_WORDS)}
+            {this.renderMenuItem(TRANSLATIONS_LABEL, ROUTES.TRANSLATIONS)}
+            {this.renderMenuItem("User Contributions", ROUTES.CONTRIBUTIONS)}
+            {this.renderMenuItem("Sharing Links", ROUTES.SHARING)}
+            {this.renderMenuItem("User Management", ROUTES.MANAGEMENT)}
+            {this.renderMenuItem("Settings", ROUTES.THEME)}
+          </MenuList>
+        );
+    }else{
+        return (
+          <MenuList>
+            {this.renderMenuItem("Add Words", ROUTES.ADD_WORDS)}
+            {this.renderMenuItem(TRANSLATIONS_LABEL, ROUTES.TRANSLATIONS)}
+            {this.renderMenuItem("User Contributions", ROUTES.CONTRIBUTIONS)}
+            {this.renderMenuItem("Sharing Links", ROUTES.SHARING)}
+          </MenuList>
+        );
+    }
   }
 }
 

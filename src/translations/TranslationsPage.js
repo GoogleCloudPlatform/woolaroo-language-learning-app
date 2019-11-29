@@ -10,7 +10,6 @@ import './TranslationsPage.css';
 class TranslationsPage extends ListPageBase {
   constructor(props) {
     super(props);
-
     this.updatePageNum = this.updatePageNum.bind(this);
     this.updateCompleteState = this.updateCompleteState.bind(this);
     this.updateNeedsRecording = this.updateNeedsRecording.bind(this);
@@ -19,31 +18,52 @@ class TranslationsPage extends ListPageBase {
     const queryStringParams = new URLSearchParams(props.location.search);
     const needsRecording = queryStringParams.get('needsRecording');
     const top500 = queryStringParams.get('top500');
+    const search = queryStringParams.get('search');
+
     let pageNum;
     if (props.match && props.match.params) {
       pageNum = +props.match.params.pageNum;
     }
 
-    this.state = {
-      ...this.state,
-      listItemTag: TranslationListItem,
-      collectionName: 'translations',
-      pageSize: 25,
-      completeState: queryStringParams.get('state'),
-      needsRecording: !!(needsRecording && needsRecording !== '0'),
-      top500: top500 !== '0',
-      pageNum: pageNum || 1,
-      search: queryStringParams.get('search'),
-    };
+    //Handle search when coming from another page
+    if (search){
+      this.state = {
+        ...this.state,
+        listItemTag: TranslationListItem,
+        collectionName: 'translations',
+        pageSize: 25,
+        completeState: queryStringParams.get('state'),
+        needsRecording: false,
+        top500: false,
+        pageNum: pageNum || 1,
+        search: queryStringParams.get('search'),
+      };
+    }else{
+      this.state = {
+        ...this.state,
+        listItemTag: TranslationListItem,
+        collectionName: 'translations',
+        pageSize: 25,
+        completeState: queryStringParams.get('state'),
+        needsRecording: !!(needsRecording && needsRecording !== '0'),
+        top500: top500 !== '0',
+        pageNum: pageNum || 1,
+        search: queryStringParams.get('search'),
+      };
+    }
   }
 
   async componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
+      //clear filter when searching a new word from translation page
       const queryStringParams = new URLSearchParams(this.props.location.search);
       const newSearch = queryStringParams.get('search') || '';
       if (newSearch !== this.state.search) {
         await this.setState({
           search: newSearch,
+          top500: false,            //clear filters when doing a fresh search
+          needsRecording: false,    //clear filters when doing a fresh search
+
           pageNum: 1,
         });
         await this.fetchItems();
@@ -81,6 +101,9 @@ class TranslationsPage extends ListPageBase {
     if (nextNeedsRecording) {
       nextHistory += `&needsRecording=1`;
     }
+    if (this.state.search && (this.state.search+"").length>0){      //to avoid resetting search query after filtering
+      nextHistory += `&search=`+encodeURIComponent(this.state.search);
+    }
     this.props.history.push(nextHistory);
     await this.setState({needsRecording: nextNeedsRecording, loading: true, pageNum: 1});
     await this.fetchItems();
@@ -93,6 +116,9 @@ class TranslationsPage extends ListPageBase {
     }
     if (!nextTop500) {
       nextHistory += `&top500=0`;
+    }
+    if (this.state.search && (this.state.search+"").length>0){     //to avoid resetting search query after filtering
+      nextHistory += `&search=`+encodeURIComponent(this.state.search);
     }
     this.props.history.push(nextHistory);
     await this.setState({top500: nextTop500, loading: true, pageNum: 1});
@@ -145,7 +171,7 @@ class TranslationsPage extends ListPageBase {
   render() {
     return (
       <div>
-        <h2>Translations</h2>
+        <h1>Translations</h1>
         {this.renderStateSelection_()}
         {this.renderFilterChips_()}
         {this.state.loading ? <div>Loading...</div> : this.renderItems()}

@@ -82,4 +82,4 @@ def main():
 
 
 if __name__ == "__main__":
-    OAuth_addFirebase()
+    main()

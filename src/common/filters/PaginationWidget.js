@@ -18,13 +18,12 @@ class PaginationWidget extends React.Component {
       }
       pageNums.push(
         <li key={pageNum}>
-          <a
-            href='#'
+          <button
             onClick={(e) => this.handleClick_(e, pageNum)}
             className={this.props.pageNum === pageNum ? 'selected' : null}
           >
             {pageNum}
-          </a>
+          </button>
         </li>
       );
     }
@@ -39,20 +38,18 @@ class PaginationWidget extends React.Component {
 
     return [
       <li key="next-1">
-        <a
-          href='#'
+        <button
           onClick={(e) => this.handleClick_(e, Math.max(1, this.props.pageNum + 1))}
         >
           {">"}
-        </a>
+        </button>
       </li>,
       <li key="next-2">
-        <a
-          href='#'
+        <button
           onClick={(e) => this.handleClick_(e, Math.max(1, this.props.pageNum + 5))}
         >
           {">>"}
-        </a>
+        </button>
       </li>
     ];
   }
@@ -62,20 +59,18 @@ class PaginationWidget extends React.Component {
       <div className="pagination-widget">
         <ul className="page-numbers">
           <li>
-            <a
-              href='#'
+            <button
               onClick={(e) => this.handleClick_(e, Math.max(1, this.props.pageNum - 5))}
             >
               {"<<"}
-            </a>
+            </button>
           </li>
           <li>
-            <a
-              href='#'
+            <button
               onClick={(e) => this.handleClick_(e, Math.max(1, this.props.pageNum - 1))}
             >
               {"<"}
-            </a>
+            </button>
           </li>
           {this.renderPageNums_()}
           {this.renderNextArrows_()}

@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom';
 import TranslationListItem from './TranslationListItem';
 import Button from '@material-ui/core/Button';
 import ApiUtils from '../utils/ApiUtils';
+import AuthUtils from '../utils/AuthUtils';
 import TextField from '@material-ui/core/TextField';
 import { shallow } from 'enzyme';
 
 let fetchSpy;
 const stubbedTranslation = {
   english_word: "dog",
+  primary_word: "狗",
   sound_link: "https://gcs/efwfefxs.mp3",
   translation: "狗",
   transliteration: "gau",
