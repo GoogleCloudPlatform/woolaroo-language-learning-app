@@ -17,7 +17,7 @@ class ListItemBase extends React.Component {
     super(props);
 
     this.handleClose_ = this.handleClose_.bind(this);
-    this.deleteItem_ = this.deleteItem_.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
     this.handleDialogClose_ = this.handleDialogClose_.bind(this);
     this.handleDeleteConfirm_ = this.handleDeleteConfirm_.bind(this);
     this.showDeleteConfirm_ = this.showDeleteConfirm_.bind(this);
@@ -73,7 +73,7 @@ class ListItemBase extends React.Component {
     });
   }
 
-  deleteItem_ = async (e) => {
+  deleteItem = async (e) => {
     try {
       const { id, collectionName } = this.state;
 
@@ -188,7 +188,7 @@ class ListItemBase extends React.Component {
   handleDeleteConfirm_(e) {
     e && e.stopPropagation();
     this.setState({showDeleteConfirm: false, deleted: true});
-    this.deleteItem_();
+    this.deleteItem();
   }
 
   handleDialogClose_() {
