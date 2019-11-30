@@ -167,7 +167,7 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID} \
  --role roles/editor
 
 # Link project to mirror github
-read -p "Visit https://console.cloud.google.com/cloud-build/triggers \
+read -p "Visit https://console.cloud.google.com/cloud-build/triggers?project=${PROJECT_ID} \
   and connect repository choosing Github mirrored.  \
  Then come back here and press [Enter] to continue ..."
 
