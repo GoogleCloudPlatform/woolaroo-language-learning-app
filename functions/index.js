@@ -107,7 +107,7 @@ exports.approveSuggestions = functions.https.onRequest(async (req, res) => {
       transliteration: req.body.transliteration || '',
       sound_link: req.body.sound_link || '',
       frequency: Number(req.body.frequency) || 11,
-      timestamp: admin.firestore.FieldValue.serverTimestamp(),
+      timestamp: admin.firestore.FieldValue.serverTimestamp()
     }
     const doc_suggestion = admin.firestore().collection('translations')
         .doc(req.body.english_word)
