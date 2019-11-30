@@ -284,18 +284,15 @@ exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
             if (needsRecording && docData.sound_link) {
               return;
             }
-            //TODO debug only must clean up
-            // console.log(search);
-            // if (docData.english_word.indexOf(search) === -1) console.log('not found in english words');
-            // if (docData.primary_word.indexOf(search) === -1) console.log('not found in primary words');
-            // if (docData.translation.indexOf(search) === -1) console.log('not found in translations');
-            // if (docData.transliteration.indexOf(search) === -1) console.log('not found in transliterations');
-            if (search &&
-              docData.english_word.indexOf(search) === -1 &&
-              docData.primary_word.indexOf(search) === -1 &&
-              docData.translation.indexOf(search) === -1 &&
-              docData.transliteration.indexOf(search) === -1) {
-              return;
+
+            if (search) {
+              const fieldsToSearch = docsData.english_word +
+                (docsData.primary_word || '') +
+                (docsData.translation || '') +
+                (docsData.transliteration || '');
+              if (fieldsToSearch.indexOf(search) === -1) {
+                return;
+              }
             }
 
             filteredCollection.push({...docData, id: doc.id});
