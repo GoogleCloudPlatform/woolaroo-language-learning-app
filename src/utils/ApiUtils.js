@@ -1,4 +1,4 @@
-const IS_LOCAL = false;
+const IS_LOCAL = true;
 //process.env.NODE_ENV === 'development'
 //  || process.env.NODE_ENV === 'test';
 
