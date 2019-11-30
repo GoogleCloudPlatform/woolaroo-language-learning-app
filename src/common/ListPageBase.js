@@ -82,7 +82,6 @@ class ListPageBase extends React.Component {
           signal: this.abortController.signal,
         });
       if (resp.status === 403) {
-        await this.showPopup('Failed to fetch data. Please try again!');
         console.error(resp.text());
         return;
       }
@@ -94,7 +93,6 @@ class ListPageBase extends React.Component {
         loading: false,
       });
     } catch(err) {
-      await this.showPopup('Failed to fetch data. Please try again!');
       console.error(err);
     }
   }
