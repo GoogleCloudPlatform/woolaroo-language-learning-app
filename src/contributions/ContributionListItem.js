@@ -36,7 +36,7 @@ class ContributionListItem extends ListItemBase {
         return;
       }
 
-      const endpoint = this.state.collectionName === 'feedback' ? 'approveSuggesions' : 'addTranslations';
+      const endpoint = this.state.collectionName === 'feedback' ? 'approveSuggestions' : 'addTranslations';
       const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}${endpoint}`, {
         method: 'POST',
         body: JSON.stringify({
