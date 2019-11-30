@@ -177,7 +177,7 @@ exports.getTranslations = functions.https.onRequest(async (req, res) => {
     return collectionRef.doc(english_word).get()
   })
   Promise.all(promises).then(docs => {
-    const translations = docs.map(x => createTranslationResponse(x.data()))
+    const translations = docs.map(x => createTranslationResponseForApp(x.data()))
     console.log(translations);
     res.set('Access-Control-Allow-Origin', "*");
     res.set('Access-Control-Allow-Methods', 'GET, POST');
@@ -190,14 +190,32 @@ exports.getTranslations = functions.https.onRequest(async (req, res) => {
   });
 });
 
-function createTranslationResponse(data) {
-  return {
-    english_word: (data === undefined) ? '' : data.english_word,
-    translation: (data === undefined) ? '' : data.translation,
-    transliteration: (data === undefined) ? '' : data.transliteration,
-    sound_link: (data === undefined) ? '' : data.sound_link,
+// For App, a quick fix to support multiple langauges.
+function createTranslationResponseForApp(data) {
+  if (data === undefined) {
+    return {
+      english_word: "",
+      translation: "",
+      transliteration: "",
+      sound_link: ""
+    };
+  } else if (data.primary_word === "") {
+    return {
+      english_word: data.english_word,
+      translation: data.translation,
+      transliteration: data.transliteration,
+      sound_link: data.sound_link     
+    };
+  } else {
+    return {
+      english_word: data.primary_word,
+      translation: data.translation,
+      transliteration: data.transliteration,
+      sound_link: data.sound_link     
+    };
   };
 }
+
 
 // For translation page, which will be used by admin & moderators.
 // https://us-central1-barnard-project.cloudfunctions.net/translations?limit=2&reverse=true&first500=true
