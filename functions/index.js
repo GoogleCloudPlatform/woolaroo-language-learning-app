@@ -199,7 +199,7 @@ function createTranslationResponseForApp(data) {
       transliteration: "",
       sound_link: ""
     };
-  } else if (data.primary_word === "") {
+  } else if (!data.primary_word) {
     console.log("use english_word");
     return {
       english_word: data.english_word,
@@ -218,6 +218,14 @@ function createTranslationResponseForApp(data) {
   };
 }
 
+function createTranslationResponse(data) {
+  return {
+    english_word: (data === undefined) ? '' : data.english_word,
+    translation: (data === undefined) ? '' : data.translation,
+    transliteration: (data === undefined) ? '' : data.transliteration,
+    sound_link: (data === undefined) ? '' : data.sound_link,
+  };
+}
 
 // For translation page, which will be used by admin & moderators.
 // https://us-central1-barnard-project.cloudfunctions.net/translations?limit=2&reverse=true&first500=true
