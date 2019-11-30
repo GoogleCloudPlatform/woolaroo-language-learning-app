@@ -200,6 +200,7 @@ function createTranslationResponseForApp(data) {
       sound_link: ""
     };
   } else if (data.primary_word === "") {
+    console.log("use english_word");
     return {
       english_word: data.english_word,
       translation: data.translation,
@@ -207,6 +208,7 @@ function createTranslationResponseForApp(data) {
       sound_link: data.sound_link     
     };
   } else {
+    console.log("use primary_word");
     return {
       english_word: data.primary_word,
       translation: data.translation,
