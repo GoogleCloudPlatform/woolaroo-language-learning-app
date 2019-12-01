@@ -61,14 +61,14 @@ class ListItemBase extends React.Component {
   }
 
   handleTranslationChange = (e) => {
-    const newTranslation = e.target.value.trim().toLowerCase();
+    const newTranslation = e.target.value;
     this.setState({
       translation: newTranslation,
     });
   }
 
   handleTransliterationChange = (e) => {
-    const newTransliteration = e.target.value.trim().toLowerCase();
+    const newTransliteration = e.target.value;
     this.setState({
       transliteration: newTransliteration,
     });
