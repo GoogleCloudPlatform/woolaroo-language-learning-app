@@ -75,14 +75,14 @@ class FlaggedListItem extends ContributionListItem {
                 <Grid item xs={3}>
                   {this.renderTransliteration()}
                 </Grid>
-                <Grid item xs={1}>
+                <Grid item xs={2}>
                   {this.renderAudioRecorder()}
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={2}>
                   {this.renderEndOfRow()}
                 </Grid>
               </React.Fragment>
-            </Grid>            
+            </Grid>
           </Grid>
         </div>
         {this.renderPromoMessage()}

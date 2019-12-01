@@ -3,9 +3,13 @@
 }
 
 button.recording, button.playing {
-  border: solid 1px black;
+  border: solid 2px #2CAB6F;
 }
 
 button.recording, button.record {
   margin-right: 10px;
+}
+
+.audio-buttons button {
+    margin-top: 5px;
 }
