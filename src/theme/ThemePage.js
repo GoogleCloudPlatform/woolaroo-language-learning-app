@@ -183,7 +183,7 @@ class ThemePage extends React.Component {
                 <TextField
                   id="organization-name"
                   label="Organization name"
-                  value={this.state.data.organization_name}
+                  value={this.state.data.organization_name || ""}
                   className={classes.textField}
                   margin="normal"
                   onChange={this.handleChange_organization_name}
@@ -192,7 +192,7 @@ class ThemePage extends React.Component {
                 <TextField
                   id="organization-website"
                   label="Organization website"
-                  value={this.state.data.organization_url}
+                  value={this.state.data.organization_url || ""}
                   className={classes.textField}
                   margin="normal"
                   onChange={this.handleChange_organization_url}
@@ -202,7 +202,7 @@ class ThemePage extends React.Component {
                   id="optional-message"
                   multiline
                   rows="6"
-                  value={this.state.data.privacy_policy}
+                  value={this.state.data.privacy_policy  || ""}
                   placeholder="Terms and Conditions (optional)"
                   className={classes.textField}
                   margin="normal"
@@ -245,7 +245,7 @@ class ThemePage extends React.Component {
                   </Button>
                 </label>
             </div>
-            
+
             <div className="newSection">
                 <h2>Language Settings</h2>
                 <TextField
