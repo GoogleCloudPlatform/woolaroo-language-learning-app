@@ -7,6 +7,11 @@
   font-weight: 400;
 }
 
+.MuiListItem-root.nav-menu-item {
+  border-top-right-radius: 22px;
+  border-bottom-right-radius: 22px;
+}
+
 .MuiListItem-root.nav-menu-item.Mui-selected {
   background-color: #D5EEE2;
   color: #2CAB6F;
