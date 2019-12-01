@@ -132,7 +132,7 @@ class App extends React.Component {
               </Button>
 
               <Button variant="contained"
-                color="secondary"
+                color="primary"
                 onClick={() => this.authAction_()}
               >
                Try again
