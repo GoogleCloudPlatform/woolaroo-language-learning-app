@@ -9,3 +9,7 @@ button.recording, button.playing {
 button.recording, button.record {
   margin-right: 10px;
 }
+
+.audio-buttons button {
+    margin-top: 5px;
+}
