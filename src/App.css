@@ -85,6 +85,16 @@ body {
   background-color: #EDA14F !important;
 }
 
+.MuiButton-outlinedSecondary {
+  color: #EDA14F !important;
+  border: 1px solid rgba(237, 161, 79, 0.08);
+}
+
+.MuiButton-outlinedSecondary:hover {
+  border: 1px solid #EDA14F !important;
+  background-color: rgba(237, 161, 79, 0.08) !important;
+}
+
 .MuiFab-root {
   background-color: #FFF !important;
 }
