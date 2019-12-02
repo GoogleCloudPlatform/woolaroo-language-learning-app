@@ -13,7 +13,7 @@
     <mat-error *ngIf="fieldHasError('englishWord', 'required')" i18n="@@englishWordRequired"
     >English word is required</mat-error>
   </mat-form-field>
-  <mat-form-field class="text" appearance="outline" [hideRequiredMarker]="true"
+  <mat-form-field *ngIf="primaryLanguageWordAvailable" class="text" appearance="outline" [hideRequiredMarker]="true"
                   hintLabel="e.g. 'hello'" i18n-hintLabel="@@wordHint">
     <mat-label i18n="@@wordInPrimaryLanguage">Word in English</mat-label>
     <input type="text" matInput name="word" formControlName="word" maxlength="100" />
