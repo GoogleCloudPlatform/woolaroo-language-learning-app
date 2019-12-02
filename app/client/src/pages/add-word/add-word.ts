@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, NgZone } from '@angular/core';
+import {AfterViewInit, Component, Inject, LOCALE_ID, NgZone} from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -10,6 +10,7 @@ import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
 import { WordTranslation } from 'services/entities/translation';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { environment } from 'environments/environment';
+import {DEFAULT_LOCALE, getBaseLocale} from "../../util/locale";
 
 @Component({
   selector: 'app-page-add-word',
@@ -30,10 +31,13 @@ export class AddWordPageComponent implements AfterViewInit {
                private zone: NgZone,
                private i18n: I18n,
                @Inject(FEEDBACK_SERVICE) private feedbackService: IFeedbackService,
-               @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {
+               @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
+               @Inject(LOCALE_ID) private locale:string ) {
     const word: WordTranslation = history.state.word;
     this.form = new FormGroup({
-      word: new FormControl(word ? word.original : ''),
+      word: new FormControl(word ? word.original : '', getBaseLocale(locale) != DEFAULT_LOCALE ? [
+        Validators.required
+      ] : []),
       nativeWord: new FormControl(word ? word.translation : '', [
         Validators.required
       ]),

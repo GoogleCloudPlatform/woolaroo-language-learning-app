@@ -214,7 +214,7 @@
     that uses the camera in your phone to instantly translate objects into indigenous languages.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/pages/about/about.html</context>
-          <context context-type="linenumber">6</context>
+          <context context-type="linenumber">7</context>
         </context-group>
       </trans-unit><trans-unit id="aboutContent2" datatype="html">
         <source>It&apos;s really easy to use — just take a photo of  an everyday object
@@ -222,7 +222,7 @@
     image, share it or have another go.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/pages/about/about.html</context>
-          <context context-type="linenumber">8</context>
+          <context context-type="linenumber">9</context>
         </context-group>
       </trans-unit><trans-unit id="technologyTitle" datatype="html">
         <source>The technology</source>
@@ -318,6 +318,12 @@
           <context context-type="sourcefile">src/components/add-word-fieldset/add-word-fieldset.html</context>
           <context context-type="linenumber">18</context>
         </context-group>
+      </trans-unit><trans-unit id="wordRequired" datatype="html">
+        <source>English word is required</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/add-word-fieldset/add-word-fieldset.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
       </trans-unit><trans-unit id="wordHint" datatype="html">
         <source>e.g. &apos;hello&apos;</source>
         <context-group purpose="location">
@@ -328,25 +334,25 @@
         <source>Transliteration (optional)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/add-word-fieldset/add-word-fieldset.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit><trans-unit id="transliterationHint" datatype="html">
         <source>Word in Latin alphabet (e.g. &apos;marhaba&apos;)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/add-word-fieldset/add-word-fieldset.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit><trans-unit id="recordPronunciation" datatype="html">
         <source>Record pronunciation</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/add-word-fieldset/add-word-fieldset.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit><trans-unit id="saved" datatype="html">
         <source>Saved</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/add-word-fieldset/add-word-fieldset.html</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit><trans-unit id="specialCharsInstructions" datatype="html">
         <source>
@@ -354,7 +360,7 @@
     </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/add-word-fieldset/add-word-fieldset.html</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="dir" datatype="html">
