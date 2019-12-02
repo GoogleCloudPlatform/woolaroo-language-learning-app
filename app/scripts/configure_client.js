@@ -11,10 +11,6 @@ if(!API_URL) {
     throw new Error('API URL not set');
 }
 const ASSETS_BASE_URL = process.argv[paramIndex++] || './';
-const GOOGLE_API_KEY = process.argv[paramIndex++];
-if(!GOOGLE_API_KEY) {
-    throw new Error('Google API key not set');
-}
 const GOOGLE_TRACKER_ID = process.argv[paramIndex++];
 
 const ENDANGERED_LANGUAGE = process.argv[paramIndex++];
