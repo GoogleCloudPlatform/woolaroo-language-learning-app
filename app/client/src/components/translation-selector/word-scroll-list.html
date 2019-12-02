@@ -1,7 +1,7 @@
 <ul #scrollContent>
   <li *ngFor="let word of translations; index as i" [class.selected]="i === selectedWordIndex">
-    <span class="selected-spacer">{{word.original}}</span>
-    <span class="word">{{word.original}}</span>
+    <span class="selected-spacer">{{word.original || word.english}}</span>
+    <span class="word">{{word.original || word.english}}</span>
   </li>
   <li class="manual-entry" (click)="onManualEntryClick()">
     <span i18n="@@enterSomethingElse">Enter something else</span>

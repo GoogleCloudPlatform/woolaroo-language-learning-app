@@ -1,4 +1,4 @@
-import { Component, Inject, InjectionToken, Input, NgZone } from '@angular/core';
+import { Component, Inject, InjectionToken, Input, NgZone, LOCALE_ID } from '@angular/core';
 import { audioRecordingIsAvailable, AudioStream, play, RecordingStream, startRecording } from 'util/audio';
 import { getOperatingSystem, OperatingSystem } from 'util/platform';
 import { FormGroup } from '@angular/forms';
@@ -39,12 +39,14 @@ export class AddWordFieldsetComponent {
   public keymanUrl: string;
 
   public get audioRecordingIsAvailable(): boolean { return audioRecordingIsAvailable(); }
+  // only show primary language word if current language is not english
+  public get primaryLanguageWordAvailable(): boolean { return (this.locale || 'en').split('-')[0] != 'en'; }
 
   @Input()
   public formGroup: FormGroup|undefined = undefined;
 
   constructor(@Inject(ADD_WORD_FIELDSET_CONFIG) private config: AddWordFieldsetConfig,
-              private zone: NgZone) {
+              private zone: NgZone, @Inject(LOCALE_ID) private locale:string ) {
     this.operatingSystem = getOperatingSystem();
     this.keymanUrl = this.config.keymanUrl;
     this.gboardUrl = this.operatingSystem === OperatingSystem.Android ?

@@ -99,7 +99,7 @@ export class ImageRenderingService {
     context.setTransform(scale, 0, 0, scale, 0, 0);
     let y = height / scale; // start at bottom
     const maxTextWidth = (width - 2 * this.config.padding) / scale;
-    y = this._renderText(context, word.original, this.config.originalWord, centerX, y, maxTextWidth);
+    y = this._renderText(context, word.original || word.english, this.config.originalWord, centerX, y, maxTextWidth);
     y = this._renderLine(context, centerX, y);
     if (word.translation) {
       y = this._renderText(context, word.translation, this.config.translation, centerX, y, maxTextWidth);

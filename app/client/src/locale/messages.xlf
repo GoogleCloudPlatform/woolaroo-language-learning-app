@@ -2,14 +2,8 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template">
     <body>
-      <trans-unit id="dir" datatype="html">
-        <source>ltr</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app.component.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit><trans-unit id="introAbout" datatype="html">
-        <source>Powered by Google Machine Learning Project Woolaroo
+      <trans-unit id="introAbout" datatype="html">
+        <source>Powered by Google Machine Learning Project Barnard
   provides a new and interactive way to access indigenous languages.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/pages/intro/about/about.html</context>
@@ -52,7 +46,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/sidenav/sidenav.html</context>
-          <context context-type="linenumber">9</context>
+          <context context-type="linenumber">8</context>
         </context-group>
       </trans-unit><trans-unit id="introTermsAndPrivacy" datatype="html">
         <source>By using the Project Woolaroo you are accepting the
@@ -67,30 +61,6 @@
           <context context-type="sourcefile">src/pages/intro/terms/terms.html</context>
           <context context-type="linenumber">4</context>
         </context-group>
-      </trans-unit><trans-unit id="photoSource" datatype="html">
-        <source>You can use a photo from your phone or take a photo of something around you</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/pages/photo-source/photo-source.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit><trans-unit id="pickPhoto" datatype="html">
-        <source>
-      Pick Photo
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/pages/photo-source/photo-source.html</context>
-          <context context-type="linenumber">4</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/pages/capture/capture.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
-      </trans-unit><trans-unit id="takePhoto" datatype="html">
-        <source>Take Photo</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/pages/photo-source/photo-source.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
       </trans-unit><trans-unit id="errorTitle" datatype="html">
         <source>Error</source>
         <context-group purpose="location">
@@ -102,6 +72,32 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/error-popup/error-popup.html</context>
           <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit><trans-unit id="pickPhoto" datatype="html">
+        <source>Pick photo</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/pages/capture/capture.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/pages/photo-source/photo-source.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit><trans-unit id="photoSource" datatype="html">
+        <source>You can use a photo from your phone or take a photo of something around you</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/pages/photo-source/photo-source.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit><trans-unit id="takePhoto" datatype="html">
+        <source>Take Photo</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/pages/photo-source/photo-source.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/pages/photo-source/photo-source.html</context>
+          <context context-type="linenumber">10</context>
         </context-group>
       </trans-unit><trans-unit id="imageCaptionLabel" datatype="html">
         <source>What&apos;s this?</source>
@@ -123,7 +119,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/sidenav/sidenav.html</context>
-          <context context-type="linenumber">6</context>
+          <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit><trans-unit id="feedbackTitle" datatype="html">
         <source>Feedback</source>
@@ -183,7 +179,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/sidenav/sidenav.html</context>
-          <context context-type="linenumber">8</context>
+          <context context-type="linenumber">7</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/translation-selector/translation-selector.html</context>
@@ -211,10 +207,10 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/sidenav/sidenav.html</context>
-          <context context-type="linenumber">4</context>
+          <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit><trans-unit id="aboutContent1" datatype="html">
-        <source>Introducing Woolaroo, an open source Google Project
+        <source>Introducing Barnard, an open source Google Project
     that uses the camera in your phone to instantly translate objects into indigenous languages.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/pages/about/about.html</context>
@@ -236,7 +232,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/sidenav/sidenav.html</context>
-          <context context-type="linenumber">5</context>
+          <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit><trans-unit id="technologyContent1" datatype="html">
         <source>Built with Google Translate and Cloud Vision technology,
@@ -262,17 +258,17 @@
           <context context-type="sourcefile">src/pages/technology/technology.html</context>
           <context context-type="linenumber">12</context>
         </context-group>
+      </trans-unit><trans-unit id="addToHomeScreen" datatype="html">
+        <source>Add to home screen</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/sidenav/sidenav.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
       </trans-unit><trans-unit id="logo" datatype="html">
         <source>Woolaroo</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/logo/logo.ts</context>
           <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit><trans-unit id="addToHomeScreen" datatype="html">
-        <source>Add to home screen</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/components/sidenav/sidenav.html</context>
-          <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit><trans-unit id="enterSomethingElse" datatype="html">
         <source>Enter something else</source>
@@ -316,29 +312,41 @@
           <context context-type="sourcefile">src/components/add-word-fieldset/add-word-fieldset.html</context>
           <context context-type="linenumber">10</context>
         </context-group>
+      </trans-unit><trans-unit id="wordInPrimaryLanguage" datatype="html">
+        <source>Word in English</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/add-word-fieldset/add-word-fieldset.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit><trans-unit id="wordHint" datatype="html">
+        <source>e.g. &apos;hello&apos;</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/components/add-word-fieldset/add-word-fieldset.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
       </trans-unit><trans-unit id="transliteration" datatype="html">
         <source>Transliteration (optional)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/add-word-fieldset/add-word-fieldset.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit><trans-unit id="transliterationHint" datatype="html">
         <source>Word in Latin alphabet (e.g. &apos;marhaba&apos;)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/add-word-fieldset/add-word-fieldset.html</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit><trans-unit id="recordPronunciation" datatype="html">
         <source>Record pronunciation</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/add-word-fieldset/add-word-fieldset.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit><trans-unit id="saved" datatype="html">
         <source>Saved</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/add-word-fieldset/add-word-fieldset.html</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit><trans-unit id="specialCharsInstructions" datatype="html">
         <source>
@@ -346,7 +354,14 @@
     </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/add-word-fieldset/add-word-fieldset.html</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dir" datatype="html">
+        <source>ltr</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.ts</context>
+          <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="wordSubmitted" datatype="html">
