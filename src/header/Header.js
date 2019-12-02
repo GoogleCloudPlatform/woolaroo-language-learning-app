@@ -22,7 +22,7 @@ class Header extends React.Component {
     const top500 = queryStringParams.get('top500');
 
     this.state = {
-      search: queryStringParams.get('search') || '',
+      search: this.sanitizeInput_(queryStringParams.get('search')),
       top500: top500 !== '0',
       needsRecording: !!(needsRecording && needsRecording !== '0'),
     };
@@ -34,7 +34,7 @@ class Header extends React.Component {
       const needsRecording = queryStringParams.get('needsRecording');
       const top500 = queryStringParams.get('top500');
       this.setState({
-          search: queryStringParams.get('search') || '',
+          search: this.sanitizeInput_(queryStringParams.get('search')),
           top500: top500 !== '0',
           needsRecording: !!(needsRecording && needsRecording !== '0'),
       });
@@ -43,7 +43,7 @@ class Header extends React.Component {
 
   handleChange_(e) {
     this.setState({
-      search: e.target.value,
+      search: this.sanitizeInput_(e.target.value),
     });
   }
 
@@ -51,6 +51,11 @@ class Header extends React.Component {
     if (e.keyCode === 13) {
       this.doSearch_();
     }
+  }
+
+  sanitizeInput_(text) {
+    if (!text) return '';
+    return text.trim().toLowerCase();
   }
 
   doSearch_() {

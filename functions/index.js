@@ -307,7 +307,11 @@ exports.getEntireCollection = functions.https.onRequest(async (req, res) => {
               return;
             }
 
-            if (search && docData.english_word.indexOf(search) === -1) {
+            if (search &&
+              (!docData.english_word || docData.english_word.indexOf(search) === -1) &&
+              (!docData.primary_word || docData.primary_word.indexOf(search) === -1) &&
+              (!docData.translation || docData.translation.indexOf(search) === -1) &&
+              (!docData.transliteration || docData.transliteration.indexOf(search) === -1)) {
               return;
             }
 
