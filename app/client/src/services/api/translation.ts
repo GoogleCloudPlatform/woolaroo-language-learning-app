@@ -36,7 +36,7 @@ export class APITranslationService implements ITranslationService {
       return Promise.resolve(this.lastTranslations);
     }
     const response = await this.http.post<TranslationResponse[]>(this.config.endpointURL, { english_words: lowercaseWords }).toPromise();
-    const translations = response.filter(tr => tr.translation).map(tr => ({
+    const translations = response.map(tr => ({
       english: tr.english_word,
       original: tr.primary_word,
       translation: tr.translation,
@@ -45,7 +45,7 @@ export class APITranslationService implements ITranslationService {
     }));
     lowercaseWords.forEach((w) => {
       if (!translations.find((tr) => tr.english === w)) {
-        translations.push({ original: w, english: '', translation: '', transliteration: '', soundURL: '' });
+        translations.push({ original: '', english: w, translation: '', transliteration: '', soundURL: '' });
       }
     });
     // cache results
