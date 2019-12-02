@@ -128,7 +128,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
         }
         // show words as if none had translations
         this.zone.run(() => {
-          this.translations = words.map(w => ({ original: w, translation: '', transliteration: '', soundURL: null }));
+          this.translations = words.map(w => ({ original: w, english: '', translation: '', transliteration: '', soundURL: null }));
         });
       }
     );

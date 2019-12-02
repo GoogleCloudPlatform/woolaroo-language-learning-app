@@ -22,6 +22,7 @@ export class APIFeedbackService implements IFeedbackService {
     }
     console.log('Sending feedback');
     const requestBody = {
+      primary_word: feedback.word,
       english_word: feedback.englishWord,
       translation: feedback.nativeWord,
       transliteration: feedback.transliteration,
@@ -41,6 +42,7 @@ export class APIFeedbackService implements IFeedbackService {
     }
     console.log('Adding word');
     const requestBody = {
+      primary_word: word.word,
       english_word: word.englishWord,
       translation: word.nativeWord,
       transliteration: word.transliteration,

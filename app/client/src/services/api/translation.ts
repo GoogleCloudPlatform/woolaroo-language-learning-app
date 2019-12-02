@@ -9,6 +9,7 @@ interface APITranslationConfig {
 
 interface TranslationResponse {
   english_word: string;
+  primary_word: string;
   transliteration: string;
   sound_link: string;
   translation: string;
@@ -25,25 +26,26 @@ export class APITranslationService implements ITranslationService {
     if (words.length !== translations.length) {
       return false;
     }
-    return words.every(w => translations.find(tr => tr.original === w));
+    return words.every(w => !!translations.find(tr =>  tr.original === w));
   }
 
-  public async translate(words: string[], maxTranslations: number = 0): Promise<WordTranslation[]> {
-    const lowercaseWords = words.map((w) => w.toLowerCase());
+  public async translate(englishWords: string[], maxTranslations: number = 0): Promise<WordTranslation[]> {
+    const lowercaseWords = englishWords.map((w) => w.toLowerCase());
     if (this.lastTranslations && APITranslationService.wordTranslationsAreEqual(lowercaseWords, this.lastTranslations)) {
       // use cached results
       return Promise.resolve(this.lastTranslations);
     }
     const response = await this.http.post<TranslationResponse[]>(this.config.endpointURL, { english_words: lowercaseWords }).toPromise();
     const translations = response.filter(tr => tr.translation).map(tr => ({
-      original: tr.english_word,
+      english: tr.english_word,
+      original: tr.primary_word,
       translation: tr.translation,
       transliteration: tr.transliteration,
       soundURL: tr.sound_link
     }));
     lowercaseWords.forEach((w) => {
-      if (!translations.find((tr) => tr.original === w)) {
-        translations.push({ original: w, translation: '', transliteration: '', soundURL: '' });
+      if (!translations.find((tr) => tr.english === w)) {
+        translations.push({ original: w, english: '', translation: '', transliteration: '', soundURL: '' });
       }
     });
     // cache results
