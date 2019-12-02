@@ -18,6 +18,7 @@ import { CaptionImagePageModule } from 'pages/caption-image/caption-image.module
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from 'environments/environment';
+import { getBaseLocale } from 'util/locale';
 
 declare const require: any; // Use the require method provided by webpack
 
@@ -47,7 +48,7 @@ declare const require: any; // Use the require method provided by webpack
     {
       provide: TRANSLATIONS,
       useFactory: (locale: string) => {
-        locale = (locale || 'en').split('-')[0];
+        locale = getBaseLocale(locale);
         return require(`raw-loader!../locale/messages.${locale}.xlf`).default;
       },
       deps: [LOCALE_ID]

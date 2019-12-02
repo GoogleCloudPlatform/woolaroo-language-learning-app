@@ -1,6 +1,7 @@
 import { Component, Inject, InjectionToken, Input, NgZone, LOCALE_ID } from '@angular/core';
 import { audioRecordingIsAvailable, AudioStream, play, RecordingStream, startRecording } from 'util/audio';
 import { getOperatingSystem, OperatingSystem } from 'util/platform';
+import { DEFAULT_LOCALE, getBaseLocale } from 'util/locale';
 import { FormGroup } from '@angular/forms';
 
 interface AddWordFieldsetConfig {
@@ -40,7 +41,7 @@ export class AddWordFieldsetComponent {
 
   public get audioRecordingIsAvailable(): boolean { return audioRecordingIsAvailable(); }
   // only show primary language word if current language is not english
-  public get primaryLanguageWordAvailable(): boolean { return (this.locale || 'en').split('-')[0] != 'en'; }
+  public get primaryLanguageWordAvailable(): boolean { return getBaseLocale(this.locale) != DEFAULT_LOCALE; }
 
   @Input()
   public formGroup: FormGroup|undefined = undefined;
