@@ -8,8 +8,9 @@ export enum FeedbackType {
 }
 
 export interface AddedWord {
-  nativeWord: string;
+  word: string;
   englishWord: string;
+  nativeWord: string;
   transliteration: string;
   recording: Blob|null;
 }

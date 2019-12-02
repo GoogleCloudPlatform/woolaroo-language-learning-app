@@ -2,7 +2,7 @@ import { InjectionToken } from '@angular/core';
 import { WordTranslation } from './entities/translation';
 
 export interface ITranslationService {
-  translate(words: string[], maxTranslations: number): Promise<WordTranslation[]>;
+  translate(englishWords: string[], maxTranslations: number): Promise<WordTranslation[]>;
 }
 
 export const TRANSLATION_SERVICE = new InjectionToken<ITranslationService>('Translation service');
