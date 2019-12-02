@@ -33,10 +33,11 @@ export class AddWordPageComponent implements AfterViewInit {
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {
     const word: WordTranslation = history.state.word;
     this.form = new FormGroup({
+      word: new FormControl(word ? word.original : ''),
       nativeWord: new FormControl(word ? word.translation : '', [
         Validators.required
       ]),
-      englishWord: new FormControl(word ? word.original : '', [
+      englishWord: new FormControl(word ? word.english : '', [
         Validators.required
       ]),
       transliteration: new FormControl(word ? word.transliteration : '', [

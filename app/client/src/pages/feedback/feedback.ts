@@ -31,9 +31,10 @@ export class FeedbackPageComponent implements AfterViewInit {
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {
     const word = history.state.word;
     this.feedbackForm = new FormGroup({
+      word: new FormControl(word ? word.original : ''),
       nativeWord: new FormControl(word ? word.translation : '', [
       ]),
-      englishWord: new FormControl(word ? word.original : '', [
+      englishWord: new FormControl(word ? word.english : '', [
       ]),
       transliteration: new FormControl(word ? word.transliteration : '', [
       ]),
