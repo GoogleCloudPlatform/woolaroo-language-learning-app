@@ -118,6 +118,9 @@
       <trans-unit id="wordHint" datatype="html">
         <target>e.g. &apos;hello&apos;</target>
       </trans-unit>
+      <trans-unit id="wordRequired" datatype="html">
+        <target>English word is required</target>
+      </trans-unit>
       <trans-unit id="transliteration" datatype="html">
         <target>Transliteration (optional)</target>
       </trans-unit>

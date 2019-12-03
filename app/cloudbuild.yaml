@@ -61,11 +61,9 @@ steps:
            "../client/src/environments/environment.prod.params.ts",
            "${_API_URL}",
            "https://storage.googleapis.com/${_BUCKET_NAME}/",
-           "${_GOOGLE_API_KEY}",
            "${_GOOGLE_TRACKER_ID}",
            "${_ENDANGERED_LANGUAGE}",
            "${_TERMS_AND_CONDITIONS}",
-           "../client/src/locale/messages.${_LANGUAGE}.xlf",
            "/assets/img/partner_logo.png",
            "../client/src/style/theme-config.scss",
            "${_THEME}"]

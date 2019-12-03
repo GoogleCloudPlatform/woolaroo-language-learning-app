@@ -11,10 +11,6 @@ if(!API_URL) {
     throw new Error('API URL not set');
 }
 const ASSETS_BASE_URL = process.argv[paramIndex++] || './';
-const GOOGLE_API_KEY = process.argv[paramIndex++];
-if(!GOOGLE_API_KEY) {
-    throw new Error('Google API key not set');
-}
 const GOOGLE_TRACKER_ID = process.argv[paramIndex++];
 
 const ENDANGERED_LANGUAGE = process.argv[paramIndex++];
@@ -25,10 +21,6 @@ if(!ENDANGERED_LANGUAGE) {
 let TERMS_AND_CONDITIONS = process.argv[paramIndex++];
 if(TERMS_AND_CONDITIONS) {
     TERMS_AND_CONDITIONS = TERMS_AND_CONDITIONS.trim();
-}
-const LANGUAGE_FILE_PATH = process.argv[paramIndex++];
-if(TERMS_AND_CONDITIONS && !LANGUAGE_FILE_PATH) {
-    throw new Error('Google API key not set');
 }
 
 let PARTNER_LOGO_URL = process.argv[paramIndex++];
@@ -47,7 +39,6 @@ if(THEME && !THEME_FILE_PATH) {
 
 const configParams = {
     assetsBaseUrl: ASSETS_BASE_URL,
-    googleApiKey: GOOGLE_API_KEY,
     googleTrackerId: GOOGLE_TRACKER_ID,
     apiUrl: API_URL,
     partnerLogoUrl: PARTNER_LOGO_URL,
