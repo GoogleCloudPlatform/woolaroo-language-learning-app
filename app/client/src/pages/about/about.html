@@ -3,7 +3,7 @@
   <span i18n="@@aboutTitle">About the app</span>
 </mat-toolbar>
 <div class="content">
-  <img class="arts-culture-logo" src="assets/img/google_arts_culture_logo.png" alt="" />
+  <img class="arts-culture-logo" [src]="'assets/img/google_arts_culture_logo.png' | assetUrl" alt="" />
   <p class="mat-body-2 intro" i18n="@@aboutContent1">Introducing Barnard, an open source Google Project
     that uses the camera in your phone to instantly translate objects into indigenous languages.</p>
   <p class="mat-body-1 instructions" i18n="@@aboutContent2">It's really easy to use — just take a photo of  an everyday object
