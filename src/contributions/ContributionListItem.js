@@ -20,7 +20,7 @@ class ContributionListItem extends ListItemBase {
 
   saveContribution_ = async (e) => {
     try {
-      let { english_word, primary_word, sound_link, translation,
+      let { id, english_word, primary_word, sound_link, translation,
         transliteration } = this.state;
       english_word = (""+english_word).trim();
       primary_word = (""+primary_word).trim();
@@ -40,6 +40,7 @@ class ContributionListItem extends ListItemBase {
       const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}${endpoint}`, {
         method: 'POST',
         body: JSON.stringify({
+          id,
           english_word,
           primary_word,
           translation,
