@@ -22,8 +22,8 @@ if ! [ -x "$(command -v npm)" ]; then
   exit 1
 fi
 
-gcloud auth revoke
-firebase logout
+gcloud auth revoke || true
+firebase logout || true
 
 CURRENT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "${CURRENT_PATH}/./config.sh"
