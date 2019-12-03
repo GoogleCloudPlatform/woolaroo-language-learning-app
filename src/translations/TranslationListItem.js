@@ -155,18 +155,16 @@ class TranslationListItem extends ListItemBase {
       </Button>
     ];
 
-    if (this.state.frequency < 0) {
-      endOfRow.push(
-        <IconButton
-          aria-label="delete"
-          className="delete-translation"
-          key={1}
-          onClick={this.showDeleteConfirm_}
-        >
-          <DeleteIcon />
-        </IconButton>
-      );
-    }
+    endOfRow.push(
+      <IconButton
+        aria-label="delete"
+        className="delete-translation"
+        key={1}
+        onClick={this.showDeleteConfirm_}
+      >
+        <DeleteIcon />
+      </IconButton>
+    );
 
     return endOfRow;
   }
