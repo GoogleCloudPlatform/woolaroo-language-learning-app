@@ -111,15 +111,15 @@ exports.approveSuggestions = functions.https.onRequest(async (req, res) => {
     }
     const doc_suggestion = admin.firestore().collection('translations')
         .doc(req.body.english_word)
-    const doc = admin.firestore().collection('suggestions')
-      .doc(req.body.english_word);
+    const doc = admin.firestore().collection('feedback')
+      .doc(req.body.id);
     try {
       await doc_suggestion.set(suggestion);
       await doc.delete();
       console.log("saved in translations and deleted from suggestions.");
       res.status(200).send(JSON.stringify("Row deleted."));
     } catch(err) {
-      console.log("Error saving in translations and deleted from suggestions.:", err);
+      console.log("Error saving in translations and deleted from suggestions.", err);
     }
   });
 });
