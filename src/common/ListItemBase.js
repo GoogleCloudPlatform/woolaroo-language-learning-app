@@ -79,7 +79,7 @@ class ListItemBase extends React.Component {
     try {
       const { id, collectionName } = this.state;
 
-      await fetch(`${ApiUtils.origin}${ApiUtils.path}deleteRow`, {
+      const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}deleteRow`, {
         method: 'DELETE',
         body: JSON.stringify({
           id,
@@ -91,9 +91,13 @@ class ListItemBase extends React.Component {
         }
       });
 
-      this.setState({
-        deleted: true,
-      });
+      if (resp.status === 200) {
+        this.setState({
+          deleted: true,
+        });
+      }else {
+        await this.showPopup('Something went wrong. Please try again!');
+      }
     } catch(err) {
       console.error(err);
     }
@@ -192,7 +196,7 @@ class ListItemBase extends React.Component {
 
   handleDeleteConfirm_(e) {
     e && e.stopPropagation();
-    this.setState({showDeleteConfirm: false, deleted: true});
+    this.setState({showDeleteConfirm: false});
     this.deleteItem();
   }
 
