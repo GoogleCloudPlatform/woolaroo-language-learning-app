@@ -36,18 +36,21 @@ export class APITranslationService implements ITranslationService {
       return Promise.resolve(this.lastTranslations);
     }
     const response = await this.http.post<TranslationResponse[]>(this.config.endpointURL, { english_words: lowercaseWords }).toPromise();
-    const translations = response.map(tr => ({
+    let translations = response.map(tr => ({
       english: tr.english_word,
       original: tr.primary_word,
       translation: tr.translation,
       transliteration: tr.transliteration,
       soundURL: tr.sound_link
     }));
+    // add any missing translations
     lowercaseWords.forEach((w) => {
       if (!translations.find((tr) => tr.english === w)) {
         translations.push({ original: '', english: w, translation: '', transliteration: '', soundURL: '' });
       }
     });
+    // filter out empty translations
+    translations = translations.filter(tr => tr.english);
     // cache results
     this.lastTranslations = translations;
     return translations;
