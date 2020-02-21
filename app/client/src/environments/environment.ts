@@ -76,9 +76,10 @@ export const environment = {
       type: APIImageRecognitionService,
       config: {
         endpointURL: `${baseEndpointUrl}/visionAPI`,
-        maxFileSize: 50 * 1024,
+        maxFileSize: 15 * 1024,
         validImageFormats: [ 'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/bmp', 'image/webp' ],
-        resizedImageDimension: 500,
+        resizedImageDimension: 300,
+        resizedImageQuality: 0.6,
         maxResults: 10,
         retryCount: 3,
         singleWordDescriptionsOnly: true,
