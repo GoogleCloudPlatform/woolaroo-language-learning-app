@@ -58,7 +58,8 @@ export const environment = {
         snapMinSpeed: 0.01,
         snapDecelerationDistance: 200,
         snapStickyDistance: 30,
-        targetPositionRatio: 0.2
+        targetPositionRatio: 0.2,
+        draggingMinDistance: 5
       },
       selectionLine: {
         animationInterval: 25,

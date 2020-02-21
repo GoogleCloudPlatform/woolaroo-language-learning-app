@@ -20,6 +20,17 @@ interface WordScrollListConfig {
   snapDecelerationDistance: number;
   snapStickyDistance: number;
   targetPositionRatio: number;
+  draggingMinDistance: number;
+}
+
+interface DragInfo {
+  interval: any;
+  offsetX: number;
+  velocityX: number;
+  startTime: number;
+  minScrollPosition: number;
+  maxScrollPosition: number;
+  startScrollPosition: number;
 }
 
 export const WORD_SCROLL_LIST_CONFIG = new InjectionToken<WordScrollListConfig>('Word Scroll List config');
@@ -30,10 +41,8 @@ export const WORD_SCROLL_LIST_CONFIG = new InjectionToken<WordScrollListConfig>(
   styleUrls: ['./word-scroll-list.scss']
 })
 export class WordScrollListComponent implements AfterViewChecked {
-  private isDragging = false;
-  private dragInterval: any = null;
-  private dragOffsetX = 0;
-  private dragVelocityX = 0;
+  private dragInfo: DragInfo|null = null;
+  private snapInterval: any = null;
   @Output()
   public targetPositionChanged: EventEmitter<Point> = new EventEmitter();
   @Output()
@@ -51,6 +60,16 @@ export class WordScrollListComponent implements AfterViewChecked {
     if  (this._translations) {
       this.selectedWordIndex = Math.floor((this._translations.length - 1) / 2); // select center word (or left of center if even number)
     }
+  }
+
+  public get isDragging(): boolean {
+    return !!this.dragInfo && (
+      Math.abs(this.dragInfo.maxScrollPosition - this.dragInfo.startScrollPosition) > this.config.draggingMinDistance
+      || Math.abs(this.dragInfo.minScrollPosition - this.dragInfo.startScrollPosition) > this.config.draggingMinDistance);
+  }
+
+  public get isSnappingToWord(): boolean {
+    return !!this.snapInterval;
   }
 
   private _selectedWordIndex = -1;
@@ -84,32 +103,55 @@ export class WordScrollListComponent implements AfterViewChecked {
   }
 
   startDrag(x: number) {
-    if (this.dragInterval) {
-      clearInterval(this.dragInterval);
-      this.dragInterval = null;
+    if(this.snapInterval) {
+      clearInterval(this.snapInterval);
+      this.snapInterval = null;
+    }
+    if (this.dragInfo && this.dragInfo.interval) {
+      clearInterval(this.dragInfo.interval);
     }
     const positionX = this.getScrollPosition();
-    this.dragVelocityX = 0;
-    this.dragOffsetX = positionX - x;
     const properties = { position: positionX, time: WordScrollListComponent.getTime() };
-    this.dragInterval = setInterval(() => this.updateScrollVelocity(properties), this.config.animationInterval);
+    this.dragInfo = {
+      velocityX: 0,
+      offsetX: positionX - x,
+      interval: setInterval(() => this.updateScrollVelocity(properties), this.config.animationInterval),
+      startScrollPosition: positionX,
+      minScrollPosition: positionX,
+      maxScrollPosition: positionX,
+      startTime: Date.now()
+    };
   }
 
-  stopDrag() {
-    clearInterval(this.dragInterval);
-    this.dragInterval = null;
+  stopDrag(x: number, y:number) {
+    if(!this.dragInfo) {
+      return;
+    }
+    if(this.dragInfo.interval) {
+      clearInterval(this.dragInfo.interval);
+    }
     if (this.isDragging) {
-      this.isDragging = false;
-      const velocity = this.dragVelocityX;
-      const properties = {time: WordScrollListComponent.getTime(), position: this.getScrollPosition(), velocity};
-      const snapWordIndex = this.getEndingSnapWordIndex(properties.position, velocity);
-      this.dragInterval = setInterval(() => this.updateSnapPosition(properties, snapWordIndex), this.config.animationInterval);
+      const velocity = this.dragInfo.velocityX;
+      this.dragInfo = null;
+      const snapWordIndex = this.getEndingSnapWordIndex(this.getScrollPosition(), velocity);
+      this.scrollToWord(snapWordIndex, velocity);
       this.updateTargetPosition();
+    } else {
+      this.dragInfo = null;
+      const wordIndex = this.getWordIndexFromPosition(x, y);
+      if(wordIndex >= 0) {
+        this.scrollToWord(wordIndex);
+      }
     }
   }
 
   updateDrag(x: number) {
-    const scrollPosition = x + this.dragOffsetX;
+    if(!this.dragInfo) {
+      return;
+    }
+    const scrollPosition = x + this.dragInfo.offsetX;
+    this.dragInfo.minScrollPosition = Math.min(this.dragInfo.minScrollPosition, scrollPosition);
+    this.dragInfo.maxScrollPosition = Math.max(this.dragInfo.maxScrollPosition, scrollPosition);
     this.setScrollPosition(scrollPosition);
     this.selectedWordIndex = this.getWordIndexFromScrollPosition(scrollPosition, this.selectedWordIndex);
     this.updateTargetPosition();
@@ -129,30 +171,29 @@ export class WordScrollListComponent implements AfterViewChecked {
     this.startDrag(ev.clientX);
   }
 
-  onTouchEnd = () => {
+  onTouchEnd = (ev: TouchEvent) => {
     window.document.body.removeEventListener('touchmove', this.onTouchMove);
     window.document.body.removeEventListener('touchend', this.onTouchEnd);
-    this.stopDrag();
+    const touch = ev.touches[0];
+    this.stopDrag(touch.clientX, touch.clientY);
   };
 
-  onMouseUp = () => {
+  onMouseUp = (ev: MouseEvent) => {
     window.document.body.removeEventListener('mousemove', this.onMouseMove);
     window.document.body.removeEventListener('mouseup', this.onMouseUp);
-    this.stopDrag();
+    this.stopDrag(ev.clientX, ev.clientY);
   };
 
   onTouchMove = (ev: TouchEvent) => {
-    this.isDragging = true;
     this.updateDrag(ev.touches[0].clientX);
   };
 
   onMouseMove = (ev: MouseEvent) => {
-    this.isDragging = true;
     this.updateDrag(ev.clientX);
   };
 
   onManualEntryClick() {
-    if (!this.isDragging && !this.dragInterval) {
+    if (!this.isDragging && !this.isSnappingToWord) {
       this.manualEntrySelected.emit();
     }
   }
@@ -232,12 +273,32 @@ export class WordScrollListComponent implements AfterViewChecked {
     return nearestIndex;
   }
 
+  private getWordIndexFromPosition(x: number, y: number): number {
+    if (!this.scrollContent) {
+      return 0;
+    }
+    const scrollContent = this.scrollContent.nativeElement;
+    const items = scrollContent.getElementsByTagName('li');
+    for (let k = 0; k < items.length; k++) {
+      const child = items[k];
+      let childRect = child.getBoundingClientRect();
+      if (x >= childRect.left && x <= childRect.right
+        && y >= childRect.top && y <= childRect.bottom) {
+        // position is within child bounds
+        return k;
+      }
+    }
+    return -1;
+  }
+
   private updateScrollVelocity(lastProperties: {position: number, time: number}) {
     const positionX = this.getScrollPosition();
     const dx = positionX - lastProperties.position;
     const t = WordScrollListComponent.getTime();
     const dt = t - lastProperties.time;
-    this.dragVelocityX = dx / dt;
+    if(this.dragInfo) {
+      this.dragInfo.velocityX = dx / dt;
+    }
     lastProperties.position = positionX;
     lastProperties.time = t;
   }
@@ -281,6 +342,11 @@ export class WordScrollListComponent implements AfterViewChecked {
     this.targetPositionChanged.emit({ x: targetX, y: currentItemCenterY });
   }
 
+  private scrollToWord(index: number, velocity: number = 0) {
+    const properties = {time: WordScrollListComponent.getTime(), position: this.getScrollPosition(), velocity};
+    this.snapInterval = setInterval(() => this.updateSnapPosition(properties, index), this.config.animationInterval);
+  }
+
   private updateSnapPosition(lastProperties: {position: number, velocity: number, time: number}, snapWordIndex: number) {
     let velocity = lastProperties.velocity;
     if (Math.abs(velocity) > this.config.snapMaxSpeed) {
@@ -308,8 +374,8 @@ export class WordScrollListComponent implements AfterViewChecked {
     if (Math.sign(dx) === Math.sign(snapDx) && Math.abs(dx) >= Math.abs(snapDx) && Math.abs(dx) < 10) {
       // close enough - end snap
       this.setScrollPosition(snapPosition);
-      clearInterval(this.dragInterval);
-      this.dragInterval = null;
+      clearInterval(this.snapInterval);
+      this.snapInterval = null;
       this.selectedWordIndex = this.getWordIndexFromScrollPosition(snapPosition);
     } else {
       const position = lastProperties.position + dx;
