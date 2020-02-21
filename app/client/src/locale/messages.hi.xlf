@@ -6,8 +6,10 @@
         <target>ltr</target>
       </trans-unit>
       <trans-unit id="introAbout" datatype="html">
-        <target>Google मशीन लर्निंग की पेशकश, प्रोजेक्ट Woolaroo यानी स्थानीय भाषाओं में अनुवाद का इंटरैक्टिव तरीका.</target>
-        </trans-unit>
+        <target>Google Arts &amp; Culture ने Woolaroo नाम का एक प्रयोग शुरू किया है जो मशीन लर्निंग का इस्तेमाल करता है,
+          ताकि नए और इंटरैक्टिव तरीके से स्थानीय भाषा इस्तेमाल की जा सके.
+        </target>
+      </trans-unit>
       <trans-unit id="next" datatype="html">
         <target>आगे बढ़ें</target>
       </trans-unit>
@@ -15,7 +17,10 @@
         <target>अभी नहीं</target>
       </trans-unit>
       <trans-unit id="introFeedback" datatype="html">
-        <target>ऐसा हो सकता है कि यह हमेशा सही न हो, इसलिए कृपया सुझाव देने के अलावा सुधार करके इसे बेहतर बनाने में मदद करें. </target>
+        <target>Woolaroo, रीयल टाइम में बेहतर मशीन लर्निंग का इस्तेमाल करके, आपकी फ़ोटो में मौजूद चीज़ों को समझता है और
+          उनका अनुवाद करता है. ज़रूरी नहीं की यह हर बार सही ही हो. आप अपना सुझाव देकर इसे बेहतर बनाने में मदद कर सकते
+          हैं.
+        </target>
       </trans-unit>
       <trans-unit id="startExploring" datatype="html">
         <target>एक्सप्लोर करना शुरू करें</target>
@@ -24,7 +29,12 @@
         <target>शर्तें और निजता</target>
       </trans-unit>
       <trans-unit id="introTermsAndPrivacy" datatype="html">
-        <target>प्रोजेक्ट Woolaroo का इस्तेमाल करके आप <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>नियमों<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> और शर्तों के साथ ही, <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>निजता नीति से<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> सहमत होते हैं.</target>
+        <target>प्रोजेक्ट Woolaroo का इस्तेमाल करके आप<x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>नियमों
+          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>
+          और शर्तों के साथ ही,<x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>निजता नीति से
+          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>
+          सहमत होते हैं.
+        </target>
       </trans-unit>
       <trans-unit id="accept" datatype="html">
         <target>स्वीकार करें</target>
@@ -60,7 +70,7 @@
         <target>सबमिट करें</target>
       </trans-unit>
       <trans-unit id="feedbackInstructions" datatype="html">
-        <target>हमारे साथ सुझाव शेयर करके, प्रोजेक्ट Woolaroo से किए गए अनुवाद को बेहतर बनाने में हमारी मदद करें</target>
+        <target>हमारे साथ सुझाव शेयर करके, प्रोजेक्ट Woolaroo से किए गए अनुवाद को बेहतर बनाने में हमारी मदद करें:</target>
       </trans-unit>
       <trans-unit id="incorrectTranslation" datatype="html">
         <target>गलत अनुवाद</target>
@@ -90,7 +100,10 @@
         <target>जोड़ें</target>
       </trans-unit>
       <trans-unit id="addWordInstructions" datatype="html">
-        <target><x id="INTERPOLATION" equiv-text="{{endangeredLanguage}}"/> के नए शब्द और उनके अनुवाद जोड़कर ऐप्लिकेशन में योगदान दें.</target>
+        <target>
+          <x id="INTERPOLATION" equiv-text="{{endangeredLanguage}}"/>
+          के नए शब्द और उनके अनुवाद जोड़कर ऐप्लिकेशन में योगदान दें.
+        </target>
       </trans-unit>
       <trans-unit id="wordInNativeScript" datatype="html">
         <target>शब्द, स्थानीय लिपि में</target>
@@ -123,28 +136,40 @@
         <target>सेव किया गया</target>
       </trans-unit>
       <trans-unit id="specialCharsInstructions" datatype="html">
-        <target>विशेष वर्ण टाइप करना चाहते हैं? <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>GBoard<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> या <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>Keyman<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> इस्तेमाल करें</target>
+        <target>विशेष वर्ण टाइप करना चाहते हैं?<x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>GBoard
+          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>
+          या<x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>Keyman
+          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>
+          इस्तेमाल करें
+        </target>
       </trans-unit>
       <trans-unit id="aboutTitle" datatype="html">
-        <target>ऐप्लिकेशन के बारे में जानकारी</target>
+        <target>के बारे में जानकारी</target>
       </trans-unit>
       <trans-unit id="aboutContent1" datatype="html">
-        <target>पेश है Woolaroo, एक ओपन सोर्स Google Project जो फ़ोन का कैमरा इस्तेमाल करके चीज़ों का स्थानीय भाषाओं में झटपट अनुवाद कर देता है. </target>
+        <target>Woolaroo, Google Arts &amp; Culture का ओपन सोर्स वाला प्रयोग है, जो आपके फ़ोन के कैमरे का इस्तेमाल करके
+          फ़ोटो में मौजूद चीज़ों का स्थानीय भाषा में अनुवाद करता है.
+        </target>
       </trans-unit>
       <trans-unit id="aboutContent2" datatype="html">
-        <target>इसे इस्तेमाल करना बहुत आसान है – रोज़मर्रा की किसी चीज़ की फ़ोटो लें (या आपके पास मौजूद फ़ोटो अपलोड करें) और इसका अनुवाद रियल-टाइम में <x id="INTERPOLATION" equiv-text="{{endangeredLanguage}}"/> में किया जाएगा. आप अनुवाद की गई इमेज को सेव कर सकते हैं, शेयर कर सकते हैं या अनुवाद सही न लग रहा हो, तो दोबारा कोशिश कर सकते हैं.</target>
+        <target>यह बहुत आसान है - ऑब्जेक्ट की फ़ोटो लें या खुद कोई फ़ोटो अपलोड करें और वास्तविक समय में अनुवाद पाएं. आप
+          अनुवाद वाली इमेज सेव कर सकते हैं और शेयर कर सकते है या फिर से कोशिश कर सकते हैं.
+        </target>
       </trans-unit>
       <trans-unit id="technologyTitle" datatype="html">
         <target>टेक्नोलॉजी</target>
       </trans-unit>
       <trans-unit id="technologyContent1" datatype="html">
-        <target>Google अनुवाद और क्लाउड विज़न टेक्नोलॉजी से बना Project Woolaroo, आपके फ़ोटो में मौजूद चीज़ों को समझने और रीयल-टाइम में उनका अनुवाद करने के लिए, बेहतर मशीन लर्निंग का इस्तेमाल करता है.</target>
+        <target>Woolaroo, वास्तविक समय में आपकी फ़ोटो में मौजूद चीज़ों को समझने और उनका अनुवाद करने के लिए, बेहतर मशीन लर्निंग का इस्तेमाल करता है.</target>
       </trans-unit>
       <trans-unit id="technologyContent2" datatype="html">
-        <target>यह इमेज में मौजूद मुख्य चीज़ के आधार पर, स्थानीय भाषा में जितना हो सके उतना बेहतर अनुवाद करता है. अगर कई चीज़ों की पहचान की जाती है, तो आप स्क्रोल करके सही अनुवाद पर जा सकते हैं.</target>
+        <target>अनुवाद, इमेज में मौजूद खास ऑब्जेक्ट के हिसाब से होगा. अगर कई ऑब्जेक्ट मिलते हैं, तो आप स्क्रोल करके सही अनुवाद चुन सकते हैं.</target>
       </trans-unit>
       <trans-unit id="technologyContent3" datatype="html">
-        <target>प्रोजेक्ट Woolaroo, एकदम नई एआई (AI) टेक्नोलॉजी से काम करता है, इसलिए हो सकता है कि हर बार यह सही न हो. लेकिन, इसे बेहतर बनाने के लिए हम लगातार कोशिश कर रहे हैं. कोई अनुवाद सही न लगने पर, अनुवाद के लिए सुझाव सुविधा का इस्तेमाल करके आप हमारी मदद कर सकते हैं </target>
+        <target>प्रोजेक्ट Woolaroo, एकदम नई एआई (AI) टेक्नोलॉजी से काम करता है, इसलिए हो सकता है कि हर बार यह सही न हो.
+          लेकिन, इसे बेहतर बनाने के लिए हम लगातार कोशिश कर रहे हैं. कोई अनुवाद सही न लगने पर, अनुवाद के लिए सुझाव सुविधा
+          का इस्तेमाल करके आप हमारी मदद कर सकते हैं
+        </target>
       </trans-unit>
       <trans-unit id="logo" datatype="html">
         <target>Woolaroo</target>
