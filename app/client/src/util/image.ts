@@ -2,14 +2,14 @@ import { default as loadImage, MetaData } from 'blueimp-load-image';
 
 const EXIF_ORIENTATION = 0x0112;
 
-export async function canvasToBlob(canvas: HTMLCanvasElement): Promise<Blob> {
+export async function canvasToBlob(canvas: HTMLCanvasElement, quality: number = 0.8): Promise<Blob> {
   return new Promise<Blob>((resolve, reject) => {
     try {
       if (canvas.toBlob) {
-        canvas.toBlob(b => b ? resolve(b) : reject('Unable to convert canvas to blob'), 'image/jpeg', 0.8);
+        canvas.toBlob(b => b ? resolve(b) : reject('Unable to convert canvas to blob'), 'image/jpeg', quality);
       } else {
         // canvas.toBlob not implemented on this platform - default to manual deserialization
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+        const dataUrl = canvas.toDataURL('image/jpeg', quality);
         resolve(dataURItoBlob(dataUrl));
       }
     } catch (err) {
@@ -31,10 +31,10 @@ function dataURItoBlob(dataURI: string): Blob {
 }
 
 
-export async function resizeImage(imageData: Blob, maxWidth: number, maxHeight: number): Promise<Blob> {
+export async function resizeImage(imageData: Blob, maxWidth: number, maxHeight: number, quality: number = 0.8): Promise<Blob> {
   return new Promise<Blob>((resolve, reject) => {
     loadImage(imageData, canvas => {
-      canvasToBlob(canvas as HTMLCanvasElement).then(resolve, reject);
+      canvasToBlob(canvas as HTMLCanvasElement, quality).then(resolve, reject);
     }, { maxWidth, maxHeight, canvas: true });
   });
 }
