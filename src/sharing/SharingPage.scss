@@ -1,0 +1,97 @@
+.header-text {
+  margin-left: 0.25em;
+}
+
+.invite-container-div {
+  display: grid;
+  gap: 1.5em;
+
+  .invite-email-div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .invite-email-text {
+      margin-left: 0.5em;
+    }
+
+    .invite-email-input {
+      margin-top: 0.5em;
+    }
+  }
+
+  .send-invite-button {
+    justify-self: end;
+    margin-right: 0.5em;
+  }
+}
+
+.app-url-container {
+  display: grid;
+  gap: 1.5em;
+  margin-top: 3em;
+
+  .app-url-div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .app-url-text {
+      margin-left: 0.5em;
+    }
+
+    .app-url-input {
+      margin-top: 0.5em;
+    }
+
+  }
+
+  .copy-link-button {
+    justify-self: end;
+    margin-right: 0.5em;
+  }
+
+}
+
+.social-media-icons {
+  margin: 3em 0em 3em 0.5em;
+}
+
+
+.contributor-container {
+  display: grid;
+  gap: 1.5em;
+  margin-top: 3em;
+
+  .contributor-url-div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .contributor-text {
+      margin-left: 0.5em;
+    }
+
+    .contributor-input {
+      margin-top: 0.5em;
+    }
+
+  }
+
+  .copy-link-button {
+    justify-self: end;
+    margin-right: 0.5em;
+  }
+
+}
+
+
+
+
+
+// .fullwidth {
+//   width: 100%;
+// }
+// .button-margin {
+//   margin: 8px;
+// }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import  { Breakpoint, BreakpointProvider } from 'react-socks';
-import './App.css';
+import './App.scss';
 import AddWordsPage from './addWords/AddWordsPage';
 import { TranslationsPageWithRouter } from './translations/TranslationsPage';
 import ContributionsPage from './contributions/ContributionsPage';

@@ -1,3 +1,6 @@
+@import './style/dimensions';
+
+
 html {
   height:100%;
 }
@@ -48,6 +51,11 @@ body {
 .body-margin {
   width: 300px;
   flex-shrink: 2;
+
+  @media (max-width: $small-width) {
+    width: 20px;
+  }
+
 }
 
 .page-container {
