@@ -145,7 +145,7 @@ class AudioRecorder extends React.Component {
     let secondsElapsed = 0;
 
     recordingTimer = setInterval(() => {
-      secondsElapsed += 0.1;
+      secondsElapsed += 0.05;
 
       let recordingProgress = (secondsElapsed / maximumSecondsToRecord) * 100;
 
@@ -154,7 +154,7 @@ class AudioRecorder extends React.Component {
       if (secondsElapsed >= maximumSecondsToRecord) {
         _this.stopRecording_();
       }
-    }, 100);
+    }, 50);
   }
 
   closeDialog = () => {
