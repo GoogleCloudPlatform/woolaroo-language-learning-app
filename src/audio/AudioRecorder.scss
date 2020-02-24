@@ -1,5 +1,7 @@
 .audio-buttons {
   width: 150px;
+  display: flex;
+
 }
 
 button.recording, button.playing {
@@ -12,4 +14,15 @@ button.recording, button.record {
 
 .audio-buttons button {
     margin-top: 5px;
+}
+
+.progress-ring {
+  position: absolute;
+  margin: -60px 0px 0px -4px;
+  pointer-events: none;
+}
+
+.MuiSvgIcon-root {
+  min-width: 1.25em;
+  min-height: 1.25em;
 }
