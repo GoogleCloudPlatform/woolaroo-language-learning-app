@@ -5,7 +5,11 @@ import MicIcon from "@material-ui/icons/Mic";
 import StopIcon from "@material-ui/icons/StopOutlined";
 import "./AudioRecorder.scss";
 import ProgressRing from "./ProgressRing";
-
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogActions from "@material-ui/core/DialogActions";
+import Button from "@material-ui/core/Button";
 
 /**
  * This component allows audio recording and playback.
@@ -14,13 +18,15 @@ import ProgressRing from "./ProgressRing";
  */
 
 const maximumSecondsToRecord = 5;
+let recordingTimer;
 
 class AudioRecorder extends React.Component {
   state = {
     isRecording: false,
     isPlaying: false,
-    recordedBlob: null, 
-    recordingProgress: 0 //this denotes the percentage displayed on the inner circle of recording
+    recordedBlob: null,
+    recordingProgress: 0, //this denotes the percentage displayed on the inner circle of recording
+    isError: false
   };
 
   render() {
@@ -30,9 +36,7 @@ class AudioRecorder extends React.Component {
         className="record"
         onClick={() => this.startRecording_()}
       >
-        <MicIcon 
-        className="icons"
-        />
+        <MicIcon className="icons" />
       </Fab>
     );
     const stopRecording = (
@@ -42,12 +46,14 @@ class AudioRecorder extends React.Component {
           className="recording"
           onClick={() => this.stopRecording_()}
         >
-          <StopIcon
-          className="icons"
-          />
+          <StopIcon className="icons" />
         </Fab>
         <div className="progress-ring">
-          <ProgressRing radius={32} stroke={4} progress={this.state.recordingProgress} />
+          <ProgressRing
+            radius={32}
+            stroke={4}
+            progress={this.state.recordingProgress}
+          />
         </div>
       </div>
     );
@@ -57,14 +63,13 @@ class AudioRecorder extends React.Component {
         className={this.state.isPlaying ? "playing" : ""}
         onClick={() => this.playback_()}
       >
-        <PlayIcon 
-        className="icons"
-        />
+        <PlayIcon className="icons" />
       </Fab>
     );
 
     return (
       <div className="audio-buttons">
+        {this.showAlertForErrorMessages()}
         {this.props.disableRecord
           ? null
           : this.state.isRecording
@@ -107,7 +112,9 @@ class AudioRecorder extends React.Component {
 
     if (!this.stream) {
       //TODO: Provide a viewable alert here
-      throw new Error(`Failed to get local audio stream.`);
+      this.setState({ isError: true });
+      return;
+      //throw new Error(`Failed to get local audio stream.`);
     }
 
     // Save it using MediaRecorder.
@@ -128,25 +135,44 @@ class AudioRecorder extends React.Component {
 
     this.setState({ isRecording: true });
 
+    this.startTimer();
+  }
 
+  startTimer() {
     //Scope to access class methods from within
     let _this = this;
 
     let secondsElapsed = 0;
 
-    let recordingTimer = setInterval(() => {
+    recordingTimer = setInterval(() => {
       secondsElapsed += 0.1;
 
       let recordingProgress = (secondsElapsed / maximumSecondsToRecord) * 100;
 
       _this.setState({ recordingProgress: recordingProgress });
 
-      if(secondsElapsed >= maximumSecondsToRecord) {
+      if (secondsElapsed >= maximumSecondsToRecord) {
         _this.stopRecording_();
-        clearInterval(recordingTimer);
       }
     }, 100);
+  }
 
+  closeDialog = () => {
+    this.setState({ isError: false });
+  };
+
+  showAlertForErrorMessages() {
+    return (
+      <Dialog open={this.state.isError} onClose={this.closeDialog}>
+        <DialogTitle>Microphone Access Denied</DialogTitle>
+        <DialogContent>Failed to get local audio stream.</DialogContent>
+        <DialogActions>
+          <Button onClick={this.closeDialog} color="primary" autoFocus>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
   }
 
   async stopRecording_() {
@@ -168,9 +194,11 @@ class AudioRecorder extends React.Component {
       this.stream = null;
     }
 
-    this.setState({ 
+    clearInterval(recordingTimer);
+
+    this.setState({
       isRecording: false,
-      recordingProgress: 0 
+      recordingProgress: 0
     });
   }
 
