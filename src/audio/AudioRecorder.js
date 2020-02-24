@@ -30,7 +30,9 @@ class AudioRecorder extends React.Component {
         className="record"
         onClick={() => this.startRecording_()}
       >
-        <MicIcon />
+        <MicIcon 
+        className="icons"
+        />
       </Fab>
     );
     const stopRecording = (
@@ -40,7 +42,9 @@ class AudioRecorder extends React.Component {
           className="recording"
           onClick={() => this.stopRecording_()}
         >
-          <StopIcon />
+          <StopIcon
+          className="icons"
+          />
         </Fab>
         <div className="progress-ring">
           <ProgressRing radius={32} stroke={4} progress={this.state.recordingProgress} />
@@ -53,7 +57,9 @@ class AudioRecorder extends React.Component {
         className={this.state.isPlaying ? "playing" : ""}
         onClick={() => this.playback_()}
       >
-        <PlayIcon />
+        <PlayIcon 
+        className="icons"
+        />
       </Fab>
     );
 
