@@ -135,18 +135,17 @@ class AudioRecorder extends React.Component {
     let secondsElapsed = 0;
 
     let recordingTimer = setInterval(() => {
-      secondsElapsed++;
+      secondsElapsed += 0.1;
 
       let recordingProgress = (secondsElapsed / maximumSecondsToRecord) * 100;
 
       _this.setState({ recordingProgress: recordingProgress });
 
-      
-      if(secondsElapsed === maximumSecondsToRecord) {
+      if(secondsElapsed >= maximumSecondsToRecord) {
         _this.stopRecording_();
         clearInterval(recordingTimer);
       }
-    }, 1000);
+    }, 100);
 
   }
 
