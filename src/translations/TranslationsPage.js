@@ -44,7 +44,7 @@ class TranslationsPage extends ListPageBase {
         listItemTag: TranslationListItem,
         collectionName: 'translations',
         pageSize: 25,
-        completeState: queryStringParams.get('state'),
+        completeState: 'incomplete',
         needsRecording: !!(needsRecording && needsRecording !== '0'),
         top500: top500 !== '0',
         pageNum: pageNum || 1,
