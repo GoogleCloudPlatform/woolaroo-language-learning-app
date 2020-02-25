@@ -28,6 +28,8 @@ interface DragInfo {
   offsetX: number;
   velocityX: number;
   startTime: number;
+  lastClientX: number;
+  lastClientY: number;
   minScrollPosition: number;
   maxScrollPosition: number;
   startScrollPosition: number;
@@ -102,7 +104,7 @@ export class WordScrollListComponent implements AfterViewChecked {
     }
   }
 
-  startDrag(x: number) {
+  startDrag(x: number, y: number) {
     if(this.snapInterval) {
       clearInterval(this.snapInterval);
       this.snapInterval = null;
@@ -119,11 +121,13 @@ export class WordScrollListComponent implements AfterViewChecked {
       startScrollPosition: positionX,
       minScrollPosition: positionX,
       maxScrollPosition: positionX,
+      lastClientX: x,
+      lastClientY: y,
       startTime: Date.now()
     };
   }
 
-  stopDrag(x: number, y:number) {
+  stopDrag() {
     if(!this.dragInfo) {
       return;
     }
@@ -137,21 +141,23 @@ export class WordScrollListComponent implements AfterViewChecked {
       this.scrollToWord(snapWordIndex, velocity);
       this.updateTargetPosition();
     } else {
+      const wordIndex = this.getWordIndexFromPosition(this.dragInfo.lastClientX, this.dragInfo.lastClientY);
       this.dragInfo = null;
-      const wordIndex = this.getWordIndexFromPosition(x, y);
       if(wordIndex >= 0) {
         this.scrollToWord(wordIndex);
       }
     }
   }
 
-  updateDrag(x: number) {
+  updateDrag(x: number, y: number) {
     if(!this.dragInfo) {
       return;
     }
     const scrollPosition = x + this.dragInfo.offsetX;
     this.dragInfo.minScrollPosition = Math.min(this.dragInfo.minScrollPosition, scrollPosition);
     this.dragInfo.maxScrollPosition = Math.max(this.dragInfo.maxScrollPosition, scrollPosition);
+    this.dragInfo.lastClientX = x;
+    this.dragInfo.lastClientY = y;
     this.setScrollPosition(scrollPosition);
     this.selectedWordIndex = this.getWordIndexFromScrollPosition(scrollPosition, this.selectedWordIndex);
     this.updateTargetPosition();
@@ -161,35 +167,36 @@ export class WordScrollListComponent implements AfterViewChecked {
   onTouchStart(ev: TouchEvent) {
     window.document.body.addEventListener('touchmove', this.onTouchMove);
     window.document.body.addEventListener('touchend', this.onTouchEnd);
-    this.startDrag(ev.touches[0].clientX);
+    const touch = ev.touches[0];
+    this.startDrag(touch.clientX, touch.clientY);
   }
 
   @HostListener('mousedown', ['$event'])
   onMouseDown(ev: MouseEvent) {
     window.document.body.addEventListener('mousemove', this.onMouseMove);
     window.document.body.addEventListener('mouseup', this.onMouseUp);
-    this.startDrag(ev.clientX);
+    this.startDrag(ev.clientX, ev.clientY);
   }
 
-  onTouchEnd = (ev: TouchEvent) => {
+  onTouchEnd = () => {
     window.document.body.removeEventListener('touchmove', this.onTouchMove);
     window.document.body.removeEventListener('touchend', this.onTouchEnd);
-    const touch = ev.touches[0];
-    this.stopDrag(touch.clientX, touch.clientY);
+    this.stopDrag();
   };
 
-  onMouseUp = (ev: MouseEvent) => {
+  onMouseUp = () => {
     window.document.body.removeEventListener('mousemove', this.onMouseMove);
     window.document.body.removeEventListener('mouseup', this.onMouseUp);
-    this.stopDrag(ev.clientX, ev.clientY);
+    this.stopDrag();
   };
 
   onTouchMove = (ev: TouchEvent) => {
-    this.updateDrag(ev.touches[0].clientX);
+    const touch = ev.touches[0];
+    this.updateDrag(touch.clientX, touch.clientY);
   };
 
   onMouseMove = (ev: MouseEvent) => {
-    this.updateDrag(ev.clientX);
+    this.updateDrag(ev.clientX, ev.clientY);
   };
 
   onManualEntryClick() {
