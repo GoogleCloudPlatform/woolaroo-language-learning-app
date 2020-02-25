@@ -2,8 +2,8 @@ import React from 'react';
 import ListPageBase from '../common/ListPageBase'
 import ContributionListItem from './ContributionListItem';
 import FlaggedListItem from './FlaggedListItem';
-import './ContributionsPage.css';
-import '../common/filters/StateSelection.css';
+import './ContributionsPage.scss';
+import '../common/filters/StateSelection.scss';
 
 const TAB_TO_ITEM = {
   'new': {listItemTag: ContributionListItem, collectionName: 'suggestions'},
@@ -36,7 +36,7 @@ class ContributionsPage extends ListPageBase {
 
   renderTabSelection_() {
     return (
-      <div className="state-selection contribution-tabs">
+      <div className="state-selection">
         <ul>
           <li
             className={this.state.tab === 'new' ? 'selected' : null}

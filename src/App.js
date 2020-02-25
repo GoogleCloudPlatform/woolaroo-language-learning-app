@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import  { Breakpoint, BreakpointProvider } from 'react-socks';
+import  { Breakpoint, BreakpointProvider, setDefaultBreakpoints } from 'react-socks';
 import './App.scss';
 import AddWordsPage from './addWords/AddWordsPage';
 import { TranslationsPageWithRouter } from './translations/TranslationsPage';
@@ -21,6 +21,13 @@ const ROUTES = {
   SHARING: '/sharing',
   MANAGEMENT: '/management',
 };
+
+setDefaultBreakpoints([
+  { small: 500 }, // mobile devices (not sure which one's this big)
+  { medium: 800 }, // ipad, ipad pro, ipad mini, etc
+  { large: 1086 }, // smaller laptops
+  { xlarge: 1280 } // laptops and desktops
+]);
 
 //Note: When SIGNIN_ASSET is an external URL, it may not show up on browsers in content blocking mode (tracking protection)
 
@@ -45,6 +52,8 @@ class App extends React.Component {
     };
 
   }
+
+  
 
   componentDidMount() {
     this.authUtils_.getFirebaseAuth().onAuthStateChanged(async (user) => {

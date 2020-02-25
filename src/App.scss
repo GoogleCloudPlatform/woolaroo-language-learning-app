@@ -49,11 +49,17 @@ body {
 }
 
 .body-margin {
-  width: 300px;
-  flex-shrink: 2;
+  min-width: 100px;
+  @media (max-width: $max-width) {
+    min-width: 45px;
+  }
 
-  @media (max-width: $small-width) {
-    width: 20px;
+  @media (max-width: $large-width) {
+    min-width: 24px;
+  }
+
+  @media (max-width: $medium-width) {
+    min-width: 24px;
   }
 
 }
