@@ -3,7 +3,7 @@ import AudioRecorder from '../audio/AudioRecorder';
 import ContributionListItem from './ContributionListItem';
 import Grid from '@material-ui/core/Grid';
 import WarningIcon from '@material-ui/icons/Warning';
-import './ContributionListItem.css';
+import './ContributionListItem.scss';
 import './FlaggedListItem.css';
 
 class FlaggedListItem extends ContributionListItem {

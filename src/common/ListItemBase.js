@@ -11,7 +11,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import Snackbar from '@material-ui/core/Snackbar';
 import TextField from '@material-ui/core/TextField';
 import Tooltip from '@material-ui/core/Tooltip';
-import './ListItemBase.css';
+import './ListItemBase.scss';
 
 class ListItemBase extends React.Component {
   constructor(props) {
