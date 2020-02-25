@@ -5,7 +5,7 @@ import StateSelection from '../common/filters/StateSelection';
 import FilterChips from '../common/filters/FilterChips';
 import TranslationListItem from './TranslationListItem';
 import { withRouter } from 'react-router-dom';
-import './TranslationsPage.css';
+import './TranslationsPage.scss';
 
 class TranslationsPage extends ListPageBase {
   constructor(props) {
@@ -168,6 +168,17 @@ class TranslationsPage extends ListPageBase {
     )
   }
 
+  renderBottomProgressBar() {
+    //Check if it is loading or does not have any items
+    return (
+      <div className={`${this.state.items.length === 0 || this.state.loading ? 'bottom-banner-fixed' : 'progress-bar-container' }`}>
+        Progress bar
+      </div>
+
+    )
+
+  }
+
   render() {
     return (
       <div>
@@ -175,6 +186,7 @@ class TranslationsPage extends ListPageBase {
         {this.renderStateSelection_()}
         {this.renderFilterChips_()}
         {this.state.loading ? <div>Loading...</div> : this.renderItems()}
+        {this.renderBottomProgressBar()}
       </div>
     );
   }
