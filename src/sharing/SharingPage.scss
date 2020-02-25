@@ -1,5 +1,7 @@
 .header-text {
   margin-left: 0.25em;
+  font-family: "Product Sans Regular";
+  font-weight: 100;
 }
 
 .invite-container-div {
@@ -13,6 +15,7 @@
 
     .invite-email-text {
       margin-left: 0.5em;
+      opacity: 0.75;
     }
 
     .invite-email-input {
@@ -38,6 +41,7 @@
 
     .app-url-text {
       margin-left: 0.5em;
+      opacity: 0.75;
     }
 
     .app-url-input {
@@ -70,6 +74,7 @@
 
     .contributor-text {
       margin-left: 0.5em;
+      opacity: 0.75;
     }
 
     .contributor-input {
@@ -83,6 +88,11 @@
     margin-right: 0.5em;
   }
 
+}
+
+.MuiButton-root {
+  font-family: "Product Sans Regular" !important;
+  text-transform: capitalize !important;
 }
 
 

@@ -5,3 +5,8 @@
 .page-numbers button.selected {
     color: #2CAB6F;
 }
+
+h1 {
+    font-family: "Product Sans Regular";
+    font-weight: 300;
+}

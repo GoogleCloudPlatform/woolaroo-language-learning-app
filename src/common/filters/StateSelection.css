@@ -28,6 +28,7 @@
 .state-selection a {
   text-decoration: none;
   color: #5f6368;
+  font-family: "Product Sans Regular";
 }
 
 
@@ -42,4 +43,5 @@
   /*input has OS specific font-family*/
   text-decoration: none;
   cursor: pointer;
+  font-family: "Product Sans Regular";
 }

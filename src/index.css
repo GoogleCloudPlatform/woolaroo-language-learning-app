@@ -11,3 +11,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+@font-face {
+  font-family: "Product Sans Medium";
+  src: url(./style/fonts/ProductSans-Medium.woff) format('woff');
+}
+
+@font-face {
+  font-family: "Product Sans Regular";
+  src: url(./style/fonts/ProductSans-Regular.woff) format('woff');
+}
