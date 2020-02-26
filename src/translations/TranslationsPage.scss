@@ -18,20 +18,40 @@ h1 {
     position: sticky;
     min-height: 50px;
     width: 100%;
-    background-color: red;
+    box-shadow: -3px 3px 5px 6px whitesmoke;
+    background-color: white;
     z-index: 2;
+    display: grid;
+    grid-template-columns: auto 300px;
+    align-items: center;
 
-    
+    @media (max-width: $small-width) {
+        grid-template-columns: auto;
+    }
+
+    .progress-div {
+        margin: 0em 1em 0em 1em;
+    }
+
+    .progress-text {
+        color: #2CAB6F;
+
+        .progress-number {
+            font-weight: bold;
+        }
+
+        @media (max-width: $small-width) {
+            display: none;
+        }
+    }
+
+
 }
 
 .bottom-banner-fixed {
-    bottom: 0;
-    position: bottom;
-    min-height: 50px;
-    width: 100%;
-    background-color: red;
-    z-index: 2;
-    position: fixed;
+    position: fixed !important;
+    width: 76%;
+
     @media (max-width: $large-width) {
         width: 95%;
     }
