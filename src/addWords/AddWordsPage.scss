@@ -1,0 +1,29 @@
+@import "../style/dimensions";
+
+.title-row {
+  position: relative;
+}
+
+.save-all-button.MuiButton-contained {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.appbar-containers {
+  display: flex;
+  align-items: center;
+}
+
+.add-words-title-text {
+  margin-left: 1em !important;
+
+  @media (max-width: $small-width) {
+    margin-left: 0em !important;
+  }
+
+}
+
+.cancel-button {
+  margin-right: 1em !important;
+}

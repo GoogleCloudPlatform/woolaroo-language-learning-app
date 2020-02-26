@@ -228,7 +228,7 @@ class TranslationsPage extends ListPageBase {
             />
           </Tooltip>
         </div>
-        <div class="progress-text">
+        <div className="progress-text">
           <Typography variant="subtitle2" align="center">
             <span className="progress-number">{this.getProgressNumber()}</span>{" "}
             words completed
