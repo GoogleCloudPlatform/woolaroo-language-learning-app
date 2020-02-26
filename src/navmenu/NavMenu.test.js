@@ -20,5 +20,13 @@ it('renders a <MenuItem/> nav link for each of the routes specified in App.js',
     const numRoutes = Object.keys(ROUTES).length;
     //-2 for moderator. Future To Do: add separate test for admin vs moderator
     expect(NavMenuWrapper.find('li.nav-menu-item').length)    
-      .toEqual(numRoutes-2);
+      .toEqual(numRoutes-3);
+    //Add word is a button now [reduced number and added new test]
+});
+
+it('renders a Add Word Button in the Nav menu',
+  () => {
+    const NavMenuWrapper = mount(<Router><NavMenu /></Router>);
+    //-2 for moderator. Future To Do: add separate test for admin vs moderator
+    expect(NavMenuWrapper.find('div.add-word').length).toEqual(1);
 });
