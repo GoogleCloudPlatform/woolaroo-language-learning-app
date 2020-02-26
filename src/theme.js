@@ -61,6 +61,12 @@ const baseTheme = createMuiTheme({
       label: {
           fontFamily: "Product Sans Regular"
       }
+    },
+    MuiAppBar: {
+      colorPrimary: {
+        color: "#000000",
+        backgroundColor: "#fff"
+      }
     }
   }
 });
