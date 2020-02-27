@@ -10,6 +10,8 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
+import { Tooltip } from "@material-ui/core";
+import InfoIcon from "@material-ui/icons/InfoOutlined";
 
 const BASE_NUM_ROWS = 5;
 
@@ -73,6 +75,45 @@ class AddWordsPage extends ListPageBase {
         <br />
         <br />
       </div>
+    );
+  }
+
+  //Overriding method from parent to display list header
+  renderItems() {
+    if (this.state.items.length === 0) {
+      return (
+        <ul className="items-list">
+          <h5>No results to show.</h5>
+        </ul>
+      );
+    }
+
+    return (
+      <ul className="items-list">
+        <li>
+          <div className="add-word-list-item-header">
+            <div className="list-first-header">
+              <Typography variant="subtitle2">
+                Word in [endangered language]
+              </Typography>
+            </div>
+            <div className="list-second-header">
+              <Typography variant="subtitle2">English Translation</Typography>
+            </div>
+            <div className="list-third-header">
+              <Typography variant="subtitle2">
+                Transliteration (optional)  
+              </Typography>
+              <Tooltip title="Explanation of transliteration" placement="top">
+                  <InfoIcon style={{ marginLeft: "4px" }} />
+              </Tooltip>
+            </div>
+          </div>
+        </li>
+        {this.state.items.map((item, itemIdx) => {
+          return <AddWordsListItem key={itemIdx} item={item} />;
+        })}
+      </ul>
     );
   }
 

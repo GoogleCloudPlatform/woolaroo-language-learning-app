@@ -175,11 +175,7 @@ class ListPageBase extends React.Component {
     );
   }
   
-  componentDidUpdate() {
-    console.log(this.state.listItemTag.toString())
-  }
-
-  render() {
+    render() {
     return (
       <div>
         <h1>{this.state.pageTitle}</h1>
