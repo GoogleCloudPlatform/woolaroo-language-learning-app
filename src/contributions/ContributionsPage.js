@@ -72,6 +72,7 @@ class ContributionsPage extends ListPageBase {
         </Typography>
         {this.renderTabSelection_()}
         {this.state.loading ? <div>Loading...</div> : this.renderItems()}
+        {this.renderPromoMessage_()}
       </div>
     );
   }
