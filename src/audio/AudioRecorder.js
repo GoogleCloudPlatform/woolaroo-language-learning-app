@@ -68,7 +68,15 @@ class AudioRecorder extends React.Component {
     );
 
     return (
-      <div className="audio-buttons">
+      <div
+        className={
+          this.props.classPreference === null ||
+          typeof this.props.classPreference === "undefined" ||
+          this.props.classPreference === ""
+            ? "audio-buttons"
+            : this.props.classPreference
+        }
+      >
         {this.showAlertForErrorMessages()}
         {this.props.disableRecord
           ? null
