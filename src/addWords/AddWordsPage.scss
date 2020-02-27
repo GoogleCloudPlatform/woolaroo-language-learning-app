@@ -2,6 +2,20 @@
 
 .title-row {
   position: relative;
+  margin-top: 1.5em;
+}
+
+.table-container {
+  margin-top: 2em;
+
+  @media (max-width: $medium-width) {
+    margin-top: 1em;
+  }
+
+  @media (max-width: $small-width) {
+    margin-top: 0em;
+  }
+
 }
 
 .save-all-button.MuiButton-contained {
@@ -26,4 +40,92 @@
 
 .cancel-button {
   margin-right: 1em !important;
+}
+
+.prompt-text {
+  opacity: 0.75;
+}
+
+.initial-prompt-text {
+  margin-top: 2em !important;
+}
+
+.bulk-upload {
+  margin-top: 1.5em !important;
+}
+
+.header-button-container {
+  margin-top: 2.5em;
+  display: flex;
+  flex-wrap: wrap;
+
+  @media (max-width: $small-width) {
+    display: grid;
+  }
+
+
+  .upload-button {
+    margin-right: 3em !important;
+
+    @media (max-width: $small-width) {
+      margin-right: 0em !important;
+    }
+  }
+
+  .add-from-drive {
+    @media (max-width: $small-width) {
+      margin-top: 1em !important;
+    }
+  }
+
+}
+
+.hr-divider {
+  margin-top: 2em;
+  line-height: 1em;
+  position: relative;
+  outline: 0;
+  border: 0;
+  color: black;
+  text-align: center;
+  height: 1.5em;
+  opacity: .5;
+
+  &:before {
+    content: '';
+    background: #818078;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 1px;
+  }
+
+  &:after {
+    content: attr(data-content);
+    position: relative;
+    display: inline-block;
+    color: black;
+    font-weight: bold;
+    padding: 0 .5em;
+    line-height: 1.5em;
+    background-color: #fcfcfa;
+  }
+}
+
+
+.MuiDialog-paperFullScreen {
+  padding: 0 100px 0 100px;
+
+  @media (max-width: $max-width) {
+    padding: 0 75px 0 75px;
+  }
+
+  @media (max-width: $large-width) {
+    padding: 0 50px 0 50px;
+  }
+
+  @media (max-width: $small-width) {
+    padding: 0 24px 0 24px;
+  }
 }

@@ -50,6 +50,10 @@ const baseTheme = createMuiTheme({
       },
       outlinedSecondary: {
         fontFamily: "Product Sans Medium"
+      },
+      outlinedPrimary: {
+        color: "#2CAB6F",
+        border: "1px solid #2CAB6F"
       }
     },
     MuiInput: {

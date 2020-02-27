@@ -9,6 +9,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
+import AddIcon from "@material-ui/icons/Add";
 
 const BASE_NUM_ROWS = 5;
 
@@ -62,24 +63,12 @@ class AddWordsPage extends ListPageBase {
     return (
       <div ref={this.individualWordsContainer_}>
         <div className="title-row">
-          <h1>Add individual words</h1>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => this.saveAll_()}
-            className="save-all-button"
-          >
-            Save All
-          </Button>
+          <Typography variant="h5">Add Invidual words</Typography>
         </div>
-        {this.renderItems()}
+        <div className="table-container">{this.renderItems()}</div>
         <br />
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => this.addRows_()}
-        >
-          + Add more words
+        <Button color="primary" onClick={() => this.addRows_()}>
+          <AddIcon style={{ marginRight: "10px" }} /> Add more words
         </Button>
         <br />
         <br />
@@ -120,7 +109,47 @@ class AddWordsPage extends ListPageBase {
             </div>
           </Toolbar>
         </AppBar>
-        <div>{this.renderIndividualWords_()}</div>
+        <Toolbar />
+        <div>
+          <div>
+            <Typography
+              variant="subtitle1"
+              className="prompt-text initial-prompt-text"
+            >
+              Contribute to the app by adding new words in [endangered language]
+              and their translations. You can either upload words in bulk from a
+              Google Sheet or .csv file, or add them in one by one.
+            </Typography>
+
+            <Typography variant="h5" className="bulk-upload">
+              Bulk Upload
+            </Typography>
+            <Typography variant="subtitle1" className="prompt-text">
+              Format your file so that the column headers are XX, XX, XX, XX.{" "}
+              <span style={{ textDecoration: "underline" }}>
+                Example spreadsheet
+              </span>
+            </Typography>
+            <div className="header-button-container">
+              <Button
+                color="primary"
+                variant="outlined"
+                className="upload-button"
+              >
+                Upload from Computer
+              </Button>
+              <Button
+                color="primary"
+                variant="outlined"
+                className="add-from-drive"
+              >
+                <AddIcon style={{ marginRight: "10px" }} /> Add from Drive
+              </Button>
+            </div>
+            <hr className="hr-divider" data-content="or" />
+          </div>
+          {this.renderIndividualWords_()}
+        </div>
       </Dialog>
     );
   }
