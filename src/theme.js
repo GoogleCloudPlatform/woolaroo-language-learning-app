@@ -53,7 +53,10 @@ const baseTheme = createMuiTheme({
       },
       outlinedPrimary: {
         color: "#2CAB6F",
-        border: "1px solid #2CAB6F"
+        border: "1px solid #2CAB6F",
+        '&:hover': {
+          border: "1px solid #2CAB6F"
+        }
       }
     },
     MuiInput: {
