@@ -117,7 +117,7 @@ class ListPageBase extends React.Component {
 
       //When there is no data - or there are any other failure response
       if (!resp.ok) {
-        this.showPopup("Failed to fetch data. Please try again!");
+        await this.showPopup("Failed to fetch data. Please try again!");
         this.setState({ loading: false });
         console.log("failureResponse", await resp.text());
         return;
@@ -175,8 +175,8 @@ class ListPageBase extends React.Component {
     );
   }
 
-  showPopup(message) {
-    this.setState({ promo_message: message, promo_open: true });
+  async showPopup(message) {
+    await this.setState({ promo_message: message, promo_open: true });
   }
 
   renderItems() {
