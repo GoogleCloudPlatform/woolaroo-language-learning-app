@@ -8,6 +8,13 @@ import ApiUtils from "../utils/ApiUtils";
 import AuthUtils from "../utils/AuthUtils";
 import Snackbar from "@material-ui/core/Snackbar";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import Radio from "@material-ui/core/Radio";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import Typography from "@material-ui/core/Typography";
+import ColorComponent from "./ColorComponent";
+
 import "./ThemePage.scss";
 
 const styles = theme => ({
@@ -211,84 +218,129 @@ class ThemePage extends React.Component {
           </div>
         </div>
         <div className="new-section">
-          <h1 className-="theme-section-header-text">
-            Language Information
-          </h1>
-        </div>
-        <TextField
-          id="optional-message"
-          multiline
-          rows="6"
-          value={this.state.data.privacy_policy || ""}
-          placeholder="Terms and Conditions (optional)"
-          className={classes.textField}
-          margin="normal"
-          onChange={this.handleChange_privacy_policy}
-        />
-        <FormHelperText>
-          Your own terms and conditions for people using your app
-        </FormHelperText>
-        <br />
-        <div>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={this.savechanges}
-            disabled={this.state.disabled}
-          >
-            Save Changes
-          </Button>
-        </div>
-
-        <div className={classes.newSection}>
-          <h2> Logo </h2>
-          <Card className={classes.card}>
-            <CardMedia
-              className={classes.media}
-              image={this.props.landing_image}
-              title="App logo"
-              alt="App Logo"
-            />
-          </Card>
-          <input
-            accept="image/*"
-            className={classes.input}
-            id="contained-button-file"
-            multiple
-            type="file"
-          />
-          <label htmlFor="contained-button-file">
-            <Button
-              variant="contained"
-              component="span"
-              color="primary"
-              className={classes.lastSection}
+          <h1 className="theme-section-header-text">Language Information</h1>
+          <div className="text-field">
+            <TextField
+              select
+              labelId="theme-language-select-outlined-label"
+              id="theme-language-select-outlined"
+              value="Choose language"
+              variant="outlined"
             >
-              Upload new
-            </Button>
-          </label>
+              <MenuItem value="Choose language">Choose language</MenuItem>
+              <MenuItem value="Maori"> Maori</MenuItem>
+            </TextField>
+            <FormHelperText className="form-helper-text">
+              The endangered language you're translating
+            </FormHelperText>
+          </div>
         </div>
+        <div className="app-information-section new-section">
+          <h1 className="theme-section-header-text">App information</h1>
+          <div className="text-field">
+            <TextField
+              id="app-name"
+              label="App Name"
+              margin="normal"
+              variant="outlined"
+            />
+          </div>
+          <div className="text-field">
+            <TextField
+              select
+              labelId="theme-language-primary-outlined-label"
+              id="theme-language-primary-select-outlined"
+              value="Choose Primary Language"
+              variant="outlined"
+            >
+              <MenuItem value="Choose Primary Language">
+                Choose Primary Language
+              </MenuItem>
+              <MenuItem value="English"> English</MenuItem>
+            </TextField>
+            <FormHelperText className="form-helper-text">
+              Help text
+            </FormHelperText>
+          </div>
+          <div className="text-field">
+            <TextField
+              id="optional-message"
+              multiline
+              rows="6"
+              variant="outlined"
+              value={this.state.data.privacy_policy || ""}
+              placeholder="Terms and Conditions (optional)"
+              margin="normal"
+              onChange={this.handleChange_privacy_policy}
+            />
+            <FormHelperText className="form-helper-text">
+              Your own terms and conditions for people using your app
+            </FormHelperText>
+          </div>
+          <div className="logo-section">
+            <h2 className="theme-section-header-subtext"> Logo </h2>
+            <Card className={classes.card}>
+              <CardMedia
+                className={classes.media}
+                image={this.props.landing_image}
+                title="App logo"
+                alt="App Logo"
+              />
+            </Card>
+            <input
+              accept="image/*"
+              className={classes.input}
+              id="contained-button-file"
+              multiple
+              type="file"
+            />
+            <label htmlFor="contained-button-file">
+              <Button variant="contained" component="span" color="primary">
+                Upload new
+              </Button>
+            </label>
+          </div>
 
-        <div className="newSection">
-          <h2>Language Settings</h2>
-          <TextField
-            disabled
-            id="endangered-language-helper"
-            label="Endangered&nbsp;language&nbsp;(read&nbsp;only)"
-            className={classes.textField}
-            margin="normal"
-            value={this.state.data.translation_language}
-          />
-          <br />
-          <TextField
-            disabled
-            id="primary-language-helper"
-            label="Primary&nbsp;language&nbsp;(read&nbsp;only)"
-            className={classes.textField}
-            margin="normal"
-            value={this.state.data.primary_language}
-          />
-          <br />
+          <div className="primary-color-section">
+            <h2 className="theme-section-header-subtext"> Primary color </h2>
+            <Typography variant="subtitle2">
+              Buttons in your app will appear in this color
+            </Typography>
+            <div className="choose-color-container">
+              <RadioGroup aria-label="gender" row>
+                <FormControlLabel
+                  value="#9F2958"
+                  control={<Radio />}
+                  label={<ColorComponent color="#9F2958" />}
+                  labelPlacement="top"
+                />
+                <FormControlLabel
+                  value="#A23D1E"
+                  control={<Radio />}
+                  label={<ColorComponent color="#A23D1E" />}
+                  labelPlacement="top"
+                />
+                <FormControlLabel
+                  value="#2A635A"
+                  control={<Radio />}
+                  label={<ColorComponent color="#2A635A" />}
+                  labelPlacement="top"
+                />
+                <FormControlLabel
+                  value="#293A8D"
+                  control={<Radio />}
+                  label={<ColorComponent color="#293A8D" />}
+                  labelPlacement="top"
+                />
+                <FormControlLabel
+                  value="#612995"
+                  control={<Radio />}
+                  label={<ColorComponent color="#612995" />}
+                  labelPlacement="top"
+                />
+              </RadioGroup>
+            </div>
+          </div>
         </div>
       </div>
     );
