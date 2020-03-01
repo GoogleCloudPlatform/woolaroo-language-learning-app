@@ -1,14 +1,14 @@
 import React from "react";
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
-import Button from '@material-ui/core/Button';
-import ApiUtils from '../utils/ApiUtils';
-import AuthUtils from '../utils/AuthUtils';
-import Snackbar from '@material-ui/core/Snackbar';
+import Button from "@material-ui/core/Button";
+import ApiUtils from "../utils/ApiUtils";
+import AuthUtils from "../utils/AuthUtils";
+import Snackbar from "@material-ui/core/Snackbar";
 import FormHelperText from "@material-ui/core/FormHelperText";
-import './ThemePage.css';
+import "./ThemePage.scss";
 
 const styles = theme => ({
   textField: {
@@ -33,11 +33,11 @@ const styles = theme => ({
     marginTop: theme.spacing(12)
   },
   input: {
-    display: 'none',
+    display: "none"
   },
   lastSection: {
     marginBottom: theme.spacing(12)
-  },
+  }
 });
 
 class ThemePage extends React.Component {
@@ -54,15 +54,15 @@ class ThemePage extends React.Component {
       loadaction: "readSettings",
       promo_message: null,
       promo_open: false,
-      disabled: true,
-    }
+      disabled: true
+    };
 
-    this.savedData = {}
+    this.savedData = {};
   }
 
   async componentDidMount() {
-    if (this.state.loading === true){
-        await this.fetchData();
+    if (this.state.loading === true) {
+      await this.fetchData();
     }
   }
   async fetchData() {
@@ -75,209 +75,230 @@ class ThemePage extends React.Component {
     this.setState({ loading: true });
 
     try {
-      const resp = await
-        fetch(`${ApiUtils.origin}${ApiUtils.path}${this.state.loadaction}`, {
+      const resp = await fetch(
+        `${ApiUtils.origin}${ApiUtils.path}${this.state.loadaction}`,
+        {
           headers: {
-            'Authorization': await AuthUtils.getAuthHeader(),
+            Authorization: await AuthUtils.getAuthHeader()
           },
-          signal: this.abortController.signal,
-        });
+          signal: this.abortController.signal
+        }
+      );
       if (resp.status === 403) {
         await AuthUtils.signOut();
         return;
       }
       const result = await resp.json();
       this.setState({
-        data:result.data,
-        loading: false,
+        data: result.data,
+        loading: false
       });
-      const { organization_name, organization_url, privacy_policy } = this.state.data;
+      const {
+        organization_name,
+        organization_url,
+        privacy_policy
+      } = this.state.data;
       this.savedData = {
-          organization_name: organization_name,
-          organization_url: organization_url,
-          privacy_policy: privacy_policy
+        organization_name: organization_name,
+        organization_url: organization_url,
+        privacy_policy: privacy_policy
       };
-
-    } catch(err) {
+    } catch (err) {
       console.error(err);
     }
   }
-  handleChange_organization_name = (e) => {
+  handleChange_organization_name = e => {
     const newvalue = e.target.value;
     this.setState(prevState => ({
-        data: {
-            ...prevState.data,
-            organization_name:newvalue,
-        }
+      data: {
+        ...prevState.data,
+        organization_name: newvalue
+      }
     }));
-    this.setState({disabled:(newvalue === this.savedData.organization_name)});
+    this.setState({ disabled: newvalue === this.savedData.organization_name });
   };
-  handleChange_organization_url = (e) => {
+  handleChange_organization_url = e => {
     const newvalue = e.target.value.trim();
     this.setState(prevState => ({
-        data: {
-            ...prevState.data,
-            organization_url:newvalue
-        }
+      data: {
+        ...prevState.data,
+        organization_url: newvalue
+      }
     }));
-    this.setState({disabled:(newvalue === this.savedData.organization_url)});
+    this.setState({ disabled: newvalue === this.savedData.organization_url });
   };
-  handleChange_privacy_policy = (e) => {
+  handleChange_privacy_policy = e => {
     const newvalue = e.target.value;
     this.setState(prevState => ({
-        data: {
-            ...prevState.data,
-            privacy_policy:newvalue
-        }
+      data: {
+        ...prevState.data,
+        privacy_policy: newvalue
+      }
     }));
-    this.setState({disabled:(newvalue === this.savedData.privacy_policy)});
+    this.setState({ disabled: newvalue === this.savedData.privacy_policy });
   };
   async setStateAsync(state) {
-    return new Promise((resolve) => {
-      this.setState(state, resolve)
+    return new Promise(resolve => {
+      this.setState(state, resolve);
     });
   }
-  savechanges = async (e) => {
+  savechanges = async e => {
     try {
       // prevent the button from being clicked again.
-      await this.setStateAsync({disabled: true});
+      await this.setStateAsync({ disabled: true });
 
-      const { organization_name, organization_url, privacy_policy } = this.state.data;
+      const {
+        organization_name,
+        organization_url,
+        privacy_policy
+      } = this.state.data;
 
-      const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}updateSettings`, {
-        method: 'POST',
-        body: JSON.stringify({
-          organization_name: organization_name,
-          organization_url: organization_url,
-          privacy_policy: privacy_policy
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': await AuthUtils.getAuthHeader(),
+      const resp = await fetch(
+        `${ApiUtils.origin}${ApiUtils.path}updateSettings`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            organization_name: organization_name,
+            organization_url: organization_url,
+            privacy_policy: privacy_policy
+          }),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: await AuthUtils.getAuthHeader()
+          }
         }
-      });
+      );
       if (resp.status === 200) {
         this.savedData = {
           organization_name: organization_name,
           organization_url: organization_url,
           privacy_policy: privacy_policy
         };
-        await this.showPopup('Saved!');
-      }else {
-        await this.showPopup('Something went wrong. Please try again!');
+        await this.showPopup("Saved!");
+      } else {
+        await this.showPopup("Something went wrong. Please try again!");
         console.error(resp.text());
-        await this.setStateAsync({disabled: false});
+        await this.setStateAsync({ disabled: false });
       }
-    } catch(err) {
-      await this.showPopup('Something went wrong. Please try again!');
+    } catch (err) {
+      await this.showPopup("Something went wrong. Please try again!");
       console.error(err);
     }
   };
 
   renderItems(classes) {
-
     return (
       <div>
-            <div>
-                <h2> Organization information </h2>
-                <TextField
-                  id="organization-name"
-                  label="Organization name"
-                  value={this.state.data.organization_name || ""}
-                  className={classes.textField}
-                  margin="normal"
-                  onChange={this.handleChange_organization_name}
-                />
-                <br/>
-                <TextField
-                  id="organization-website"
-                  label="Organization website"
-                  value={this.state.data.organization_url || ""}
-                  className={classes.textField}
-                  margin="normal"
-                  onChange={this.handleChange_organization_url}
-                />
-                <br/>
-                <TextField
-                  id="optional-message"
-                  multiline
-                  rows="6"
-                  value={this.state.data.privacy_policy  || ""}
-                  placeholder="Terms and Conditions (optional)"
-                  className={classes.textField}
-                  margin="normal"
-                  onChange={this.handleChange_privacy_policy}
-                />
-                <FormHelperText>
-                  Your own terms and conditions for people using your app
-                </FormHelperText>
-                <br/>
-                <div>
-                    <Button variant="contained" color="primary"
-                        onClick={this.savechanges}
-                        disabled={this.state.disabled}
-                    >
-                      Save Changes
-                    </Button>
-                </div>
-            </div>
+        <div className="first-section">
+          <h1 className-="theme-section-header-text">
+            Organization information
+          </h1>
+          <div className="text-field">
+            <TextField
+              id="organization-name"
+              label="Organization name"
+              margin="normal"
+              variant="outlined"
+            />
+          </div>
+          <div className="text-field">
+            <TextField
+              id="organization-website"
+              label="Organization website"
+              margin="normal"
+              variant="outlined"
+            />
+          </div>
+        </div>
+        <div className="new-section">
+          <h1 className-="theme-section-header-text">
+            Language Information
+          </h1>
+        </div>
+        <TextField
+          id="optional-message"
+          multiline
+          rows="6"
+          value={this.state.data.privacy_policy || ""}
+          placeholder="Terms and Conditions (optional)"
+          className={classes.textField}
+          margin="normal"
+          onChange={this.handleChange_privacy_policy}
+        />
+        <FormHelperText>
+          Your own terms and conditions for people using your app
+        </FormHelperText>
+        <br />
+        <div>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={this.savechanges}
+            disabled={this.state.disabled}
+          >
+            Save Changes
+          </Button>
+        </div>
 
-            <div className={classes.newSection}>
-                <h2> Logo </h2>
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.media}
-                    image={this.props.landing_image}
-                    title="App logo"
-                    alt="App Logo"
-                  />
-                </Card>
-                <input
-                accept="image/*"
-                className={classes.input}
-                id="contained-button-file"
-                multiple
-                type="file"
-                />
-                <label htmlFor="contained-button-file">
-                  <Button variant="contained" component="span" color="primary" className={classes.lastSection}>
-                    Upload new
-                  </Button>
-                </label>
-            </div>
+        <div className={classes.newSection}>
+          <h2> Logo </h2>
+          <Card className={classes.card}>
+            <CardMedia
+              className={classes.media}
+              image={this.props.landing_image}
+              title="App logo"
+              alt="App Logo"
+            />
+          </Card>
+          <input
+            accept="image/*"
+            className={classes.input}
+            id="contained-button-file"
+            multiple
+            type="file"
+          />
+          <label htmlFor="contained-button-file">
+            <Button
+              variant="contained"
+              component="span"
+              color="primary"
+              className={classes.lastSection}
+            >
+              Upload new
+            </Button>
+          </label>
+        </div>
 
-            <div className="newSection">
-                <h2>Language Settings</h2>
-                <TextField
-                  disabled
-                  id="endangered-language-helper"
-                  label="Endangered&nbsp;language&nbsp;(read&nbsp;only)"
-                  className={classes.textField}
-                  margin="normal"
-                  value={this.state.data.translation_language}
-                />
-                <br/>
-                <TextField
-                  disabled
-                  id="primary-language-helper"
-                  label="Primary&nbsp;language&nbsp;(read&nbsp;only)"
-                  className={classes.textField}
-                  margin="normal"
-                  value={this.state.data.primary_language}
-                />
-                <br/>
-              </div>
-            </div>
-      );
-
+        <div className="newSection">
+          <h2>Language Settings</h2>
+          <TextField
+            disabled
+            id="endangered-language-helper"
+            label="Endangered&nbsp;language&nbsp;(read&nbsp;only)"
+            className={classes.textField}
+            margin="normal"
+            value={this.state.data.translation_language}
+          />
+          <br />
+          <TextField
+            disabled
+            id="primary-language-helper"
+            label="Primary&nbsp;language&nbsp;(read&nbsp;only)"
+            className={classes.textField}
+            margin="normal"
+            value={this.state.data.primary_language}
+          />
+          <br />
+        </div>
+      </div>
+    );
   }
-
 
   handleClose_() {
-    this.setState({promo_open: false});
+    this.setState({ promo_open: false });
   }
   async showPopup(message) {
-    await this.setState({promo_message: message, promo_open: true})
+    await this.setState({ promo_message: message, promo_open: true });
   }
   renderPromoMessage_() {
     if (!this.state.promo_message || !this.state.promo_open) {
@@ -286,23 +307,23 @@ class ThemePage extends React.Component {
 
     return (
       <Snackbar
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         message={<span id="message-id">{this.state.promo_message}</span>}
         onClose={this.handleClose_}
         open
       />
     );
   }
-  render(){
-    const {classes} = this.props;
+  render() {
+    const { classes } = this.props;
     return (
-        <div>
-            <h1> Settings </h1>
-            {this.state.loading ? <div>Loading...</div> : this.renderItems(classes)}
-            <br/><br/>
-            {this.renderPromoMessage_()}
-        </div>
-      );
+      <div>
+        {this.state.loading ? <div>Loading...</div> : this.renderItems(classes)}
+        <br />
+        <br />
+        {this.renderPromoMessage_()}
+      </div>
+    );
   }
 }
 export default withStyles(styles)(ThemePage);
