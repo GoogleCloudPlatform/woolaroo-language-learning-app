@@ -1,0 +1,58 @@
+
+@import "../style/dimensions";
+
+.theme-section-header-text {
+    margin-left: 0em;
+    font-family: "Product Sans Regular";
+    font-weight: normal;
+    opacity: 0.75;
+}
+
+
+.text-field {
+    width: 50%;
+    display: inline-grid;
+    @media (max-width: $large-width) {
+        width: 100%;
+    }
+}
+
+.first-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.select-field {
+    width: 50%;
+    display: inline-grid;
+    @media (max-width: $large-width) {
+        width: 100%;
+    }
+}
+
+.first-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.new-section {
+    margin-top: 75px;
+
+    @media (max-width: $medium-width) {
+        margin-top: 50px;
+    }
+    
+
+}
+
+.MuiButton-root {
+    font-family: "Product Sans Regular" !important;
+    text-transform: capitalize !important;
+}
+
+
+.MuiFormControl-root {
+    margin-left: 0em !important;
+    margin-right: 0em !important;
+}
+
