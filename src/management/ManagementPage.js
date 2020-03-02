@@ -15,7 +15,7 @@ import TextField from '@material-ui/core/TextField';
 import ApiUtils from '../utils/ApiUtils';
 import AuthUtils from '../utils/AuthUtils';
 import UserTable from './UserTable';
-import './ManagementPage.css';
+import './ManagementPage.scss';
 
 class ManagementPage extends React.Component {
   constructor(props) {
@@ -117,7 +117,7 @@ class ManagementPage extends React.Component {
             color='primary'
             onClick={this.openDialog_}
           >
-            Invite moderators
+            Invite users
           </Button>
         </div>
         <br/>
