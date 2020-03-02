@@ -1,9 +1,6 @@
 import React from "react";
 import AudioRecorder from "../audio/AudioRecorder";
 import ContributionListItem from "./ContributionListItem";
-import IconButton from "@material-ui/core/IconButton";
-import RejectIcon from "@material-ui/icons/Block";
-import SaveIcon from "@material-ui/icons/Done";
 import WarningIcon from "@material-ui/icons/ReportProblemOutlined";
 import "./ContributionListItem.scss";
 import "./FlaggedListItem.scss";

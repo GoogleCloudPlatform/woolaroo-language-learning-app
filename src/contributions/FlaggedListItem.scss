@@ -81,8 +81,6 @@
     grid-column: 1;
   }
 
-
-
 }
 
 .flagged-audio-recorder {
@@ -104,8 +102,6 @@
     grid-column: 1;
   }
 
-
-
 }
 
 .flagged-edit-translations {
@@ -115,7 +111,7 @@
   display: inherit;
 
   @media (max-width: $medium-width) {
-    
+
     grid-row: 3;
     grid-column: 2;
 
@@ -232,7 +228,7 @@
     margin-bottom: 0.5em;
   }
 
-  .english-word-small{
+  .english-word-small {
     color: #202124;
     font-size: 12px;
     text-overflow: ellipsis;
@@ -240,4 +236,3 @@
   }
 
 }
-
