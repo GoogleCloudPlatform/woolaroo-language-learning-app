@@ -13,6 +13,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import 'react-table/react-table.css'
 import './UserTable.css';
 
+//NOT USED IN MANAGEMENT PAGE
 class UserTable extends React.Component {
   constructor(props) {
     super(props);

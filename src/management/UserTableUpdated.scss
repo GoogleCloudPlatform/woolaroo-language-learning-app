@@ -1,0 +1,27 @@
+@import "../style/dimensions";
+
+
+.toolbar-container {
+    width: 50%;
+    display: flex;
+    color: #2CAB6F;
+    justify-content: space-between;
+
+    @media (max-width: $medium-width) {
+        width: 100%;
+    }
+
+    .MuiTypography-subtitle2 {
+        font-weight: bold;
+    }
+
+}
+
+.user-table-container {
+    margin: 3em 0em 5em 0em;
+
+}
+
+.add-role-dialog-title.MuiDialogTitle-root {
+    text-align: center;
+}
