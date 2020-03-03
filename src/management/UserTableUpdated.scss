@@ -28,11 +28,15 @@
 
     .MuiTableCell-sizeSmall {
         @media (max-width: $medium-width) {
-            padding: 0em 1em 0em 0em;
+            padding: 0em 0.5em 0em 0em;
+            white-space: pre-line;
+        }
+
+        @media (max-width: $small-width) {
+            padding: 0em 0.25em 0em 0em;
+            word-break: break-all;
         }
     }
-
-    
 
 }
 
