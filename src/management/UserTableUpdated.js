@@ -1,5 +1,3 @@
-import "./UserTableUpdated.scss";
-
 import React from "react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -22,6 +20,8 @@ import TableCell from "@material-ui/core/TableCell";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
+import { Breakpoint } from "react-socks";
+import "./UserTableUpdated.scss";
 
 class UserTableUpdated extends React.Component {
   constructor(props) {
@@ -216,42 +216,38 @@ class UserTableUpdated extends React.Component {
     }));
   };
 
-  sortData(array) {
+  sortingFunction(a, b, orderBy) {
     let order = this.state.order;
+    if (b[orderBy] === null || typeof b[orderBy] === "undefined") {
+      return -1;
+    }
 
+    if (a[orderBy] > b[orderBy]) {
+      if (order === "asc") {
+        return 1;
+      }
+      return -1;
+    }
+
+    if (a[orderBy] < b[orderBy]) {
+      if (order === "asc") {
+        return -1;
+      }
+      return 1;
+    }
+    return 0;
+  }
+
+  sortData(array) {
     switch (this.state.orderBy) {
       case "name":
-        return array.sort((a, b) =>
-          a.name > b.name
-            ? order === "asc"
-              ? 1
-              : -1
-            : order === "asc"
-            ? -1
-            : 1
-        );
+        return array.sort((a, b) => this.sortingFunction(a, b, "name"));
 
       case "email":
-        return array.sort((a, b) =>
-          a.email > b.email
-            ? order === "asc"
-              ? 1
-              : -1
-            : order === "asc"
-            ? -1
-            : 1
-        );
+        return array.sort((a, b) => this.sortingFunction(a, b, "email"));
 
       case "role":
-        return array.sort((a, b) =>
-          a.role > b.role
-            ? order === "asc"
-              ? 1
-              : -1
-            : order === "asc"
-            ? -1
-            : 1
-        );
+        return array.sort((a, b) => this.sortingFunction(a, b, "role"));
 
       default:
         return array;
@@ -293,14 +289,16 @@ class UserTableUpdated extends React.Component {
             }
             onClick={() => this.handleSortClick("email")}
           >
-            <TableSortLabel
-              active={this.state.orderBy === "email"}
-              direction={
-                this.state.orderBy === "email" ? this.state.order : "asc"
-              }
-            >
-              Email
-            </TableSortLabel>
+            <Breakpoint customQuery="(min-width: 650px)">
+              <TableSortLabel
+                active={this.state.orderBy === "email"}
+                direction={
+                  this.state.orderBy === "email" ? this.state.order : "asc"
+                }
+              >
+                Email
+              </TableSortLabel>
+            </Breakpoint>
           </TableCell>
           <TableCell
             key="role"
@@ -309,14 +307,16 @@ class UserTableUpdated extends React.Component {
             }
             onClick={() => this.handleSortClick("role")}
           >
-            <TableSortLabel
-              active={this.state.orderBy === "role"}
-              direction={
-                this.state.orderBy === "role" ? this.state.order : "asc"
-              }
-            >
-              Role
-            </TableSortLabel>
+            <Breakpoint customQuery="(min-width: 450px)">
+              <TableSortLabel
+                active={this.state.orderBy === "role"}
+                direction={
+                  this.state.orderBy === "role" ? this.state.order : "asc"
+                }
+              >
+                Role
+              </TableSortLabel>
+            </Breakpoint>
           </TableCell>
         </TableRow>
       </TableHead>
@@ -356,6 +356,7 @@ class UserTableUpdated extends React.Component {
   };
 
   getTableBody = () => {
+    console.log("data", this.state.data);
     return this.props.loading ? (
       <TableBody>
         <div style={{ marginLeft: "24px" }}>
@@ -373,9 +374,27 @@ class UserTableUpdated extends React.Component {
                 onChange={() => this.toggleRow(row.uid)}
               />
             </TableCell>
-            <TableCell align="left">{row.name}</TableCell>
-            <TableCell align="left">{row.email}</TableCell>
-            <TableCell align="left">{row.role}</TableCell>
+            <TableCell align="left">
+              <div>
+                <p>{row.name}</p>
+                <Breakpoint customQuery="(max-width: 650px)">
+                  <p>{row.email}</p>
+                </Breakpoint>
+                <Breakpoint customQuery="(max-width: 450px)">
+                  <p>Role: {row.role}</p>
+                </Breakpoint>
+              </div>
+            </TableCell>
+            <TableCell align="left">
+              <Breakpoint customQuery="(min-width: 650px)">
+                {row.email}
+              </Breakpoint>
+            </TableCell>
+            <TableCell align="left">
+              <Breakpoint customQuery="(min-width: 450px)">
+                {row.role}
+              </Breakpoint>
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
