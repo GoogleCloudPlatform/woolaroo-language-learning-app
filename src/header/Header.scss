@@ -1,3 +1,5 @@
+@import "../style/dimensions";
+
 .MuiAppBar-colorPrimary.header {
   background: #fff;
   color: #5f6368;
@@ -26,6 +28,11 @@
   max-width: 640px;
   padding: 10px;
   width: 100%;
+
+  @media (max-width: $small-width) {
+    display: none;
+  }
+
 }
 
 .header-search.hidden {
@@ -61,4 +68,22 @@ svg.header-search-icon:hover {
 .auth-button.MuiButton-root {
   margin-left: 16px;
   min-width: 96px;
+}
+
+
+.mobile-search-icon {
+  position: absolute;
+  right: 0;
+  margin-right: 2em;
+  display: none;
+
+
+  @media (max-width: $small-width) {
+    display: block;
+  }
+
+}
+
+.mobile-search-icon.hidden {
+  visibility: hidden;
 }
