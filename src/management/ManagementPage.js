@@ -14,7 +14,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import TextField from '@material-ui/core/TextField';
 import ApiUtils from '../utils/ApiUtils';
 import AuthUtils from '../utils/AuthUtils';
-import UserTable from './UserTable';
+import UserTableUpdated from './UserTableUpdated';
 import './ManagementPage.scss';
 
 class ManagementPage extends React.Component {
@@ -163,7 +163,7 @@ class ManagementPage extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-        <UserTable
+        <UserTableUpdated
           updateRole={(email, role, revoke) => this.updateRole_(email, role, revoke)}
           data={this.state.data}
           loading={this.state.loading}
