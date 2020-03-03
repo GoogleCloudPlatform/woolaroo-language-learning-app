@@ -20,6 +20,20 @@
 .user-table-container {
     margin: 3em 0em 5em 0em;
 
+    .MuiTableCell-root {
+        @media (max-width: $medium-width) {
+            padding: 0em;
+        }
+    }
+
+    .MuiTableCell-sizeSmall {
+        @media (max-width: $medium-width) {
+            padding: 0em 1em 0em 0em;
+        }
+    }
+
+    
+
 }
 
 .add-role-dialog-title.MuiDialogTitle-root {
