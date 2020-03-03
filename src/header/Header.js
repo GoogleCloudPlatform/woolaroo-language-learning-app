@@ -9,6 +9,7 @@ import { withRouter } from "react-router-dom";
 import { Breakpoint } from "react-socks";
 import "./Header.scss";
 import HamburgerNavMenu from "../navmenu/HamburgerNavMenu";
+import GoogleLogo from "../assets/google-logo.png";
 
 class Header extends React.Component {
   constructor(props) {
@@ -92,16 +93,14 @@ class Header extends React.Component {
 
     if (this.props.signedIn) {
       return (
-        // Only show button after logging in. Before logging in, landing page should have login button in the middle of the page.
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={this.props.authAction}
-          className="auth-button"
-          key={1}
-        >
-          {this.props.signedIn ? "Log out" : "Sign in"}
-        </Button>
+        <div className="profile-container" onClick={this.props.authAction}>
+          <div className="google-logo-container">
+            <img src={GoogleLogo} alt="Google Logo" />
+          </div>
+          <div className="profile-picture-container">
+            {/* Profile picture image would go here */}
+          </div>
+        </div>
       );
     } else {
       return null;
