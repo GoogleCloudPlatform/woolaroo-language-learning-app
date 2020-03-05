@@ -29,7 +29,7 @@
         <target>By using Woolaroo you are accepting the
           <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Terms and Conditions
           <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>
-          and<x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Privacy Policy<x id="CLOSE_LINK" ctype="x-a"
+          and <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Privacy Policy<x id="CLOSE_LINK" ctype="x-a"
                                                                                      equiv-text="&lt;/a&gt;"/>.
         </target>
       </trans-unit>
