@@ -35,7 +35,10 @@ export class TranslationSelectorComponent {
     }
     const audioPlayer = this.audioPlayer.nativeElement as HTMLAudioElement;
     if (!this.audioPlaying) {
-      audioPlayer.play();
+      audioPlayer.play().then(
+        () => console.log('Audio started'),
+        err => console.warn('Unable to start audio: ' + err.toString())
+      );
     } else {
       audioPlayer.pause();
       audioPlayer.currentTime = 0;
@@ -43,14 +46,24 @@ export class TranslationSelectorComponent {
   }
 
   onAudioPlaying() {
+    console.log('Audio playing');
     this.audioPlaying = true;
   }
 
   onAudioStopped() {
+    console.log('Audio stopped');
     this.audioPlaying = false;
   }
 
   onSelectedWordChanged(translation: WordTranslation) {
+    if(this.audioPlaying) {
+      this.audioPlaying = false;
+      const audioPlayer = this.audioPlayer ? this.audioPlayer.nativeElement as HTMLAudioElement : null;
+      if(audioPlayer) {
+        audioPlayer.pause();
+        audioPlayer.currentTime = 0;
+      }
+    }
     // will be fired immediately after "translations" is set, so need to delay changing
     // state again by a frame to avoid "expression changed after it was checked" error
     setTimeout(() => {
