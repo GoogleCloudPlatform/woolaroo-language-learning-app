@@ -1,0 +1,24 @@
+@import "../../style/dimensions";
+
+.filter-chips {
+  margin-bottom: 24px;
+
+  @media (max-width: $small-width) {
+    display: grid;
+  }
+}
+
+div.filter-chip {
+  font-size: 14px;
+  width: 180px;
+  height: 38px;
+}
+
+div.top500-chip {
+  margin-right: 12px;
+
+  @media (max-width: $small-width) {
+    margin-bottom: 1em;
+  }
+  
+}
