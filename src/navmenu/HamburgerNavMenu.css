@@ -1,5 +1,6 @@
 .bm-burger-button {
-  position: fixed;
+  /* Change to position to fixed if want to overflow over other components */
+  position: absolute;
   width: 20px;
   height: 20px;
   top: 22px;
