@@ -1,0 +1,71 @@
+@import "../style/dimensions";
+
+.state-selection li.selected {
+    border-bottom: 2px solid #2CAB6F;
+}
+
+.page-numbers button.selected {
+    color: #2CAB6F;
+}
+
+h1 {
+    font-family: "Product Sans Regular";
+    font-weight: 300;
+}
+
+.progress-bar-container {
+    bottom: 0;
+    position: sticky;
+    min-height: 50px;
+    width: 100%;
+    box-shadow: -3px 3px 5px 6px whitesmoke;
+    background-color: white;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: auto 300px;
+    align-items: center;
+
+    @media (max-width: $small-width) {
+        grid-template-columns: auto;
+    }
+
+    .progress-div {
+        margin: 0em 1em 0em 1em;
+    }
+
+    .progress-text {
+        color: #2CAB6F;
+
+        .progress-number {
+            font-weight: bold;
+        }
+
+        @media (max-width: $small-width) {
+            display: none;
+        }
+    }
+
+
+}
+
+.bottom-banner-fixed {
+    position: fixed !important;
+    width: 76%;
+
+    @media (max-width: $large-width) {
+        width: 95%;
+    }
+
+    @media (max-width: $medium-width) {
+        width: 93%;
+    }
+
+    @media (max-width: $small-width) {
+        width: 90%;
+    }
+
+    @media (max-width: $x-small-width) {
+        width: 86%;
+    }
+
+}
