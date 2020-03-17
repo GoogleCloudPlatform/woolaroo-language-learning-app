@@ -5,7 +5,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Done';
 import ApiUtils from '../utils/ApiUtils';
 import AuthUtils from '../utils/AuthUtils';
-import './ContributionListItem.css';
+import './ContributionListItem.scss';
 
 class ContributionListItem extends ListItemBase {
   constructor(props) {
@@ -81,8 +81,8 @@ class ContributionListItem extends ListItemBase {
     return [
       <IconButton
         aria-label="save"
-        className="save-contribution"
         key={0}
+        className="save-contribution"
         onClick={this.saveContribution_}
       >
         <SaveIcon />

@@ -1,6 +1,29 @@
+@import "../style/dimensions";
+
 .audio-buttons {
   width: 150px;
   display: flex;
+  justify-content: center;
+  
+  @media (max-width: $max-width) {
+    grid-column: 2;
+    justify-content: start;
+  }
+  @media (max-width: $large-width) {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  @media (max-width: $medium-width) {
+    grid-column: 2;
+    justify-content: start;
+  }
+  
+  @media (max-width: $small-width) {
+    //Must come down
+    margin-top: 1em;
+    grid-column: 1 / span 3;
+    grid-row: auto;
+  }
 
 }
 

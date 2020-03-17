@@ -1,5 +1,5 @@
 import React from "react";
-import "./StateSelection.css";
+import "./StateSelection.scss";
 
 class StateSelection extends React.Component {
   handleClick_(e, nextCompleteState) {
