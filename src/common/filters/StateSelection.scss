@@ -11,7 +11,6 @@
   display: flex;
   justify-content: space-between;
   font-size: 18px;
-  font-weight: bold;
   text-align: center;
   flex-wrap: wrap;
 }
@@ -46,10 +45,16 @@
   font-family: "Product Sans Regular";
 }
 
+.state-selection li.selected button {
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+}
+
+
 
 .state-selection button {
   color: #5f6368;
-  font-weight: bold;
   background: none!important;
   border: none;
   padding: 0!important;

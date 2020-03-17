@@ -1,0 +1,81 @@
+@import "../style/dimensions";
+
+.theme-section-header-text {
+    margin-left: 0em;
+    font-family: "Product Sans Regular";
+    font-weight: normal;
+    opacity: 0.75;
+}
+
+.theme-section-header-subtext {
+    font-family: "Product Sans Regular";
+    font-weight: normal;
+}
+
+
+
+.text-field {
+    width: 50%;
+    display: inline-grid;
+
+    @media (max-width: $large-width) {
+        width: 100%;
+    }
+}
+
+.first-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.select-field {
+    width: 50%;
+    display: inline-grid;
+
+    @media (max-width: $large-width) {
+        width: 100%;
+    }
+}
+
+.first-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-helper-text {
+    margin-left: 1.5em !important;
+}
+
+.new-section {
+    margin-top: 75px;
+
+    @media (max-width: $medium-width) {
+        margin-top: 50px;
+    }
+
+    .logo-section {
+        margin: 0.5em 0em 0em 0.75em;
+    }
+
+    .primary-color-section {
+        margin: 0.5em 0em 0em 0.75em;
+
+        .choose-color-container {
+            margin-top: 2.5em;
+        }
+
+
+    }
+
+
+}
+
+.app-information-section {
+    display: grid;
+    gap: 1em;
+}
+
+.MuiButton-root {
+    font-family: "Product Sans Regular" !important;
+    text-transform: capitalize !important;
+}

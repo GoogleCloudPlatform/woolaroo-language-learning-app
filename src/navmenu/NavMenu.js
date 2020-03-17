@@ -82,7 +82,7 @@ class NavMenu extends React.Component {
             {this.renderMenuItem("User Contributions", ROUTES.CONTRIBUTIONS)}
             {this.renderMenuItem("Sharing Links", ROUTES.SHARING)}
             {this.renderMenuItem("User Management", ROUTES.MANAGEMENT)}
-            {this.renderMenuItem("Settings", ROUTES.THEME)}
+            {this.renderMenuItem("Theme Customization", ROUTES.THEME)}
           </MenuList>
         ) : (
           <MenuList autoFocus={false}>
@@ -94,28 +94,6 @@ class NavMenu extends React.Component {
         )}
       </div>
     );
-
-    // if (AuthUtils.getUserType() === "admin") {
-    //   return (
-    //     <MenuList>
-    //       {this.renderMenuItem("Add Word", ROUTES.ADD_WORDS)}
-    //       {this.renderMenuItem(TRANSLATIONS_LABEL, ROUTES.TRANSLATIONS)}
-    //       {this.renderMenuItem("User Contributions", ROUTES.CONTRIBUTIONS)}
-    //       {this.renderMenuItem("Sharing Links", ROUTES.SHARING)}
-    //       {this.renderMenuItem("User Management", ROUTES.MANAGEMENT)}
-    //       {this.renderMenuItem("Settings", ROUTES.THEME)}
-    //     </MenuList>
-    //   );
-    // } else {
-    //   return (
-    //     <MenuList autoFocus={false}>
-    //       {this.renderMenuItem("Add Word", ROUTES.ADD_WORDS)}
-    //       {this.renderMenuItem(TRANSLATIONS_LABEL, ROUTES.TRANSLATIONS)}
-    //       {this.renderMenuItem("User Contributions", ROUTES.CONTRIBUTIONS)}
-    //       {this.renderMenuItem("Sharing Links", ROUTES.SHARING)}
-    //     </MenuList>
-    //   );
-    // }
   }
 }
 

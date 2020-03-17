@@ -1,0 +1,70 @@
+@import "../style/dimensions";
+
+
+
+.contributions-state-selection {
+  margin: 1em 0 1.5em 0;
+}
+
+.contributions-state-selection ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  justify-content: start;
+  font-size: 18px;
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+.contributions-state-selection li {
+  padding: 24px;
+  padding-bottom: 12px;
+  cursor: pointer;
+  min-width: 300px;
+
+  @media (max-width: $max-width) {
+    min-width: 250px;
+  }
+  
+  @media (max-width: $medium-width) {
+    min-width: 175px;
+  }
+
+  @media (max-width: $small-width) {
+    min-width: 100px;
+  }
+
+}
+
+.contributions-state-selection li.selected {
+  border-bottom: 2px solid #2CAB6F;
+}
+
+.contributions-state-selection a {
+  text-decoration: none;
+  color: #5f6368;
+  font-family: "Product Sans Regular";
+}
+
+.contributions-state-selection li.selected a {
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+}
+
+
+.contributions-state-selection button {
+  color: #5f6368;
+  font-weight: bold;
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  font-size: 18px;
+  /*optional*/
+  /*input has OS specific font-family*/
+  text-decoration: none;
+  cursor: pointer;
+  font-family: "Product Sans Regular";
+}
+
