@@ -1,0 +1,33 @@
+.audio-buttons {
+  width: 150px;
+  display: flex;
+
+}
+
+button.recording, button.playing {
+  border: solid 2px #2CAB6F;
+}
+
+button.recording, button.record {
+  margin-right: 10px;
+}
+
+.audio-buttons button {
+    margin-top: 5px;
+}
+
+.progress-ring {
+  position: absolute;
+  margin: -60px 0px 0px -4px;
+  pointer-events: none;
+}
+
+.icons {
+  color:#2CAB6F;
+  min-width: 1.5em;
+  min-height: 1.5em;
+}
+
+.MuiDialogContent-root {
+  margin-bottom: 1em;
+}

@@ -31,7 +31,7 @@ it('makes the correct call to fetch translations', async () => {
 
   expect(fetchSpy).toHaveBeenCalledTimes(1);
   expect(fetchSpy).toHaveBeenCalledWith(ApiUtils.origin + ApiUtils.path +
-    "getEntireCollection?collectionName=translations&pageNum=1&pageSize=25&top500=1",
+    "getEntireCollection?collectionName=translations&pageNum=1&pageSize=25&state=incomplete&top500=1",
     expect.any(Object));
 });
 
