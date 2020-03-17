@@ -1,12 +1,15 @@
 @import "../style/dimensions";
 
-
-
 .flagged-reason {
   background-color: #fff2cc;
   display: flex;
   align-items: center;
   margin-bottom: 12px;
+
+  @media (max-width: $medium-width) {
+    margin-top: 0.75em;
+  }
+
 }
 
 .flagged-list-item .translation-list-item {
@@ -48,12 +51,11 @@
     grid-template-columns: 1fr;
   }
 
-
 }
 
 .flagged-translation {
-
   align-self: center;
+  margin-left: 0.75em;
 
   @media (max-width: $small-width) {
     grid-row: 2;
@@ -61,6 +63,7 @@
   }
 
   @media (max-width: $x-small-width) {
+    margin-left: 0em;
     grid-row: 2;
     margin-bottom: 0.5em;
   }
@@ -68,8 +71,8 @@
 }
 
 .flagged-transliteration {
-
   align-self: center;
+  margin-left: 0.75em;
 
   @media (max-width: $small-width) {
     grid-row: 2;
@@ -77,6 +80,7 @@
   }
 
   @media (max-width: $x-small-width) {
+    margin-left: 0em;
     grid-row: 3;
     grid-column: 1;
   }

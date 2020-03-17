@@ -1,7 +1,7 @@
 import React from 'react';
 import Chip from '@material-ui/core/Chip';
 import DoneIcon from '@material-ui/icons/Done';
-import './FilterChips.css';
+import './FilterChips.scss';
 
 class FilterChips extends React.Component {
   handleNeedsRecordingClick_(needsRecording) {

@@ -18,17 +18,26 @@ class FlaggedListItem extends ContributionListItem {
   }
 
   getFlaggedTypeStr_() {
-    if (this.state.types.length === 2) {
-      return "Marked as incorrect and offensive";
-    }
-    if (this.state.types.includes("IncorrectTranslation")) {
-      return "Marked as incorrect";
-    }
-    if (this.state.types.includes("OffensiveTranslation")) {
-      return "Marked as offensive";
+    if (this.state.types !== null && typeof this.state.types !== "undefined") {
+      if (this.state.types.length === 2) {
+        return "Marked as incorrect and offensive";
+      }
+      if (this.state.types.includes("IncorrectTranslation")) {
+        return "Marked as incorrect";
+      }
+      if (this.state.types.includes("OffensiveTranslation")) {
+        return "Marked as offensive";
+      }
     }
     // Shouldn't actually happen.
     return "Marked for unknown reason";
+  }
+
+  getFlaggedContent_() {
+    if(this.state.content !== null && typeof this.state.content !== 'undefined' && this.state.content.trim() !== "") {
+      return this.state.content
+    }
+    return "Unknown Reason";
   }
 
   renderBaseWord() {
@@ -64,17 +73,16 @@ class FlaggedListItem extends ContributionListItem {
     const emptyTransliteration = (
       <div className="empty-field">No existing transliteration</div>
     );
-
     return (
       <li className="flagged-list-item">
         <div className="flagged-reason">
           <WarningIcon className="warning-icon" />
-          {this.getFlaggedTypeStr_()}: "{this.state.content}"
+          {this.getFlaggedTypeStr_()}: "{this.getFlaggedContent_()}"
         </div>
         <div className="list-item-flagged-content">
           <div>{this.renderBaseWord()}</div>
           <div className="flagged-translation">
-            {this.state.curr_translation || emptyTranslation}{" "}
+            {this.state.curr_translation || emptyTranslation}
           </div>
           <div className="flagged-transliteration">
             {this.state.curr_transliteration || emptyTransliteration}

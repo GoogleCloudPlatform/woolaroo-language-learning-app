@@ -5,6 +5,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import "./NavMenu.scss";
 import { ROUTES } from "../App";
 import AuthUtils from "../utils/AuthUtils";
+import Badge from "@material-ui/core/Badge";
 
 import AddWordsPage from "../addWords/AddWordsPage";
 
@@ -28,7 +29,7 @@ class NavMenu extends React.Component {
 
   closeAddWord = () => {
     this.setState({ isAddWordOpen: false });
-  }
+  };
 
   onClick(route) {
     this.props.history.push(route);
@@ -36,6 +37,14 @@ class NavMenu extends React.Component {
     if (this.props.isMobileMenu) {
       this.props.closeSideMenu();
     }
+  }
+
+  getLabel = (label) => {
+    if(label === "User Contributions") {
+      //This displays the number of user contributions made
+      return <div> User Contributions <span className="user-contributions-number"> 2 </span></div>
+    }
+    return label;
   }
 
   renderMenuItem(label, route) {
@@ -63,7 +72,7 @@ class NavMenu extends React.Component {
         onClick={() => this.onClick(route)}
         className="nav-menu-item"
       >
-        {label}
+        {this.getLabel(label)}
       </MenuItem>
     );
   }
@@ -71,18 +80,18 @@ class NavMenu extends React.Component {
   render() {
     return (
       <div>
-        <AddWordsPage 
-        isOpen={this.state.isAddWordOpen}
-        onClose = {this.closeAddWord}
+        <AddWordsPage
+          isOpen={this.state.isAddWordOpen}
+          onClose={this.closeAddWord}
         />
         {AuthUtils.getUserType() === "admin" ? (
           <MenuList>
             {this.renderMenuItem("Add Word", ROUTES.ADD_WORDS)}
             {this.renderMenuItem(TRANSLATIONS_LABEL, ROUTES.TRANSLATIONS)}
             {this.renderMenuItem("User Contributions", ROUTES.CONTRIBUTIONS)}
+            {this.renderMenuItem("Theme Customization", ROUTES.THEME)}
             {this.renderMenuItem("Sharing Links", ROUTES.SHARING)}
             {this.renderMenuItem("User Management", ROUTES.MANAGEMENT)}
-            {this.renderMenuItem("Theme Customization", ROUTES.THEME)}
           </MenuList>
         ) : (
           <MenuList autoFocus={false}>
