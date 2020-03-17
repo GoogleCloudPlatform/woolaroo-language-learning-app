@@ -27,6 +27,32 @@
 
 }
 
+.add-word-audio-buttons {
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  
+  @media (max-width: $max-width) {
+    width: 100%;
+    grid-row: 2;
+    grid-column: 3;
+    justify-content: flex-end;
+  }
+  @media (max-width: $large-width) {
+    width: 100%;
+    grid-row: 2;
+    grid-column: 1 / end;
+    justify-content: flex-end;
+  }
+  @media (max-width: $small-width) {
+    //Must come down
+    justify-content: flex-start;
+    margin-top: 1em;
+    grid-column: 1 / span 3;
+    grid-row: auto;
+  }
+}
+
 button.recording, button.playing {
   border: solid 2px #2CAB6F;
 }

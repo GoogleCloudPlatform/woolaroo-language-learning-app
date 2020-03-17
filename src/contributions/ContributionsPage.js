@@ -4,6 +4,7 @@ import ContributionListItem from './ContributionListItem';
 import FlaggedListItem from './FlaggedListItem';
 import './ContributionsPage.scss';
 import '../common/filters/StateSelection.scss';
+import { LIST_ITEM_TITLE } from "../utils/TableUtils";
 
 const TAB_TO_ITEM = {
   'new': {listItemTag: ContributionListItem, collectionName: 'suggestions'},
@@ -16,10 +17,10 @@ class ContributionsPage extends ListPageBase {
     const initialTab = 'new';
     this.state = {
       ...this.state,
-      pageTitle: 'User Contributions',
+      pageTitle: LIST_ITEM_TITLE.CONTRIBUTIONS,
       tab: initialTab,
       listItemTag: TAB_TO_ITEM[initialTab].listItemTag,
-      collectionName: TAB_TO_ITEM[initialTab].collectionName,
+      collectionName: TAB_TO_ITEM[initialTab].collectionName
     };
   }
 

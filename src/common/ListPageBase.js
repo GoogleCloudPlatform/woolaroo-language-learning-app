@@ -174,8 +174,8 @@ class ListPageBase extends React.Component {
       </ul>
     );
   }
-
-  render() {
+  
+    render() {
     return (
       <div>
         <h1>{this.state.pageTitle}</h1>

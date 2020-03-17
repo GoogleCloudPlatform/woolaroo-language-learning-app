@@ -1,0 +1,63 @@
+@import "../style/dimensions";
+
+
+.translation-text {
+    min-width: 21em;
+    display: inline-grid;
+
+    @media (max-width: $large-width) {
+        min-width: 18em;
+    }
+
+    @media (max-width: $medium-width) {
+        min-width: 16em;
+        //padding-right: 10px !important;
+    }
+
+    @media (max-width: 700px) {
+        min-width: 125px;
+    }
+
+    @media (max-width: 600px) {
+        min-width: 75px;
+        max-width: 75px;
+        padding-right: 2.5em !important;
+    }
+
+    @media (max-width: $small-width) {
+        min-width: 100%;
+        grid-column: 1 / end;
+        padding: 0em;
+    }
+
+}
+
+//Grid Column and Grid row are referring to the parent Grid container - translation-list-item
+
+.add-word-english-translation {
+    display: inline-grid;
+    width: 100%;
+
+    @media (max-width: $large-width) {
+        grid-column: 2;
+    }
+
+    @media (max-width: $small-width) {
+        grid-column: 1 / end;
+    }
+    
+}
+
+.add-word-transliteration {
+    display: inline-grid;
+    width: 100%;
+
+    @media (max-width: $large-width) {
+        grid-column: 3 / end;
+    }
+
+    @media (max-width: $small-width) {
+        grid-column: 1 / end;
+    }
+    
+}

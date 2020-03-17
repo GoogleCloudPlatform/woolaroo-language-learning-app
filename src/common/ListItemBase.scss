@@ -5,21 +5,21 @@
   //justify-content: space-between;
   align-items: center;
   display: grid;
-  grid-template-columns: 200px 1fr 1fr 150px auto auto auto;
+  grid-template-columns: auto 1fr 1fr 150px auto auto auto;
 
   @media (max-width: $max-width) {
     //Must come down
-    grid-template-columns: 200px 1fr 1fr;
+    grid-template-columns: auto 1fr 1fr;
   }
 
   @media (max-width: $large-width) {
     //Stay at same level
-    grid-template-columns: 200px 1fr 1fr 150px auto auto auto;
+    grid-template-columns: auto 1fr 1fr 150px auto auto auto;
   }
 
   @media (max-width: $medium-width) {
     //Must come down
-    grid-template-columns: 1fr 1fr 1.5fr;
+    grid-template-columns: auto 1fr 1.5fr;
   }
 
   @media (max-width: $small-width) {

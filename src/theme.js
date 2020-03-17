@@ -50,6 +50,13 @@ const baseTheme = createMuiTheme({
       },
       outlinedSecondary: {
         fontFamily: "Product Sans Medium"
+      },
+      outlinedPrimary: {
+        color: "#2CAB6F",
+        border: "1px solid #2CAB6F",
+        '&:hover': {
+          border: "1px solid #2CAB6F"
+        }
       }
     },
     MuiInput: {
@@ -60,6 +67,12 @@ const baseTheme = createMuiTheme({
     MuiChip: {
       label: {
           fontFamily: "Product Sans Regular"
+      }
+    },
+    MuiAppBar: {
+      colorPrimary: {
+        color: "#000000",
+        backgroundColor: "#fff"
       }
     }
   }

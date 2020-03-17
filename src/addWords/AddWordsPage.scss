@@ -1,0 +1,234 @@
+@import "../style/dimensions";
+
+.add-word-list-item-header {
+  //display: flex;
+  //justify-content: space-between;
+  align-items: center;
+  display: grid;
+  grid-template-columns: auto 1fr 1fr 150px auto auto auto;
+
+  @media (max-width: $max-width) {
+    //Must come down
+    grid-template-columns: auto 1fr 1fr;
+  }
+
+  @media (max-width: $large-width) {
+    //Stay at same level
+    grid-template-columns: auto 1fr 1fr 150px auto auto auto;
+  }
+
+  @media (max-width: $medium-width) {
+    //Must come down
+    grid-template-columns: auto 1fr 1.5fr;
+  }
+
+  @media (max-width: $small-width) {
+    //Must come down
+    grid-template-columns: 1fr 1fr auto;
+  }
+
+}
+
+.list-first-header {
+  min-width: 21em;
+  display: inline-grid;
+  padding-left: 0.5em;
+
+  @media (max-width: $large-width) {
+    min-width: 18em;
+  }
+
+  @media (max-width: $medium-width) {
+    min-width: 16em;
+  }
+
+  @media (max-width: 700px) {
+    min-width: 125px;
+  }
+
+  @media (max-width: 600px) {
+    min-width: 75px;
+    max-width: 75px;
+    padding-right: 2.5em !important;
+  }
+
+  @media (max-width: $small-width) {
+    display: none;
+  }
+}
+
+.list-second-header {
+  display: inline-grid;
+  width: 100%;
+  padding-left: 2px;
+
+  @media (max-width: $large-width) {
+    grid-column: 2;
+  }
+
+  @media (max-width: 700px) {
+    padding-left: 18px;
+  }
+
+  @media (max-width: 600px) {
+    padding-left: 0px;
+  }
+
+  @media (max-width: $small-width) {
+    display: none;
+  }
+
+}
+
+.list-third-header {
+  display: flex;
+  width: 100%;
+  padding-left: 0.25em;
+  align-items: flex-end;
+
+  @media (max-width: $large-width) {
+    grid-column: 3 / end;
+  }
+
+  @media (max-width: 700px) {
+    padding-left: 1em;
+  }
+
+  @media (max-width: 600px) {
+    padding-left: 0px;
+  }
+
+  @media (max-width: $small-width) {
+    display: none;
+  }
+}
+
+.title-row {
+  position: relative;
+  margin-top: 1.5em;
+}
+
+.table-container {
+  margin-top: 2em;
+
+  @media (max-width: $medium-width) {
+    margin-top: 1em;
+  }
+
+  @media (max-width: $small-width) {
+    margin-top: 0em;
+  }
+
+}
+
+.save-all-button.MuiButton-contained {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.appbar-containers {
+  display: flex;
+  align-items: center;
+}
+
+.add-words-title-text {
+  margin-left: 1em !important;
+
+  @media (max-width: $small-width) {
+    margin-left: 0em !important;
+  }
+
+}
+
+.cancel-button {
+  margin-right: 1em !important;
+}
+
+.prompt-text {
+  opacity: 0.75;
+}
+
+.initial-prompt-text {
+  margin-top: 2em !important;
+}
+
+.bulk-upload {
+  margin-top: 1.5em !important;
+}
+
+.header-button-container {
+  margin-top: 2.5em;
+  display: flex;
+  flex-wrap: wrap;
+
+  @media (max-width: $small-width) {
+    display: grid;
+  }
+
+
+  .upload-button {
+    margin-right: 3em !important;
+
+    @media (max-width: $small-width) {
+      margin-right: 0em !important;
+    }
+  }
+
+  .add-from-drive {
+    @media (max-width: $small-width) {
+      margin-top: 1em !important;
+    }
+  }
+
+}
+
+.hr-divider {
+  margin-top: 2em;
+  line-height: 1em;
+  position: relative;
+  outline: 0;
+  border: 0;
+  color: black;
+  text-align: center;
+  height: 1.5em;
+  opacity: .5;
+
+  &:before {
+    content: '';
+    background: #818078;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 1px;
+  }
+
+  &:after {
+    content: attr(data-content);
+    position: relative;
+    display: inline-block;
+    color: black;
+    font-weight: bold;
+    padding: 0 .5em;
+    line-height: 1.5em;
+    background-color: #fcfcfa;
+  }
+}
+
+
+.MuiDialog-paperFullScreen {
+  padding: 0 100px 0 100px;
+
+  @media (max-width: $max-width) {
+    padding: 0 75px 0 75px;
+  }
+
+  @media (max-width: $large-width) {
+    padding: 0 50px 0 50px;
+  }
+
+  @media (max-width: $small-width) {
+    padding: 0 24px 0 24px;
+  }
+}
