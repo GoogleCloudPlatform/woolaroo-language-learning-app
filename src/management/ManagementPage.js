@@ -117,7 +117,7 @@ class ManagementPage extends React.Component {
             color='primary'
             onClick={this.openDialog_}
           >
-            Invite users
+            Invite Moderators
           </Button>
         </div>
         <br/>
@@ -150,7 +150,9 @@ class ManagementPage extends React.Component {
             </FormControl>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.closeDialog_}>
+            <Button 
+            color='primary'
+            onClick={this.closeDialog_}>
               Cancel
             </Button>
             {/* This UI is used for inviting users, so revoke=false and forceCreate=true */}

@@ -43,3 +43,15 @@
 .add-role-dialog-title.MuiDialogTitle-root {
     text-align: center;
 }
+
+.selected-row {
+    background-color: rgb(213, 238, 226);
+}
+
+.MuiCheckbox-colorSecondary.Mui-checked {
+    color: #2CAB6F !important;
+}
+
+.MuiRadio-colorSecondary.Mui-checked {
+    color: #2CAB6F !important;
+}
