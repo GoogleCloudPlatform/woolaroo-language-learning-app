@@ -366,7 +366,7 @@ class UserTableUpdated extends React.Component {
     ) : (
       <TableBody>
         {this.sortData(this.state.data).map(row => (
-          <TableRow key={row.uid}>
+          <TableRow key={row.uid} className={this.state.selected[row.uid] === true ? 'selected-row': ''}>
             <TableCell component="th" scope="row">
               <Checkbox
                 className="checkbox"
