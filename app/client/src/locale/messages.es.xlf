@@ -6,9 +6,7 @@
         <target>ltr</target>
       </trans-unit>
       <trans-unit id="introAbout" datatype="html">
-        <target>Woolaroo es un experimento de Google Arts &amp; Culture que utiliza tecnología de aprendizaje automático
-          para acercarnos a las lenguas indígenas de una forma novedosa e interactiva.
-        </target>
+        <target>Woolaroo es un experimento de Google Arts & Culture que utiliza tecnología de aprendizaje automático para acercarnos a las lenguas indígenas de una forma novedosa e interactiva.</target>
       </trans-unit>
       <trans-unit id="next" datatype="html">
         <target>Siguiente</target>
@@ -17,10 +15,7 @@
         <target>Saltar</target>
       </trans-unit>
       <trans-unit id="introFeedback" datatype="html">
-        <target>Woolaroo utiliza tecnología de aprendizaje automático avanzada para reconocer los objetos fotografiados
-          y los traduce en tiempo real. Es posible que no siempre dé en el clavo, por lo que agradecemos que nos envíes
-          tus comentarios.
-        </target>
+        <target>Woolaroo utiliza tecnología de aprendizaje automático avanzada para reconocer los objetos fotografiados y los traduce en tiempo real. Es posible que no siempre dé en el clavo, por lo que agradecemos que nos envíes tus comentarios.</target>
       </trans-unit>
       <trans-unit id="startExploring" datatype="html">
         <target>Empezar a probar</target>
@@ -70,8 +65,7 @@
         <target>ENVIAR</target>
       </trans-unit>
       <trans-unit id="feedbackInstructions" datatype="html">
-        <target>Envíanos tus comentarios sobre las traducciones del proyecto Woolaroo para ayudarnos a mejorarlas:
-        </target>
+        <target>Danos tu opinión y ayúdanos a mejorar las traducciones de Woolaroo</target>
       </trans-unit>
       <trans-unit id="incorrectTranslation" datatype="html">
         <target>Traducción incorrecta</target>
@@ -121,7 +115,16 @@
         <target>Debes incluir una palabra en inglés;</target>
       </trans-unit>
       <trans-unit id="englishWordHint" datatype="html">
-        <target>por ejemplo, &apos;hello&apos;</target>
+        <target>por ejemplo: &apos;hello&apos;</target>
+      </trans-unit>
+      <trans-unit id="wordInPrimaryLanguage" datatype="html">
+        <target>Es obligatorio indicar la palabra en español</target>
+      </trans-unit>
+      <trans-unit id="wordInPrimaryLanguageRequired" datatype="html">
+        <target>Es obligatorio indicar la palabra en español</target>
+      </trans-unit>
+      <trans-unit id="wordInPrimaryLanguageHint" datatype="html">
+        <target>por ejemplo: &apos;hola&apos;</target>
       </trans-unit>
       <trans-unit id="transliteration" datatype="html">
         <target>Transliteración (opcional)</target>
@@ -147,31 +150,22 @@
         <target>Información</target>
       </trans-unit>
       <trans-unit id="aboutContent1" datatype="html">
-        <target>Woolaroo es un experimento de código abierto de Google Arts &amp; Culture que utiliza la cámara de tu
-          teléfono para identificar objetos y traducirlos instantáneamente a la palabra correspondiente en una lengua
-          indígena.
-        </target>
+        <target>Woolaroo es un experimento de código abierto de Google Arts & Culture que utiliza la cámara de tu teléfono para identificar objetos y traducirlos instantáneamente a la palabra correspondiente en una lengua indígena.</target>
       </trans-unit>
       <trans-unit id="aboutContent2" datatype="html">
-        <target>Es muy fácil de usar: solo tienes que hacer una foto de un objeto (o subir una que ya tengas) y verás su
-          traducción en tiempo real. Puedes guardar la imagen traducida, compartirla o traducir otro objeto.
-        </target>
+        <target>Es muy fácil de usar: solo tienes que hacer una foto de un objeto (o subir una que ya tengas) y verás su traducción en tiempo real. Puedes guardar la imagen traducida, compartirla o traducir otro objeto.</target>
       </trans-unit>
       <trans-unit id="technologyTitle" datatype="html">
         <target>Información sobre la tecnología</target>
       </trans-unit>
       <trans-unit id="technologyContent1" datatype="html">
-        <target>Woolaroo, que cuenta con la tecnología del Traductor de Google y de Cloud Vision, utiliza el aprendizaje
-          automático avanzado para reconocer los objetos fotografiados y los traduce en tiempo real.
-        </target>
+        <target>Woolaroo, que cuenta con la tecnología del Traductor de Google y de Cloud Vision, utiliza el aprendizaje automático avanzado para reconocer los objetos fotografiados y los traduce en tiempo real.</target>
       </trans-unit>
       <trans-unit id="technologyContent2" datatype="html">
-        <target>Se proporciona la traducción que se estima más adecuada según el objeto principal que aparece en la
-          imagen. Si se detectan varios objetos, puedes ver la traducción de todos y elegir la correcta en cada caso.
-        </target>
+        <target>Se proporciona la traducción que se estima más adecuada según el objeto principal que aparece en la imagen. Si se detectan varios objetos, puedes ver la traducción de todos y elegir la correcta en cada caso.</target>
       </trans-unit>
       <trans-unit id="technologyContent3" datatype="html">
-        <target>Aunque el Woolaroo dispone de la tecnología de inteligencia artificial más puntera, es posible
+        <target>Woolaroo se basa en la tecnología de inteligencia artificial más puntera, es posible
           que no siempre acierte. Por eso, seguimos esforzándonos al máximo para mejorarlo. Si quieres aportar tu
           granito de arena, puedes usar la función para enviar comentarios cuando encuentres una traducción que no sea
           correcta.
