@@ -315,13 +315,13 @@
           <context context-type="sourcefile">src/components/add-word-fieldset/add-word-fieldset.html</context>
           <context context-type="linenumber">18</context>
         </context-group>
-      </trans-unit><trans-unit id="wordRequired" datatype="html">
+      </trans-unit><trans-unit id="wordInPrimaryLanguageRequired" datatype="html">
         <source>English word is required</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/add-word-fieldset/add-word-fieldset.html</context>
           <context context-type="linenumber">21</context>
         </context-group>
-      </trans-unit><trans-unit id="wordHint" datatype="html">
+      </trans-unit><trans-unit id="wordInPrimaryLanguageHint" datatype="html">
         <source>e.g. &apos;hello&apos;</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/add-word-fieldset/add-word-fieldset.html</context>
@@ -358,6 +358,13 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/components/add-word-fieldset/add-word-fieldset.html</context>
           <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dir" datatype="html">
+        <source>ltr</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.ts</context>
+          <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="wordSubmitted" datatype="html">

@@ -164,10 +164,10 @@
       <trans-unit id="wordInPrimaryLanguage" datatype="html">
         <target>Word in English</target>
       </trans-unit>
-      <trans-unit id="wordRequired" datatype="html">
+      <trans-unit id="wordInPrimaryLanguageRequired" datatype="html">
         <target>English word is required</target>
       </trans-unit>
-      <trans-unit id="wordHint" datatype="html">
+      <trans-unit id="wordInPrimaryLanguageHint" datatype="html">
         <target>e.g. &apos;hello&apos;</target>
       </trans-unit>
       <trans-unit id="transliteration" datatype="html">

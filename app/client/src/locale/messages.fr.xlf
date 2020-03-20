@@ -6,9 +6,7 @@
         <target>ltr</target>
       </trans-unit>
       <trans-unit id="introAbout" datatype="html">
-        <target>Woolaroo est une expérience de Google Arts &amp; Culture basée sur le machine learning, qui offre un
-          accès novateur et interactif aux langues indigènes.
-        </target>
+        <target>Woolaroo est une expérience de Google Arts & Culture basée sur le machine learning, qui offre un accès novateur et interactif aux langues indigènes.</target>
       </trans-unit>
       <trans-unit id="next" datatype="html">
         <target>Suivant</target>
@@ -17,10 +15,7 @@
         <target>Ignorer</target>
       </trans-unit>
       <trans-unit id="introFeedback" datatype="html">
-        <target>Woolaroo utilise un système de machine learning avancé pour identifier les objets photographiés et les
-          traduire en temps réel. L'application peut parfois se tromper, et vous pouvez nous aider à l'améliorer en nous
-          faisant part de vos commentaires.
-        </target>
+        <target>Woolaroo utilise un système de machine learning avancé pour identifier les objets photographiés et les traduire en temps réel. L'application peut parfois se tromper, et vous pouvez nous aider à l'améliorer en nous faisant part de vos commentaires.</target>
       </trans-unit>
       <trans-unit id="startExploring" datatype="html">
         <target>Lancer l&apos;application</target>
@@ -71,9 +66,7 @@
         <target>ENVOYER</target>
       </trans-unit>
       <trans-unit id="feedbackInstructions" datatype="html">
-        <target>N'hésitez pas à nous faire part de vos commentaires pour nous aider à améliorer les traductions
-          proposées par Woolaroo:
-        </target>
+        <target>Envoyez-nous vos commentaires pour nous aider à améliorer les traductions de Woolaroo.</target>
       </trans-unit>
       <trans-unit id="incorrectTranslation" datatype="html">
         <target>Traduction incorrecte</target>
@@ -91,7 +84,7 @@
         <target>Aucun type de commentaire sélectionné</target>
       </trans-unit>
       <trans-unit id="enterFeedback" datatype="html">
-        <target>Saisir un commentaire</target>
+        <target>Écrivez vos commentaires</target>
       </trans-unit>
       <trans-unit id="feedbackRequired" datatype="html">
         <target>Commentaire obligatoire</target>
@@ -126,6 +119,15 @@
       <trans-unit id="englishWordHint" datatype="html">
         <target>(par exemple : &apos;hello&apos;)</target>
       </trans-unit>
+      <trans-unit id="wordInPrimaryLanguage" datatype="html">
+        <target>Mot en français</target>
+      </trans-unit>
+      <trans-unit id="wordInPrimaryLanguageRequired" datatype="html">
+        <target>Vous devez saisir le mot en français.</target>
+      </trans-unit>
+      <trans-unit id="wordInPrimaryLanguageHint" datatype="html">
+        <target>(par exemple : &apos;bonjour&apos;)</target>
+      </trans-unit>
       <trans-unit id="transliteration" datatype="html">
         <target>Translittération (facultatif)</target>
       </trans-unit>
@@ -150,15 +152,10 @@
         <target>À propos</target>
       </trans-unit>
       <trans-unit id="aboutContent1" datatype="html">
-        <target>Woolaroo is an open source Google Arts &amp; Culture Experiment that uses your phone’s camera to instantly
-          translate objects into indigenous languages.
-        </target>
+        <target>Woolaroo est une expérience en Open Source de Google Arts & Culture qui utilise l'appareil photo de votre téléphone pour traduire instantanément les textes écrits dans une langue indigène.</target>
       </trans-unit>
       <trans-unit id="aboutContent2" datatype="html">
-        <target>C'est très simple : il vous suffit de prendre une photo ou d'importer une photo existante contenant du
-          texte pour obtenir immédiatement sa traduction. Vous pouvez enregistrer l'image traduite, la partager ou
-          recommencer avec une autre image.
-        </target>
+        <target>C'est très simple : il vous suffit de prendre une photo ou d'importer une photo existante contenant du texte pour obtenir immédiatement sa traduction. Vous pouvez enregistrer l'image traduite, la partager ou recommencer avec une autre image.</target>
       </trans-unit>
       <trans-unit id="technologyTitle" datatype="html">
         <target>La technologie</target>

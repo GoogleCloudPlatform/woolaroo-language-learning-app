@@ -6,10 +6,7 @@
         <target>ltr</target>
       </trans-unit>
       <trans-unit id="introAbout" datatype="html">
-        <target>O Woolaroo é um experimento do Google Arts &amp; Culture que usa o aprendizado de máquina para oferecer
-          uma
-          maneira nova e interativa de conhecer idiomas indígenas.
-        </target>
+        <target>O Woolaroo é um experimento do Google Arts & Culture que usa o aprendizado de máquina para oferecer uma maneira nova e interativa de conhecer idiomas indígenas.</target>
       </trans-unit>
       <trans-unit id="next" datatype="html">
         <target>Próxima</target>
@@ -18,10 +15,7 @@
         <target>Pular</target>
       </trans-unit>
       <trans-unit id="introFeedback" datatype="html">
-        <target>O Woolaroo usa aprendizado de máquina avançado para entender o que são os objetos nas fotos e traduzir o
-          nome deles em tempo real. Ele nem sempre acerta e, por isso, você pode enviar feedback para melhorar a
-          ferramenta.
-        </target>
+        <target>O Woolaroo usa aprendizado de máquina avançado para entender o que são os objetos nas fotos e traduzir o nome deles em tempo real. Ele nem sempre acerta e, por isso, você pode enviar feedback para melhorar a ferramenta.</target>
       </trans-unit>
       <trans-unit id="startExploring" datatype="html">
         <target>Comece a explorar</target>
@@ -72,7 +66,7 @@
         <target>ENVIAR</target>
       </trans-unit>
       <trans-unit id="feedbackInstructions" datatype="html">
-        <target>Ajude a melhorar as traduções do Woolaroo:</target>
+        <target>Envie seu feedback e nos ajude a melhorar as traduções do Woolaroo.</target>
       </trans-unit>
       <trans-unit id="incorrectTranslation" datatype="html">
         <target>Tradução incorreta</target>
@@ -90,7 +84,7 @@
         <target>Nenhum tipo de feedback selecionado</target>
       </trans-unit>
       <trans-unit id="enterFeedback" datatype="html">
-        <target>Digite o feedback</target>
+        <target>Insira seu feedback</target>
       </trans-unit>
       <trans-unit id="feedbackRequired" datatype="html">
         <target>Feedback obrigatório</target>
@@ -125,6 +119,15 @@
       <trans-unit id="englishWordHint" datatype="html">
         <target>Por exemplo, &apos;hello&apos;</target>
       </trans-unit>
+      <trans-unit id="wordInPrimaryLanguage" datatype="html">
+        <target>Palavra em português</target>
+      </trans-unit>
+      <trans-unit id="wordInPrimaryLanguageRequired" datatype="html">
+        <target>A palavra em português é obrigatória.</target>
+      </trans-unit>
+      <trans-unit id="wordInPrimaryLanguageHint" datatype="html">
+        <target>Por exemplo: &apos;olá&apos;</target>
+      </trans-unit>
       <trans-unit id="transliteration" datatype="html">
         <target>Transliteração (opcional)</target>
       </trans-unit>
@@ -148,14 +151,10 @@
         <target>Sobre</target>
       </trans-unit>
       <trans-unit id="aboutContent1" datatype="html">
-        <target>O Woolaroo é um experimento de código aberto do Google Arts & Culture que usa a câmera do seu smartphone
-          para traduzir instantaneamente os nomes de objetos para idiomas indígenas.
-        </target>
+        <target>O Woolaroo é um experimento de código aberto do Google Arts & Culture que usa a câmera do seu smartphone para traduzir instantaneamente os nomes de objetos para idiomas indígenas.</target>
       </trans-unit>
       <trans-unit id="aboutContent2" datatype="html">
-        <target>É fácil usar o Woolaroo: basta tirar a foto de um objeto ou fazer o upload de uma imagem para ver a
-          tradução do nome dele em tempo real. Você pode salvar e compartilhar o resultado ou solicitar outra tradução.
-        </target>
+        <target>É fácil usar o Woolaroo: basta tirar a foto de um objeto ou fazer o upload de uma imagem para ver a tradução do nome dele em tempo real. Você pode salvar e compartilhar o resultado ou solicitar outra tradução.</target>
       </trans-unit>
       <trans-unit id="technologyTitle" datatype="html">
         <target>A tecnologia</target>

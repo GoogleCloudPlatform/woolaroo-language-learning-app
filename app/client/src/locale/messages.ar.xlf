@@ -6,16 +6,16 @@
         <target>rtl</target>
       </trans-unit>
       <trans-unit id="introAbout" datatype="html">
-        <target>Woolaroo هو تطبيق ناشئ عن تجربة من "Google للفنون والثقافة"، يستند إلى تعلُّم الآلة لتوفير طريقة تفاعلية جديدة تتيح الوصول إلى لغات الشعوب </target>
+        <target>Woolaroo هو تطبيق ناشئ عن تجربة من "Google للفنون والثقافة"، يستند إلى تعلُّم الآلة لتوفير طريقة تفاعلية جديدة تتيح الوصول إلى لغات الشعوب الأصلية.</target>
       </trans-unit>
       <trans-unit id="next" datatype="html">
         <target>التالي</target>
       </trans-unit>
       <trans-unit id="skip" datatype="html">
-        <target>تخطّي</target>
+        <target>التخطّي</target>
       </trans-unit>
       <trans-unit id="introFeedback" datatype="html">
-        <target>يستخدم تطبيق Woolaroo مستوى متقدمًا من تعلُّم الآلة للتعرّف على عناصر صورك وترجمتها في الوقت الفعلي. قد يخطئ النظام أحيانًا، لذا يُرجى مساعدتنا في تحسينه من خلال إطلاعنا على تعليقاتك.</target>
+        <target>يستخدم تطبيق Woolaroo مستوًى متقدمًا من تعلُّم الآلة للتعرّف على عناصر صورك وترجمتها في الوقت الفعلي. قد يخطئ النظام أحيانًا، لذا يُرجى مساعدتنا في تحسينه من خلال اطلاعنا على تعليقاتك.</target>
       </trans-unit>
       <trans-unit id="startExploring" datatype="html">
         <target>بدء الاستكشاف</target>
@@ -24,19 +24,22 @@
         <target>الأحكام والخصوصية</target>
       </trans-unit>
       <trans-unit id="introTermsAndPrivacy" datatype="html">
-        <target>يشير استخدام تطبيق Woolaroo إلى موافقتك على الأحكام والشروط وسياسة الخصوصية.</target>
+        <target><x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>سياسة الخصوصية<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>
+          و
+          <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>الأحكام والشروط<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>
+          من خلال استخدام Woolaroo، أنت توافق على </target>
       </trans-unit>
       <trans-unit id="accept" datatype="html">
-        <target>الموافقة</target>
+        <target>قبول</target>
       </trans-unit>
       <trans-unit id="photoSource" datatype="html">
         <target>يمكنك استخدام صورة من هاتفك أو التقاط صورة لعنصر من حولك.</target>
       </trans-unit>
       <trans-unit id="pickPhoto" datatype="html">
-        <target>التقاط صورة</target>
+        <target>اختيار صورة</target>
       </trans-unit>
       <trans-unit id="takePhoto" datatype="html">
-        <target>اختيار صورة</target>
+        <target>التقاط صورة</target>
       </trans-unit>
       <trans-unit id="errorTitle" datatype="html">
         <target>خطأ</target>
@@ -60,7 +63,7 @@
         <target>إرسال</target>
       </trans-unit>
       <trans-unit id="feedbackInstructions" datatype="html">
-        <target>يُرجى مساعدتنا في تحسين الترجمة في تطبيق Woolaroo من خلال إرسال التعليقات إلينا:</target>
+        <target>يمكنك مساعدتنا في تحسين ترجمات Woolaroo من خلال اطلاعنا على تعليقاتك.:</target>
       </trans-unit>
       <trans-unit id="incorrectTranslation" datatype="html">
         <target>ترجمة غير صحيحة</target>
@@ -110,6 +113,15 @@
       <trans-unit id="englishWordHint" datatype="html">
         <target>مثلاً، hello</target>
       </trans-unit>
+      <trans-unit id="wordInPrimaryLanguage" datatype="html">
+        <target>الكلمة بالعربية</target>
+      </trans-unit>
+      <trans-unit id="wordInPrimaryLanguageRequired" datatype="html">
+        <target>يجب إضافة الكلمة باللغة العربية</target>
+      </trans-unit>
+      <trans-unit id="wordInPrimaryLanguageHint" datatype="html">
+        <target>مثلاً، "مرحبًا"</target>
+      </trans-unit>
       <trans-unit id="transliteration" datatype="html">
         <target>التحويل الصوتي (اختياري)</target>
       </trans-unit>
@@ -129,7 +141,7 @@
         <target>لمحة</target>
       </trans-unit>
       <trans-unit id="aboutContent1" datatype="html">
-        <target>Woolaroo هو تطبيق ناشئ عن تجربة ومفتوح المصدر من "Google للفنون والثقافة"، يستخدم كاميرا هاتفك لترجمة العناصر إلى لغات الشعوب أصلية بشكل فوري.</target>
+        <target>Woolaroo هو تطبيق ناشئ عن تجربة ومفتوح المصدر من "Google للفنون والثقافة"، يستخدم كاميرا هاتفك لترجمة العناصر إلى لغات الشعوب الأصلية بشكل فوري.</target>
       </trans-unit>
       <trans-unit id="aboutContent2" datatype="html">
         <target>يسهل استخدام هذا التطبيق، فما عليك سوى التقاط صورة لعنصر معيّن أو تحميل صورة موجودة على هاتفك، وسيترجم التطبيق محتواها في الوقت الفعلي. يمكنك حفظ الصورة المترجَمة أو مشاركتها أو تحميل صورة أخرى.</target>
@@ -138,13 +150,13 @@
         <target>التكنولوجيا</target>
       </trans-unit>
       <trans-unit id="technologyContent1" datatype="html">
-        <target>تم إنشاء تطبيق Woolaroo باستخدام "ترجمة Google" وتقنية Cloud Vision، إضافةً إلى تقنية متقدمة لتعلُّم الآلة تتيح التعرّف على عناصر الصورة وترجمتها في الوقت الفعلي.</target>
+        <target>تم إنشاء تطبيق Woolaroo باستخدام "ترجمة Google" وتقنية Cloud Vision، إضافةً إلى تقنية متقدمة لتعلُّم الآلة تتيح التعرّف على عناصر الصورة وترجمتها في الوقت الفعلي.</target>
       </trans-unit>
       <trans-unit id="technologyContent2" datatype="html">
         <target>تستند الترجمة التي تظهر على الشاشة إلى العنصر الرئيسي في الصورة. وفي حال العثور على عناصر متعددة، يمكنك التنقّل بينها واختيار الترجمة الصحيحة.</target>
       </trans-unit>
       <trans-unit id="technologyContent3" datatype="html">
-        <target>يعتمد تطبيق Woolaroo على أحدث تكنولوجيا الذكاء الاصطناعي، وبالتالي يمكن أن يخطئ أحيانًا، لكننا نعمل بجد على تحسينه. يمكنك مساعدتنا باستخدام ميزة "تعليقات بشأن الترجمة" لتسجيل أيّ ترجمات لا تبدو صحيحة. </target>
+        <target>يعتمد تطبيق Woolaroo على أحدث تكنولوجيا الذكاء الاصطناعي، وبالتالي يمكن أن يخطئ أحيانًا، لكننا نعمل بجد على تحسينه. يمكنك مساعدتنا باستخدام ميزة "تعليقات بشأن الترجمة" لتسجيل أيّ ترجمات لا تبدو صحيحة.</target>
       </trans-unit>
       <trans-unit id="logo" datatype="html">
         <target>Woolaroo</target>
