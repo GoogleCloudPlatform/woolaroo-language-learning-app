@@ -29,6 +29,17 @@ export class APITranslationService implements ITranslationService {
     return words.every(w => !!translations.find(tr =>  tr.original === w));
   }
 
+  private static formatSoundURL(url:string|null):string|null {
+    if(!url) {
+      return url;
+    }
+    if(url.indexOf('?') >= 0) {
+      return `${url}&ngsw-bypass`;
+    } else {
+      return `${url}?ngsw-bypass`;
+    }
+  }
+
   public async translate(englishWords: string[], maxTranslations: number = 0): Promise<WordTranslation[]> {
     const lowercaseWords = englishWords.map((w) => w.toLowerCase());
     if (this.lastTranslations && APITranslationService.wordTranslationsAreEqual(lowercaseWords, this.lastTranslations)) {
@@ -41,7 +52,7 @@ export class APITranslationService implements ITranslationService {
       original: tr.primary_word,
       translation: tr.translation,
       transliteration: tr.transliteration,
-      soundURL: tr.sound_link
+      soundURL: APITranslationService.formatSoundURL(tr.sound_link)
     }));
     // add any missing translations
     lowercaseWords.forEach((w) => {
