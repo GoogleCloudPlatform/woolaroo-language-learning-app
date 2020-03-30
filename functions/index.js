@@ -101,25 +101,25 @@ exports.approveSuggestions = functions.https.onRequest(async (req, res) => {
       return;
     }
     const suggestion = {
-      english_word: req.body.english_word || '',
-      primary_word: req.body.primary_word || '',
-      translation: req.body.translation || '',
-      transliteration: req.body.transliteration || '',
+      english_word: req.body.english_word.trim() || '',
+      primary_word: req.body.primary_word.trim() || '',
+      translation: req.body.translation.trim() || '',
+      transliteration: req.body.transliteration.trim() || '',
       sound_link: req.body.sound_link || '',
       frequency: Number(req.body.frequency) || 11,
       timestamp: admin.firestore.FieldValue.serverTimestamp()
     }
     const doc_suggestion = admin.firestore().collection('translations')
         .doc(req.body.english_word)
-    const doc = admin.firestore().collection('suggestions')
-      .doc(req.body.english_word);
+    const doc = admin.firestore().collection('feedback')
+      .doc(req.body.id);
     try {
       await doc_suggestion.set(suggestion);
       await doc.delete();
       console.log("saved in translations and deleted from suggestions.");
       res.status(200).send(JSON.stringify("Row deleted."));
     } catch(err) {
-      console.log("Error saving in translations and deleted from suggestions.:", err);
+      console.log("Error saving in translations and deleted from suggestions.", err);
     }
   });
 });
@@ -128,10 +128,10 @@ exports.approveSuggestions = functions.https.onRequest(async (req, res) => {
 exports.addTranslations = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
     var snapshot = await admin.firestore().collection('translations').doc(req.body.english_word).set({
-      english_word: req.body.english_word || '',
-      primary_word: req.body.primary_word || '',
-      translation: req.body.translation || '',
-      transliteration: req.body.transliteration || '',
+      english_word: req.body.english_word.trim() || '',
+      primary_word: req.body.primary_word.trim() || '',
+      translation: req.body.translation.trim() || '',
+      transliteration: req.body.transliteration.trim() || '',
       sound_link: req.body.sound_link || '',
       frequency: Number(req.body.frequency) || 11,
       timestamp: admin.firestore.FieldValue.serverTimestamp(),
