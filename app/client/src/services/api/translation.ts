@@ -29,6 +29,17 @@ export class APITranslationService implements ITranslationService {
     return words.every(w => !!translations.find(tr =>  tr.original === w));
   }
 
+  private static formatSoundURL(url:string|null):string|null {
+    if(!url) {
+      return url;
+    }
+    if(url.indexOf('?') >= 0) {
+      return `${url}&ngsw-bypass`;
+    } else {
+      return `${url}?ngsw-bypass`;
+    }
+  }
+
   public async translate(englishWords: string[], maxTranslations: number = 0): Promise<WordTranslation[]> {
     const lowercaseWords = englishWords.map((w) => w.toLowerCase());
     if (this.lastTranslations && APITranslationService.wordTranslationsAreEqual(lowercaseWords, this.lastTranslations)) {
@@ -36,18 +47,21 @@ export class APITranslationService implements ITranslationService {
       return Promise.resolve(this.lastTranslations);
     }
     const response = await this.http.post<TranslationResponse[]>(this.config.endpointURL, { english_words: lowercaseWords }).toPromise();
-    const translations = response.map(tr => ({
+    let translations = response.map(tr => ({
       english: tr.english_word,
       original: tr.primary_word,
       translation: tr.translation,
       transliteration: tr.transliteration,
-      soundURL: tr.sound_link
+      soundURL: APITranslationService.formatSoundURL(tr.sound_link)
     }));
+    // add any missing translations
     lowercaseWords.forEach((w) => {
       if (!translations.find((tr) => tr.english === w)) {
         translations.push({ original: '', english: w, translation: '', transliteration: '', soundURL: '' });
       }
     });
+    // filter out empty translations
+    translations = translations.filter(tr => tr.english);
     // cache results
     this.lastTranslations = translations;
     return translations;

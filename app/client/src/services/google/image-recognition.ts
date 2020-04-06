@@ -24,6 +24,7 @@ export interface GoogleImageRecognitionConfigBase {
   maxFileSize: number;
   validImageFormats: string[];
   resizedImageDimension: number;
+  resizedImageQuality: number;
   maxResults: number;
   singleWordDescriptionsOnly: boolean;
   maxSafeSearchLikelihoods: {[index: string]: SafeSearchLikelihood};
@@ -86,7 +87,9 @@ export class GoogleImageRecognitionServiceBase implements IImageRecognitionServi
     }
     if (imageData.size > this.baseConfig.maxFileSize) {
       console.log('Image file size is too large - resizing: ' + imageData.size);
-      imageData = await resizeImage(imageData, this.baseConfig.resizedImageDimension, this.baseConfig.resizedImageDimension);
+      imageData = await resizeImage(imageData, this.baseConfig.resizedImageDimension,
+        this.baseConfig.resizedImageDimension, this.baseConfig.resizedImageQuality);
+      console.log('New image size: ' + imageData.size);
     }
     return new Promise<ImageDescription[]>((resolve, reject) => {
       const reader = new FileReader();

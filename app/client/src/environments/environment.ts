@@ -58,7 +58,8 @@ export const environment = {
         snapMinSpeed: 0.01,
         snapDecelerationDistance: 200,
         snapStickyDistance: 30,
-        targetPositionRatio: 0.2
+        targetPositionRatio: 0.2,
+        draggingMinDistance: 5
       },
       selectionLine: {
         animationInterval: 25,
@@ -75,9 +76,10 @@ export const environment = {
       type: APIImageRecognitionService,
       config: {
         endpointURL: `${baseEndpointUrl}/visionAPI`,
-        maxFileSize: 50 * 1024,
+        maxFileSize: 15 * 1024,
         validImageFormats: [ 'image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/bmp', 'image/webp' ],
-        resizedImageDimension: 500,
+        resizedImageDimension: 300,
+        resizedImageQuality: 0.6,
         maxResults: 10,
         retryCount: 3,
         singleWordDescriptionsOnly: true,
