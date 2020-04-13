@@ -23,6 +23,7 @@ barnard-project.json
 .env.test.local
 .env.production.local
 *.swp
+/.idea
 
 npm-debug.log*
 yarn-debug.log*
