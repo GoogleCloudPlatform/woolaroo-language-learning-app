@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
 import { IImageRecognitionService, IMAGE_RECOGNITION_SERVICE } from 'services/image-recognition';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';

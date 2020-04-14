@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatInputModule } from '@angular/material';
+import { MatInputModule } from '@angular/material/input';
 import { IconComponentModule } from 'components/icon/icon.module';
 import { TranslationSelectorComponent } from './translation-selector';
 import { SelectionLineComponent, SELECTION_LINE_CONFIG } from './selection-line';

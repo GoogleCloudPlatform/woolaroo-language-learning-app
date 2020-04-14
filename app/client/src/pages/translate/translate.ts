@@ -1,7 +1,7 @@
 import { OnInit, Component, Inject, NgZone, OnDestroy, InjectionToken } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { WordTranslation } from 'services/entities/translation';
 import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
 import { ITranslationService, TRANSLATION_SERVICE } from 'services/translation';

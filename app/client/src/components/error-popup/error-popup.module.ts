@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { MatDialogModule, MatButtonModule } from "@angular/material";
+import { MatButtonModule } from "@angular/material/button";
+import { MatDialogModule } from "@angular/material/dialog";
 import { ErrorPopUpComponent } from './error-popup';
 
 @NgModule({

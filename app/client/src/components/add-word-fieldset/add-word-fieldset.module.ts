@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { ErrorStateMatcher, MatInputModule, ShowOnDirtyErrorStateMatcher } from '@angular/material';
+import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroupDirective, FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { IconComponentModule } from 'components/icon/icon.module';

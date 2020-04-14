@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
 import { PaginationIndicatorModule } from 'components/pagination-indicator/pagination-indicator.module';
 import { IntroAboutPageComponent } from './about/about';
 import { IntroFeedbackPageComponent } from './feedback/feedback';

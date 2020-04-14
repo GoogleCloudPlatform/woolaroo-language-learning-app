@@ -1,4 +1,4 @@
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 
 export function addOpenedListener(dialog: MatDialogRef<any>, listener: () => void) {
   let opened = false;

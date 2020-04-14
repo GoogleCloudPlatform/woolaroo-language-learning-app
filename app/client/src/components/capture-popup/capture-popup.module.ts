@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material/dialog';
 import { CapturePopUpComponent } from './capture-popup';
 import { BusySpinnerModule } from 'components/busy-spinner/busy-spinner.module';
 
