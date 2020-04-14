@@ -11,6 +11,53 @@ export const environment = {
   assets: {
     baseUrl: params.assetsBaseUrl,
   },
+  i18n: {
+    defaultLanguage: 'en',
+    languages: [
+      {
+        code: 'en',
+        name: 'English',
+        file: params.assetsBaseUrl + 'assets/locale/en.json',
+        direction: 'ltr'
+      },
+      {
+        code: 'fr',
+        name: 'Français',
+        file: params.assetsBaseUrl + 'assets/locale/fr.json',
+        direction: 'ltr'
+      },
+      {
+        code: 'es',
+        name: 'Español',
+        file: params.assetsBaseUrl + 'assets/locale/es.json',
+        direction: 'ltr'
+      },
+      {
+        code: 'hi',
+        name: 'हिन्दी',
+        file: params.assetsBaseUrl + 'assets/locale/hi.json',
+        direction: 'ltr'
+      },
+      {
+        code: 'ar',
+        name: 'اَلْعَرَبِيَّةُ',
+        file: params.assetsBaseUrl + 'assets/locale/ar.json',
+        direction: 'rtl'
+      },
+      {
+        code: 'it',
+        name: 'Italiano',
+        file: params.assetsBaseUrl + 'assets/locale/it.json',
+        direction: 'ltr'
+      },
+      {
+        code: 'pt',
+        name: 'Português',
+        file: params.assetsBaseUrl + 'assets/locale/pt.json',
+        direction: 'ltr'
+      }
+    ]
+  },
   endangeredLanguage: params.endangeredLanguage,
   pages: {
     splash: {

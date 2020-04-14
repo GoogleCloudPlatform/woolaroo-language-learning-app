@@ -14,4 +14,4 @@ import { I18nService } from './i18n.service';
     TranslatePipe
   ]
 })
-export class i18nModule {}
+export class I18nModule {}

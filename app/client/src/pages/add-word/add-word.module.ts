@@ -11,6 +11,7 @@ import { LoadingPopUpModule } from 'components/loading-popup/loading-popup.modul
 import { IconComponentModule } from 'components/icon/icon.module';
 import { AddWordFieldsetModule } from 'components/add-word-fieldset/add-word-fieldset.module';
 import { AddWordPageComponent } from './add-word';
+import { I18nModule } from 'i18n/i18n.module';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { AddWordPageComponent } from './add-word';
     ReactiveFormsModule,
     LoadingPopUpModule,
     IconComponentModule,
-    AddWordFieldsetModule
+    AddWordFieldsetModule,
+    I18nModule
   ]
 })
 export class AddWordPageModule {}

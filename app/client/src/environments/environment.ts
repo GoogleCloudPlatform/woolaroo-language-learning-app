@@ -19,43 +19,43 @@ export const environment = {
       {
         code: 'en',
         name: 'English',
-        file: '/assets/locale/en.json',
+        file: './assets/locale/en.json',
         direction: 'ltr'
       },
       {
         code: 'fr',
         name: 'Français',
-        file: '/assets/locale/fr.json',
+        file: './assets/locale/fr.json',
         direction: 'ltr'
       },
       {
         code: 'es',
         name: 'Español',
-        file: '/assets/locale/es.json',
+        file: './assets/locale/es.json',
         direction: 'ltr'
       },
       {
         code: 'hi',
         name: 'हिन्दी',
-        file: '/assets/locale/hi.json',
+        file: './assets/locale/hi.json',
         direction: 'ltr'
       },
       {
         code: 'ar',
         name: 'اَلْعَرَبِيَّةُ',
-        file: '/assets/locale/ar.json',
+        file: './assets/locale/ar.json',
         direction: 'rtl'
       },
       {
         code: 'it',
         name: 'Italiano',
-        file: '/assets/locale/it.json',
+        file: './assets/locale/it.json',
         direction: 'ltr'
       },
       {
         code: 'pt',
         name: 'Português',
-        file: '/assets/locale/pt.json',
+        file: './assets/locale/pt.json',
         direction: 'ltr'
       }
     ]
@@ -74,7 +74,7 @@ export const environment = {
       debugWords: ['technology', 'garbage', 'book']
     },
     termsAndPrivacy: {
-      enabled: false,
+      enabled: true,
       content: '<b>Terms and Privacy content</b><br /><a href="#">Here\'s a link</a>'
     },
     captionImage: {

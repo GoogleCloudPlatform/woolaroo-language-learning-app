@@ -6,14 +6,15 @@ export class TranslatePipe implements PipeTransform {
   constructor(private i18nService: I18nService) {
   }
 
-  transform(text: any, id?: string): string {
+  transform(text: any, id?: string, replacements?: {[index:string]:string}): string {
     const translateKey = id ? id : text;
-    const translation = this.i18nService.getTranslation(translateKey);
+    let translation = this.i18nService.getTranslation(translateKey);
     if(!translation) {
       console.warn('Translation not found: ' + translateKey);
-      return translateKey;
-    } else {
-      return translation;
+      translation = translateKey;
     }
+    return translation.replace(/\$\{([^\}]+)\}/g, (substring, ...args) => {
+      return replacements ? (replacements[args[0]] || '') : '';
+    });
   }
 }
