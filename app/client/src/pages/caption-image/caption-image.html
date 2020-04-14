@@ -3,8 +3,7 @@
 <button class="add-feedback" (click)="onAddFeedbackClick()"><app-icon icon="add_feedback" [shadow]="true"></app-icon></button>
 <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
   <mat-form-field class="text" appearance="outline" [hideRequiredMarker]="true">
-    <input type="text" matInput name="caption" required formControlName="caption" i18n-placeholder="@@imageCaptionLabel" placeholder="What's this?" />
-    <mat-error *ngIf="form.controls['caption'].hasError('required')" i18n="@@imageCaptionRequired"
-    >Image caption is required</mat-error>
+    <input type="text" matInput name="caption" required formControlName="caption" [placeholder]="'What\'s this?' | translate:'imageCaptionLabel'" />
+    <mat-error *ngIf="form.controls['caption'].hasError('required')" [innerHTML]="'Image caption is required' | translate:'imageCaptionRequired'"></mat-error>
   </mat-form-field>
 </form>

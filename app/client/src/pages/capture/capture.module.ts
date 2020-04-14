@@ -8,6 +8,7 @@ import { LoadingPopUpModule } from 'components/loading-popup/loading-popup.modul
 import { SidenavModule } from 'components/sidenav/sidenav.module';
 import { FileUploadButtonModule } from 'components/file-upload-button/file-upload-button.module';
 import { CapturePopUpModule } from 'components/capture-popup/capture-popup.module';
+import { I18nModule } from 'i18n/i18n.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { CapturePopUpModule } from 'components/capture-popup/capture-popup.modul
     LoadingPopUpModule,
     CapturePopUpModule,
     SidenavModule,
-    FileUploadButtonModule
+    FileUploadButtonModule,
+    I18nModule
   ]
 })
 export class CapturePageModule {}

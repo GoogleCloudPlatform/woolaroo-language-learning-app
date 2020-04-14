@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { LogoComponent } from './logo';
 import { PipesModule } from 'pipes/pipes.module';
+import { I18nModule } from 'i18n/i18n.module';
 
 @NgModule({
   declarations: [
@@ -10,7 +11,8 @@ import { PipesModule } from 'pipes/pipes.module';
     LogoComponent
   ],
   imports: [
-    PipesModule
+    PipesModule,
+    I18nModule
   ]
 })
 export class LogoModule {}

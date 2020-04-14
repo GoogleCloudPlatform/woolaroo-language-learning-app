@@ -1,32 +1,29 @@
 <div [formGroup]="formGroup">
   <mat-form-field class="text" appearance="outline" [hideRequiredMarker]="true"
-                  hintLabel="e.g. هتاف للترحيب" i18n-hintLabel="@@nativeScriptHint">
-    <mat-label i18n="@@wordInNativeScript">Word in native script</mat-label>
+                  [hintLabel]="'e.g. هتاف للترحيب' | translate:'nativeScriptHint'">
+    <mat-label [innerHTML]="'Word in native script' | translate:'wordInNativeScript'"></mat-label>
     <input type="text" matInput name="nativeWord" formControlName="nativeWord" maxlength="100" />
-    <mat-error *ngIf="fieldHasError('nativeWord', 'required')" i18n="@@nativeWordRequired"
-    >Word in native script is required</mat-error>
+    <mat-error *ngIf="fieldHasError('nativeWord', 'required')" [innerHTML]="'Word in native script is required' | translate:'nativeWordRequired'"></mat-error>
   </mat-form-field>
   <mat-form-field class="text" appearance="outline" [hideRequiredMarker]="true"
-                  hintLabel="e.g. 'hello'" i18n-hintLabel="@@englishWordHint">
-    <mat-label i18n="@@wordInEnglish">Word in English</mat-label>
+                  [hintLabel]="'e.g. \'hello\'' | translate:'englishWordHint'">
+    <mat-label [innerHTML]="'Word in English' | translate:'wordInEnglish'"></mat-label>
     <input type="text" matInput name="englishWord" formControlName="englishWord" maxlength="100" />
-    <mat-error *ngIf="fieldHasError('englishWord', 'required')" i18n="@@englishWordRequired"
-    >English word is required</mat-error>
+    <mat-error *ngIf="fieldHasError('englishWord', 'required')" [innerHTML]="'English word is required' | translate:'englishWordRequired'"></mat-error>
   </mat-form-field>
   <mat-form-field *ngIf="primaryLanguageWordAvailable" class="text" appearance="outline" [hideRequiredMarker]="true"
-                  hintLabel="e.g. 'hello'" i18n-hintLabel="@@wordInPrimaryLanguageHint">
-    <mat-label i18n="@@wordInPrimaryLanguage">Word in English</mat-label>
+                  [hintLabel]="'e.g. \'hello\'' | translate:'wordInPrimaryLanguageHint'">
+    <mat-label [innerHTML]="'Word in English' | translate:'wordInPrimaryLanguage'"></mat-label>
     <input type="text" matInput name="word" formControlName="word" maxlength="100" />
-    <mat-error *ngIf="fieldHasError('word', 'required')" i18n="@@wordInPrimaryLanguageRequired"
-    >English word is required</mat-error>
+    <mat-error *ngIf="fieldHasError('word', 'required')" [innerHTML]="'English word is required' | translate:'wordInPrimaryLanguageRequired'"></mat-error>
   </mat-form-field>
   <mat-form-field class="text" appearance="outline" [hideRequiredMarker]="true"
-                  hintLabel="Word in Latin alphabet (e.g. 'marhaba')" i18n-hintLabel="@@transliterationHint">
-    <mat-label i18n="@@transliteration">Transliteration (optional)</mat-label>
+                  [hintLabel]="'Word in Latin alphabet (e.g. \'marhaba\')' | translate:'transliterationHint'">
+    <mat-label [innerHTML]="'Transliteration (optional)' | translate:'transliteration'"></mat-label>
     <input type="text" matInput name="transliteration" formControlName="transliteration" />
   </mat-form-field>
   <div class="record" *ngIf="audioRecordingIsAvailable">
-    <label class="mat-body-1" i18n="@@recordPronunciation">Record pronunciation</label>
+    <label class="mat-body-1" [innerHTML]="'Record pronunciation' | translate:'recordPronunciation'"></label>
     <button class="start" *ngIf="recordingState === recordingStateValues.Idle
           || recordingState === recordingStateValues.Finished" (click)="onStartRecordingClick($event)">
       <app-icon icon="record_audio" color="primary"></app-icon></button>
@@ -39,12 +36,10 @@
       <button class="play" (click)="onPlayRecordingClick($event)">
         <app-icon icon="play_recording" color="primary"></app-icon>
       </button>
-      <span i18n="@@saved">Saved</span>
+      <span [innerHTML]="'Saved' | translate:'saved'"></span>
     </span>
   </div>
   <div class="special-chars">
-    <span *ngIf="operatingSystem === operatingSystemValues.Android || operatingSystem === operatingSystemValues.iOS" i18n="@@specialCharsInstructions">
-      Want to type special characters? Try <a href="{{ gboardUrl }}">GBoard</a> or <a href="{{ keymanUrl }}">Keyman</a>
-    </span>
+    <span *ngIf="operatingSystem === operatingSystemValues.Android || operatingSystem === operatingSystemValues.iOS" [innerHTML]="'Want to type special characters? Try <a href=\'${gboardUrl}\'>GBoard</a> or <a href=\'${keymanUrl}\'>Keyman</a>' | translate:'specialCharsInstructions'"></span>
   </div>
 </div>

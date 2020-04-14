@@ -7,8 +7,7 @@
     "build": "ng build -c production",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "build-i18n": "ng xi18n --output-path=src/locale && ngx-extractor -i src/**/**/*.ts -f xlf -o src/locale/messages.xlf"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {

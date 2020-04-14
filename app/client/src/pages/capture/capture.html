@@ -7,7 +7,7 @@
     <div class="camera-frame"></div>
     <button (click)="onOpenMenuClick()" class="open-menu" aria-label="Open Menu"><app-icon icon="menu"></app-icon></button>
     <button (click)="onCaptureClick()" class="capture" aria-label="Capture Photo"><app-icon icon="capture_photo"></app-icon></button>
-    <button class="load-photo" aria-label="Pick photo" i18n-aria-label="@@pickPhoto">
+    <button class="load-photo" [attr.aria-label]="'Pick photo' | translate:'pickPhoto'">
       <app-file-upload-button (imageUploaded)="onImageUploaded($event)" accept="image/*">
         <app-icon icon="photo_library"></app-icon>
       </app-file-upload-button>

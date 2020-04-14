@@ -11,6 +11,7 @@ import { LoadingPopUpModule } from 'components/loading-popup/loading-popup.modul
 import { IconComponentModule } from 'components/icon/icon.module';
 import { ErrorPopUpModule } from 'components/error-popup/error-popup.module';
 import { AddWordFieldsetModule } from 'components/add-word-fieldset/add-word-fieldset.module';
+import { I18nModule } from 'i18n/i18n.module';
 import { FeedbackPageComponent } from './feedback';
 
 @NgModule({
@@ -32,7 +33,8 @@ import { FeedbackPageComponent } from './feedback';
     LoadingPopUpModule,
     IconComponentModule,
     AddWordFieldsetModule,
-    ErrorPopUpModule
+    ErrorPopUpModule,
+    I18nModule
   ]
 })
 export class FeedbackPageModule {}

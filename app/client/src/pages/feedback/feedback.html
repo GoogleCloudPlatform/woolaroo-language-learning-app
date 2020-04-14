@@ -1,33 +1,31 @@
 <form [formGroup]="feedbackForm" (ngSubmit)="onFormSubmit()">
   <mat-toolbar>
     <button class="close" (click)="onCloseClick($event)"><app-icon icon="close"></app-icon></button>
-    <span i18n="@@feedbackTitle">Feedback</span>
-    <button mat-button color="primary" class="submit" type="submit" i18n="@@submit">Submit</button>
+    <span [innerHTML]="'Feedback' | translate:'feedbackTitle'"></span>
+    <button mat-button color="primary" class="submit" type="submit" [innerHTML]="'Submit' | translate:'submit'"></button>
   </mat-toolbar>
   <div class="content">
-    <p class="mat-body-1 instructions" i18n="@@feedbackInstructions">
-      Help us improve Woolaroo's translations by sharing your feedback with us:
-    </p>
+    <p class="mat-body-1 instructions" [innerHTML]="'Help us improve Woolaroo\'s translations by sharing your feedback with us:' | translate:'feedbackInstructions'"></p>
     <div class="feedback-types">
       <ul>
         <li>
           <mat-checkbox (change)="onFeedbackTypeChange($event, FeedbackType.IncorrectTranslation)"
                         [checked]="typeIsSelected(FeedbackType.IncorrectTranslation)"
-                        i18n="@@incorrectTranslation">Incorrect translation</mat-checkbox>
+                        [innerHTML]="'Incorrect translation' | translate:'incorrectTranslation'"></mat-checkbox>
         </li>
         <li>
           <mat-checkbox (change)="onFeedbackTypeChange($event, FeedbackType.OffensiveTranslation)"
                         [checked]="typeIsSelected(FeedbackType.OffensiveTranslation)"
-                        i18n="@@offensiveTranslation">Offensive translation</mat-checkbox>
+                        [innerHTML]="'Offensive translation' | translate:'offensiveTranslation'"></mat-checkbox>
         </li>
       </ul>
-      <mat-error *ngIf="feedbackForm.controls['types'].hasError('required')" i18n="@@feedbackTypeRequired">No feedback type selected</mat-error>
+      <mat-error *ngIf="feedbackForm.controls['types'].hasError('required')" [innerHTML]="'No feedback type selected' | translate:'feedbackTypeRequired'"></mat-error>
     </div>
     <app-add-word-fieldset [formGroup]="feedbackForm"></app-add-word-fieldset>
     <mat-form-field class="textarea" appearance="outline">
-      <mat-label i18n="@@enterFeedback">Enter feedback</mat-label>
+      <mat-label [innerHTML]="'Enter feedback' | translate:'enterFeedback'"></mat-label>
       <textarea matInput name="content" required formControlName="content"></textarea>
-      <mat-error *ngIf="feedbackForm.controls['content'].hasError('required')" i18n="@@feedbackRequired">Feedback required</mat-error>
+      <mat-error *ngIf="feedbackForm.controls['content'].hasError('required')" [innerHTML]="'Feedback required' | translate:'feedbackRequired'"></mat-error>
     </mat-form-field>
   </div>
 </form>

@@ -7,6 +7,7 @@ import { ServicesModule } from 'services/services.module';
 import { PipesModule } from 'pipes/pipes.module';
 import { IconComponentModule } from 'components/icon/icon.module';
 import { environment } from 'environments/environment';
+import { I18nModule } from 'i18n/i18n.module';
 import { CAPTION_IMAGE_PAGE_CONFIG, CaptionImagePageComponent } from './caption-image';
 
 @NgModule({
@@ -21,7 +22,8 @@ import { CAPTION_IMAGE_PAGE_CONFIG, CaptionImagePageComponent } from './caption-
     ReactiveFormsModule,
     MatInputModule,
     MatDialogModule,
-    CommonModule
+    CommonModule,
+    I18nModule
   ],
   providers: [
     { provide: CAPTION_IMAGE_PAGE_CONFIG, useValue: environment.pages.captionImage }

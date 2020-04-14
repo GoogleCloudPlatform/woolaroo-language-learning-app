@@ -34,7 +34,7 @@ For posterity, an example configuration of a source control based trigger is pro
 ### App
 
 * cd to `./client`.
-* Run `ng build -c production --output-path=dist --i18n-file src/locale/messages.<UI_LANGUAGE>.xlf --i18n-locale <UI_LANGUAGE>`.
+* Run `ng build -c production --output-path=dist`.
 * Run `gsutil -m rsync -rd ./dist/google-barnard <BUCKET_URL>`.
   * To get the BUCKET_URL, run `terraform output bucket_url`.
 * Run `gsutil -m setmeta -h 'Content-Type:text/javascript' <BUCKET_URL>/**/*.js`.

@@ -5,6 +5,7 @@ import { ServicesModule } from 'services/services.module';
 import { IconComponentModule } from 'components/icon/icon.module';
 import { TranslationSelectorModule } from 'components/translation-selector/translation-selector.module';
 import { PipesModule } from 'pipes/pipes.module';
+import { I18nModule } from 'i18n/i18n.module';
 import { environment } from 'environments/environment';
 
 @NgModule({
@@ -16,7 +17,8 @@ import { environment } from 'environments/environment';
     IconComponentModule,
     PipesModule,
     TranslationSelectorModule,
-    ServicesModule
+    ServicesModule,
+    I18nModule
   ],
   providers: [
     { provide: TRANSLATE_PAGE_CONFIG, useValue: environment.pages.translate }

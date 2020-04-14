@@ -3,6 +3,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { TERMS_PAGE_CONFIG, TermsPageComponent } from './terms';
 import { IconComponentModule } from 'components/icon/icon.module';
 import { environment } from 'environments/environment';
+import { I18nModule } from 'i18n/i18n.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { environment } from 'environments/environment';
   ],
   imports: [
     MatToolbarModule,
-    IconComponentModule
+    IconComponentModule,
+    I18nModule
   ]
 })
 export class TermsPageModule {}

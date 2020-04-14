@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { IconComponentModule } from 'components/icon/icon.module';
 import { LogoModule } from 'components/logo/logo.module';
+import { I18nModule } from 'i18n/i18n.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { LogoModule } from 'components/logo/logo.module';
     MatButtonModule,
     MatListModule,
     IconComponentModule,
-    LogoModule
+    LogoModule,
+    I18nModule
   ]
 })
 export class SidenavModule {}

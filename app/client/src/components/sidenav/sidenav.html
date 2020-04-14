@@ -1,13 +1,13 @@
 <app-logo class="brand-logo"></app-logo>
 <mat-list>
-  <mat-list-item><a [routerLink]="['/about']" i18n="@@aboutTitle">About</a></mat-list-item>
-  <mat-list-item><a [routerLink]="['/technology']" i18n="@@technologyTitle">The technology</a></mat-list-item>
-  <mat-list-item><a [routerLink]="['/feedback']" [state]="{prevPageCssClass: 'capture'}" i18n="@@translationFeedback">
-    Translation feedback</a></mat-list-item>
-  <mat-list-item><a [routerLink]="['/add-word']" [state]="{prevPageCssClass: 'capture'}" i18n="@@addWord">Add word</a></mat-list-item>
-  <mat-list-item *ngIf="termsAndPrivacyEnabled"><a [routerLink]="['/terms']" i18n="@@termsAndPrivacyTitle">Terms &amp; Privacy</a></mat-list-item>
+  <mat-list-item><a [routerLink]="['/about']" [innerHTML]="'About' | translate:'aboutTitle'"></a></mat-list-item>
+  <mat-list-item><a [routerLink]="['/technology']" [innerHTML]="'The technology' | translate:'technologyTitle'"></a></mat-list-item>
+  <mat-list-item><a [routerLink]="['/feedback']" [state]="{prevPageCssClass: 'capture'}" [innerHTML]="'
+    Translation feedback' | translate:'translationFeedback'"></a></mat-list-item>
+  <mat-list-item><a [routerLink]="['/add-word']" [state]="{prevPageCssClass: 'capture'}" [innerHTML]="'Add word' | translate:'addWord'"></a></mat-list-item>
+  <mat-list-item *ngIf="termsAndPrivacyEnabled"><a [routerLink]="['/terms']" [innerHTML]="'Terms &amp; Privacy' | translate:'termsAndPrivacyTitle'"></a></mat-list-item>
 </mat-list>
 <button *ngIf="addToHomeScreenEnabled" class="home-screen" mat-button (click)="onAddToHomeScreenClick()">
   <app-icon icon="add_to_home"></app-icon>
-  <span i18n="@@addToHomeScreen">Add to home screen</span>
+  <span [innerHTML]="'Add to home screen' | translate:'addToHomeScreen'"></span>
 </button>

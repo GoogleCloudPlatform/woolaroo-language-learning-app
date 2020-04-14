@@ -9,5 +9,5 @@
 </app-translation-selector>
 <button mat-button (click)="onSubmitFeedbackClick()" class="submit-feedback">
   <app-icon icon="add_feedback" shadow="true"></app-icon>
-  <span i18n="@@translationFeedback">Translation Feedback</span>
+  <span [innerHTML]="'Translation Feedback' | translate:'translationFeedback'"></span>
 </button>

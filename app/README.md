@@ -3,7 +3,7 @@
 ## Requirements
 
 * Node 10.16+
-* Angular 8.3+
+* Angular 9.0+
 * Terraform
 
 ## Setup
@@ -42,11 +42,8 @@
 
 ## Localization
 
-* To create a version of the app in a specific language:
-  * Generate the language template file by running `npm run build-i18n` from the `./client` directory.
-  * Copy the template file and rename it to `src/locale/messages.<LANGUAGE>.xlf`.
-  * Add language translations (https://angular.io/guide/i18n#translate-the-source-text).
-  * Rebuild the app with the `i18n-file` and `i18n-locale` arguments (see below).
+* Supported UI languages are set in `src/environments/environment.ts`
+* Language translations are in JSON format in `src/assets/locale`
 
 ## Deployment
 

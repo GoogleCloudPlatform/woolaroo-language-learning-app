@@ -5,6 +5,7 @@ import { IconComponentModule } from 'components/icon/icon.module';
 import { TranslationSelectorComponent } from './translation-selector';
 import { SelectionLineComponent, SELECTION_LINE_CONFIG } from './selection-line';
 import { WordScrollListComponent, WORD_SCROLL_LIST_CONFIG } from './word-scroll-list';
+import { I18nModule } from 'i18n/i18n.module';
 import { environment } from 'environments/environment';
 
 @NgModule({
@@ -19,7 +20,8 @@ import { environment } from 'environments/environment';
   imports: [
     CommonModule,
     IconComponentModule,
-    MatInputModule
+    MatInputModule,
+    I18nModule
   ],
   providers: [
     { provide: SELECTION_LINE_CONFIG, useValue: environment.components.translationSelector.selectionLine },

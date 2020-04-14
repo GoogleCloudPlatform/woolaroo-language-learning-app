@@ -4,7 +4,7 @@
     <span class="word">{{word.original || word.english}}</span>
   </li>
   <li class="manual-entry" (click)="onManualEntryClick()">
-    <span i18n="@@enterSomethingElse">Enter something else</span>
+    <span [innerHTML]="'Enter something else' | translate:'enterSomethingElse'"></span>
     <app-icon icon="search"></app-icon>
   </li>
 </ul>
