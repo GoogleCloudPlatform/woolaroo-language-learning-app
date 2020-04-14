@@ -10,7 +10,6 @@ import { ANALYTICS_SERVICE, IAnalyticsService } from 'services/analytics';
 import { FEEDBACK_SERVICE, IFeedbackService } from 'services/feedback';
 import { FeedbackType, Feedback } from 'services/entities/feedback';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -27,7 +26,6 @@ export class FeedbackPageComponent implements AfterViewInit {
   constructor( private router: Router,
                private location: Location,
                private dialog: MatDialog,
-               private i18n: I18n,
                private snackBar: MatSnackBar,
                @Inject(FEEDBACK_SERVICE) private feedbackService: IFeedbackService,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {
@@ -76,7 +74,7 @@ export class FeedbackPageComponent implements AfterViewInit {
         console.log('Feedback submitted');
         this.location.back();
         const snackbarCssClass = this.prevPageCssClass ? `${this.prevPageCssClass}-snack-bar` : '';
-        this.snackBar.open(this.i18n({ id: 'feedbackSubmitted', value: 'Feedback submitted' }), '',
+        this.snackBar.open($localize `:@@feedbackSubmitted:Feedback submitted`, '',
           { duration: environment.components.snackBar.duration, panelClass: snackbarCssClass });
         // HACK: fix snackbar not closing on some iOS devices
         setTimeout(() => {
@@ -85,7 +83,7 @@ export class FeedbackPageComponent implements AfterViewInit {
       },
       err => {
         console.warn('Failed submitting feedback', err);
-        const errorMessage = this.i18n({ id: 'submitFeedbackError', value: 'Unable to save feedback' });
+        const errorMessage = $localize `:@@submitFeedbackError:Unable to save feedback`;
         this.dialog.open(ErrorPopUpComponent, { data: { message: errorMessage } });
       }
     ).finally(

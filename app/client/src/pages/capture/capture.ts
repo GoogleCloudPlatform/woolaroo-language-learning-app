@@ -5,7 +5,6 @@ import { CameraPreviewComponent, CameraPreviewStatus } from 'components/camera-p
 import { CapturePopUpComponent } from 'components/capture-popup/capture-popup';
 import { ErrorPopUpComponent } from 'components/error-popup/error-popup';
 import { ANALYTICS_SERVICE, IAnalyticsService } from 'services/analytics';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { IImageRecognitionService, IMAGE_RECOGNITION_SERVICE } from 'services/image-recognition';
 import { AppRoutes } from 'app/routes';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
@@ -83,7 +82,6 @@ export class CapturePageComponent extends ImageLoaderPageBase implements AfterVi
                dialog: MatDialog,
                sessionService: SessionService,
                @Inject(IMAGE_RECOGNITION_SERVICE) imageRecognitionService: IImageRecognitionService,
-               private i18n: I18n,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService) {
     super(router, dialog, sessionService, imageRecognitionService);
   }
@@ -117,7 +115,7 @@ export class CapturePageComponent extends ImageLoaderPageBase implements AfterVi
         if (loadingPopUp) {
           loadingPopUp.close();
         }
-        const errorMessage = this.i18n({ id: 'startCameraError', value: 'Unable to start camera' });
+        const errorMessage = $localize`:@@startCameraError:Unable to start camera`;
         const errorDialog = this.dialog.open(ErrorPopUpComponent, { data: { message: errorMessage } });
         errorDialog.afterClosed().subscribe({ complete: () => this.router.navigateByUrl(AppRoutes.ImageSource, { replaceUrl: true }) });
       }
@@ -155,7 +153,7 @@ export class CapturePageComponent extends ImageLoaderPageBase implements AfterVi
           console.warn('Failed to capture image', err);
           this.captureInProgress = false;
           loadingPopUp.close();
-          const errorMessage = this.i18n({ id: 'captureImageError', value: 'Unable to capture image' });
+          const errorMessage = $localize `:@@captureImageError:Unable to capture image`;
           this.dialog.open(ErrorPopUpComponent, { data: { message: errorMessage } });
         }
       );

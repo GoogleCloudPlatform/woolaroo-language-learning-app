@@ -9,7 +9,6 @@ import { ANALYTICS_SERVICE, IAnalyticsService } from 'services/analytics';
 import { FEEDBACK_SERVICE, IFeedbackService } from 'services/feedback';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
 import { WordTranslation } from 'services/entities/translation';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { environment } from 'environments/environment';
 import {DEFAULT_LOCALE, getBaseLocale} from "../../util/locale";
 
@@ -30,7 +29,6 @@ export class AddWordPageComponent implements AfterViewInit {
                private dialog: MatDialog,
                private snackBar: MatSnackBar,
                private zone: NgZone,
-               private i18n: I18n,
                @Inject(FEEDBACK_SERVICE) private feedbackService: IFeedbackService,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
                @Inject(LOCALE_ID) private locale:string ) {
@@ -72,7 +70,7 @@ export class AddWordPageComponent implements AfterViewInit {
         console.log('Added word submitted');
         this.location.back();
         const snackbarCssClass = this.prevPageCssClass ? `${this.prevPageCssClass}-snack-bar` : '';
-        this.snackBar.open(this.i18n({ id: 'wordSubmitted', value: 'Submitted for review' }), '',
+        this.snackBar.open($localize `:@@wordSubmitted:Submitted for review`, '',
           { duration: environment.components.snackBar.duration, panelClass: snackbarCssClass });
         // HACK: fix snackbar not closing on some iOS devices
         setTimeout(() => {
@@ -81,7 +79,7 @@ export class AddWordPageComponent implements AfterViewInit {
       },
       err => {
         console.warn('Failed adding word', err);
-        const errorMessage = this.i18n({ id: 'addWordError', value: 'Unable to add word' });
+        const errorMessage = $localize `:@@addWordError:Unable to add word`;
         this.dialog.open(ErrorPopUpComponent, { data: { message: errorMessage } });
       }
     ).finally(

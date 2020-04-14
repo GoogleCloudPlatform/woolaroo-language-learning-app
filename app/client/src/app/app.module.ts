@@ -15,7 +15,6 @@ import { AboutPageModule } from 'pages/about/about.module';
 import { TechnologyPageModule } from 'pages/technology/technology.module';
 import { AddWordPageModule } from 'pages/add-word/add-word.module';
 import { CaptionImagePageModule } from 'pages/caption-image/caption-image.module';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from 'environments/environment';
 import { getBaseLocale } from 'util/locale';
@@ -45,7 +44,7 @@ declare const require: any; // Use the require method provided by webpack
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
-    {
+    /*{
       provide: TRANSLATIONS,
       useFactory: (locale: string) => {
         locale = getBaseLocale(locale);
@@ -54,7 +53,7 @@ declare const require: any; // Use the require method provided by webpack
       deps: [LOCALE_ID]
     },
     { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
-    I18n
+    I18n*/
   ],
   bootstrap: [AppComponent]
 })
