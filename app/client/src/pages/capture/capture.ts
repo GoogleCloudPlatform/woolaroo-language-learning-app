@@ -73,7 +73,7 @@ export class ImageLoaderPageBase {
   styleUrls: ['./capture.scss']
 })
 export class CapturePageComponent extends ImageLoaderPageBase implements AfterViewInit, OnDestroy {
-  @ViewChild(CameraPreviewComponent, {static: false})
+  @ViewChild(CameraPreviewComponent)
   private cameraPreview: CameraPreviewComponent|null = null;
   private modalIsForCameraStartup = true;
   public captureInProgress = false;

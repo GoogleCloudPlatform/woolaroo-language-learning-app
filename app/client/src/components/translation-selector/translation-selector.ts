@@ -20,7 +20,7 @@ export class TranslationSelectorComponent {
   public selectedWordChanged: EventEmitter<WordTranslation> = new EventEmitter<WordTranslation>();
   @Output()
   public manualEntrySelected: EventEmitter<any> = new EventEmitter();
-  @ViewChild('audioPlayer', {static: false})
+  @ViewChild('audioPlayer')
   public audioPlayer: ElementRef|null = null;
   public audioPlaying = false;
   public lineTargetPosition: Point|null = null;

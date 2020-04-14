@@ -1,6 +1,8 @@
 import { IProfileService } from './profile';
 import { Profile } from './entities/profile';
+import { Injectable } from "@angular/core";
 
+@Injectable()
 export class LocalProfileService implements IProfileService {
   public loadProfile(): Promise<Profile> {
     const serializedProfile = window.localStorage.getItem('profile');

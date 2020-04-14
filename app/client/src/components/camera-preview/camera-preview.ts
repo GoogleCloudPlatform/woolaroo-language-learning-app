@@ -27,9 +27,9 @@ export enum CameraPreviewStatus {
   styleUrls: ['./camera-preview.scss']
 })
 export class CameraPreviewComponent implements OnDestroy {
-  @ViewChild('video', {static: false})
+  @ViewChild('video')
   private videoRef: ElementRef|null = null;
-  @ViewChild('capturedImage', {static: false})
+  @ViewChild('capturedImage')
   private capturedImage: ElementRef|null = null;
   private videoStream: MediaStream|null = null;
   private videoResizeTimer: any;

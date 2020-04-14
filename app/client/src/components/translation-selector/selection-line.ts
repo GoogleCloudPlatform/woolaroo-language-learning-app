@@ -18,7 +18,7 @@ export class SelectionLineComponent {
   private targetAngle = -Math.PI * 0.5;
   private animationTimer: any = null;
 
-  @ViewChild('line', { static: false })
+  @ViewChild('line')
   public line: ElementRef|null = null;
 
   private _targetPosition: Point|null = null;
