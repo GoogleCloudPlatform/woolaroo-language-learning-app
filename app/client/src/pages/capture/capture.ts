@@ -11,6 +11,7 @@ import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
 import { SessionService } from 'services/session';
 import { addOpenedListener } from 'util/dialog';
 import { removeImageTransform } from 'util/image';
+import { I18nService } from 'i18n/i18n.service';
 
 export class ImageLoaderPageBase {
   constructor( protected router: Router,
@@ -81,6 +82,7 @@ export class CapturePageComponent extends ImageLoaderPageBase implements AfterVi
   constructor( router: Router,
                dialog: MatDialog,
                sessionService: SessionService,
+               private i18n: I18nService,
                @Inject(IMAGE_RECOGNITION_SERVICE) imageRecognitionService: IImageRecognitionService,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService) {
     super(router, dialog, sessionService, imageRecognitionService);
@@ -115,7 +117,7 @@ export class CapturePageComponent extends ImageLoaderPageBase implements AfterVi
         if (loadingPopUp) {
           loadingPopUp.close();
         }
-        const errorMessage = $localize`:@@startCameraError:Unable to start camera`;
+        const errorMessage = this.i18n.getTranslation('startCameraError') || 'Unable to start camera';
         const errorDialog = this.dialog.open(ErrorPopUpComponent, { data: { message: errorMessage } });
         errorDialog.afterClosed().subscribe({ complete: () => this.router.navigateByUrl(AppRoutes.ImageSource, { replaceUrl: true }) });
       }
@@ -153,7 +155,7 @@ export class CapturePageComponent extends ImageLoaderPageBase implements AfterVi
           console.warn('Failed to capture image', err);
           this.captureInProgress = false;
           loadingPopUp.close();
-          const errorMessage = $localize `:@@captureImageError:Unable to capture image`;
+          const errorMessage = this.i18n.getTranslation('captureImageError') || 'Unable to capture image';
           this.dialog.open(ErrorPopUpComponent, { data: { message: errorMessage } });
         }
       );

@@ -1,14 +1,10 @@
 <p class="mat-body-1" [innerHTML]="'You can use a photo from your phone or take a photo of something around you' | translate:'photoSource'"></p>
 <div class="actions">
   <button mat-button color="primary" class="load-photo">
-    <app-file-upload-button (imageUploaded)="this.onImageUploaded($event)" i18n="@@pickPhoto" accept="image/*">
-      Pick Photo
-    </app-file-upload-button>
+    <app-file-upload-button (imageUploaded)="this.onImageUploaded($event)" accept="image/*" [innerHTML]="'Pick Photo' | translate:'pickPhoto'"></app-file-upload-button>
   </button>
   <button *ngIf="cameraIsAvailable" mat-flat-button color="primary" (click)="onCaptureClick()" class="capture" [innerHTML]="'Take Photo' | translate:'takePhoto'"></button>
   <button *ngIf="!cameraIsAvailable" mat-flat-button color="primary" class="capture">
-    <app-file-upload-button (imageUploaded)="this.onImageUploaded($event)" i18n="@@takePhoto" accept="image/*" [captureOnly]="true">
-      Take Photo
-    </app-file-upload-button>
+    <app-file-upload-button (imageUploaded)="this.onImageUploaded($event)" accept="image/*" [captureOnly]="true" [innerHTML]="'Take Photo' | translate:'takePhoto'"></app-file-upload-button>
   </button>
 </div>

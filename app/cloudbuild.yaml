@@ -73,7 +73,6 @@ steps:
     name: node:10.16.3
     entrypoint: "npm"
     args: ["run", "build", "--", "-c", "production", "--output-path=./dist",
-           "--i18n-file=./src/locale/messages.${_LANGUAGE}.xlf", "--i18n-locale=${_LANGUAGE}",
            "--deploy-url=https://storage.googleapis.com/${_BUCKET_NAME}/"]
     dir: "./app/client"
   - id: 'fix_client_asset_paths'
