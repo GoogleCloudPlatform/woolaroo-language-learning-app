@@ -7,6 +7,7 @@ import { PROFILE_SERVICE, PROFILE_CONFIG} from './profile';
 import { environment } from 'environments/environment';
 import { SessionService } from 'services/session';
 import { ImageRenderingService, IMAGE_RENDERING_CONFIG } from 'services/image-rendering';
+import { EndangeredLanguageService, ENDANGERED_LANGUAGE_CONFIG } from './endangered-language';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,8 @@ import { ImageRenderingService, IMAGE_RENDERING_CONFIG } from 'services/image-re
     SessionService,
     ImageRenderingService,
     { provide: IMAGE_RENDERING_CONFIG, useValue: environment.services.imageRendering.config },
+    EndangeredLanguageService,
+    { provide: ENDANGERED_LANGUAGE_CONFIG, useValue: environment.services.endangeredLanguage.config },
     { provide: IMAGE_RECOGNITION_SERVICE, useClass: environment.services.imageRecognition.type },
     { provide: IMAGE_RECOGNITION_CONFIG, useValue: environment.services.imageRecognition.config },
     { provide: TRANSLATION_SERVICE, useClass: environment.services.translation.type },

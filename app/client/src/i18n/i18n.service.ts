@@ -1,5 +1,4 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { environment } from 'environments/environment';
+import { EventEmitter, Inject, Injectable, InjectionToken } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 export type LanguageDirection = 'ltr'|'rtl';
@@ -9,36 +8,49 @@ interface LanguageData {
   name: string;
   file: string;
   direction: LanguageDirection;
+  default: boolean;
 }
 
+interface I18nServiceConfig {
+  languages: LanguageData[];
+}
+
+export const I18N_SERVICE_CONFIG = new InjectionToken<I18nServiceConfig>('I18n config');
 
 @Injectable()
 export class I18nService {
-  private _currentLanguage: LanguageData;
   private _translations:{[key:string]:string};
 
-  public readonly languageChanged:EventEmitter<string> = new EventEmitter();
-  public get languageDirection():LanguageDirection { return this._currentLanguage.direction; }
+  private _currentLanguage: LanguageData;
+  public get currentLanguage():LanguageData { return this._currentLanguage; }
 
-  constructor(private http: HttpClient) {
+  public readonly currentLanguageChanged:EventEmitter<string> = new EventEmitter();
+
+  public get languages(): LanguageData[] { return this.config.languages; }
+
+  constructor(private http: HttpClient, @Inject(I18N_SERVICE_CONFIG) private config: I18nServiceConfig) {
     this._translations = {};
-    this._currentLanguage = { code: environment.i18n.defaultLanguage, name: '', direction: 'ltr', file: '' };
-    this.setLanguage(environment.i18n.defaultLanguage);
+    this._currentLanguage = this.config.languages.find(lang => lang.default) || this.config.languages[0];
+    this.loadTranslations(this._currentLanguage);
   }
 
-  async setLanguage(language: string) {
-    const newLanguage = (environment.i18n.languages as LanguageData[]).find(lang => lang.code == language);
-    if(!newLanguage) {
-      throw new Error("Language not found: " + language);
+  async setLanguage(code: string) {
+    const language = this.config.languages.find(lang => lang.code == code);
+    if(!language) {
+      throw new Error("Language not found: " + code);
     }
-    this._currentLanguage = newLanguage;
+    this._currentLanguage = language;
+    await this.loadTranslations(language);
+  }
+
+  async loadTranslations(lang: LanguageData) {
     try {
-      this._translations = await this.http.get<{[key: string]:string}>(newLanguage.file).toPromise();
+      this._translations = await this.http.get<{[key: string]:string}>(lang.file).toPromise();
     } catch(err) {
       console.warn('Error loading translation file', err);
       this._translations = {};
     }
-    this.languageChanged.emit(language);
+    this.currentLanguageChanged.emit(lang.code);
   }
 
   getTranslation(key: string) {

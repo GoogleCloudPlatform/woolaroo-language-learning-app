@@ -3,6 +3,7 @@ export const params = {
   googleTrackerId: '',
   apiUrl: '',
   partnerLogoUrl: '',
+  language: '',
   endangeredLanguage: '',
   termsAndPrivacyEnabled: false,
   termsAndPrivacyContent: null

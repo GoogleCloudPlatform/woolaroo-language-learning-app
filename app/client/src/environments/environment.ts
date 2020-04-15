@@ -14,13 +14,13 @@ export const environment = {
     baseUrl: './',
   },
   i18n: {
-    defaultLanguage: 'en',
     languages: [
       {
         code: 'en',
         name: 'English',
         file: './assets/locale/en.json',
-        direction: 'ltr'
+        direction: 'ltr',
+        default: true
       },
       {
         code: 'fr',
@@ -60,7 +60,6 @@ export const environment = {
       }
     ]
   },
-  endangeredLanguage: 'Sicilian',
   pages: {
     splash: {
       logosDuration: 4000,
@@ -163,6 +162,23 @@ export const environment = {
         },
         line: { width: 1, height: 80, marginBottom: 20 },
         padding: 20
+      }
+    },
+    endangeredLanguage: {
+      config: {
+        languages: [
+          {
+            code: 'scn',
+            name: 'Sicilian',
+            apiURL: 'https://us-central1-barnard-sicilian.cloudfunctions.net',
+            default: true
+          },
+          {
+            code: 'yi',
+            name: 'Yiddish',
+            apiURL: 'https://us-central1-barnard-yiddish.cloudfunctions.net'
+          }
+        ]
       }
     },
     translation: {

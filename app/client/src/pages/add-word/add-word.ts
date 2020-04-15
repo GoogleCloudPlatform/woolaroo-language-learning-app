@@ -12,6 +12,7 @@ import { WordTranslation } from 'services/entities/translation';
 import { environment } from 'environments/environment';
 import {DEFAULT_LOCALE, getBaseLocale} from "../../util/locale";
 import { I18nService } from 'i18n/i18n.service';
+import { EndangeredLanguageService } from '../../services/endangered-language';
 
 @Component({
   selector: 'app-page-add-word',
@@ -23,7 +24,7 @@ export class AddWordPageComponent implements AfterViewInit {
   private readonly prevPageCssClass?: string;
   public submittingForm = false;
 
-  public get endangeredLanguage(): string { return environment.endangeredLanguage; }
+  public get endangeredLanguage(): string { return this.endangeredLanguageService.currentLanguage.name; }
 
   constructor( private router: Router,
                private location: Location,
@@ -31,6 +32,7 @@ export class AddWordPageComponent implements AfterViewInit {
                private snackBar: MatSnackBar,
                private zone: NgZone,
                private i18n: I18nService,
+               private endangeredLanguageService: EndangeredLanguageService,
                @Inject(FEEDBACK_SERVICE) private feedbackService: IFeedbackService,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
                @Inject(LOCALE_ID) private locale:string ) {

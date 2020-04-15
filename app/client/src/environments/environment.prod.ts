@@ -3,8 +3,8 @@ import { SafeSearchLikelihood } from 'services/google/image-recognition';
 import { APITranslationService } from 'services/api/translation';
 import { LocalProfileService } from 'services/local-profile';
 import { APIFeedbackService } from 'services/api/feedback';
-import { params } from './environment.prod.params';
 import { APIImageRecognitionService } from 'services/api/image-recognition';
+import { params } from './environment.prod.params';
 
 export const environment = {
   production: true,
@@ -12,49 +12,55 @@ export const environment = {
     baseUrl: params.assetsBaseUrl,
   },
   i18n: {
-    defaultLanguage: 'en',
     languages: [
       {
         code: 'en',
         name: 'English',
         file: params.assetsBaseUrl + 'assets/locale/en.json',
-        direction: 'ltr'
+        direction: 'ltr',
+        default: params.language === 'en'
       },
       {
         code: 'fr',
         name: 'Français',
         file: params.assetsBaseUrl + 'assets/locale/fr.json',
-        direction: 'ltr'
+        direction: 'ltr',
+        default: params.language === 'fr'
       },
       {
         code: 'es',
         name: 'Español',
         file: params.assetsBaseUrl + 'assets/locale/es.json',
-        direction: 'ltr'
+        direction: 'ltr',
+        default: params.language === 'es'
       },
       {
         code: 'hi',
         name: 'हिन्दी',
         file: params.assetsBaseUrl + 'assets/locale/hi.json',
-        direction: 'ltr'
+        direction: 'ltr',
+        default: params.language === 'hi'
       },
       {
         code: 'ar',
         name: 'اَلْعَرَبِيَّةُ',
         file: params.assetsBaseUrl + 'assets/locale/ar.json',
-        direction: 'rtl'
+        direction: 'rtl',
+        default: params.language === 'ar'
       },
       {
         code: 'it',
         name: 'Italiano',
         file: params.assetsBaseUrl + 'assets/locale/it.json',
-        direction: 'ltr'
+        direction: 'ltr',
+        default: params.language === 'it'
       },
       {
         code: 'pt',
         name: 'Português',
         file: params.assetsBaseUrl + 'assets/locale/pt.json',
-        direction: 'ltr'
+        direction: 'ltr',
+        default: params.language === 'pt'
       }
     ]
   },
@@ -158,6 +164,24 @@ export const environment = {
         },
         line: { width: 1, height: 80, marginBottom: 20 },
         padding: 20
+      }
+    },
+    endangeredLanguage: {
+      config: {
+        languages: [
+          {
+            code: 'scn',
+            name: 'Sicilian',
+            apiURL: 'https://us-central1-barnard-sicilian.cloudfunctions.net',
+            default: params.endangeredLanguage === 'scn'
+          },
+          {
+            code: 'yi',
+            name: 'Yiddish',
+            apiURL: 'https://us-central1-barnard-yiddish.cloudfunctions.net',
+            default: params.endangeredLanguage === 'yi'
+          }
+        ]
       }
     },
     translation: {

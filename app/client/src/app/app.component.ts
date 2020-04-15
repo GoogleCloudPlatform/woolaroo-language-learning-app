@@ -25,8 +25,8 @@ export class AppComponent implements OnInit {
       const navStart = e as NavigationStart;
       nav.extras.state = {...navStart.restoredState, navigationId: navStart.id };
     });
-    this.i18nService.languageChanged.subscribe(() => {
-      window.document.body.setAttribute('dir', this.i18nService.languageDirection);
+    this.i18nService.currentLanguageChanged.subscribe(() => {
+      window.document.body.setAttribute('dir', this.i18nService.currentLanguage.direction);
     });
   }
 
@@ -36,6 +36,6 @@ export class AppComponent implements OnInit {
       this.sessionService.currentSession.installPrompt = ev;
     });
     // set document language direction
-    window.document.body.setAttribute('dir', this.i18nService.languageDirection);
+    window.document.body.setAttribute('dir', this.i18nService.currentLanguage.direction);
   }
 }
