@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 export type LanguageDirection = 'ltr'|'rtl';
 
-interface LanguageData {
+export interface Language {
   code: string;
   name: string;
   file: string;
@@ -12,7 +12,7 @@ interface LanguageData {
 }
 
 interface I18nServiceConfig {
-  languages: LanguageData[];
+  languages: Language[];
 }
 
 export const I18N_SERVICE_CONFIG = new InjectionToken<I18nServiceConfig>('I18n config');
@@ -21,12 +21,12 @@ export const I18N_SERVICE_CONFIG = new InjectionToken<I18nServiceConfig>('I18n c
 export class I18nService {
   private _translations:{[key:string]:string};
 
-  private _currentLanguage: LanguageData;
-  public get currentLanguage():LanguageData { return this._currentLanguage; }
+  private _currentLanguage: Language;
+  public get currentLanguage():Language { return this._currentLanguage; }
 
   public readonly currentLanguageChanged:EventEmitter<string> = new EventEmitter();
 
-  public get languages(): LanguageData[] { return this.config.languages; }
+  public get languages(): Language[] { return this.config.languages; }
 
   constructor(private http: HttpClient, @Inject(I18N_SERVICE_CONFIG) private config: I18nServiceConfig) {
     this._translations = {};
@@ -43,13 +43,15 @@ export class I18nService {
     await this.loadTranslations(language);
   }
 
-  async loadTranslations(lang: LanguageData) {
+  async loadTranslations(lang: Language) {
+    console.log(`Loading translations: ${lang.code}`);
     try {
       this._translations = await this.http.get<{[key: string]:string}>(lang.file).toPromise();
     } catch(err) {
       console.warn('Error loading translation file', err);
       this._translations = {};
     }
+    console.log(`Translations loaded: ${lang.code}`);
     this.currentLanguageChanged.emit(lang.code);
   }
 

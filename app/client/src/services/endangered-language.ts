@@ -1,6 +1,6 @@
 import { EventEmitter, Inject, Injectable, InjectionToken } from '@angular/core';
 
-interface EndangeredLanguage {
+export interface EndangeredLanguage {
   code: string;
   name: string;
   default: boolean;
