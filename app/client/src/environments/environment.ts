@@ -170,13 +170,11 @@ export const environment = {
           {
             code: 'scn',
             name: 'Sicilian',
-            apiURL: 'https://us-central1-barnard-sicilian.cloudfunctions.net',
             default: true
           },
           {
             code: 'yi',
-            name: 'Yiddish',
-            apiURL: 'https://us-central1-barnard-yiddish.cloudfunctions.net'
+            name: 'Yiddish'
           }
         ]
       }

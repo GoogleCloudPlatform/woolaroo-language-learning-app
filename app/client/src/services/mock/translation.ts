@@ -4,7 +4,7 @@ import { ITranslationService } from '../translation';
 
 @Injectable()
 export class MockTranslationService implements ITranslationService {
-  public async translate(words: string[], maxTranslations: number = 0): Promise<WordTranslation[]> {
+  public async translate(words: string[], targetLanguage: string, maxTranslations: number = 0): Promise<WordTranslation[]> {
     return words.map((w, index) =>({
       original: w,
       english: w + ' en',

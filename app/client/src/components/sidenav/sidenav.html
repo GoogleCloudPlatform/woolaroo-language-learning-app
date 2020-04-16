@@ -6,8 +6,8 @@
   <mat-list-item><a [routerLink]="['/add-word']" [state]="{prevPageCssClass: 'capture'}" [innerHTML]="'Add word' | translate:'addWord'"></a></mat-list-item>
   <mat-list-item *ngIf="termsAndPrivacyEnabled"><a [routerLink]="['/terms']" [innerHTML]="'Terms &amp; Privacy' | translate:'termsAndPrivacyTitle'"></a></mat-list-item>
 </mat-list>
-<language-selector></language-selector>
 <button *ngIf="addToHomeScreenEnabled" class="home-screen" mat-button (click)="onAddToHomeScreenClick()">
   <app-icon icon="add_to_home"></app-icon>
   <span [innerHTML]="'Add to home screen' | translate:'addToHomeScreen'"></span>
 </button>
+<language-selector></language-selector>

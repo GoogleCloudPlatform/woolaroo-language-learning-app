@@ -12,6 +12,7 @@ import { FeedbackType, Feedback } from 'services/entities/feedback';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
 import { environment } from 'environments/environment';
 import { I18nService } from 'i18n/i18n.service';
+import { EndangeredLanguageService } from '../../services/endangered-language';
 
 @Component({
   selector: 'app-page-feedback',
@@ -29,6 +30,7 @@ export class FeedbackPageComponent implements AfterViewInit {
                private dialog: MatDialog,
                private snackBar: MatSnackBar,
                private i18n: I18nService,
+               private endangeredLanguageService: EndangeredLanguageService,
                @Inject(FEEDBACK_SERVICE) private feedbackService: IFeedbackService,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {
     const word = history.state.word;
@@ -71,6 +73,8 @@ export class FeedbackPageComponent implements AfterViewInit {
     this.submittingForm = true;
     const loadingPopup = this.dialog.open(LoadingPopUpComponent, { panelClass: 'loading-popup' });
     const feedback: Feedback = this.feedbackForm.value;
+    feedback.language = this.i18n.currentLanguage.code;
+    feedback.nativeLanguage = this.endangeredLanguageService.currentLanguage.code;
     this.feedbackService.sendFeedback(feedback).then(
       () => {
         console.log('Feedback submitted');

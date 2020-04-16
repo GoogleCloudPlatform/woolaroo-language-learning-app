@@ -34,15 +34,19 @@ mat-list {
   }
 }
 
+language-selector {
+  margin: 0 30px;
+}
+
 button.home-screen {
   text-transform: none;
   letter-spacing: 0;
   width: 100%;
-  text-align: left;
-  padding-left: 24px;
+  text-align: start;
+  padding: 0 24px;
   border-radius: 0;
 
-  app-icon {
-    margin-right: 30px;
+  span {
+    margin: 0 30px;
   }
 }

@@ -50,6 +50,7 @@ $app-theme: map-merge($app-theme, ("shadow": (
 @include mat-checkbox-theme($app-theme);
 @include mat-dialog-theme($app-theme);
 @include mat-form-field-theme($app-theme);
+@include mat-select-theme($app-theme);
 @include mat-icon-theme($app-theme);
 @include mat-input-theme($app-theme);
 @include mat-sidenav-theme($app-theme);
