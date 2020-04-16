@@ -18,6 +18,4 @@ export interface AddedWord {
 export interface Feedback extends AddedWord {
   types: FeedbackType[];
   content: string;
-  language: string;
-  nativeLanguage: string;
 }

@@ -62,6 +62,7 @@ steps:
            "${_API_URL}",
            "https://storage.googleapis.com/${_BUCKET_NAME}/",
            "${_GOOGLE_TRACKER_ID}",
+           "${_LANGUAGE}",
            "${_ENDANGERED_LANGUAGE}",
            "${_TERMS_AND_CONDITIONS}",
            "/assets/img/partner_logo.png",

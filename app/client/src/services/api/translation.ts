@@ -40,13 +40,16 @@ export class APITranslationService implements ITranslationService {
     }
   }
 
-  public async translate(englishWords: string[], targetLanguage: string, maxTranslations: number = 0): Promise<WordTranslation[]> {
+  public async translate(englishWords: string[], primaryLanguage: string, targetLanguage: string, maxTranslations: number = 0): Promise<WordTranslation[]> {
     const lowercaseWords = englishWords.map((w) => w.toLowerCase());
     if (this.lastTranslations && APITranslationService.wordTranslationsAreEqual(lowercaseWords, this.lastTranslations)) {
       // use cached results
       return Promise.resolve(this.lastTranslations);
     }
-    const response = await this.http.post<TranslationResponse[]>(this.config.endpointURL, { english_words: lowercaseWords, target_language: targetLanguage }).toPromise();
+    const response = await this.http.post<TranslationResponse[]>(this.config.endpointURL, {
+      english_words: lowercaseWords,
+      primary_language: primaryLanguage,
+      target_language: targetLanguage }).toPromise();
     let translations = response.map(tr => ({
       english: tr.english_word,
       original: tr.primary_word,

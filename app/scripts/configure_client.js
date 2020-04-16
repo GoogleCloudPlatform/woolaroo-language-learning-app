@@ -13,6 +13,11 @@ if(!API_URL) {
 const ASSETS_BASE_URL = process.argv[paramIndex++] || './';
 const GOOGLE_TRACKER_ID = process.argv[paramIndex++];
 
+const LANGUAGE = process.argv[paramIndex++];
+if(!LANGUAGE) {
+    throw new Error('Endangered language not set');
+}
+
 const ENDANGERED_LANGUAGE = process.argv[paramIndex++];
 if(!ENDANGERED_LANGUAGE) {
     throw new Error('Endangered language not set');
@@ -42,6 +47,7 @@ const configParams = {
     googleTrackerId: GOOGLE_TRACKER_ID,
     apiUrl: API_URL,
     partnerLogoUrl: PARTNER_LOGO_URL,
+    language: LANGUAGE,
     endangeredLanguage: ENDANGERED_LANGUAGE,
     termsAndPrivacyEnabled: !!TERMS_AND_CONDITIONS,
     termsAndPrivacyContent: TERMS_AND_CONDITIONS

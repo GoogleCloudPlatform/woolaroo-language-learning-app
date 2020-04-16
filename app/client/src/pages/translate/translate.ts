@@ -11,6 +11,7 @@ import { downloadFile } from 'util/file';
 import { SessionService } from 'services/session';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
 import { I18nService } from '../../i18n/i18n.service';
+import { EndangeredLanguageService } from '../../services/endangered-language';
 
 interface TranslatePageConfig {
   debugImageUrl?: string;
@@ -37,6 +38,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
                private zone: NgZone,
                private sessionService: SessionService,
                private i18n: I18nService,
+               private endangeredLanguageService: EndangeredLanguageService,
                @Inject(TRANSLATION_SERVICE) private translationService: ITranslationService,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
                private imageRenderingService: ImageRenderingService) {
@@ -113,7 +115,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
   }
 
   loadTranslations(words: string[], loadingPopUp?: MatDialogRef<any>) {
-    this.translationService.translate(words, this.i18n.currentLanguage.code, 1).then(
+    this.translationService.translate(words, this.i18n.currentLanguage.code, this.endangeredLanguageService.currentLanguage.code, 1).then(
       translations => {
         console.log('Translations loaded');
         if (loadingPopUp) {

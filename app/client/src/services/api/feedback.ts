@@ -25,6 +25,8 @@ export class APIFeedbackService implements IFeedbackService {
       primary_word: feedback.word ? feedback.word.toLowerCase() : feedback.word,
       english_word: feedback.englishWord ? feedback.englishWord.toLowerCase() : feedback.englishWord,
       translation: feedback.nativeWord ? feedback.nativeWord.toLowerCase() : feedback.nativeWord,
+      language: feedback.language,
+      native_language: feedback.nativeLanguage,
       transliteration: feedback.transliteration ? feedback.transliteration.toLowerCase() : feedback.transliteration,
       sound_link: soundUrl,
       types: feedback.types,
@@ -46,6 +48,8 @@ export class APIFeedbackService implements IFeedbackService {
       english_word: word.englishWord ? word.englishWord.toLowerCase() : word.englishWord,
       translation: word.nativeWord ? word.nativeWord.toLowerCase() : word.nativeWord,
       transliteration: word.transliteration ? word.transliteration.toLowerCase() : word.transliteration,
+      language: word.language,
+      native_language: word.nativeLanguage,
       sound_link: soundUrl
     };
     await this.http.post(this.config.addWordEndpointURL, requestBody, { responseType: 'text' }).toPromise();
