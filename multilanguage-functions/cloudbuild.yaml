@@ -9,9 +9,9 @@ steps:
     dir: './cloud-builders-community/firebase'
 
   - name: 'gcr.io/cloud-builders/npm'
-    dir: 'functions'
+    dir: 'multilanguage-functions'
     args: ['install']
 
   - name: 'gcr.io/$PROJECT_ID/firebase'
-    dir: 'functions'
+    dir: 'multilanguage-functions'
     args: [ 'deploy', '--only', 'functions', '--project', '${PROJECT_ID}']
