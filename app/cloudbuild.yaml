@@ -23,6 +23,10 @@ steps:
     name: hashicorp/terraform:light
     args: ["init"]
     dir: "./app/terraform"
+  - id: 'import_terraform_app'
+    name: hashicorp/terraform:light
+    args: ["import", "google_app_engine_application.app", "$PROJECT_ID", "||", "echo", '"Failed importing app"']
+    dir: "./app/terraform"
   - id: 'run_terraform'
     name: hashicorp/terraform:light
     args: ["apply", "-auto-approve",
