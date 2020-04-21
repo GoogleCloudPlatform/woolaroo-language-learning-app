@@ -38,26 +38,14 @@ exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
         fs.writeFileSync(tempLocalPath, nodeBuffer);
         const command = new ffmpeg(tempLocalPath).toFormat('mp3').save(targetTempFilePath);
         await promisifyCommand(command);
-
+        // upload to drive
         const drive = google.drive({version: 'v3'});
         const file = await drive.files.create({
-            parents: [ functions.config().audioSuggestions.folder_id ],
-            requestBody: fs.readFileSync(targetTempFilePath)
+            parents: [ functions.config().audio_suggestions.folder_id ],
+            requestBody: await fs.readFile(targetTempFilePath)
         });
-        console.log(`Audio saved to ${file.}.`);
-        res.status(200).send(mediaLink);
-        /*await bucket.upload(targetTempFilePath, options);
-        console.log(`Audio saved successfully.`);
-        fs.unlinkSync(tempLocalPath);
-        fs.unlinkSync(targetTempFilePath);
-        // Make the file publicly accessible.
-        var file = bucket.file(filePath);
-        file.makePublic();
-        // Rather than getting the bucket URL, get the public HTTP URL.
-        const metadata = await file.getMetadata();
-        const mediaLink = metadata[0].mediaLink;
-        console.log(`Audio available publicly at ${mediaLink}.`);
-        res.status(200).send(mediaLink);*/
+        console.log(`Audio saved to ${file.webViewLink}.`);
+        res.status(200).send(file.webViewLink);
     });
 });
 
