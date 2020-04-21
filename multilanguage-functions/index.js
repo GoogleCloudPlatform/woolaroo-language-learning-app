@@ -1,6 +1,6 @@
 const fs = require('fs');
 const functions = require('firebase-functions');
-const uuidv1 = require('uuid/v1');
+const {uuidv1} = require('uuid');
 const admin = require('firebase-admin');
 const cors = require('cors')({origin: true});
 const vision = require('@google-cloud/vision');
@@ -35,11 +35,11 @@ exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
         const fileName = uuidv1();
         const tempLocalPath = `/tmp/${fileName}.webm`;
         const targetTempFilePath =  `/tmp/${fileName}.mp3`;
-        fs.writeFileSync(tempLocalPath, nodeBuffer);
+        await fs.writeFile(tempLocalPath, nodeBuffer);
         const command = new ffmpeg(tempLocalPath).toFormat('mp3').save(targetTempFilePath);
         await promisifyCommand(command);
         // upload to drive
-        const drive = google.drive({version: 'v3'});
+        const drive = google.drive({version: 'v3', auth: await getGoogleAPIAuthentication()});
         const file = await drive.files.create({
             parents: [ functions.config().audio_suggestions.folder_id ],
             requestBody: await fs.readFile(targetTempFilePath)
