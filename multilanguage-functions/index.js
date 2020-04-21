@@ -29,24 +29,23 @@ function promisifyCommand(command) {
 
 exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
     return cors(req, res, async () => {
-        // Convert base64 body to blob of webm.
-        const fileName = uuidv1();
+        // convert base64 body to blob of webm
         const nodeBuffer = Buffer.from(req.body, 'base64');
-        var tempLocalPath = `/tmp/${fileName}.webm`;
+        // convert to mp3
+        const fileName = uuidv1();
+        const tempLocalPath = `/tmp/${fileName}.webm`;
         const targetTempFilePath =  `/tmp/${fileName}.mp3`;
         fs.writeFileSync(tempLocalPath, nodeBuffer);
-        var command = new ffmpeg(tempLocalPath)
-            .toFormat('mp3')
-            .save(targetTempFilePath);
+        const command = new ffmpeg(tempLocalPath).toFormat('mp3').save(targetTempFilePath);
         await promisifyCommand(command);
 
         const drive = google.drive({version: 'v3'});
-        drive.files.create({
-            parents: [ functions.config().audioSuggestions.folder_id],
-            requestBody: {
-
-            }
+        const file = await drive.files.create({
+            parents: [ functions.config().audioSuggestions.folder_id ],
+            requestBody: fs.readFileSync(targetTempFilePath)
         });
+        console.log(`Audio saved to ${file.}.`);
+        res.status(200).send(mediaLink);
         /*await bucket.upload(targetTempFilePath, options);
         console.log(`Audio saved successfully.`);
         fs.unlinkSync(tempLocalPath);
