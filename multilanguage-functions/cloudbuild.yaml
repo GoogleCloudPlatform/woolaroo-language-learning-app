@@ -15,8 +15,8 @@ steps:
 
   - name: 'gcr.io/$PROJECT_ID/firebase'
     dir: './multilanguage-functions'
-    args: [ 'functions:config:set', 'suggestions.spreadsheet_id="$_SUGGESTIONS_SPREADSHEET"',
-            'feedback.spreadsheet_id="$_FEEDBACK_SPREADSHEET"', '--project', '${PROJECT_ID}']
+    args: [ 'functions:config:set', 'suggestions.spreadsheet_id="${_SUGGESTIONS_SPREADSHEET}"',
+            'feedback.spreadsheet_id="${_FEEDBACK_SPREADSHEET}"', '--project', '${PROJECT_ID}']
 
   - name: 'gcr.io/$PROJECT_ID/firebase'
     dir: './multilanguage-functions'
