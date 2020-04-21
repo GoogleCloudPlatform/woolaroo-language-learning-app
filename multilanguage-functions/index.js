@@ -1,6 +1,6 @@
 const fs = require('fs');
 const functions = require('firebase-functions');
-const uuidv1 = require('uuid/uuidv1');
+const uuidv1 = require('uuid/v1');
 const admin = require('firebase-admin');
 const cors = require('cors')({origin: true});
 const vision = require('@google-cloud/vision');
