@@ -38,7 +38,7 @@
   "wordInPrimaryLanguageRequired": "يجب إضافة الكلمة باللغة العربية",
   "wordInPrimaryLanguageHint": "مثلاً، &amp;مرحبًا&amp;",
   "transliteration": "التحويل الصوتي (اختياري)",
-  "transliterationHint": "كلمة بالحروف اللاتينية، مثل &apos;marhaba&apos;",
+  "transliterationHint": "كلمة بالحروف اللاتينية، مثل 'marhaba'",
   "recordPronunciation": "سجل النطق",
   "saved": "تم الحفظ.",
   "specialCharsInstructions": "للكتابة بأحرف خاصة، يمكنك استخدام  <a>GBoard</a> أو  <a>Keyman</a>.",
