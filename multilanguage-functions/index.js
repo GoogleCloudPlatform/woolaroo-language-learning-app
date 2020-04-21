@@ -7,7 +7,7 @@ const vision = require('@google-cloud/vision');
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 const ffmpeg = require('fluent-ffmpeg');
 ffmpeg.setFfmpegPath(ffmpegPath);
-const {google} = require('googleapis');
+// const {google} = require('googleapis');
 
 admin.initializeApp();
 const projectId = admin.instanceId().app.options.projectId;
