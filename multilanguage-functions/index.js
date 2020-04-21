@@ -7,12 +7,18 @@ const vision = require('@google-cloud/vision');
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 const ffmpeg = require('fluent-ffmpeg');
 ffmpeg.setFfmpegPath(ffmpegPath);
-// const {google} = require('googleapis');
+const {google} = require('googleapis');
 
 admin.initializeApp();
-const projectId = admin.instanceId().app.options.projectId;
-const bucketName = `${projectId}.appspot.com`;
 const visionClient = new vision.v1p3beta1.ImageAnnotatorClient();
+
+async function getGoogleAPIAuthentication() {
+    const auth = new google.auth.GoogleAuth({
+        // Scopes can be specified either as an array or as a single, space-delimited string.
+        scopes: ['https://www.googleapis.com/auth/drive']
+    });
+    return await auth.getClient();
+}
 
 // Makes an ffmpeg command return a promise.
 function promisifyCommand(command) {
@@ -23,6 +29,10 @@ function promisifyCommand(command) {
 
 exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
     return cors(req, res, async () => {
+        const drive = google.drive({version: 'v3'});
+        drive.files.create({
+
+        });
         const fileName = uuidv1();
         const filePath = `suggestions/${fileName}.mp3`
         const options = {
@@ -31,72 +41,95 @@ exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
                 contentType: 'audio/mp3',
             }
         };
-        const bucket = admin.storage().bucket(bucketName);
-        try {
-            // Convert base64 body to blob of webm.
-            const nodeBuffer = Buffer.from(req.body, 'base64');
-            var tempLocalPath = `/tmp/${fileName}.webm`;
-            const targetTempFilePath =  `/tmp/${fileName}.mp3`;
-            fs.writeFileSync(tempLocalPath, nodeBuffer);
-            var command = new ffmpeg(tempLocalPath)
-                .toFormat('mp3')
-                .save(targetTempFilePath);
-            await promisifyCommand(command);
-            await bucket.upload(targetTempFilePath, options);
-            console.log(`Audio saved successfully.`);
-            fs.unlinkSync(tempLocalPath);
-            fs.unlinkSync(targetTempFilePath);
-            // Make the file publicly accessible.
-            var file = bucket.file(filePath);
-            file.makePublic();
-            // Rather than getting the bucket URL, get the public HTTP URL.
-            const metadata = await file.getMetadata();
-            const mediaLink = metadata[0].mediaLink;
-            console.log(`Audio available publicly at ${mediaLink}.`);
-            res.status(200).send(mediaLink);
-        } catch (err) {
-            console.log(`Unable to upload audio ${err}`)
-        }
+        // Convert base64 body to blob of webm.
+        const nodeBuffer = Buffer.from(req.body, 'base64');
+        var tempLocalPath = `/tmp/${fileName}.webm`;
+        const targetTempFilePath =  `/tmp/${fileName}.mp3`;
+        fs.writeFileSync(tempLocalPath, nodeBuffer);
+        var command = new ffmpeg(tempLocalPath)
+            .toFormat('mp3')
+            .save(targetTempFilePath);
+        await promisifyCommand(command);
+        /*await bucket.upload(targetTempFilePath, options);
+        console.log(`Audio saved successfully.`);
+        fs.unlinkSync(tempLocalPath);
+        fs.unlinkSync(targetTempFilePath);
+        // Make the file publicly accessible.
+        var file = bucket.file(filePath);
+        file.makePublic();
+        // Rather than getting the bucket URL, get the public HTTP URL.
+        const metadata = await file.getMetadata();
+        const mediaLink = metadata[0].mediaLink;
+        console.log(`Audio available publicly at ${mediaLink}.`);
+        res.status(200).send(mediaLink);*/
     });
 });
 
-exports.addSuggestions = functions.https.onRequest(async (req, res) => {
+async function saveFeedback(spreadsheetId, sheetTitle, data) {
+    const sheets = google.sheets({version: 'v4', auth: await getGoogleAPIAuthentication()});
+    // find spreadsheet
+    const spreadsheet = (await sheets.spreadsheets.get({spreadsheetId: spreadsheetId, fields: 'sheets(properties.title)'})).data;
+    if(!spreadsheet) {
+        throw new Error("Spreadsheet not found");
+    }
+    // find sheet
+    const sheet = spreadsheet.sheets.find(sh => sh.properties.title === sheetTitle);
+    if(!sheet) {
+        // sheet does not exist - create it
+        await sheets.spreadsheets.batchUpdate({ spreadsheetId: spreadsheetId, requestBody: {
+                "requests": [ {
+                    "addSheet": {
+                        "properties": {
+                            "title": sheetTitle,
+                            "sheetType": "GRID"
+                        }
+                    }
+                } ]
+            } })
+    }
+    // append data to sheet
+    await sheets.spreadsheets.values.append({
+        spreadsheetId: spreadsheetId,
+        range: sheetTitle + '!A1',
+        valueInputOption: 'RAW',
+        requestBody: { values: [data] }
+    });
+}
+
+exports.addSuggestion = functions.https.onRequest(async (req, res) => {
     return cors(req, res, async () => {
-        await admin.firestore().collection('suggestions').add({
-            english_word: req.body.english_word || '',
-            primary_word: req.body.primary_word || '',
-            translation: req.body.translation || '',
-            transliteration: req.body.transliteration || '',
-            sound_link: req.body.sound_link || '',
-            primary_language: req.body.language || '',
-            translation_language: req.body.native_language || '',
-            timestamp: admin.firestore.FieldValue.serverTimestamp()
-        });
-        console.log('Translation suggestions saved.');
+        await saveFeedback(functions.config().suggestions.spreadsheet_id, req.body.native_language, [
+            req.body.language || '',
+            req.body.native_language || '',
+            req.body.english_word || '',
+            req.body.primary_word || '',
+            req.body.translation || '',
+            req.body.transliteration || '',
+            req.body.sound_link || '',
+            new Date()
+        ]);
         res.status(200).send("Translation suggestions saved.");
     });
 });
 
 exports.addFeedback = functions.https.onRequest(async (req, res) => {
     return cors(req, res, async () => {
-        await admin.firestore().collection('feedback').add({
-            english_word: req.body.english_word || '',
-            primary_word: req.body.primary_word || '',
-            translation: req.body.translation || '',
-            transliteration: req.body.transliteration || '',
-            primary_language: req.body.language || '',
-            translation_language: req.body.native_language || '',
-            sound_link: req.body.sound_link || '',
-            types: req.body.types || '',
-            content: req.body.content || '',
-            timestamp: admin.firestore.FieldValue.serverTimestamp()
-        });
-        res.status(200).send("feedback saved.");
+        await saveFeedback(functions.config().feedback.spreadsheet_id, req.body.native_language, [
+            req.body.language || '',
+            req.body.native_language || '',
+            req.body.english_word || '',
+            req.body.primary_word || '',
+            req.body.translation || '',
+            req.body.transliteration || '',
+            req.body.sound_link || '',
+            req.body.types || '',
+            req.body.content || '',
+            new Date()
+        ]);
+        res.status(200).send("Feedback saved.");
     });
 });
 
-// For App, which will be used by app users
-// https://us-central1-barnard-project.cloudfunctions.net/getTranslations
 exports.getTranslations = functions.https.onRequest(async (req, res) => {
     const english_words = req.body.english_words || [];
     const primary_language = req.body.primary_language || '';
@@ -119,7 +152,6 @@ exports.getTranslations = functions.https.onRequest(async (req, res) => {
     });
 });
 
-// For App, a quick fix to support multiple langauges.
 function createTranslationResponseForApp(data, primary_language, target_language) {
     if (data === undefined) {
         return {
