@@ -8,10 +8,11 @@ steps:
     args: [ 'builds', 'submit', '--config', 'cloudbuild.yaml', '.']
     dir: './cloud-builders-community/firebase'
 
-  - name: 'gcr.io/cloud-builders/npm'
-    dir: 'multilanguage-functions'
+  - name: 'node:8'
+    dir: './multilanguage-functions'
+    entrypoint: 'npm'
     args: ['install']
 
   - name: 'gcr.io/$PROJECT_ID/firebase'
-    dir: 'multilanguage-functions'
+    dir: './multilanguage-functions'
     args: [ 'deploy', '--only', 'functions', '--project', '${PROJECT_ID}']
