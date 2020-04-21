@@ -9,7 +9,7 @@ steps:
       if [ 0 -eq $(gsutil ls -p "${PROJECT_ID}" | grep -c "gs://${_TERRAFORM_BUCKET_NAME}") ]; then
         gsutil mb -p "${PROJECT_ID}" "gs://${_TERRAFORM_BUCKET_NAME}/"
       else
-        echo "terraform state bucket named ${_TERRAFORM_BUCKET_NAME} already exists, skipping gsutil mb"
+        echo "Terraform state bucket named ${_TERRAFORM_BUCKET_NAME} already exists, skipping gsutil mb"
       fi
   - id: 'configure_terraform'
     name: node:10.16.3
@@ -25,7 +25,10 @@ steps:
     dir: "./app/terraform"
   - id: 'import_terraform_app'
     name: hashicorp/terraform:light
-    args: ["import", "google_app_engine_application.app", "$PROJECT_ID", "||", "echo", '"Failed importing app"']
+    entrypoint: "sh"
+    args:
+    - '-c'
+    - terraform import google_app_engine_application.app $PROJECT_ID || echo "App not imported"
     dir: "./app/terraform"
   - id: 'run_terraform'
     name: hashicorp/terraform:light
