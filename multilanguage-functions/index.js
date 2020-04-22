@@ -135,8 +135,7 @@ exports.getTranslations = functions.https.onRequest(async (req, res) => {
         return collectionRef.doc(english_word).get()
     });
     Promise.all(promises).then(docs => {
-        const translations = docs.map(x => createTranslationResponseForApp(x.data(), primary_language, target_language));
-        console.log(translations);
+        const translations = docs.map(x => createTranslationResponseForApp(x, primary_language, target_language));
         res.set('Access-Control-Allow-Origin', "*");
         res.set('Access-Control-Allow-Methods', 'GET, POST');
         res.set('Access-Control-Allow-Headers', 'Content-Type');
@@ -148,8 +147,9 @@ exports.getTranslations = functions.https.onRequest(async (req, res) => {
     });
 });
 
-function createTranslationResponseForApp(data, primary_language, target_language) {
-    if (data === undefined) {
+function createTranslationResponseForApp(doc, primary_language, target_language) {
+    const data = doc.data();
+    if (!data) {
         return {
             english_word: "",
             primary_word: "",
@@ -161,7 +161,7 @@ function createTranslationResponseForApp(data, primary_language, target_language
         const primaryTranslation = data[primary_language];
         const targetTranslation = data[target_language];
         return {
-            english_word: data.english_word || '',
+            english_word: doc.id,
             primary_word: primaryTranslation ? primaryTranslation.translation || '' : '',
             translation: targetTranslation ? targetTranslation.translation || '' : '',
             transliteration: targetTranslation ? targetTranslation.transliteration || '' : '',
