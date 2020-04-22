@@ -6,17 +6,14 @@ const cors = require('cors')({origin: true});
 const vision = require('@google-cloud/vision');
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 const ffmpeg = require('fluent-ffmpeg');
-ffmpeg.setFfmpegPath(ffmpegPath);
 const {google} = require('googleapis');
 
+ffmpeg.setFfmpegPath(ffmpegPath);
 admin.initializeApp();
 const visionClient = new vision.v1p3beta1.ImageAnnotatorClient();
 
 async function getGoogleAPIAuthentication() {
-    const auth = new google.auth.GoogleAuth({
-        // Scopes can be specified either as an array or as a single, space-delimited string.
-        scopes: ['https://www.googleapis.com/auth/drive']
-    });
+    const auth = new google.auth.GoogleAuth({ scopes: ['https://www.googleapis.com/auth/drive'] });
     return await auth.getClient();
 }
 
@@ -127,47 +124,35 @@ exports.addFeedback = functions.https.onRequest(async (req, res) => {
 });
 
 exports.getTranslations = functions.https.onRequest(async (req, res) => {
-    const english_words = req.body.english_words || [];
-    const primary_language = req.body.primary_language || '';
-    const target_language = req.body.target_language || '';
-    const collectionRef = admin.firestore().collection("translations");
-    const promises = english_words.map(async english_word => {
-        return collectionRef.doc(english_word).get()
-    });
-    Promise.all(promises).then(docs => {
-        const translations = docs.map(x => createTranslationResponseForApp(x, primary_language, target_language));
-        res.set('Access-Control-Allow-Origin', "*");
-        res.set('Access-Control-Allow-Methods', 'GET, POST');
-        res.set('Access-Control-Allow-Headers', 'Content-Type');
-        res.status(200).send(translations);
-        return "200"
-    }).catch(function(error) {
-        console.log("Internal server error", error);
-        res.status(500).send(error)
+    return cors(req, res, async () => {
+        const english_words = req.body.english_words || [];
+        const primary_language = req.body.primary_language || '';
+        const target_language = req.body.target_language || '';
+        const collectionRef = admin.firestore().collection("translations");
+        const promises = english_words.map(async english_word => {
+            return collectionRef.doc(english_word).get()
+        });
+        Promise.all(promises).then(docs => {
+            const translations = docs.map(x => createTranslationResponseForApp(x, primary_language, target_language));
+            res.status(200).send(translations);
+        }).catch(function(error) {
+            console.log("Internal server error", error);
+            res.status(500).send(error)
+        });
     });
 });
 
 function createTranslationResponseForApp(doc, primary_language, target_language) {
     const data = doc.data();
-    if (!data) {
-        return {
-            english_word: "",
-            primary_word: "",
-            translation: "",
-            transliteration: "",
-            sound_link: ""
-        };
-    } else {
-        const primaryTranslation = data[primary_language];
-        const targetTranslation = data[target_language];
-        return {
-            english_word: doc.id,
-            primary_word: primaryTranslation ? primaryTranslation.translation || '' : '',
-            translation: targetTranslation ? targetTranslation.translation || '' : '',
-            transliteration: targetTranslation ? targetTranslation.transliteration || '' : '',
-            sound_link: targetTranslation ? targetTranslation.sound_link || '' : ''
-        };
-    }
+    const primaryTranslation = data ? data[primary_language] : null;
+    const targetTranslation = data ? data[target_language] : null;
+    return {
+        english_word: doc.id,
+        primary_word: primaryTranslation ? primaryTranslation.translation || '' : '',
+        translation: targetTranslation ? targetTranslation.translation || '' : '',
+        transliteration: targetTranslation ? targetTranslation.transliteration || '' : '',
+        sound_link: targetTranslation ? targetTranslation.sound_link || '' : ''
+    };
 }
 
 exports.visionAPI = functions.https.onRequest(async (req, res) => {
