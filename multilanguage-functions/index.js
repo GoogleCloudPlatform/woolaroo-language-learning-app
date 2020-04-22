@@ -40,12 +40,24 @@ exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
         await promisifyCommand(command);
         // upload to drive
         const drive = google.drive({version: 'v3', auth: await getGoogleAPIAuthentication()});
-        const file = await drive.files.create({
-            parents: [ functions.config().audio_suggestions.folder_id ],
-            requestBody: await fs.readFile(targetTempFilePath)
-        });
-        console.log(`Audio saved to ${file.webViewLink}.`);
-        res.status(200).send(file.webViewLink);
+        const createResponse = (await drive.files.create({
+            requestBody: {
+                parents: [ functions.config().audio_suggestions.folder_id ],
+                mimeType: 'audio/mp3',
+                name: `${fileName}.mp3`
+            },
+            media: {
+                mimeType: 'audio/mp3',
+                body: fs.createReadStream(targetTempFilePath),
+            }
+        }));
+        const fileId = createResponse.data.id;
+        const file = (await drive.files.get({
+            fileId: fileId,
+            fields: 'webContentLink'
+        })).data;
+        console.log(`Audio saved to ${file.webContentLink}.`);
+        res.status(200).send(file.webContentLink);
     });
 });
 
@@ -80,7 +92,7 @@ async function saveFeedback(spreadsheetId, sheetTitle, data) {
     });
 }
 
-exports.addSuggestion = functions.https.onRequest(async (req, res) => {
+exports.addSuggestions = functions.https.onRequest(async (req, res) => {
     return cors(req, res, async () => {
         await saveFeedback(functions.config().suggestions.spreadsheet_id, req.body.native_language, [
             req.body.language || '',

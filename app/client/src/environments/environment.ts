@@ -5,7 +5,7 @@ import { APIFeedbackService } from 'services/api/feedback';
 import { SafeSearchLikelihood } from 'services/google/image-recognition';
 import { APIImageRecognitionService } from 'services/api/image-recognition';
 
-const baseEndpointUrl = 'https://us-central1-barnard-sicilian.cloudfunctions.net';
+const baseEndpointUrl = 'https://us-central1-ggl-woolaroo-multilang-uat.cloudfunctions.net';
 const debugImageUrl = '/assets/debug/IMG_20190920_141505.jpg';
 
 export const environment = {
