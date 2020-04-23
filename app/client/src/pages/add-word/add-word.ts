@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, LOCALE_ID, NgZone} from '@angular/core';
+import { AfterViewInit, Component, Inject, NgZone } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -10,7 +10,7 @@ import { FEEDBACK_SERVICE, IFeedbackService } from 'services/feedback';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
 import { WordTranslation } from 'services/entities/translation';
 import { environment } from 'environments/environment';
-import {DEFAULT_LOCALE, getBaseLocale} from "../../util/locale";
+import { DEFAULT_LOCALE } from "../../util/locale";
 import { I18nService } from 'i18n/i18n.service';
 import { EndangeredLanguageService } from '../../services/endangered-language';
 import { AddedWord } from '../../services/entities/feedback';
@@ -35,11 +35,10 @@ export class AddWordPageComponent implements AfterViewInit {
                private i18n: I18nService,
                private endangeredLanguageService: EndangeredLanguageService,
                @Inject(FEEDBACK_SERVICE) private feedbackService: IFeedbackService,
-               @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
-               @Inject(LOCALE_ID) private locale:string ) {
+               @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {
     const word: WordTranslation = history.state.word;
     this.form = new FormGroup({
-      word: new FormControl(word ? word.original : '', getBaseLocale(locale) != DEFAULT_LOCALE ? [
+      word: new FormControl(word ? word.original : '', this.i18n.currentLanguage.code != DEFAULT_LOCALE ? [
         Validators.required
       ] : []),
       nativeWord: new FormControl(word ? word.translation : '', [
@@ -71,6 +70,9 @@ export class AddWordPageComponent implements AfterViewInit {
     this.submittingForm = true;
     const loadingPopup = this.dialog.open(LoadingPopUpComponent, { panelClass: 'loading-popup' });
     const addedWord: AddedWord = this.form.value;
+    if(!addedWord.word && this.i18n.currentLanguage.code == DEFAULT_LOCALE) {
+      addedWord.word = addedWord.englishWord;
+    }
     addedWord.language = this.i18n.currentLanguage.code;
     addedWord.nativeLanguage = this.endangeredLanguageService.currentLanguage.code;
     this.feedbackService.addWord(this.form.value).then(
