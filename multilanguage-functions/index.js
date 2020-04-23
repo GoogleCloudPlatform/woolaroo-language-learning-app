@@ -127,7 +127,7 @@ exports.addFeedback = functions.https.onRequest(async (req, res) => {
             req.body.translation || '',
             req.body.transliteration || '',
             req.body.sound_link || '',
-            req.body.types || '',
+            req.body.types ? req.body.types.join(', ') : '',
             req.body.content || '',
             new Date()
         ]);
