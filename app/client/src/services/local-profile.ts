@@ -15,7 +15,7 @@ export class LocalProfileService implements IProfileService {
       }
     }
     if (!profile) {
-      profile = { termsAgreed: false, introViewed: false };
+      profile = { termsAgreed: false, introViewed: false, language: null, endangeredLanguage: null };
     }
     return Promise.resolve(profile);
   }

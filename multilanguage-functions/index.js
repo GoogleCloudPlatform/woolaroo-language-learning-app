@@ -24,6 +24,18 @@ function promisifyCommand(command) {
     });
 }
 
+async function writeFileAsync(path, buffer) {
+    return new Promise((resolve, reject) => {
+        fs.writeFile(path, buffer, (err) => {
+            if(err) {
+                reject(err);
+            } else {
+                resolve();
+            }
+        });
+    });
+}
+
 exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
     return cors(req, res, async () => {
         // convert base64 body to blob of webm
@@ -32,7 +44,7 @@ exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
         const fileName = uuidv1();
         const tempLocalPath = `/tmp/${fileName}.webm`;
         const targetTempFilePath =  `/tmp/${fileName}.mp3`;
-        await fs.writeFile(tempLocalPath, nodeBuffer);
+        await writeFileAsync(tempLocalPath, nodeBuffer);
         const command = new ffmpeg(tempLocalPath).toFormat('mp3').save(targetTempFilePath);
         await promisifyCommand(command);
         // upload to drive

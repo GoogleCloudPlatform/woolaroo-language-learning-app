@@ -31,10 +31,11 @@ export class EndangeredLanguageService {
     if(code == this._currentLanguage.code) {
       return;
     }
-    const newLanguage = this.config.languages.find(lang => lang.default);
+    const newLanguage = this.config.languages.find(lang => lang.code === code);
     if(!newLanguage) {
       throw new Error("Language not found: " + code);
     }
+    console.log("Endangered language changed: " + code);
     this._currentLanguage = newLanguage;
     this.currentLanguageChanged.emit(this._currentLanguage.code);
   }

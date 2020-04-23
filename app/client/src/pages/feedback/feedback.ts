@@ -36,14 +36,10 @@ export class FeedbackPageComponent implements AfterViewInit {
     const word = history.state.word;
     this.feedbackForm = new FormGroup({
       word: new FormControl(word ? word.original : ''),
-      nativeWord: new FormControl(word ? word.translation : '', [
-      ]),
-      englishWord: new FormControl(word ? word.english : '', [
-      ]),
-      transliteration: new FormControl(word ? word.transliteration : '', [
-      ]),
-      recording: new FormControl(null, [
-      ]),
+      nativeWord: new FormControl(word ? word.translation : '', []),
+      englishWord: new FormControl(word ? word.english : '', []),
+      transliteration: new FormControl(word ? word.transliteration : '', []),
+      recording: new FormControl(null, []),
       content: new FormControl('', [
         Validators.required
       ]),
@@ -52,7 +48,6 @@ export class FeedbackPageComponent implements AfterViewInit {
       ])
     });
     this.prevPageCssClass = history.state.prevPageCssClass;
-    console.log(this.prevPageCssClass);
   }
 
   ngAfterViewInit() {

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { I18nService, Language } from '../../i18n/i18n.service';
-import { EndangeredLanguageService, EndangeredLanguage } from '../../services/endangered-language';
+import { I18nService, Language } from 'i18n/i18n.service';
+import { EndangeredLanguageService, EndangeredLanguage } from 'services/endangered-language';
 
 @Component({
   selector: 'language-selector',
@@ -20,6 +20,8 @@ export class LanguageSelectorComponent {
     this.endangeredLanguageService.setLanguage(code);
   }
 
-  constructor(private i18n:I18nService, private endangeredLanguageService: EndangeredLanguageService) {
+  constructor(
+    private i18n:I18nService,
+    private endangeredLanguageService: EndangeredLanguageService) {
   }
 }
