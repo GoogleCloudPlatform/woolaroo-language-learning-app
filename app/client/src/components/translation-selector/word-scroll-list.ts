@@ -143,7 +143,7 @@ export class WordScrollListComponent implements AfterViewChecked {
     } else {
       const wordIndex = this.getWordIndexFromPosition(this.dragInfo.lastClientX, this.dragInfo.lastClientY);
       this.dragInfo = null;
-      if(wordIndex >= 0) {
+      if(wordIndex >= 0 && this._translations && wordIndex < this._translations.length) {
         this.scrollToWord(wordIndex);
       }
     }
