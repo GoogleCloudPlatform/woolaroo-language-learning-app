@@ -11,13 +11,3 @@ services:
     volumes:
       - ./client:/var/www/app
       - /var/www/app/node_modules/
-  server:
-    build:
-      context: ./server
-      dockerfile: Dockerfile-dev
-    ports:
-      - "3000:3000"
-    tty: true
-    volumes:
-      - ./server:/var/www/server
-      - /var/www/server/node_modules/

@@ -1,5 +1,0 @@
-/src
-/node_modules
-/Dockerfile-dev
-/tsconfig.json
-/.dockerignore
