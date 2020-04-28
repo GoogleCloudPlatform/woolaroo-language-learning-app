@@ -23,18 +23,5 @@
       min-width: 155px;
       margin: 0 5px;
     }
-
-    .load-photo {
-      // Move padding from button to label, so file select is
-      // triggered wherever the user clicks, not just on the button text
-      padding: 0;
-      vertical-align: top;
-
-      ::ng-deep {
-        label {
-          padding: 4px 20px;
-        }
-      }
-    }
   }
 }
