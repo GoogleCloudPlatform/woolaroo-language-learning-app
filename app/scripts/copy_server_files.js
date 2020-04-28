@@ -30,20 +30,27 @@ const CDN_BASE_URL = process.argv[argIndex++];
 if(!CDN_BASE_URL) {
     throw new Error('CDN base URL not set');
 }
-const SERVICE_WORKER_DEST_DIR = process.argv[argIndex++];
-if(!SERVICE_WORKER_DEST_DIR) {
-    throw new Error('Service worker destination path not set');
+const ASSETS_DEST_DIR = process.argv[argIndex++];
+if(!ASSETS_DEST_DIR) {
+    throw new Error('Assets destination path not set');
 }
-
-fs.copyFileSync(path.join(process.cwd(), INDEX_FILE), path.join(process.cwd(), DEST_INDEX_FILE));
-const serviceWorkerDestDir = path.join(process.cwd(), SERVICE_WORKER_DEST_DIR);
+// create index destination directory
+const indexDestDir = path.dirname(path.join(process.cwd(), DEST_INDEX_FILE));
 try {
-    fs.mkdirSync(serviceWorkerDestDir, {recursive: true});
+    fs.mkdirSync(indexDestDir, {recursive: true});
 } catch(err) {
     console.warn("Error creating service worker dir", err);
 }
-fs.copyFileSync(path.join(process.cwd(), SERVICE_WORKER_FILE), path.join(serviceWorkerDestDir, path.basename(SERVICE_WORKER_FILE)));
-fs.copyFileSync(path.join(process.cwd(), FAVICON_FILE), path.join(serviceWorkerDestDir, path.basename(FAVICON_FILE)));
+// create assets destination directory
+const assetsDestDir = path.join(process.cwd(), ASSETS_DEST_DIR);
+try {
+    fs.mkdirSync(assetsDestDir, {recursive: true});
+} catch(err) {
+    console.warn("Error creating assets dir", err);
+}
+fs.copyFileSync(path.join(process.cwd(), INDEX_FILE), path.join(process.cwd(), DEST_INDEX_FILE));
+fs.copyFileSync(path.join(process.cwd(), SERVICE_WORKER_FILE), path.join(assetsDestDir, path.basename(SERVICE_WORKER_FILE)));
+fs.copyFileSync(path.join(process.cwd(), FAVICON_FILE), path.join(assetsDestDir, path.basename(FAVICON_FILE)));
 
 let serviceWorkerData = JSON.parse(fs.readFileSync(path.join(process.cwd(), SERVICE_WORKER_DATA_FILE), 'utf-8'));
 for(const group of serviceWorkerData.assetGroups) {
@@ -63,13 +70,13 @@ for(const url of Object.keys(serviceWorkerData.hashTable)) {
     }
 }
 serviceWorkerData.hashTable = newHashTable;
-fs.writeFileSync(path.join(serviceWorkerDestDir, path.basename(SERVICE_WORKER_DATA_FILE)), JSON.stringify(serviceWorkerData));
+fs.writeFileSync(path.join(assetsDestDir, path.basename(SERVICE_WORKER_DATA_FILE)), JSON.stringify(serviceWorkerData));
 
 let manifest = JSON.parse(fs.readFileSync(path.join(process.cwd(), WEBMANIFEST_FILE), 'utf-8'));
 for(const icon of manifest.icons) {
     icon.src = getAssetURL(icon.src);
 }
-fs.writeFileSync(path.join(serviceWorkerDestDir, path.basename(WEBMANIFEST_FILE)), JSON.stringify(manifest));
+fs.writeFileSync(path.join(assetsDestDir, path.basename(WEBMANIFEST_FILE)), JSON.stringify(manifest));
 
 function getAssetURL(url) {
     // remove starting slash - need URL to be relative to cdn base URL
