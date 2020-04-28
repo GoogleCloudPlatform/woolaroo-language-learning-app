@@ -2,7 +2,9 @@
   <mat-toolbar>
     <button class="close" (click)="onCloseClick($event)"><app-icon icon="close"></app-icon></button>
     <span [innerHTML]="'Feedback' | translate:'feedbackTitle'"></span>
-    <button mat-button color="primary" class="submit" type="submit" [innerHTML]="'Submit' | translate:'submit'"></button>
+    <button mat-button color="primary" class="submit" type="submit">
+      <span [innerHTML]="'Submit' | translate:'submit'"></span>
+    </button>
   </mat-toolbar>
   <div class="content">
     <p class="mat-body-1 instructions" [innerHTML]="'Help us improve Woolaroo\'s translations by sharing your feedback with us:' | translate:'feedbackInstructions'"></p>
