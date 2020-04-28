@@ -5,6 +5,7 @@ import { I18nService } from 'i18n/i18n.service';
 import { filter } from 'rxjs/operators';
 import { EndangeredLanguageService } from '../services/endangered-language';
 import { IProfileService, PROFILE_SERVICE } from '../services/profile';
+import { Directionality } from '@angular/cdk/bidi';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ export class AppComponent implements OnInit {
               private sessionService: SessionService,
               private i18nService: I18nService,
               private endangeredLanguageService: EndangeredLanguageService,
+              private dir: Directionality,
               @Inject(PROFILE_SERVICE) private profileService: IProfileService) {
     // restore page state on back navigation
     this.router.events.pipe(

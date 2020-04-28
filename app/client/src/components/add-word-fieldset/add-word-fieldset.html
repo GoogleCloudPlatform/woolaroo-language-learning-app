@@ -40,6 +40,7 @@
     </span>
   </div>
   <div class="special-chars">
-    <span *ngIf="operatingSystem === operatingSystemValues.Android || operatingSystem === operatingSystemValues.iOS" [innerHTML]="'Want to type special characters? Try <a href=\'${gboardUrl}\'>GBoard</a> or <a href=\'${keymanUrl}\'>Keyman</a>' | translate:'specialCharsInstructions'"></span>
+    <span *ngIf="operatingSystem === operatingSystemValues.Android || operatingSystem === operatingSystemValues.iOS"
+          [innerHTML]="'Want to type special characters? Try <a href=\'${gboardUrl}\'>GBoard</a> or <a href=\'${keymanUrl}\'>Keyman</a>' | translate:'specialCharsInstructions'"></span>
   </div>
 </div>

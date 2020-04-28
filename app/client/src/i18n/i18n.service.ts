@@ -1,13 +1,12 @@
 import { EventEmitter, Inject, Injectable, InjectionToken } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
-export type LanguageDirection = 'ltr'|'rtl';
+import { Direction } from '@angular/cdk/bidi';
 
 export interface Language {
   code: string;
   name: string;
   file: string;
-  direction: LanguageDirection;
+  direction: Direction;
   default: boolean;
 }
 
@@ -24,7 +23,7 @@ export class I18nService {
   private _currentLanguage: Language;
   public get currentLanguage():Language { return this._currentLanguage; }
 
-  public readonly currentLanguageChanged:EventEmitter<string> = new EventEmitter();
+  public readonly currentLanguageChanged:EventEmitter<Language> = new EventEmitter();
 
   public get languages(): Language[] { return this.config.languages; }
 
@@ -52,7 +51,7 @@ export class I18nService {
       this._translations = {};
     }
     console.log(`Translations loaded: ${lang.code}`);
-    this.currentLanguageChanged.emit(lang.code);
+    this.currentLanguageChanged.emit(lang);
   }
 
   getTranslation(key: string) {
