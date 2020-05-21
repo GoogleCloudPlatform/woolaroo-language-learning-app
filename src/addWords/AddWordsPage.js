@@ -161,7 +161,7 @@ class AddWordsPage extends ListPageBase {
               and their translations. You can either upload words in bulk from a
               Google Sheet or .csv file, or add them in one by one.
             </Typography>
-
+            {/* Removed Bulk Upload acording to revision comms */}
             {/* <Typography variant="h5" className="bulk-upload">
               Bulk Upload
             </Typography>
