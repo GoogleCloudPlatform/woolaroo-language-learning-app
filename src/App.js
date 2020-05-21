@@ -182,7 +182,7 @@ class App extends React.Component {
           <Route path={ROUTES.ADD_WORDS} component={AddWordsPage} />
           <Route exact path={[ROUTES.TRANSLATIONS, "/translations/:pageNum"]} component={TranslationsPageWithRouter} />
           <Route path={ROUTES.CONTRIBUTIONS} component={ContributionsPage} />
-          <Route path={ROUTES.THEME} render={(props) => <ThemePage {...props} landing_image={LANDING_IMG}/>} />
+          {/* <Route path={ROUTES.THEME} render={(props) => <ThemePage {...props} landing_image={LANDING_IMG}/>} /> */}
           <Route path={ROUTES.SHARING} component={SharingPage} />
           <Route path={ROUTES.MANAGEMENT} component={ManagementPage} />
         </div>
