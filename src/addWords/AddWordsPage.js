@@ -162,7 +162,7 @@ class AddWordsPage extends ListPageBase {
               Google Sheet or .csv file, or add them in one by one.
             </Typography>
 
-            <Typography variant="h5" className="bulk-upload">
+            {/* <Typography variant="h5" className="bulk-upload">
               Bulk Upload
             </Typography>
             <Typography variant="subtitle1" className="prompt-text">
@@ -186,7 +186,7 @@ class AddWordsPage extends ListPageBase {
               >
                 <AddIcon style={{ marginRight: "10px" }} /> Add from Drive
               </Button>
-            </div>
+            </div> */}
             <hr className="hr-divider" data-content="or" />
           </div>
           {this.renderIndividualWords_()}
