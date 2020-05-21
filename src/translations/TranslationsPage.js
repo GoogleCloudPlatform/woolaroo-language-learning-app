@@ -61,7 +61,7 @@ class TranslationsPage extends ListPageBase {
         listItemTag: TranslationListItem,
         collectionName: "translations",
         pageSize: 25,
-        completeState: "incomplete",
+        completeState: "all",
         needsRecording: !!(needsRecording && needsRecording !== "0"),
         top500: top500 !== "0",
         pageNum: pageNum || 1,
