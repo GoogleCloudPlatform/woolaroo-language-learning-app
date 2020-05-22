@@ -9,6 +9,7 @@ import { withRouter } from "react-router-dom";
 import { Breakpoint } from "react-socks";
 import "./Header.scss";
 import HamburgerNavMenu from "../navmenu/HamburgerNavMenu";
+import AuthUtils from '../utils/AuthUtils';
 import GoogleLogo from "../assets/google-logo.png";
 
 class Header extends React.Component {
@@ -98,7 +99,7 @@ class Header extends React.Component {
             <img src={GoogleLogo} alt="Google Logo" />
           </div>
           <div className="profile-picture-container">
-            {/* Profile picture image would go here */}
+            <img src={AuthUtils.getUser().photoURL} alt="User Profile Picture" />
           </div>
         </div>
       );
