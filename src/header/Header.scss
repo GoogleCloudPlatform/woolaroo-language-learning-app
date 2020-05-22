@@ -121,10 +121,17 @@ svg.header-search-icon:hover {
   }
 
   .profile-picture-container {
-    background-color: lightgray;
     border-radius: 50%;
-    min-width: 2em;
-    min-height: 2em;
+    max-width: 2em;
+    max-height: 2em;
+
+    img {
+      border-radius: 50%;
+      object-fit: cover;
+      width: 2em;
+      height: 2em;
+    }
+    
   }
 
 }
