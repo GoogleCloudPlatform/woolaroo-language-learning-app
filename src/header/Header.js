@@ -7,9 +7,10 @@ import SearchIcon from "@material-ui/icons/Search";
 import ExpandIcon from "@material-ui/icons/ExpandMore";
 import { withRouter } from "react-router-dom";
 import { Breakpoint } from "react-socks";
+import { Menu, MenuItem } from "@material-ui/core";
 import "./Header.scss";
 import HamburgerNavMenu from "../navmenu/HamburgerNavMenu";
-import AuthUtils from '../utils/AuthUtils';
+import AuthUtils from "../utils/AuthUtils";
 import GoogleLogo from "../assets/google-logo.png";
 
 class Header extends React.Component {
@@ -27,7 +28,8 @@ class Header extends React.Component {
     this.state = {
       search: this.sanitizeInput_(queryStringParams.get("search")),
       top500: top500 !== "0",
-      needsRecording: !!(needsRecording && needsRecording !== "0")
+      needsRecording: !!(needsRecording && needsRecording !== "0"),
+      anchorEl: null
     };
   }
 
@@ -39,14 +41,14 @@ class Header extends React.Component {
       this.setState({
         search: this.sanitizeInput_(queryStringParams.get("search")),
         top500: top500 !== "0",
-        needsRecording: !!(needsRecording && needsRecording !== "0")
+        needsRecording: !!(needsRecording && needsRecording !== "0"),
       });
     }
   }
 
   handleChange_(e) {
     this.setState({
-      search: this.sanitizeInput_(e.target.value)
+      search: this.sanitizeInput_(e.target.value),
     });
   }
 
@@ -77,7 +79,7 @@ class Header extends React.Component {
         placeholder="Search"
         classes={{
           root: "header-search-root",
-          input: "header-search-input"
+          input: "header-search-input",
         }}
         inputProps={{ "aria-label": "search" }}
         value={this.state.search}
@@ -87,6 +89,10 @@ class Header extends React.Component {
     );
   }
 
+  handleClickProfileMenu = (event) => {
+    this.setState({ anchorEl: event.currentTarget});
+  };
+
   renderAuthButton_() {
     if (this.props.authInitializing) {
       return null;
@@ -94,13 +100,30 @@ class Header extends React.Component {
 
     if (this.props.signedIn) {
       return (
-        <div className="profile-container" onClick={this.props.authAction}>
-          <div className="google-logo-container">
-            <img src={GoogleLogo} alt="Google Logo" />
+        <div>
+          <div className="profile-container" aria-controls="sign-out-menu" aria-haspopup="true" onClick={this.handleClickProfileMenu}>
+            <div className="google-logo-container">
+              <img src={GoogleLogo} alt="Google Logo" />
+            </div>
+            <div className="profile-picture-container">
+              <img
+                src={AuthUtils.getUser().photoURL}
+                alt="User Profile Picture"
+              />
+            </div>
           </div>
-          <div className="profile-picture-container">
-            <img src={AuthUtils.getUser().photoURL} alt="User Profile Picture" />
-          </div>
+          <Menu
+           id="sign-out-menu"
+           anchorEl={this.state.anchorEl}
+           keepMounted
+           open={Boolean(this.state.anchorEl)}
+          >
+            <MenuItem
+              key="sign-out"
+            >
+              Sign Out
+            </MenuItem>
+          </Menu>
         </div>
       );
     } else {
@@ -144,8 +167,9 @@ class Header extends React.Component {
               <ExpandIcon />
             </div>
             <div
-              className={`mobile-search-icon ${!this.props.signedIn &&
-                "hidden"}`}
+              className={`mobile-search-icon ${
+                !this.props.signedIn && "hidden"
+              }`}
             >
               <SearchIcon />
             </div>
