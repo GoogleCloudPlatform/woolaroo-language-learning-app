@@ -29,7 +29,7 @@ class Header extends React.Component {
       search: this.sanitizeInput_(queryStringParams.get("search")),
       top500: top500 !== "0",
       needsRecording: !!(needsRecording && needsRecording !== "0"),
-      anchorEl: null
+      anchorEl: null,
     };
   }
 
@@ -90,7 +90,16 @@ class Header extends React.Component {
   }
 
   handleClickProfileMenu = (event) => {
-    this.setState({ anchorEl: event.currentTarget});
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = (event) => {
+    this.setState({ anchorEl: null });
+  };
+
+  handleSignOutClicked = () => {
+    this.handleClose();
+    this.props.authAction();
   };
 
   renderAuthButton_() {
@@ -101,7 +110,12 @@ class Header extends React.Component {
     if (this.props.signedIn) {
       return (
         <div>
-          <div className="profile-container" aria-controls="sign-out-menu" aria-haspopup="true" onClick={this.handleClickProfileMenu}>
+          <div
+            className="profile-container"
+            aria-controls="sign-out-menu"
+            aria-haspopup="true"
+            onClick={this.handleClickProfileMenu}
+          >
             <div className="google-logo-container">
               <img src={GoogleLogo} alt="Google Logo" />
             </div>
@@ -113,13 +127,25 @@ class Header extends React.Component {
             </div>
           </div>
           <Menu
-           id="sign-out-menu"
-           anchorEl={this.state.anchorEl}
-           keepMounted
-           open={Boolean(this.state.anchorEl)}
+            id="sign-out-menu"
+            anchorEl={this.state.anchorEl}
+            keepMounted
+            open={Boolean(this.state.anchorEl)}
+            getContentAnchorEl={null}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "center",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "center",
+            }}
+            onClose={this.handleClose}
           >
             <MenuItem
               key="sign-out"
+              onClose={this.handleClose}
+              onClick={this.handleSignOutClicked}
             >
               Sign Out
             </MenuItem>
