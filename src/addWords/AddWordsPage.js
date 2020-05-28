@@ -161,32 +161,6 @@ class AddWordsPage extends ListPageBase {
               and their translations. You can either upload words in bulk from a
               Google Sheet or .csv file, or add them in one by one.
             </Typography>
-
-            <Typography variant="h5" className="bulk-upload">
-              Bulk Upload
-            </Typography>
-            <Typography variant="subtitle1" className="prompt-text">
-              Format your file so that the column headers are XX, XX, XX, XX.{" "}
-              <span style={{ textDecoration: "underline" }}>
-                Example spreadsheet
-              </span>
-            </Typography>
-            <div className="header-button-container">
-              <Button
-                color="primary"
-                variant="outlined"
-                className="upload-button"
-              >
-                Upload from Computer
-              </Button>
-              <Button
-                color="primary"
-                variant="outlined"
-                className="add-from-drive"
-              >
-                <AddIcon style={{ marginRight: "10px" }} /> Add from Drive
-              </Button>
-            </div>
             <hr className="hr-divider" data-content="or" />
           </div>
           {this.renderIndividualWords_()}

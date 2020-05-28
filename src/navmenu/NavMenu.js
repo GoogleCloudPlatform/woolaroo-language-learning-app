@@ -62,7 +62,7 @@ class NavMenu extends React.Component {
         <img
           className="add-word-icon"
           src="https://www.gstatic.com/images/icons/material/colored_icons/2x/create_32dp.png"
-          alt="dfsgk"
+          alt="Add word icon"
         />
         <div className="add-word-text">Add word</div>
       </div>
@@ -89,7 +89,6 @@ class NavMenu extends React.Component {
             {this.renderMenuItem("Add Word", ROUTES.ADD_WORDS)}
             {this.renderMenuItem(TRANSLATIONS_LABEL, ROUTES.TRANSLATIONS)}
             {this.renderMenuItem("User Contributions", ROUTES.CONTRIBUTIONS)}
-            {this.renderMenuItem("Theme Customization", ROUTES.THEME)}
             {this.renderMenuItem("Sharing Links", ROUTES.SHARING)}
             {this.renderMenuItem("User Management", ROUTES.MANAGEMENT)}
           </MenuList>
