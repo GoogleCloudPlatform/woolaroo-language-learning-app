@@ -20,6 +20,19 @@ class ContributionListItem extends ListItemBase {
   }
 
   saveContribution_ = async e => {
+    // TODO(smus): While the translation is being saved, show a progress bar and
+    // prevent the button from being clicked again.
+    await this.setStateAsync({disabled: true});
+
+    // First, if there's a new sound_blob, we should upload it and update our
+    // sound_link.
+    const {sound_blob} = this.state;
+    if (sound_blob) {
+      const sound_link = await this.saveSoundBlob_(sound_blob);
+      await this.setStateAsync({sound_link});
+    }
+	
+	// Then, call endpoint to update the feedback/suggestion.
     try {
       let {
         id,
@@ -80,6 +93,7 @@ class ContributionListItem extends ListItemBase {
       } else {
         await this.showPopup("Failed to save. Please try again!");
         console.error(resp.text());
+        await this.setStateAsync({disabled: false});
         return;
       }
     } catch (err) {
@@ -87,6 +101,29 @@ class ContributionListItem extends ListItemBase {
       console.error(err);
     }
   };
+  
+  /** Saves audio and returns the URL. */
+  saveSoundBlob_ = async (blob) => {
+    try {
+      const base64Audio = await blobToBase64(blob);
+      const res = await fetch(`${ApiUtils.origin}${ApiUtils.path}saveAudioSuggestions`, {
+        method: 'POST',
+        body: base64Audio,
+        headers: {
+          'Authorization': await AuthUtils.getAuthHeader(),
+        }
+      });
+      if (res.status === 403) {
+        await this.showPopup('Failed to save. Please try again!');
+        console.error(res.text());
+        return;
+      }
+      return await res.text();
+    } catch(err) {
+      await this.showPopup('Failed to save. Please try again!');
+      console.error(err);
+    }
+  }
 
   renderEndOfRow() {
     return [
@@ -124,6 +161,26 @@ class ContributionListItem extends ListItemBase {
 
     return super.render();
   }
+  
+  async setStateAsync(state) {
+    return new Promise((resolve) => {
+      this.setState(state, resolve)
+    });
+  }
+}
+
+function blobToBase64(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(blob);
+    reader.onloadend = () => {
+      const base64 = reader.result;
+      // Cut off the data:audio/webm part.
+      const base64Data = base64.split(',')[1];
+      resolve(base64Data);
+    }
+    reader.onerror = reject;
+  });
 }
 
 export default ContributionListItem;

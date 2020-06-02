@@ -6,7 +6,7 @@
         <target>ltr</target>
       </trans-unit>
       <trans-unit id="introAbout" datatype="html">
-        <target>El proyecto Woolaroo utiliza la tecnología de aprendizaje automático de Google para ofrecer una forma novedosa e interactiva de acercarnos a las lenguas indígenas.</target>
+        <target>Woolaroo es un experimento de Google Arts & Culture que utiliza tecnología de aprendizaje automático para acercarnos a las lenguas indígenas de una forma novedosa e interactiva.</target>
       </trans-unit>
       <trans-unit id="next" datatype="html">
         <target>Siguiente</target>
@@ -15,7 +15,7 @@
         <target>Saltar</target>
       </trans-unit>
       <trans-unit id="introFeedback" datatype="html">
-        <target>Es posible que no siempre dé en el clavo, por lo que te pedimos que nos envíes tus comentarios y correcciones para ayudarnos a mejorar esta herramienta.</target>
+        <target>Woolaroo utiliza tecnología de aprendizaje automático avanzada para reconocer los objetos fotografiados y los traduce en tiempo real. Es posible que no siempre dé en el clavo, por lo que agradecemos que nos envíes tus comentarios.</target>
       </trans-unit>
       <trans-unit id="startExploring" datatype="html">
         <target>Empezar a probar</target>
@@ -24,7 +24,12 @@
         <target>Términos y Política de Privacidad</target>
       </trans-unit>
       <trans-unit id="introTermsAndPrivacy" datatype="html">
-        <target>Al utilizar el proyecto Woolaroo, aceptas sus <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Términos y Condiciones<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>, así como su <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Política de Privacidad<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.</target>
+        <target>Al utilizar el Woolaroo, aceptas sus<x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Términos y
+          Condiciones<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>, así como su
+          <x id="START_LINK" ctype="x-a"
+             equiv-text="&lt;a&gt;"/>
+          Política de Privacidad<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.
+        </target>
       </trans-unit>
       <trans-unit id="accept" datatype="html">
         <target>Aceptar</target>
@@ -60,7 +65,7 @@
         <target>ENVIAR</target>
       </trans-unit>
       <trans-unit id="feedbackInstructions" datatype="html">
-        <target>Envíanos tus comentarios sobre las traducciones del proyecto Woolaroo para ayudarnos a mejorarlas</target>
+        <target>Danos tu opinión y ayúdanos a mejorar las traducciones de Woolaroo</target>
       </trans-unit>
       <trans-unit id="incorrectTranslation" datatype="html">
         <target>Traducción incorrecta</target>
@@ -90,7 +95,9 @@
         <target>AÑADIR</target>
       </trans-unit>
       <trans-unit id="addWordInstructions" datatype="html">
-        <target>Para aportar tu granito de arena a la aplicación, añade palabras nuevas en [idioma amenazado] junto con su traducción.</target>
+        <target>Para aportar tu granito de arena a la aplicación, añade palabras nuevas en [idioma amenazado] junto con
+          su traducción.
+        </target>
       </trans-unit>
       <trans-unit id="wordInNativeScript" datatype="html">
         <target>Palabra en idioma nativo</target>
@@ -108,7 +115,16 @@
         <target>Debes incluir una palabra en inglés;</target>
       </trans-unit>
       <trans-unit id="englishWordHint" datatype="html">
-        <target>por ejemplo, &apos;hello&apos;</target>
+        <target>por ejemplo: &apos;hello&apos;</target>
+      </trans-unit>
+      <trans-unit id="wordInPrimaryLanguage" datatype="html">
+        <target>Es obligatorio indicar la palabra en español</target>
+      </trans-unit>
+      <trans-unit id="wordInPrimaryLanguageRequired" datatype="html">
+        <target>Es obligatorio indicar la palabra en español</target>
+      </trans-unit>
+      <trans-unit id="wordInPrimaryLanguageHint" datatype="html">
+        <target>por ejemplo: &apos;hola&apos;</target>
       </trans-unit>
       <trans-unit id="transliteration" datatype="html">
         <target>Transliteración (opcional)</target>
@@ -123,28 +139,37 @@
         <target>Guardado</target>
       </trans-unit>
       <trans-unit id="specialCharsInstructions" datatype="html">
-        <target>¿Quieres escribir un carácter especial? Prueba a utilizar <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>GBoard<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> o <x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>Keyman<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/></target>
+        <target>¿Quieres escribir un carácter especial? Prueba a utilizar<x id="START_LINK" ctype="x-a"
+                                                                            equiv-text="&lt;a&gt;"/>GBoard
+          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>
+          o<x id="START_LINK_1" ctype="x-a" equiv-text="&lt;a&gt;"/>Keyman
+          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>
+        </target>
       </trans-unit>
       <trans-unit id="aboutTitle" datatype="html">
-        <target>Información sobre la aplicación</target>
+        <target>Información</target>
       </trans-unit>
       <trans-unit id="aboutContent1" datatype="html">
-        <target>Te presentamos Woolaroo, un proyecto de Google de código abierto que utiliza la cámara de tu teléfono para identificar objetos y traducirlos rápidamente a la palabra correspondiente en una lengua indígena. </target>
+        <target>Woolaroo es un experimento de código abierto de Google Arts & Culture que utiliza la cámara de tu teléfono para identificar objetos y traducirlos instantáneamente a la palabra correspondiente en una lengua indígena.</target>
       </trans-unit>
       <trans-unit id="aboutContent2" datatype="html">
-        <target>Es muy fácil de usar: solo tienes que hacer una foto de un objeto cotidiano (o subir una que ya tengas) y verás su traducción al <x id="INTERPOLATION" equiv-text="{{endangeredLanguage}}"/> en tiempo real. Puedes guardar la imagen traducida, compartirla o traducir otro objeto.</target>
+        <target>Es muy fácil de usar: solo tienes que hacer una foto de un objeto (o subir una que ya tengas) y verás su traducción en tiempo real. Puedes guardar la imagen traducida, compartirla o traducir otro objeto.</target>
       </trans-unit>
       <trans-unit id="technologyTitle" datatype="html">
         <target>Información sobre la tecnología</target>
       </trans-unit>
       <trans-unit id="technologyContent1" datatype="html">
-        <target>El proyecto Woolaroo cuenta con la tecnología del Traductor de Google y de Cloud Vision, y utiliza el aprendizaje automático para reconocer los objetos fotografiados y traducirlos en tiempo real.</target>
+        <target>Woolaroo, que cuenta con la tecnología del Traductor de Google y de Cloud Vision, utiliza el aprendizaje automático avanzado para reconocer los objetos fotografiados y los traduce en tiempo real.</target>
       </trans-unit>
       <trans-unit id="technologyContent2" datatype="html">
-        <target>La aplicación proporciona la traducción más probable en una lengua indígena según el objeto principal que aparece en la imagen. Si se detectan varios objetos, puedes ver la traducción de todos y elegir la adecuada.</target>
+        <target>Se proporciona la traducción que se estima más adecuada según el objeto principal que aparece en la imagen. Si se detectan varios objetos, puedes ver la traducción de todos y elegir la correcta en cada caso.</target>
       </trans-unit>
       <trans-unit id="technologyContent3" datatype="html">
-        <target>Aunque el proyecto Woolaroo dispone de la tecnología de inteligencia artificial más puntera, es posible que no siempre acierte. Por eso, seguimos esforzándonos al máximo para mejorarlo. Si quieres aportar tu granito de arena, puedes usar la función para enviar comentarios cuando encuentres una traducción que no sea correcta. </target>
+        <target>Woolaroo se basa en la tecnología de inteligencia artificial más puntera, es posible
+          que no siempre acierte. Por eso, seguimos esforzándonos al máximo para mejorarlo. Si quieres aportar tu
+          granito de arena, puedes usar la función para enviar comentarios cuando encuentres una traducción que no sea
+          correcta.
+        </target>
       </trans-unit>
       <trans-unit id="logo" datatype="html">
         <target>Woolaroo</target>

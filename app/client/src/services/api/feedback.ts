@@ -22,10 +22,10 @@ export class APIFeedbackService implements IFeedbackService {
     }
     console.log('Sending feedback');
     const requestBody = {
-      primary_word: feedback.word,
-      english_word: feedback.englishWord,
-      translation: feedback.nativeWord,
-      transliteration: feedback.transliteration,
+      primary_word: feedback.word ? feedback.word.toLowerCase() : feedback.word,
+      english_word: feedback.englishWord ? feedback.englishWord.toLowerCase() : feedback.englishWord,
+      translation: feedback.nativeWord ? feedback.nativeWord.toLowerCase() : feedback.nativeWord,
+      transliteration: feedback.transliteration ? feedback.transliteration.toLowerCase() : feedback.transliteration,
       sound_link: soundUrl,
       types: feedback.types,
       content: feedback.content
@@ -42,10 +42,10 @@ export class APIFeedbackService implements IFeedbackService {
     }
     console.log('Adding word');
     const requestBody = {
-      primary_word: word.word,
-      english_word: word.englishWord,
-      translation: word.nativeWord,
-      transliteration: word.transliteration,
+      primary_word: word.word ? word.word.toLowerCase() : word.word,
+      english_word: word.englishWord ? word.englishWord.toLowerCase() : word.englishWord,
+      translation: word.nativeWord ? word.nativeWord.toLowerCase() : word.nativeWord,
+      transliteration: word.transliteration ? word.transliteration.toLowerCase() : word.transliteration,
       sound_link: soundUrl
     };
     await this.http.post(this.config.addWordEndpointURL, requestBody, { responseType: 'text' }).toPromise();

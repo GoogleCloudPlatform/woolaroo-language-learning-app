@@ -34,7 +34,8 @@ const SETTINGS = {
   APP_URL : "app_url",
   PRIMARY_LANGUAGE : "primary_language",
   TRANSLATION_LANGUAGE : "translation_language",
-  LOGO_IMAGE_ID : "logo_image_id",
+  ORGANIZATION_NAME: "organization_name",
+  ORGANIZATION_URL: "organization_url",
 }
 
 exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
@@ -695,14 +696,13 @@ exports.initSettings = functions.https.onRequest(async (req, res) => {
         } else {
           const querySnapshot = admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME).create({
             privacy_policy: "",
-            logo_image_id: "",
             app_enabled: true,
             app_name: "",
             app_url: "",
             translation_language: "",
             primary_language: "",
-            organisation_name: "",
-            organisation_url: ""
+            organization_name: "",
+            organization_url: ""
           });
           console.log("Settings document created.");
           res.status(404).send("Settings initialized.");
@@ -724,28 +724,25 @@ exports.updateSettings = functions.https.onRequest(async (req, res) => {
         console.log("Settings doesn't exist. Creating it...");
         const querySnapshot = await admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME).create({
           privacy_policy: "",
-          logo_image_id: "",
           app_enabled: true,
           app_name: "",
           app_url: "",
           translation_language: "",
           primary_language: "",
-          organisation_name: "",
-          organisation_url: ""
+          organization_name: "",
+          organization_url: ""
         });
         doc = await docRef.get();
       }
       const privacy_policy = req.body.privacy_policy || doc.get(SETTINGS.PRIVACY_POLICY);
-      const logo_image_id = req.body.logo_image_id || doc.get(SETTINGS.LOGO_IMAGE_ID);
       const app_enabled = req.body.app_enabled || doc.get(SETTINGS.APP_ENABLED);
-      const organisation_name = req.body.organisation_name || doc.get(SETTINGS.ORGANISATION_NAME);
-      const organisation_url = req.body.organisation_url || doc.get(SETTINGS.ORGANISATION_URL);
+      const organization_name = req.body.organization_name || doc.get(SETTINGS.ORGANIZATION_NAME);
+      const organization_url = req.body.organization_url || doc.get(SETTINGS.ORGANIZATION_URL);
       const snapshot = await admin.firestore().collection(SETTINGS.COLLECTION_NAME).doc(SETTINGS.DOCUMENT_NAME).set({
           privacy_policy: privacy_policy,
-          logo_image_id: logo_image_id,
           app_enabled: app_enabled,
-          organisation_name: organisation_name,
-          organisation_url: organisation_url
+          organization_name: organization_name,
+          organization_url: organization_url
         },
         {merge: true}
       );
