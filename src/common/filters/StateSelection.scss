@@ -1,5 +1,6 @@
+@import "../../style/dimensions";
+
 .state-selection {
-  width: 70%;
   margin-bottom: 24px;
 }
 
@@ -10,15 +11,28 @@
   display: flex;
   justify-content: space-between;
   font-size: 18px;
-  font-weight: bold;
   text-align: center;
+  flex-wrap: wrap;
 }
 
 .state-selection li {
   padding: 24px;
   padding-bottom: 12px;
-  min-width: 240px;
   cursor: pointer;
+  min-width: 240px;
+
+  @media (max-width: $max-width) {
+    min-width: 200px;
+  }
+  
+  @media (max-width: $medium-width) {
+    min-width: 100px;
+  }
+
+  @media (max-width: $small-width) {
+    min-width: 60px;
+  }
+
 }
 
 .state-selection li.selected {
@@ -28,12 +42,19 @@
 .state-selection a {
   text-decoration: none;
   color: #5f6368;
+  font-family: "Product Sans Regular";
 }
+
+.state-selection li.selected button {
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+}
+
 
 
 .state-selection button {
   color: #5f6368;
-  font-weight: bold;
   background: none!important;
   border: none;
   padding: 0!important;
@@ -42,4 +63,5 @@
   /*input has OS specific font-family*/
   text-decoration: none;
   cursor: pointer;
+  font-family: "Product Sans Regular";
 }

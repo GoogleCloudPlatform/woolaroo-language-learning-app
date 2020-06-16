@@ -1,0 +1,72 @@
+@import "../style/dimensions";
+
+.MuiMenuItem-root.nav-menu-item {
+  font-size: 16px;
+  color: #3c4043;
+  line-height: 40px;
+  padding-left: 60px;
+  padding-right: 48px;
+  font-weight: 400;
+}
+
+.MuiListItem-root.nav-menu-item {
+  border-top-right-radius: 22px;
+  border-bottom-right-radius: 22px;
+}
+
+.MuiListItem-root.nav-menu-item.Mui-selected {
+  background-color: #D5EEE2;
+  color: #2CAB6F;
+  font-weight: 500;
+}
+
+.MuiListItem-root.nav-menu-item.Mui-selected:hover {
+  background-color: #D5EEE2;
+}
+
+.MuiListItem-button.nav-menu-item:hover {
+  background-color: #e7f5ef;
+}
+
+.MuiList-root:focus {
+  outline: none;
+}
+
+.add-word {
+  background-color: white;
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302), 0 1px 3px 1px rgba(60, 64, 67, 0.149);
+  border-radius: 24px;
+  margin: 0em 2em 2em 2em;
+  width: 150px;
+  height: 48px;
+  display: flex;
+  cursor: pointer;
+
+  .add-word-icon {
+    max-height: 80%;
+    max-width: 80%;
+    padding: 5px 0px 0px 10px;
+  }
+
+  .add-word-text {
+    align-self: center;
+    padding-left: 10px;
+    font-family: "Product Sans Regular";
+    font-weight: 500;
+    letter-spacing: 0.25px;
+
+    @media (max-width: $large-width) {
+      font-size: 0.9em;
+      font-weight: 600;
+    }
+  }
+
+}
+
+.user-contributions-number {
+  padding: 0em 0.5em;
+  margin-left: 0.25em;
+  border-radius: 0.75em;
+  color: white;
+  background-color: #2CAB6F;
+}

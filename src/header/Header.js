@@ -1,13 +1,17 @@
-import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import InputBase from '@material-ui/core/InputBase';
-import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
-import SearchIcon from '@material-ui/icons/Search';
-import { withRouter } from 'react-router-dom';
-import  { Breakpoint } from 'react-socks';
-import './Header.css';
-import HamburgerNavMenu from '../navmenu/HamburgerNavMenu';
+import React from "react";
+import AppBar from "@material-ui/core/AppBar";
+import InputBase from "@material-ui/core/InputBase";
+import Toolbar from "@material-ui/core/Toolbar";
+import Button from "@material-ui/core/Button";
+import SearchIcon from "@material-ui/icons/Search";
+import ExpandIcon from "@material-ui/icons/ExpandMore";
+import { withRouter } from "react-router-dom";
+import { Breakpoint } from "react-socks";
+import { Menu, MenuItem } from "@material-ui/core";
+import "./Header.scss";
+import HamburgerNavMenu from "../navmenu/HamburgerNavMenu";
+import AuthUtils from "../utils/AuthUtils";
+import GoogleLogo from "../assets/google-logo.png";
 
 class Header extends React.Component {
   constructor(props) {
@@ -18,25 +22,26 @@ class Header extends React.Component {
     this.doSearch_ = this.doSearch_.bind(this);
 
     const queryStringParams = new URLSearchParams(props.location.search);
-    const needsRecording = queryStringParams.get('needsRecording');
-    const top500 = queryStringParams.get('top500');
+    const needsRecording = queryStringParams.get("needsRecording");
+    const top500 = queryStringParams.get("top500");
 
     this.state = {
-      search: this.sanitizeInput_(queryStringParams.get('search')),
-      top500: top500 !== '0',
-      needsRecording: !!(needsRecording && needsRecording !== '0'),
+      search: this.sanitizeInput_(queryStringParams.get("search")),
+      top500: top500 !== "0",
+      needsRecording: !!(needsRecording && needsRecording !== "0"),
+      anchorEl: null,
     };
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
       const queryStringParams = new URLSearchParams(this.props.location.search);
-      const needsRecording = queryStringParams.get('needsRecording');
-      const top500 = queryStringParams.get('top500');
+      const needsRecording = queryStringParams.get("needsRecording");
+      const top500 = queryStringParams.get("top500");
       this.setState({
-          search: this.sanitizeInput_(queryStringParams.get('search')),
-          top500: top500 !== '0',
-          needsRecording: !!(needsRecording && needsRecording !== '0'),
+        search: this.sanitizeInput_(queryStringParams.get("search")),
+        top500: top500 !== "0",
+        needsRecording: !!(needsRecording && needsRecording !== "0"),
       });
     }
   }
@@ -54,13 +59,13 @@ class Header extends React.Component {
   }
 
   sanitizeInput_(text) {
-    if (!text) return '';
+    if (!text) return "";
     return text.trim().toLowerCase();
   }
 
   doSearch_() {
     let nextHistory = `/?search=${this.state.search}`;
-    
+
     this.props.history.push(nextHistory);
   }
 
@@ -71,12 +76,12 @@ class Header extends React.Component {
 
     return (
       <InputBase
-        placeholder='Search'
+        placeholder="Search"
         classes={{
-          root: 'header-search-root',
-          input: 'header-search-input',
+          root: "header-search-root",
+          input: "header-search-input",
         }}
-        inputProps={{ 'aria-label': 'search' }}
+        inputProps={{ "aria-label": "search" }}
         value={this.state.search}
         onChange={this.handleChange_}
         onKeyUp={this.handleKeyUp_}
@@ -84,55 +89,119 @@ class Header extends React.Component {
     );
   }
 
+  handleClickProfileMenu = (event) => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = (event) => {
+    this.setState({ anchorEl: null });
+  };
+
+  handleSignOutClicked = () => {
+    this.handleClose();
+    this.props.authAction();
+  };
+
   renderAuthButton_() {
     if (this.props.authInitializing) {
       return null;
     }
 
-    if (this.props.signedIn){
-        return (
-          // Only show button after logging in. Before logging in, landing page should have login button in the middle of the page.
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={this.props.authAction}
-            className='auth-button'
-            key={1}
+    if (this.props.signedIn) {
+      return (
+        <div>
+          <div
+            className="profile-container"
+            aria-controls="sign-out-menu"
+            aria-haspopup="true"
+            onClick={this.handleClickProfileMenu}
           >
-            {this.props.signedIn ? 'Log out' : 'Sign in'}
-          </Button>
-        );
-    }else{
-        return null;;
+            <div className="google-logo-container">
+              <img src={GoogleLogo} alt="Google Logo" />
+            </div>
+            <div className="profile-picture-container">
+              <img
+                src={AuthUtils.getUser().photoURL}
+                alt="User Profile Picture"
+              />
+            </div>
+          </div>
+          <Menu
+            id="sign-out-menu"
+            anchorEl={this.state.anchorEl}
+            keepMounted
+            open={Boolean(this.state.anchorEl)}
+            getContentAnchorEl={null}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "center",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "center",
+            }}
+            onClose={this.handleClose}
+          >
+            <MenuItem
+              key="sign-out"
+              onClose={this.handleClose}
+              onClick={this.handleSignOutClicked}
+            >
+              Sign Out
+            </MenuItem>
+          </Menu>
+        </div>
+      );
+    } else {
+      return null;
     }
   }
 
   render() {
     return (
-      <div className='header-container'>
-        <AppBar position='static' className='header'>
+      <div className="header-container">
+        <AppBar position="static" className="header">
           {/* Only renders the hamburger menu in mobile widths. */}
           <Breakpoint medium down>
             {/* Hide the menu completely while auth is initializing. Once that is done, but
-              * before the user logs in, the menu will only show the 'Sign in' option. */}
-            {this.props.authInitializing ?
-              null : <HamburgerNavMenu signedIn={this.props.signedIn} authAction={this.props.authAction} />}
+             * before the user logs in, the menu will only show the 'Sign in' option. */}
+            {this.props.authInitializing ? null : (
+              <HamburgerNavMenu
+                signedIn={this.props.signedIn}
+                authAction={this.props.authAction}
+              />
+            )}
           </Breakpoint>
           <Toolbar>
-          <h1 className={`header-title ${this.props.signedIn && 'signed-in'}`}>
-          <img
-            src={this.props.logoURL}
-            alt="Woolaroo"
-            className="header-logo"
-          />
-          </h1>
+            <h1
+              className={`header-title ${this.props.signedIn && "signed-in"}`}
+            >
+              <img
+                src={this.props.logoURL}
+                alt="Woolaroo"
+                className="header-logo"
+              />
+            </h1>
             <div
-              className={`header-search ${!this.props.signedIn && 'hidden'}`}>
-              <SearchIcon className='header-search-icon' onClick={this.doSearch_}/>
+              className={`header-search ${!this.props.signedIn && "hidden"}`}
+            >
+              <SearchIcon
+                className="header-search-icon"
+                onClick={this.doSearch_}
+              />
               {this.renderHeaderSearch_()}
+              <ExpandIcon />
             </div>
+            <div
+              className={`mobile-search-icon ${
+                !this.props.signedIn && "hidden"
+              }`}
+            >
+              <SearchIcon />
+            </div>
+
             {/* Only renders the logout button for desktop. In mobile widths, the auth button
-              * is part of the nav menu. */}
+             * is part of the nav menu. */}
             <Breakpoint large up>
               {this.renderAuthButton_()}
             </Breakpoint>

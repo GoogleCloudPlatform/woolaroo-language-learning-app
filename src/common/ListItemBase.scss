@@ -1,0 +1,79 @@
+@import "../style/dimensions";
+
+.translation-list-item {
+  //display: flex;
+  //justify-content: space-between;
+  align-items: center;
+  display: grid;
+  grid-template-columns: auto 1fr 1fr 150px auto auto auto;
+
+  @media (max-width: $max-width) {
+    //Must come down
+    grid-template-columns: auto 1fr 1fr;
+  }
+
+  @media (max-width: $large-width) {
+    //Stay at same level
+    grid-template-columns: auto 1fr 1fr 150px auto auto auto;
+  }
+
+  @media (max-width: $medium-width) {
+    //Must come down
+    grid-template-columns: auto 1fr 1.5fr;
+  }
+
+  @media (max-width: $small-width) {
+    //Must come down
+    grid-template-columns: 1fr 1fr auto;
+  }
+
+}
+
+.base-word {
+  color: #202124;
+  font-size: 24px;
+  margin-top: 20px;
+  width: 160px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  @media (max-width: $medium-width) {
+    //Must come down
+    width: 110px;
+  }
+
+  @media (max-width: $small-width) {
+    //Must come down
+    grid-column: 1 / span 3;
+    grid-row: auto;
+  }
+
+}
+.english-word-small{
+  color: #202124;
+  font-size: 12px;
+  width: 160px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.primary-word {
+  color: #202124;
+  font-size: 24px;
+  margin-top: 20px;
+  width: 160px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+div.MuiFormControl-root{
+  min-width:100px;
+  margin-left: 8px;
+  margin-right: 8px;
+  display: inline-flex;
+
+  @media (max-width: $small-width) {
+    //Must come down
+    grid-column: 1 / span 3;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+}

@@ -30,8 +30,9 @@ it('makes the correct call to fetch translations', async () => {
   await flushPromises();
 
   expect(fetchSpy).toHaveBeenCalledTimes(1);
+  //Changed state to "all" as the tabs have been reordered
   expect(fetchSpy).toHaveBeenCalledWith(ApiUtils.origin + ApiUtils.path +
-    "getEntireCollection?collectionName=translations&pageNum=1&pageSize=25&top500=1",
+    "getEntireCollection?collectionName=translations&pageNum=1&pageSize=25&state=all&top500=1",
     expect.any(Object));
 });
 

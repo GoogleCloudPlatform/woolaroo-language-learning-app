@@ -1,0 +1,119 @@
+@import "../style/dimensions";
+
+.header-text {
+  margin-left: 0.25em;
+  font-family: "Product Sans Regular";
+  font-weight: 100;
+}
+
+.invite-container-div {
+  display: grid;
+  gap: 1.5em;
+
+  .invite-email-div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    @media (max-width: $small-width) {
+      grid-column: 1 / span 3;
+    }
+
+    .invite-email-text {
+      margin-left: 0.5em;
+      opacity: 0.75;
+    }
+
+    .invite-email-input {
+      margin-top: 0.5em;
+    }
+  }
+
+  .send-invite-button {
+    justify-self: end;
+    margin-right: 0.5em;
+
+    @media (max-width: $small-width) {
+      grid-column: 3;
+      margin-right: 0em;
+    }
+
+  }
+}
+
+.app-url-container {
+  display: grid;
+  gap: 1.5em;
+  margin-top: 3em;
+
+  .app-url-div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .app-url-text {
+      margin-left: 0.5em;
+      opacity: 0.75;
+    }
+
+    .app-url-input {
+      margin-top: 0.5em;
+    }
+
+  }
+
+  .copy-link-button {
+    justify-self: end;
+    margin-right: 0.5em;
+  }
+
+}
+
+.social-media-icons {
+  margin: 3em 0em 3em 0.5em;
+}
+
+
+.contributor-container {
+  display: grid;
+  gap: 1.5em;
+  margin-top: 3em;
+
+  .contributor-url-div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .contributor-text {
+      margin-left: 0.5em;
+      opacity: 0.75;
+    }
+
+    .contributor-input {
+      margin-top: 0.5em;
+    }
+
+  }
+
+  .copy-link-button {
+    justify-self: end;
+    margin-right: 0.5em;
+  }
+
+}
+
+.MuiButton-root {
+  font-family: "Product Sans Regular" !important;
+  text-transform: capitalize !important;
+}
+
+
+
+
+
+// .fullwidth {
+//   width: 100%;
+// }
+// .button-margin {
+//   margin: 8px;
+// }

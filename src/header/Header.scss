@@ -1,0 +1,137 @@
+@import "../style/dimensions";
+
+.header-container {
+  position: sticky !important;
+  z-index: 1050;
+  width: 100%;
+  top: 0;
+}
+
+.MuiAppBar-colorPrimary.header {
+  background: #fff;
+  color: #5f6368;
+}
+
+.header-logo {
+  max-width: 200px;
+  max-height: 22px;
+}
+
+.MuiToolbar-root {
+  justify-content: space-between;
+}
+
+.header-title {
+  font-size: 24px;
+  font-weight: 300;
+  margin: 0px 16px 0px 36px;
+}
+
+.header-search {
+  background: #f1f3f4;
+  border-radius: 5px;
+  display: flex;
+  margin: 8px 0px;
+  max-width: 640px;
+  padding: 10px;
+  width: 100%;
+
+  @media (max-width: $small-width) {
+    display: none;
+  }
+
+}
+
+.header-search.hidden {
+  visibility: hidden;
+}
+
+div.header-search-root {
+  padding-left: 6px;
+  width: 100%;
+}
+
+.MuiInputBase-input.header-search-input {
+  font-size: 18px;
+  color: #80868b;
+  font-weight: 500;
+  padding: 2px 4px;
+}
+
+.MuiInputBase-input.header-search-input::placeholder {
+  opacity: 0.75;
+}
+
+svg.header-search-icon {
+  font-size: 26px;
+  color: #5f6368;
+  cursor: pointer;
+}
+
+svg.header-search-icon:hover {
+  opacity: 0.8;
+}
+
+.auth-button.MuiButton-root {
+  margin-left: 16px;
+  min-width: 96px;
+}
+
+
+.mobile-search-icon {
+  position: absolute;
+  right: 0;
+  margin-right: 2em;
+  display: none;
+
+
+  @media (max-width: $small-width) {
+    display: block;
+  }
+
+}
+
+.mobile-search-icon.hidden {
+  visibility: hidden;
+}
+
+
+.profile-container {
+  height: 48px;
+  padding:0em 0.5em;
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  box-sizing: border-box;
+  cursor: pointer;
+  border: 1px solid #dadce0;
+
+  .google-logo-container {
+
+    max-width: 4em;
+    margin-top: 0.5em;
+    margin-right: 0.5em;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+  }
+
+  .profile-picture-container {
+    border-radius: 50%;
+    max-width: 2em;
+    max-height: 2em;
+
+    img {
+      border-radius: 50%;
+      object-fit: cover;
+      width: 2em;
+      height: 2em;
+    }
+    
+  }
+
+}

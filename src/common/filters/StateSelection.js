@@ -1,5 +1,5 @@
-import React from 'react';
-import './StateSelection.css';
+import React from "react";
+import "./StateSelection.scss";
 
 class StateSelection extends React.Component {
   handleClick_(e, nextCompleteState) {
@@ -15,20 +15,22 @@ class StateSelection extends React.Component {
       <div className="state-selection">
         <ul>
           <li
-            className={!completeState || completeState === 'all' ? 'selected' : null}
+            className={
+              !completeState || completeState === "all" ? "selected" : null
+            }
             onClick={(e) => this.handleClick_(e, null)}
           >
             <button>All</button>
           </li>
           <li
-            className={completeState === 'incomplete' ? 'selected' : null}
-            onClick={(e) => this.handleClick_(e, 'incomplete')}
+            className={completeState === "incomplete" ? "selected" : null}
+            onClick={(e) => this.handleClick_(e, "incomplete")}
           >
             <button>Incomplete</button>
           </li>
           <li
-            className={completeState === 'complete' ? 'selected' : null}
-            onClick={(e) => this.handleClick_(e, 'complete')}
+            className={completeState === "complete" ? "selected" : null}
+            onClick={(e) => this.handleClick_(e, "complete")}
           >
             <button>Complete</button>
           </li>

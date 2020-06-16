@@ -14,8 +14,8 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import TextField from '@material-ui/core/TextField';
 import ApiUtils from '../utils/ApiUtils';
 import AuthUtils from '../utils/AuthUtils';
-import UserTable from './UserTable';
-import './ManagementPage.css';
+import UserTableUpdated from './UserTableUpdated';
+import './ManagementPage.scss';
 
 class ManagementPage extends React.Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class ManagementPage extends React.Component {
 
     this.state = {
       email: '',
-      emailIsValid: false,
+      emailIsValid: true,
       inviteDialogIsOpen: false,
       inviteRole: 'Moderator',
       inviteInProgress: false,
@@ -69,7 +69,11 @@ class ManagementPage extends React.Component {
   }
 
   closeDialog_() {
-    this.setState({inviteDialogIsOpen: false});
+    this.setState({
+      inviteDialogIsOpen: false, 
+      email: '',
+      emailIsValid: true
+    });
   }
 
   handleRoleSelected_(e) {
@@ -78,7 +82,6 @@ class ManagementPage extends React.Component {
 
   handleEmailChange_(e) {
     this.setState({
-      emailIsValid: this.validateEmail_(e.target.value),
       email: e.target.value,
     });
   }
@@ -89,7 +92,14 @@ class ManagementPage extends React.Component {
 
   async updateRole_(email, role, revoke = false, forceCreate = false) {
     try {
-      this.setState({inviteInProgress: true});
+      if(!this.validateEmail_(email)) {
+        this.setState({emailIsValid: this.validateEmail_(email)})
+        return
+      }
+      this.setState({
+        inviteInProgress: true,
+        emailIsValid : true
+      });
       const resp = await fetch(`${ApiUtils.origin}${ApiUtils.path}grant${role}Role`, {
         method: 'POST',
         body: JSON.stringify({email, revoke, forceCreate}),
@@ -117,7 +127,7 @@ class ManagementPage extends React.Component {
             color='primary'
             onClick={this.openDialog_}
           >
-            Invite users
+            Invite Moderators
           </Button>
         </div>
         <br/>
@@ -150,20 +160,22 @@ class ManagementPage extends React.Component {
             </FormControl>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.closeDialog_}>
+            <Button 
+            color='primary'
+            onClick={this.closeDialog_}>
               Cancel
             </Button>
             {/* This UI is used for inviting users, so revoke=false and forceCreate=true */}
             <Button
               onClick={() => this.updateRole_(this.state.email, this.state.inviteRole, false, true)}
-              disabled={!this.state.emailIsValid || this.state.inviteInProgress}
+              disabled={this.state.inviteInProgress}
               color='primary'
             >
               Invite
             </Button>
           </DialogActions>
         </Dialog>
-        <UserTable
+        <UserTableUpdated
           updateRole={(email, role, revoke) => this.updateRole_(email, role, revoke)}
           data={this.state.data}
           loading={this.state.loading}
