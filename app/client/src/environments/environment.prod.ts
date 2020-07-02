@@ -61,6 +61,20 @@ export const environment = {
         file: params.assetsBaseUrl + 'assets/locale/pt.json',
         direction: 'ltr',
         default: params.language === 'pt'
+      },
+      {
+        code: 'ru',
+        name: 'русский',
+        file: params.assetsBaseUrl + 'assets/locale/ru.json',
+        direction: 'ltr',
+        default: params.language === 'ru'
+      },
+      {
+        code: 'zh',
+        name: '普通话',
+        file: params.assetsBaseUrl + 'assets/locale/zh.json',
+        direction: 'ltr',
+        default: params.language === 'zh'
       }
     ]
   },
@@ -178,6 +192,16 @@ export const environment = {
             code: 'yi',
             name: 'Yiddish',
             default: params.endangeredLanguage === 'yi'
+          },
+          {
+            code: 'be',
+            name: 'беларуская мова',
+            default: params.endangeredLanguage === 'be'
+          },
+          {
+            code: 'zyg',
+            name: '佒壯',
+            default: params.endangeredLanguage === 'zyg'
           }
         ]
       }

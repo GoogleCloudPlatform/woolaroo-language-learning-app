@@ -57,6 +57,18 @@ export const environment = {
         name: 'Português',
         file: './assets/locale/pt.json',
         direction: 'ltr'
+      },
+      {
+        code: 'ru',
+        name: 'русский',
+        file: './assets/locale/ru.json',
+        direction: 'ltr'
+      },
+      {
+        code: 'zh',
+        name: '普通话',
+        file: './assets/locale/zh.json',
+        direction: 'ltr'
       }
     ]
   },
@@ -175,6 +187,14 @@ export const environment = {
           {
             code: 'yi',
             name: 'Yiddish'
+          },
+          {
+            code: 'be',
+            name: 'беларуская мова'
+          },
+          {
+            code: 'zyg',
+            name: '佒壯'
           }
         ]
       }
