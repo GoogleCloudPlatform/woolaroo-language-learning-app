@@ -1,0 +1,5 @@
+<ul #scrollContent>
+  <li *ngFor="let item of items; index as i" [className]="i === currentItem ? 'current' : ''">
+    <ng-container [ngTemplateOutlet]="item.itemTemplate"></ng-container>
+  </li>
+</ul>

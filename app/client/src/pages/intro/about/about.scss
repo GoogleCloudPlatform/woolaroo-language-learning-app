@@ -1,33 +1,79 @@
 @import 'components';
 @import 'dimensions';
+@import 'palette';
 
 :host {
   @include centered-page;
 
   &:before {
-    flex-basis: 270px;
+    flex-basis: 30px;
   }
 
   &:after {
     flex-basis: 30px;
   }
 
-  p {
-    text-align: center;
-    margin: 0 45px 67px 45px;
+  app-logo {
+    height: 22px;
+    margin-bottom: 50px;
+  }
+
+  app-carousel ::ng-deep {
+    margin-bottom: 40px;
+    width: 100%;
+    flex: 0 0 auto;
+
+    p {
+      text-align: center;
+      padding: 15px 15px;
+      box-sizing: border-box;
+      border-radius: 8px;
+      background-color: mat-color($app-accent);
+      color: mat-contrast($app-accent, 800);
+      font-size: 24px;
+      line-height: 140.4%;
+      max-width: 307px;
+      width: 100%;
+      min-height: 293px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: -0.02em;
+      margin: 0 -5px;
+    }
+
+    li {
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+      &:not(.current) {
+        opacity: 50%;
+        transform: scale(0.8, 0.8);
+      }
+
+      &:nth-child(n + 2) p {
+        background-color: mat-color($app-secondary);
+      }
+    }
   }
 
   app-pagination-indicator {
-    margin-bottom: 47px;
+    margin-bottom: 60px;
+  }
+
+  .feedback {
+    font-size: 16px;
+    line-height: 140.4%;
+    text-align: center;
+    max-width: 300px;
+    margin: 0 auto 50px auto;
+    padding: 0 20px;
+    color: #767777;
   }
 
   button {
     &.next {
       margin-bottom: 27px;
-    }
-
-    &.skip {
-      font-size: 1.4rem;
     }
   }
 }

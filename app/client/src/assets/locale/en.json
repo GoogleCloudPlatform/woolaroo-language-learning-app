@@ -1,9 +1,10 @@
 {
-  "introAbout": "Woolaroo is a Google Arts &amp; Culture Experiment powered by machine learning to provide a new, interactive way to access indigenous languages.",
+  "intro1": "Woolaroo is a Google Arts and Culture experiment providing a new way to explore endangered indigenous languages via your camera.",
+  "intro2": "Powered by Machine Learning, Woolaroo recognises objects from your camera or camera roll, and translates them in real time.",
+  "getStarted": "Let’s get started",
   "next": "Next",
   "skip": "Skip",
-  "introFeedback": "Woolaroo uses advanced machine learning to understand the objects in your photos and translates them, in real time. It may not get it right every time and you can help by giving your feedback.",
-  "startExploring": "Start exploring",
+  "introFeedback": "As smart as advanced machine learning is, Woolaroo might get some objects wrong so you can help by giving feedback.",
   "termsAndPrivacyTitle": "Terms &amp; Privacy",
   "introTermsAndPrivacy": "By using Woolaroo you are accepting the <a>Terms and Conditions</a> and <a>Privacy Policy</a>.",
   "accept": "Accept",

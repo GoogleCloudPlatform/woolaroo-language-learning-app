@@ -1,22 +1,25 @@
 @import 'components';
 @import 'palette';
+@import 'typography';
 
 button.mat-button-base {
+  font-family: $main-font;
   flex: 0 0 auto;
-  text-transform: uppercase;
-  font-size: 1.1rem;
+  font-size: 20px;
   padding: 4px 20px;
   min-width: 105px;
   border-radius: 5px;
-  letter-spacing: 0.08rem;
+  letter-spacing: -0.02em;
 }
 
 .mat-body-1 {
+  font-family: $main-font;
   font-size: 1.32rem;
   line-height: 2.5rem;
 }
 
 .mat-body-2 {
+  font-family: $main-font;
   font-size: 1.92rem;
   line-height: 2.48rem;
 }

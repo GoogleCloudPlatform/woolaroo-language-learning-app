@@ -10,6 +10,8 @@ import { environment } from 'environments/environment';
   styleUrls: ['./about.scss']
 })
 export class IntroAboutPageComponent implements AfterViewInit {
+  currentAboutItem: number = 0;
+
   constructor( private router: Router,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {
   }
@@ -18,11 +20,11 @@ export class IntroAboutPageComponent implements AfterViewInit {
     this.analyticsService.logPageView(this.router.url, 'Intro - About');
   }
 
-  onNextClick() {
-    this.router.navigateByUrl(AppRoutes.IntroFeedback);
+  onCurrentAboutItemChanged(index: number) {
+    this.currentAboutItem = index;
   }
 
-  onSkipClick() {
+  onNextClick() {
     if (environment.pages.termsAndPrivacy.enabled) {
       this.router.navigateByUrl(AppRoutes.IntroTermsAndConditions);
     } else {

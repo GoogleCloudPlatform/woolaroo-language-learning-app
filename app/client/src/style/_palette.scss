@@ -9,15 +9,10 @@ $theme-colors: (
   #EB6C39,
 );
 
-$_nav-pallet: (
-  100: #FDEFC1,
-  500: #F9AB00,
-  contrast: map-get($mat-orange, 'contrast')
-);
-
 $_inverted-pallet: (
   100: #000000,
   500: #323232,
+
   contrast: (
     100: #b9b9b9,
     500: #FFFFFF
@@ -25,7 +20,6 @@ $_inverted-pallet: (
 );
 
 $app-warn:    mat-palette($mat-red);
-$app-nav:  mat-palette($_nav-pallet);
 $app-inverted:  mat-palette($_inverted-pallet);
 
 $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);

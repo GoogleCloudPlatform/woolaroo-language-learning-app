@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { CarouselModule } from 'components/carousel/carousel.module';
+import { LogoModule } from 'components/logo/logo.module';
 import { PaginationIndicatorModule } from 'components/pagination-indicator/pagination-indicator.module';
 import { IntroAboutPageComponent } from './about/about';
 import { IntroFeedbackPageComponent } from './feedback/feedback';
@@ -17,7 +19,9 @@ import { I18nModule } from 'i18n/i18n.module';
     RouterModule,
     MatButtonModule,
     PaginationIndicatorModule,
-    I18nModule
+    I18nModule,
+    CarouselModule,
+    LogoModule
   ]
 })
 export class IntroPageModule {}

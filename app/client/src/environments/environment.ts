@@ -11,7 +11,7 @@ const debugImageUrl = '/assets/debug/IMG_20190920_141505.jpg';
 export const environment = {
   production: false,
   assets: {
-    baseUrl: './',
+    baseUrl: '/',
   },
   i18n: {
     languages: [
@@ -107,6 +107,16 @@ export const environment = {
       iosGBoardUrl: 'https://apps.apple.com/us/app/gboard-the-google-keyboard/id1091700242',
       keymanUrl: 'https://keyman.com/',
       progressAnimationInterval: 25
+    },
+    carousel: {
+      animationInterval: 25,
+      snapAcceleration: 10,
+      snapMaxSpeed: 2,
+      snapMinSpeed: 0.01,
+      snapDecelerationDistance: 200,
+      snapStickyDistance: 30,
+      targetPositionRatio: 0.2,
+      draggingMinDistance: 5
     },
     translationSelector: {
       scrollList: {

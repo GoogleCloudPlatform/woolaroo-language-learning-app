@@ -1,0 +1,21 @@
+@import "~@angular/material/theming";
+
+$_primary-pallet: (
+  800: #EA564C,
+  contrast: map-get($mat-red, contrast)
+);
+
+$app-primary: mat-palette($_primary-pallet, 800);
+
+$_secondary-pallet: (
+  100: #FDEEC3,
+  800: #F49131,
+  contrast: map-get($mat-deep-orange, contrast)
+);
+$app-secondary:  mat-palette($_secondary-pallet, 800);
+
+$_accent-pallet: (
+  800: #33B575,
+  contrast: map-get($mat-green, contrast)
+);
+$app-accent:  mat-palette($_accent-pallet, 800);
