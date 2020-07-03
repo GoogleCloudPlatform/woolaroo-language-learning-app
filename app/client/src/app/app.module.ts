@@ -13,6 +13,7 @@ import { IntroPageModule } from 'pages/intro/intro.module';
 import { TermsPageModule } from 'pages/terms/terms.module';
 import { AboutPageModule } from 'pages/about/about.module';
 import { TechnologyPageModule } from 'pages/technology/technology.module';
+import { LanguageSelectPageModule } from 'pages/language-select/language-select.module';
 import { AddWordPageModule } from 'pages/add-word/add-word.module';
 import { CaptionImagePageModule } from 'pages/caption-image/caption-image.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -36,6 +37,7 @@ import { environment } from 'environments/environment';
     FeedbackPageModule,
     AddWordPageModule,
     CaptionImagePageModule,
+    LanguageSelectPageModule,
     HttpClientModule,
     BrowserAnimationsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })

@@ -13,6 +13,7 @@ import { AddWordPageComponent } from 'pages/add-word/add-word';
 import { AboutPageComponent } from 'pages/about/about';
 import { TechnologyPageComponent } from 'pages/technology/technology';
 import { AppRoutes } from 'app/routes';
+import { LanguageSelectPageComponent } from 'pages/language-select/language-select';
 
 
 const routes: Routes = [
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: AppRoutes.About, component: AboutPageComponent },
   { path: AppRoutes.Technology, component: TechnologyPageComponent },
   { path: AppRoutes.AddWord, component: AddWordPageComponent },
+  { path: AppRoutes.LanguageSelect, component: LanguageSelectPageComponent },
   { path: '**', component: SplashPageComponent } // TODO: not found page
 ];
 

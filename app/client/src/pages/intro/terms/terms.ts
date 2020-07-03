@@ -1,22 +1,9 @@
-import { AfterViewInit, Component, ElementRef, Inject, Pipe, PipeTransform, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
 import { IProfileService, PROFILE_SERVICE } from 'services/profile';
+import { Profile } from 'services/entities/profile';
 import { AppRoutes } from 'app/routes';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-
-@Pipe({
-  name: 'replaceLinks'
-})
-class ReplaceLinksPipe implements PipeTransform {
-  constructor(private sanitizer: DomSanitizer) {
-  }
-
-  transform(html:any, links?: string[]): SafeHtml {
-    return this.sanitizer.bypassSecurityTrustHtml(html);
-  }
-}
-
 
 @Component({
   selector: 'app-page-intro-terms',
@@ -53,9 +40,17 @@ export class IntroTermsPageComponent implements AfterViewInit {
       (profile) => {
         profile.termsAgreed = true;
         profile.introViewed = true;
-        this.profileService.saveProfile(profile).finally(() => this.router.navigateByUrl(AppRoutes.ImageSource));
+        this.profileService.saveProfile(profile).finally(() => this.nextPage(profile));
       },
-      () => this.router.navigateByUrl(AppRoutes.ImageSource)
+      () => this.nextPage()
     );
+  }
+
+  nextPage(profile: Profile|null = null) {
+    if(profile && profile.language && profile.endangeredLanguage) {
+      this.router.navigateByUrl(AppRoutes.ImageSource);
+    } else {
+      this.router.navigateByUrl(AppRoutes.LanguageSelect);
+    }
   }
 }

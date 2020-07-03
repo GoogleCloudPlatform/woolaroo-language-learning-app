@@ -54,7 +54,7 @@ form {
     color: mat-contrast($app-inverted, 500);
 
     input::placeholder {
-      color: mat-contrast($app-inverted, 100);
+      color: mat-contrast($app-inverted, 300);
     }
 
     ::ng-deep .mat-form-field-outline {

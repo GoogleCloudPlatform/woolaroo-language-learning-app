@@ -54,7 +54,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   private dragInfo: DragInfo|null = null;
   private snapInterval: any = null;
 
-  @ContentChildren(CarouselItem)
+  @ContentChildren(CarouselItem, {descendants: true})
   items: QueryList<CarouselItem> = new QueryList();
   @ViewChild('scrollContent', { static: true })
   public scrollContent: ElementRef|null = null;

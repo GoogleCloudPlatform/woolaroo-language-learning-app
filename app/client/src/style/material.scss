@@ -2,6 +2,10 @@
 @import 'palette';
 @import 'typography';
 
+.mat-typography {
+  font-family: $main-font;
+}
+
 button.mat-button-base {
   font-family: $main-font;
   flex: 0 0 auto;

@@ -1,13 +1,17 @@
 @import 'dimensions';
 
-@mixin icon-button {
+@mixin text-button {
   padding: 0;
   background: transparent;
   border-style: none;
-  width: 24px;
-  height: 24px;
   outline: none;
   cursor: pointer;
+}
+
+@mixin icon-button {
+  @include text-button;
+  width: 24px;
+  height: 24px;
 
   app-icon {
     width: 100%;

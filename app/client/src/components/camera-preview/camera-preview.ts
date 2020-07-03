@@ -4,7 +4,7 @@ import {
   ViewChild,
   HostListener,
   EventEmitter,
-  OnDestroy, ElementRef, InjectionToken, Inject
+  OnDestroy, ElementRef, InjectionToken, Inject, Input
 } from '@angular/core';
 import { canvasToBlob } from 'util/image';
 import { cameraStreamIsAvailable } from 'util/camera';
@@ -105,7 +105,6 @@ export class CameraPreviewComponent implements OnDestroy {
       video.srcObject = stream;
     }
     await video.play();
-    this.repositionVideo();
     console.log(`Video stream started at ${video.videoWidth}x${video.videoHeight}`);
     this._status = CameraPreviewStatus.Started;
     for (const track of this.videoStream.getTracks()) {
@@ -142,25 +141,7 @@ export class CameraPreviewComponent implements OnDestroy {
     console.warn('Video stream ended');
     this.stop();
     this.videoError.emit(new Error('Video ended'));
-  }
-
-  private repositionVideo() {
-    const video = this.video;
-    if (!video) {
-      return;
-    }
-    const desiredWidth = window.innerWidth;
-    const desiredHeight = window.innerHeight;
-    const videoWidth = video.videoWidth;
-    const videoHeight = video.videoHeight;
-    const scale = Math.max(desiredWidth / videoWidth, desiredHeight / videoHeight); // scale which will cover full screen
-    const width = Math.round(scale * videoWidth);
-    const height = Math.round(scale * videoHeight);
-    video.style.width = width + 'px';
-    video.style.height = height + 'px';
-    video.style.left = (desiredWidth - width) * 0.5 + 'px';
-    video.style.top = (desiredHeight - height) * 0.5 + 'px';
-  }
+  };
 
   private startVideoResizeTimer() {
     if (this.videoResizeTimer) {

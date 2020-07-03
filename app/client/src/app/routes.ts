@@ -3,6 +3,7 @@ export enum AppRoutes {
   Intro = 'intro',
   IntroAbout = 'intro/about',
   IntroTermsAndConditions = 'intro/terms',
+  LanguageSelect = 'language',
   TermsAndConditions = 'terms',
   ImageSource = 'image/source',
   CaptureImage = 'image/capture',

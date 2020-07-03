@@ -71,9 +71,9 @@
     color: #767777;
   }
 
-  button {
-    &.next {
-      margin-bottom: 27px;
-    }
+  button.next {
+    max-width: 320px;
+    width: 100%;
+    margin: 0 30px 27px 30px;
   }
 }
