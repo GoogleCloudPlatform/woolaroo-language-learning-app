@@ -5,7 +5,7 @@
   "introFeedback": "Lapplicazione a volte può sbagliare. Aiutaci a migliorarla fornendo i tuoi suggerimenti e le tue correzioni.",
   "startExploring": "Comincia a esplorare",
   "termsAndPrivacyTitle": "Condizioni di utilizzo e Informativa sulla privacy",
-  "introTermsAndPrivacy": "Utilizzando Woolaroo, accetti i <a>Termini e Condizioni</a> e <a>l'Informativa sulla protezione dei dati personali</a>.",
+  "introTermsAndPrivacy": "Utilizzando Woolaroo, accetti i <a href=\"${termsUrl}\">Termini e Condizioni</a> e <a href=\"${termsUrl}\">l'Informativa sulla protezione dei dati personali</a>.",
   "accept": "Accetto",
   "photoSource": "Utilizza una foto sul tuo dispositivo o scatta una foto a un oggetto vicino a te",
   "pickPhoto": "Carica una foto",

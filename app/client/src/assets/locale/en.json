@@ -6,7 +6,7 @@
   "skip": "Skip",
   "introFeedback": "As smart as advanced machine learning is, Woolaroo might get some objects wrong so you can help by giving feedback.",
   "termsAndPrivacyTitle": "Terms &amp; Privacy",
-  "introTermsAndPrivacy": "By using Woolaroo you are accepting the <a>Terms and Conditions</a> and <a>Privacy Policy</a>.",
+  "introTermsAndPrivacy": "By using Woolaroo you are accepting the <a href=\"${termsUrl}\">Terms and Conditions</a> and <a href=\"${termsUrl}\">Privacy Policy</a>.",
   "accept": "Accept",
   "errorTitle": "Error",
   "close": "Close",

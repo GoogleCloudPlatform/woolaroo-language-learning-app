@@ -5,7 +5,7 @@
   "introFeedback": "Woolaroo utiliza tecnología de aprendizaje automático avanzada para reconocer los objetos fotografiados y los traduce en tiempo real. Es posible que no siempre dé en el clavo, por lo que agradecemos que nos envíes tus comentarios.",
   "startExploring": "Empezar a probar",
   "termsAndPrivacyTitle": "Términos y Política de Privacidad",
-  "introTermsAndPrivacy": "Al utilizar el Woolaroo, aceptas sus <a>Términos y Condiciones</a>, así como su <a>Política de Privacidad</a>.",
+  "introTermsAndPrivacy": "Al utilizar el Woolaroo, aceptas sus <a href=\"${termsUrl}\">Términos y Condiciones</a>, así como su <a href=\"${termsUrl}\">Política de Privacidad</a>.",
   "accept": "Aceptar",
   "photoSource": "Puedes usar una foto que tengas en el teléfono o hacer una de un objeto de tu entorno",
   "pickPhoto": "ELEGIR UNA FOTO",

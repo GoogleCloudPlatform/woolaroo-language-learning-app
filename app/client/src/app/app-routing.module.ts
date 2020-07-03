@@ -2,7 +2,6 @@ import { NgModule} from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SplashPageComponent } from 'pages/splash/splash';
 import { IntroAboutPageComponent } from 'pages/intro/about/about';
-import { IntroFeedbackPageComponent } from 'pages/intro/feedback/feedback';
 import { IntroTermsPageComponent } from 'pages/intro/terms/terms';
 import { TermsPageComponent } from 'pages/terms/terms';
 import { PhotoSourcePageComponent } from 'pages/photo-source/photo-source';
@@ -21,7 +20,6 @@ const routes: Routes = [
   { path: AppRoutes.Splash, component: SplashPageComponent },
   { path: AppRoutes.Intro, redirectTo: AppRoutes.IntroAbout, pathMatch: 'full' },
   { path: AppRoutes.IntroAbout, component: IntroAboutPageComponent },
-  { path: AppRoutes.IntroFeedback, component: IntroFeedbackPageComponent },
   { path: AppRoutes.IntroTermsAndConditions, component: IntroTermsPageComponent },
   { path: AppRoutes.TermsAndConditions, component: TermsPageComponent },
   { path: AppRoutes.ImageSource, component: PhotoSourcePageComponent },

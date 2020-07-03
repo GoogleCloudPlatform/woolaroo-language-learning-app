@@ -2,7 +2,6 @@ export enum AppRoutes {
   Splash = 'splash',
   Intro = 'intro',
   IntroAbout = 'intro/about',
-  IntroFeedback = 'intro/feedback',
   IntroTermsAndConditions = 'intro/terms',
   TermsAndConditions = 'terms',
   ImageSource = 'image/source',

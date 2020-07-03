@@ -5,7 +5,7 @@
   "introFeedback": "O Woolaroo usa aprendizado de máquina avançado para entender o que são os objetos nas fotos e traduzir o nome deles em tempo real. Ele nem sempre acerta e, por isso, você pode enviar feedback para melhorar a ferramenta.",
   "startExploring": "Comece a explorar",
   "termsAndPrivacyTitle": "Termos e Privacidade",
-  "introTermsAndPrivacy": "Ao usar o Woolaroo, você aceita os <a>Termos e Condições</a> e a <a>Política de Privacidade</a>.",
+  "introTermsAndPrivacy": "Ao usar o Woolaroo, você aceita os <a href=\"${termsUrl}\">Termos e Condições</a> e a <a href=\"${termsUrl}\">Política de Privacidade</a>.",
   "accept": "Aceitar",
   "photoSource": "Você pode tirar uma foto ou selecionar uma imagem do seu smartphone.",
   "pickPhoto": "SELECIONE UMA FOTO",

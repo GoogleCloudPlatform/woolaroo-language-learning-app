@@ -1,8 +1,22 @@
-import { AfterViewInit, Component, ElementRef, Inject, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, Pipe, PipeTransform, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
 import { IProfileService, PROFILE_SERVICE } from 'services/profile';
 import { AppRoutes } from 'app/routes';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
+@Pipe({
+  name: 'replaceLinks'
+})
+class ReplaceLinksPipe implements PipeTransform {
+  constructor(private sanitizer: DomSanitizer) {
+  }
+
+  transform(html:any, links?: string[]): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(html);
+  }
+}
+
 
 @Component({
   selector: 'app-page-intro-terms',
