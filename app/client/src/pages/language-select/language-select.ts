@@ -4,6 +4,8 @@ import { I18nService, Language } from 'i18n/i18n.service';
 import { EndangeredLanguage, EndangeredLanguageService } from 'services/endangered-language';
 import { IProfileService, PROFILE_SERVICE } from 'services/profile';
 import { Profile } from 'services/entities/profile';
+import { Router } from '@angular/router';
+import { AppRoutes } from '../../app/routes';
 
 @Component({
   selector: 'app-language-select',
@@ -25,7 +27,8 @@ export class LanguageSelectPageComponent {
   private _currentEndangeredLanguageIndex: number = 0;
   public get currentEndangeredLanguageIndex(): number { return this._currentEndangeredLanguageIndex; }
 
-  constructor(private i18nService: I18nService,
+  constructor(private router: Router,
+              private i18nService: I18nService,
               private endangeredLanguageService: EndangeredLanguageService,
               @Inject(PROFILE_SERVICE) private profileService: IProfileService) {
     this._currentUILanguageIndex = this.i18nService.languages.indexOf(this.i18nService.currentLanguage);
@@ -66,10 +69,10 @@ export class LanguageSelectPageComponent {
   }
 
   onCloseClick() {
-
+    this.router.navigateByUrl(AppRoutes.CaptureImage);
   }
 
   onNextClick() {
-
+    this.router.navigateByUrl(AppRoutes.CaptureImage);
   }
 }
