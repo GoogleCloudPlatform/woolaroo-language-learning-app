@@ -5,7 +5,7 @@ export enum AppRoutes {
   IntroTermsAndConditions = 'intro/terms',
   ChangeLanguage = 'languages/change',
   ListLanguages = 'languages',
-  ViewLanguages = 'languages/:id',
+  ViewLanguage = 'languages/:id',
   TermsAndConditions = 'terms',
   ImageSource = 'image/source',
   CaptureImage = 'image/capture',

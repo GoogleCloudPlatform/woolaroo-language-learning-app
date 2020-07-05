@@ -27,4 +27,8 @@ export class ListLanguagesPageComponent {
     ev.stopPropagation();
     history.back();
   }
+
+  onLanguageClick(code: string) {
+    this.router.navigate([AppRoutes.ViewLanguage, code]);
+  }
 }

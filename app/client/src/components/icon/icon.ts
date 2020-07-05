@@ -33,7 +33,7 @@ export class IconComponent {
       brand: 'radio_button_unchecked.svg',
       add_to_home: 'save_alt.svg',
       add_feedback: 'chat_bubble_outline.svg',
-      back: 'arrow_back.svg',
+      back: 'back.svg',
       forward: 'arrow_forward.svg',
       share: 'share.svg',
       play_audio: 'volume_up.svg',

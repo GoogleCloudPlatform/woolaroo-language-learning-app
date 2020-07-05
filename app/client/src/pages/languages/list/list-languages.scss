@@ -3,14 +3,48 @@
 
 :host {
   @include toolbar-page;
+
+  .content {
+    padding: 160px 0 30px 0;
+  }
+}
+
+mat-toolbar {
+  display: grid;
+  grid-template-columns: 0fr 1fr;
+  height: 100px;
+
+  button {
+    grid-row: 1 / span 2;
+    grid-column: 1;
+    padding: 8px;
+  }
+
+  span:first-of-type {
+    grid-row: 1;
+    grid-column: 2;
+    font-size: 18px;
+    color: #303438;
+    opacity: 0.5;
+    align-self: flex-end;
+  }
+
+  span:last-of-type {
+    grid-row: 2;
+    grid-column: 2;
+    font-size: 20px;
+    color: #303438;
+    font-weight: bold;
+    align-self: flex-start;
+  }
 }
 
 .content app-carousel ::ng-deep {
-  margin: 30px 0 50px 0;
+  margin: 0 0 50px 0;
 
   > ul > li {
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-    
+
     &:not(.current) {
       opacity: 50%;
       transform: scale(0.8);
