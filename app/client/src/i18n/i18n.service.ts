@@ -18,7 +18,7 @@ export const I18N_SERVICE_CONFIG = new InjectionToken<I18nServiceConfig>('I18n c
 
 @Injectable()
 export class I18nService {
-  private _translations:{[key:string]:string};
+  private _translations:{[key:string]:string}|null;
 
   private _currentLanguage: Language;
   public get currentLanguage():Language { return this._currentLanguage; }
@@ -28,7 +28,7 @@ export class I18nService {
   public get languages(): Language[] { return this.config.languages; }
 
   constructor(private http: HttpClient, @Inject(I18N_SERVICE_CONFIG) private config: I18nServiceConfig) {
-    this._translations = {};
+    this._translations = null;
     this._currentLanguage = this.config.languages.find(lang => lang.default) || this.config.languages[0];
     this.loadTranslations(this._currentLanguage);
   }
@@ -55,6 +55,13 @@ export class I18nService {
   }
 
   getTranslation(key: string) {
-    return this._translations[key];
+    if(!this._translations) {
+      return key;
+    } else if(!this._translations[key]) {
+      console.warn("Translation not found: " + key);
+      return key;
+    } else {
+      return this._translations[key];
+    }
   }
 }
