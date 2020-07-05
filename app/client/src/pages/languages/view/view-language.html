@@ -7,7 +7,7 @@
   </div>
   <div class="title">
     <h1>{{ language ? language.name : '' }}</h1>
-    <a class="explore" [innerHTML]="'Explore this language'|translate:'exploreThisLanguage'"></a>
+    <button class="explore" [innerHTML]="'Explore this language'|translate:'exploreThisLanguage'" (click)="onChangeLanguageClick()"></button>
   </div>
   <div class="details">
     <div class="field">
@@ -23,12 +23,15 @@
 </div>
 <div class="other-languages">
   <h2 [innerHTML]="'Other languages'|translate:'otherLanguages'"></h2>
-  <app-carousel>
-    <ng-container *ngFor="let lang of endangeredLanguages">
+  <app-carousel [currentItem]="otherLanguages.length / 2">
+    <ng-container *ngFor="let lang of otherLanguages">
       <div class="language" *appCarouselItem (click)="onLanguageClick(lang.code)">
-        <img [src]="lang.sampleWordImageURL" [alt]="'Tree' | translate:'tree':{}" />
-        <span class="translation" [innerHTML]="lang.sampleWordTranslation"></span>
-        <span class="original" [innerHTML]="'Tree' | translate:'tree':{}"></span>
+        <div class="example">
+          <img [src]="lang.sampleWordImageURL" [alt]="'Tree' | translate:'tree':{}" />
+          <span class="translation" [innerHTML]="lang.sampleWordTranslation"></span>
+          <span class="original" [innerHTML]="'Tree' | translate:'tree':{}"></span>
+        </div>
+        <div class="name">{{ lang.name }}</div>
       </div>
     </ng-container>
   </app-carousel>

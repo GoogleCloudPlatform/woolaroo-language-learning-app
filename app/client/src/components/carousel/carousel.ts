@@ -114,13 +114,26 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   onTouchEnd = () => {
     window.document.body.removeEventListener('touchmove', this.onTouchMove);
     window.document.body.removeEventListener('touchend', this.onTouchEnd);
+    if(this.isDragging) {
+      window.document.body.addEventListener('click', this.onMouseClick, true);
+    }
     this.stopDrag();
   };
 
   onMouseUp = () => {
     window.document.body.removeEventListener('mousemove', this.onMouseMove);
     window.document.body.removeEventListener('mouseup', this.onMouseUp);
+    if(this.isDragging) {
+      window.document.body.addEventListener('click', this.onMouseClick, true);
+    }
     this.stopDrag();
+  };
+
+  onMouseClick = (ev:MouseEvent) => {
+    window.document.body.removeEventListener('click', this.onMouseClick, true);
+    // prevent click events on child elements when dragging
+    ev.preventDefault();
+    ev.stopPropagation();
   };
 
   onTouchMove = (ev: TouchEvent) => {
@@ -191,9 +204,12 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
     if (!items || this.currentItem >= items.length) {
       return;
     }
+    const currentItem = items[this.currentItem];
+    if(!currentItem) {
+      return;
+    }
     const containerBounds = scrollContainer.getBoundingClientRect();
     const centerX = containerBounds.left + containerBounds.width * 0.5;
-    const currentItem = items[this.currentItem];
     const currentItemBounds = currentItem.getBoundingClientRect();
     const currentItemCenterX = currentItemBounds.left + currentItemBounds.width * 0.5;
     this.setScrollPosition(centerX - currentItemCenterX);

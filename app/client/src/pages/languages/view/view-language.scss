@@ -67,9 +67,11 @@
   h1 {
     font-family: $main-font;
     font-size: 45px;
+    margin-bottom: 40px;
   }
 
   .explore {
+    @include text-button;
     font-weight: bold;
     font-size: 18px;
     color: mat-color($app-accent);
@@ -117,46 +119,54 @@
   }
 
   app-carousel {
+    margin: 0 -40px;
+
+    ::ng-deep ul li {
+      margin-right: 10px;
+    }
+
     .language {
-      width: 100px;
-      height: 100px;
-      border-radius: 20px;
-      overflow: hidden;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-
-      img {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      .translation {
+      .example {
+        width: 160px;
+        height: 160px;
+        border-radius: 8px;
+        overflow: hidden;
         position: relative;
-        width: 100px;
-        height: 100px;
-        font-size: 30px;
-        font-weight: bold;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background: url(../../../assets/img/camera-frame.svg) no-repeat center center;
+        color: mat-contrast($app-inverted, 500);
         margin-bottom: 10px;
-        margin-top: 20px;
-      }
 
-      .original {
-        position: relative;
-        text-transform: lowercase;
-        font-size: 18px;
-        font-weight: bold;
+        img {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .translation {
+          position: relative;
+          width: 70px;
+          height: 70px;
+          font-size: 20px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background: url(../../../assets/img/camera-frame.svg) no-repeat center center;
+          margin-bottom: 10px;
+          margin-top: 20px;
+        }
+
+        .original {
+          position: relative;
+          text-transform: lowercase;
+          font-size: 16px;
+        }
       }
     }
   }

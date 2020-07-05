@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { I18nService } from 'i18n/i18n.service';
 import { EndangeredLanguage, EndangeredLanguageService } from 'services/endangered-language';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { AppRoutes } from '../../../app/routes';
+import { AppRoutes } from 'app/routes';
 
 @Component({
   selector: 'app-view-language',
@@ -11,6 +11,13 @@ import { AppRoutes } from '../../../app/routes';
 })
 export class ViewLanguagePageComponent {
   public get endangeredLanguages():EndangeredLanguage[] { return this.endangeredLanguageService.languages; }
+  public get otherLanguages():EndangeredLanguage[] {
+    const currentLang = this.language;
+    if(!currentLang) {
+      return this.endangeredLanguageService.languages;
+    }
+    return this.endangeredLanguageService.languages.filter(lang => lang.code !== currentLang.code);
+  }
 
   public language: EndangeredLanguage|null;
 
@@ -26,7 +33,16 @@ export class ViewLanguagePageComponent {
     );
   }
 
+  onChangeLanguageClick() {
+    const currentLang = this.language;
+    if(currentLang) {
+      this.endangeredLanguageService.setLanguage(currentLang.code);
+      this.router.navigateByUrl(AppRoutes.CaptureImage);
+    }
+  }
+
   onLanguageClick(code: string) {
+    window.scrollTo(0, 0);
     this.router.navigate([AppRoutes.ListLanguages, code]);
   }
 
