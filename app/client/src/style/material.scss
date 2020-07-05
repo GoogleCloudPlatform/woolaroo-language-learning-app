@@ -29,6 +29,7 @@ button.mat-button-base {
 }
 
 mat-toolbar.mat-toolbar-single-row {
+  font-family: $main-font;
   position: fixed;
   height: 80px;
   padding: 0 20px;
@@ -58,6 +59,8 @@ mat-toolbar.mat-toolbar-single-row {
 }
 
 mat-checkbox {
+  font-family: $main-font;
+
   .mat-checkbox-inner-container {
     width: 22px;
     height: 22px;
@@ -67,6 +70,10 @@ mat-checkbox {
   .mat-checkbox-label {
     font-size: 1.1rem;
   }
+}
+
+.mat-form-field {
+  font-family: $main-font;
 }
 
 .mat-form-field.textarea,

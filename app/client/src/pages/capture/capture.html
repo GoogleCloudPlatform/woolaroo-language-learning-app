@@ -10,5 +10,8 @@
     <button class="load-photo" [attr.aria-label]="'Pick photo' | translate:'pickPhoto'" (appFileUpload)="onImageUploaded($event)" accept="image/*">
       <app-icon icon="photo_library"></app-icon>
     </button>
+    <button class="language" [attr.aria-label]="'Change language' | translate:'changeLanguage'" (click)="onChangeLanguageClick()">
+      <app-icon icon="language"></app-icon>
+    </button>
   </mat-sidenav-content>
 </mat-sidenav-container>

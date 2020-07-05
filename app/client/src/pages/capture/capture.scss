@@ -72,24 +72,31 @@ app-camera-preview {
   }
 }
 
-.load-photo {
+.load-photo,
+.language {
   @include icon-button;
   position: absolute;
-  left: 35px;
   bottom: 10px;
   width: 60px;
   height: 60px;
+  padding: 15px;
+  box-sizing: border-box;
 
   ::ng-deep {
-    app-icon {
-      width: 50px;
-      height: 50px;
-    }
-
     .mat-icon {
       color: mat-contrast($app-inverted, 500);
     }
   }
+}
+
+.load-photo {
+  left: 20px;
+  bottom: 10px;
+}
+
+.language {
+  right: 20px;
+  bottom: 10px;
 }
 
 :host-context([dir=rtl]) {

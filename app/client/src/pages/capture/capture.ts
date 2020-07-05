@@ -174,4 +174,8 @@ export class CapturePageComponent extends ImageLoaderPageBase implements AfterVi
   onSidenavClosed() {
     this.sidenavOpen = false;
   }
+
+  onChangeLanguageClick() {
+    this.router.navigateByUrl(AppRoutes.LanguageSelect);
+  }
 }
