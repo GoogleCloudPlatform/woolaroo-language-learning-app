@@ -190,6 +190,6 @@ export class CapturePageComponent extends ImageLoaderPageBase implements AfterVi
   }
 
   onChangeLanguageClick() {
-    this.router.navigateByUrl(AppRoutes.LanguageSelect);
+    this.router.navigateByUrl(AppRoutes.ChangeLanguage);
   }
 }

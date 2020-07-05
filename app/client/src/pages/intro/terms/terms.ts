@@ -50,7 +50,7 @@ export class IntroTermsPageComponent implements AfterViewInit {
     if(profile && profile.language && profile.endangeredLanguage) {
       this.router.navigateByUrl(AppRoutes.ImageSource);
     } else {
-      this.router.navigateByUrl(AppRoutes.LanguageSelect);
+      this.router.navigateByUrl(AppRoutes.ChangeLanguage);
     }
   }
 }

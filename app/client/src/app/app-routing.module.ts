@@ -1,4 +1,5 @@
 import { NgModule} from '@angular/core';
+import { AppRoutes } from 'app/routes';
 import { Routes, RouterModule } from '@angular/router';
 import { SplashPageComponent } from 'pages/splash/splash';
 import { IntroAboutPageComponent } from 'pages/intro/about/about';
@@ -12,8 +13,8 @@ import { FeedbackPageComponent } from 'pages/feedback/feedback';
 import { AddWordPageComponent } from 'pages/add-word/add-word';
 import { AboutPageComponent } from 'pages/about/about';
 import { TechnologyPageComponent } from 'pages/technology/technology';
-import { AppRoutes } from 'app/routes';
-import { LanguageSelectPageComponent } from 'pages/language-select/language-select';
+import { ChangeLanguagePageComponent } from 'pages/languages/change/change-language';
+import { ListLanguagesPageComponent } from 'pages/languages/list/list-languages';
 
 
 const routes: Routes = [
@@ -31,7 +32,8 @@ const routes: Routes = [
   { path: AppRoutes.About, component: AboutPageComponent },
   { path: AppRoutes.Technology, component: TechnologyPageComponent },
   { path: AppRoutes.AddWord, component: AddWordPageComponent },
-  { path: AppRoutes.LanguageSelect, component: LanguageSelectPageComponent },
+  { path: AppRoutes.ChangeLanguage, component: ChangeLanguagePageComponent },
+  { path: AppRoutes.ListLanguages, component: ListLanguagesPageComponent },
   { path: '**', component: SplashPageComponent } // TODO: not found page
 ];
 

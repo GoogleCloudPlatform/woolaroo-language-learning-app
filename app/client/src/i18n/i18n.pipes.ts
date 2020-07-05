@@ -6,7 +6,7 @@ export class TranslatePipe implements PipeTransform {
   constructor(private i18nService: I18nService) {
   }
 
-  transform(text: any, id?: string, replacements?: {[index:string]:string}): string {
+  transform(text: any, id?: string, replacements?: {[index:string]:string}, language?:string): string {
     const translateKey = id ? id : text;
     let translation = this.i18nService.getTranslation(translateKey);
     if(!translation) {

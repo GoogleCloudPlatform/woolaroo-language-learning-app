@@ -5,7 +5,7 @@
     <ul>
       <li><a [routerLink]="['/about']" [innerHTML]="'The app' | translate:'theApp'"></a></li>
       <li><a [routerLink]="['/technology']" [innerHTML]="'The technology' | translate:'theTechnology'"></a></li>
-      <li><a [routerLink]="['/technology']" [innerHTML]="'The languages' | translate:'theLanguages'"></a></li>
+      <li><a [routerLink]="['/languages']" [innerHTML]="'The languages' | translate:'theLanguages'"></a></li>
       <li *ngIf="termsAndPrivacyEnabled"><a [routerLink]="['/terms']" [innerHTML]="'Terms &amp; Privacy' | translate:'termsAndPrivacyTitle'"></a></li>
     </ul>
   </li>

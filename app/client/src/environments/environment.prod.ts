@@ -186,22 +186,26 @@ export const environment = {
           {
             code: 'scn',
             name: 'Sicilian',
-            default: params.endangeredLanguage === 'scn'
+            default: params.endangeredLanguage === 'scn',
+            treeImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-scn.jpg'
           },
           {
             code: 'yi',
             name: 'Yiddish',
-            default: params.endangeredLanguage === 'yi'
+            default: params.endangeredLanguage === 'yi',
+            treeImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-yi.jpg'
           },
           {
             code: 'be',
             name: 'беларуская мова',
-            default: params.endangeredLanguage === 'be'
+            default: params.endangeredLanguage === 'be',
+            treeImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-be.jpg'
           },
           {
             code: 'zyg',
             name: '佒壯',
-            default: params.endangeredLanguage === 'zyg'
+            default: params.endangeredLanguage === 'zyg',
+            treeImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-zyg.jpg'
           }
         ]
       }

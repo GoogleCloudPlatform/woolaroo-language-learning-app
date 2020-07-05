@@ -4,7 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from 'environments/environment';
 
 export type Icon = 'play_audio'|'record_audio'|'stop_audio'|'play_recording'|'back'|'add_feedback'|
-  'add_to_home'|'brand'|'photo_library'|'capture_photo'|'menu'|'close'|'share'|'search'|'add'|'language';
+  'add_to_home'|'brand'|'photo_library'|'capture_photo'|'menu'|'close'|'share'|'search'|'add'|'language'|'forward';
 
 @Component({
   selector: 'app-icon',
@@ -34,6 +34,7 @@ export class IconComponent {
       add_to_home: 'save_alt.svg',
       add_feedback: 'chat_bubble_outline.svg',
       back: 'arrow_back.svg',
+      forward: 'arrow_forward.svg',
       share: 'share.svg',
       play_audio: 'volume_up.svg',
       record_audio: 'mic.svg',

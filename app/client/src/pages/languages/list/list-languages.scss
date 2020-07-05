@@ -1,0 +1,117 @@
+@import 'palette';
+@import 'components';
+
+:host {
+  @include toolbar-page;
+}
+
+.content app-carousel ::ng-deep {
+  margin: 30px 0 50px 0;
+
+  > ul > li {
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    
+    &:not(.current) {
+      opacity: 50%;
+      transform: scale(0.8);
+    }
+  }
+
+  .language {
+    color: mat-contrast($app-inverted, 500);
+    max-width: 307px;
+    width: 90vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+
+    .example {
+      width: 225px;
+      height: 225px;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        left: 0;
+        top: 0;
+      }
+
+      .translation {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        font-size: 30px;
+        font-weight: bold;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: url(../../../assets/img/camera-frame.svg) no-repeat center center;
+        margin-bottom: 10px;
+      }
+
+      .original {
+        position: relative;
+        text-transform: lowercase;
+        font-size: 18px;
+        font-weight: bold;
+      }
+    }
+
+    .info {
+      flex: 1 1 auto;
+      border-radius: 8px;
+      background-color: mat-color($app-accent);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      margin-top: -130px;
+      padding: 160px 20px 30px 20px;
+      box-sizing: border-box;
+
+      .learn-more {
+        font-size: 20px;
+        line-height: 24px;
+        margin-bottom: 5px;
+      }
+
+      .name {
+        font-size: 45px;
+        line-height: 55px;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+    }
+  }
+
+  > ul {
+    > li:nth-child(3n + 2) .language .info {
+      background-color: mat-color($app-primary) !important;
+    }
+
+    > li:nth-child(3n + 3) .language .info {
+      background-color: mat-color($app-secondary) !important;
+    }
+  }
+}
+
+app-pagination-indicator {
+  margin-bottom: 50px;
+}
+
+.instructions {
+  text-align: center;
+  font-size: 18px;
+  color: #767777;
+}

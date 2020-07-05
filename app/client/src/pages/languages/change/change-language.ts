@@ -1,19 +1,16 @@
-import { Component, Inject, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CameraPreviewComponent } from 'components/camera-preview/camera-preview';
 import { I18nService, Language } from 'i18n/i18n.service';
 import { EndangeredLanguage, EndangeredLanguageService } from 'services/endangered-language';
-import { IProfileService, PROFILE_SERVICE } from 'services/profile';
-import { Profile } from 'services/entities/profile';
 import { Router } from '@angular/router';
-import { AppRoutes } from '../../app/routes';
+import { AppRoutes } from 'app/routes';
 
 @Component({
-  selector: 'app-language-select',
-  templateUrl: './language-select.html',
-  styleUrls: ['./language-select.scss']
+  selector: 'app-change-language',
+  templateUrl: './change-language.html',
+  styleUrls: ['./change-language.scss']
 })
-export class LanguageSelectPageComponent {
-  private _profile: Profile|null = null;
+export class ChangeLanguagePageComponent {
   @ViewChild(CameraPreviewComponent)
   private cameraPreview: CameraPreviewComponent|null = null;
 
@@ -29,25 +26,12 @@ export class LanguageSelectPageComponent {
 
   constructor(private router: Router,
               private i18nService: I18nService,
-              private endangeredLanguageService: EndangeredLanguageService,
-              @Inject(PROFILE_SERVICE) private profileService: IProfileService) {
+              private endangeredLanguageService: EndangeredLanguageService) {
     this._currentUILanguageIndex = this.i18nService.languages.indexOf(this.i18nService.currentLanguage);
     this._currentEndangeredLanguageIndex = this.endangeredLanguageService.languages.indexOf(this.endangeredLanguageService.currentLanguage);
   }
 
   ngAfterViewInit() {
-    this.profileService.loadProfile().then(
-      profile => {
-        this._profile = profile;
-        const languageCode = this._profile.language;
-        if(languageCode) {
-          const index = this.i18nService.languages.findIndex(lang => lang.code === languageCode);
-          if(index >= 0) {
-            this._currentUILanguageIndex = index;
-          }
-        }
-      }
-    );
     if (!this.cameraPreview) {
       console.error('Camera preview not found');
     } else {

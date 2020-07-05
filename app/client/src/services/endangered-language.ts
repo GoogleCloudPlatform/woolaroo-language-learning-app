@@ -5,6 +5,7 @@ export interface EndangeredLanguage {
   name: string;
   default: boolean;
   apiURL: string;
+  treeImageURL: string;
 }
 
 interface EndangeredLanguageConfig {

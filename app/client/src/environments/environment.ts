@@ -195,19 +195,23 @@ export const environment = {
           {
             code: 'scn',
             name: 'Sicilian',
-            default: true
+            default: true,
+            treeImageURL: './assets/img/languages/tree-scn.jpg'
           },
           {
             code: 'yi',
-            name: 'Yiddish'
+            name: 'Yiddish',
+            treeImageURL: './assets/img/languages/tree-yi.jpg'
           },
           {
             code: 'be',
-            name: 'беларуская мова'
+            name: 'беларуская мова',
+            treeImageURL: './assets/img/languages/tree-be.jpg'
           },
           {
             code: 'zyg',
-            name: '佒壯'
+            name: '佒壯',
+            treeImageURL: './assets/img/languages/tree-zyg.jpg'
           }
         ]
       }
