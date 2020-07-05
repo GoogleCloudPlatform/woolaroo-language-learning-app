@@ -9,12 +9,14 @@ import { SidenavModule } from 'components/sidenav/sidenav.module';
 import { CapturePopUpModule } from 'components/capture-popup/capture-popup.module';
 import { I18nModule } from 'i18n/i18n.module';
 import { DirectivesModule } from 'directives/directives.module';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
     CapturePageComponent,
   ],
   imports: [
+    CommonModule,
     MatSidenavModule,
     IconComponentModule,
     CameraPreviewModule,

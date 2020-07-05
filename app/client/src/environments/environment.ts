@@ -90,6 +90,9 @@ export const environment = {
     },
     captionImage: {
       debugImageUrl
+    },
+    capture: {
+      instructionsDuration: 5000
     }
   },
   components: {

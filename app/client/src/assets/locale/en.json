@@ -16,6 +16,8 @@
   "pickPhoto": "Pick photo",
   "photoSource": "You can use a photo from your phone or take a photo of something around you",
   "takePhoto": "Take Photo",
+  "changeLanguage": "Change language",
+  "captureInstructions": "Capture an object and Woolaroo will translate.",
   "imageCaptionLabel": "What's this?",
   "imageCaptionRequired": "Image caption is required",
   "translationFeedback": "Translation Feedback",

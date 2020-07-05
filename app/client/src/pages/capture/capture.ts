@@ -12,6 +12,8 @@ import { SessionService } from 'services/session';
 import { addOpenedListener } from 'util/dialog';
 import { removeImageTransform } from 'util/image';
 import { I18nService } from 'i18n/i18n.service';
+import { IProfileService, PROFILE_SERVICE } from 'services/profile';
+import { environment } from '../../environments/environment';
 
 export class ImageLoaderPageBase {
   constructor( protected router: Router,
@@ -78,11 +80,13 @@ export class CapturePageComponent extends ImageLoaderPageBase implements AfterVi
   private modalIsForCameraStartup = true;
   public captureInProgress = false;
   public sidenavOpen = false;
+  public instructionsVisible = false;
 
   constructor( router: Router,
                dialog: MatDialog,
                sessionService: SessionService,
                private i18n: I18nService,
+               @Inject(PROFILE_SERVICE) private profileService: IProfileService,
                @Inject(IMAGE_RECOGNITION_SERVICE) imageRecognitionService: IImageRecognitionService,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService) {
     super(router, dialog, sessionService, imageRecognitionService);
@@ -91,6 +95,16 @@ export class CapturePageComponent extends ImageLoaderPageBase implements AfterVi
   ngAfterViewInit() {
     let loadingPopUp: MatDialogRef<any>|undefined = this.sessionService.currentSession.currentModal;
     this.analyticsService.logPageView(this.router.url, 'Capture');
+    this.profileService.loadProfile().then(
+      profile => {
+        this.instructionsVisible = !profile.captureInstructionsViewed;
+        profile.captureInstructionsViewed = true;
+        this.profileService.saveProfile(profile);
+        if(this.instructionsVisible) {
+          setTimeout(() => this.instructionsVisible = false, environment.pages.capture.instructionsDuration);
+        }
+      }
+    );
     if (!this.cameraPreview) {
       console.error('Camera preview not found');
       if (loadingPopUp) {
