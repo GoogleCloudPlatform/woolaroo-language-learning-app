@@ -15,6 +15,7 @@ import { AboutPageModule } from 'pages/about/about.module';
 import { TechnologyPageModule } from 'pages/technology/technology.module';
 import { ChangeLanguageModule } from 'pages/languages/change/change-language.module';
 import { ListLanguagesModule } from 'pages/languages/list/list-languages.module';
+import { ViewLanguageModule } from 'pages/languages/view/view-language.module';
 import { AddWordPageModule } from 'pages/add-word/add-word.module';
 import { CaptionImagePageModule } from 'pages/caption-image/caption-image.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -40,6 +41,7 @@ import { environment } from 'environments/environment';
     CaptionImagePageModule,
     ChangeLanguageModule,
     ListLanguagesModule,
+    ViewLanguageModule,
     HttpClientModule,
     BrowserAnimationsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })

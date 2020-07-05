@@ -1,0 +1,35 @@
+<div class="language" *ngIf="language">
+  <div class="banner">
+    <button class="back" (click)="onBackClick($event)"><app-icon icon="back"></app-icon></button>
+    <img [src]="language ? language.sampleWordImageURL : ''" [alt]="'Tree' | translate:'tree':{}" />
+    <span class="translation" [innerHTML]="language ? language.sampleWordTranslation : ''"></span>
+    <span class="original" [innerHTML]="'Tree' | translate:'tree':{}"></span>
+  </div>
+  <div class="title">
+    <h1>{{ language ? language.name : '' }}</h1>
+    <a class="explore" [innerHTML]="'Explore this language'|translate:'exploreThisLanguage'"></a>
+  </div>
+  <div class="details">
+    <div class="field">
+      <span class="label" [innerHTML]="'Region'|translate:'region'"></span>
+      <span class="value" [innerHTML]="'Region name'|translate:'region_' + (language ? language.code : '')"></span>
+    </div>
+    <div class="field">
+      <span class="label" [innerHTML]="'Native Speakers'|translate:'nativeSpeakers'"></span>
+      <span class="value" [innerHTML]="'Region name'|translate:'nativeSpeakers_' + (language ? language.code : '')"></span>
+    </div>
+  </div>
+  <div class="description" [innerHTML]="'Description'|translate:'description_' + (language ? language.code : '')"></div>
+</div>
+<div class="other-languages">
+  <h2 [innerHTML]="'Other languages'|translate:'otherLanguages'"></h2>
+  <app-carousel>
+    <ng-container *ngFor="let lang of endangeredLanguages">
+      <div class="language" *appCarouselItem (click)="onLanguageClick(lang.code)">
+        <img [src]="lang.sampleWordImageURL" [alt]="'Tree' | translate:'tree':{}" />
+        <span class="translation" [innerHTML]="lang.sampleWordTranslation"></span>
+        <span class="original" [innerHTML]="'Tree' | translate:'tree':{}"></span>
+      </div>
+    </ng-container>
+  </app-carousel>
+</div>

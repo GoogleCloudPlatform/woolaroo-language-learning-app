@@ -47,6 +47,10 @@
   "tree": "Tree",
   "learnMoreAbout": "Learn more about",
   "languageListInstructions": "Tap a language to learn more",
+  "region": "Region",
+  "nativeSpeakers": "Native Speakers",
+  "exploreThisLanguage": "Explore this language",
+  "otherLanguages": "Other languages",
   "enterSomethingElse": "Enter something else",
   "wordInNativeScript": "Word in native script",
   "nativeWordRequired": "Word in native script is required",
@@ -67,5 +71,8 @@
   "startCameraError": "Unable to start camera",
   "captureImageError": "Unable to capture image",
   "feedbackSubmitted": "Feedback submitted",
-  "submitFeedbackError": "Unable to save feedback"
+  "submitFeedbackError": "Unable to save feedback",
+  "region_scn": "Queensland, Australia",
+  "nativeSpeakers_scn": "100000",
+  "description_scn": "<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>\n\n<p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>\n\n<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>"
 }

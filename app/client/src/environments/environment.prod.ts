@@ -187,25 +187,29 @@ export const environment = {
             code: 'scn',
             name: 'Sicilian',
             default: params.endangeredLanguage === 'scn',
-            treeImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-scn.jpg'
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-scn.jpg',
+            sampleWordTranslation: 'tullei'
           },
           {
             code: 'yi',
             name: 'Yiddish',
             default: params.endangeredLanguage === 'yi',
-            treeImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-yi.jpg'
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-yi.jpg',
+            sampleWordTranslation: 'tullei'
           },
           {
             code: 'be',
             name: 'беларуская мова',
             default: params.endangeredLanguage === 'be',
-            treeImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-be.jpg'
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-be.jpg',
+            sampleWordTranslation: 'tullei'
           },
           {
             code: 'zyg',
             name: '佒壯',
             default: params.endangeredLanguage === 'zyg',
-            treeImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-zyg.jpg'
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-zyg.jpg',
+            sampleWordTranslation: 'tullei'
           }
         ]
       }

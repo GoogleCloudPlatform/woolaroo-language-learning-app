@@ -1,0 +1,163 @@
+@import 'palette';
+@import 'components';
+@import 'typography';
+
+.banner {
+  height: 310px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: mat-contrast($app-inverted, 500);
+
+  .back {
+    @include icon-button;
+    color: mat-contrast($app-inverted, 500);
+    position: absolute;
+    left: 20px;
+    top: 40px;
+    z-index: 1;
+    padding: 5px;
+  }
+
+  img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .translation {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    font-size: 30px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: url(../../../assets/img/camera-frame.svg) no-repeat center center;
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+
+  .original {
+    position: relative;
+    text-transform: lowercase;
+    font-size: 18px;
+    font-weight: bold;
+  }
+}
+
+.title,
+.details,
+.description {
+  margin: 0 40px;
+  padding: 40px 0;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.3);
+}
+
+.title {
+  text-align: center;
+
+  h1 {
+    font-family: $main-font;
+    font-size: 45px;
+  }
+
+  .explore {
+    font-weight: bold;
+    font-size: 18px;
+    color: mat-color($app-accent);
+    text-decoration: underline;
+  }
+}
+
+.details {
+  font-size: 18px;
+
+  .field {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 30px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .label {
+    font-weight: bold;
+    color: mat-color($app-secondary);
+  }
+
+  .value {
+    color: #767777;
+  }
+}
+
+.description {
+  font-size: 18px;
+  color: #767777;
+  line-height: 140.4%;
+}
+
+.other-languages {
+  padding: 40px;
+
+  h2 {
+    font-size: 20px;
+    color: #303438;
+    font-family: $main-font;
+  }
+
+  app-carousel {
+    .language {
+      width: 100px;
+      height: 100px;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .translation {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        font-size: 30px;
+        font-weight: bold;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: url(../../../assets/img/camera-frame.svg) no-repeat center center;
+        margin-bottom: 10px;
+        margin-top: 20px;
+      }
+
+      .original {
+        position: relative;
+        text-transform: lowercase;
+        font-size: 18px;
+        font-weight: bold;
+      }
+    }
+  }
+}

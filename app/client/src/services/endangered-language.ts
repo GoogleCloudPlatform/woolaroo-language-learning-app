@@ -5,7 +5,11 @@ export interface EndangeredLanguage {
   name: string;
   default: boolean;
   apiURL: string;
-  treeImageURL: string;
+  sampleWordImageURL: string;
+  sampleWordTranslation: string;
+  region: string;
+  nativeSpeakers: string;
+  description: string;
 }
 
 interface EndangeredLanguageConfig {

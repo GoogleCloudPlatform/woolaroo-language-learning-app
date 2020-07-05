@@ -15,7 +15,7 @@ import { AboutPageComponent } from 'pages/about/about';
 import { TechnologyPageComponent } from 'pages/technology/technology';
 import { ChangeLanguagePageComponent } from 'pages/languages/change/change-language';
 import { ListLanguagesPageComponent } from 'pages/languages/list/list-languages';
-
+import { ViewLanguagePageComponent} from 'pages/languages/view/view-language';
 
 const routes: Routes = [
   { path: '', redirectTo: AppRoutes.Splash, pathMatch: 'full' },
@@ -33,6 +33,7 @@ const routes: Routes = [
   { path: AppRoutes.Technology, component: TechnologyPageComponent },
   { path: AppRoutes.AddWord, component: AddWordPageComponent },
   { path: AppRoutes.ChangeLanguage, component: ChangeLanguagePageComponent },
+  { path: AppRoutes.ViewLanguage, component: ViewLanguagePageComponent },
   { path: AppRoutes.ListLanguages, component: ListLanguagesPageComponent },
   { path: '**', component: SplashPageComponent } // TODO: not found page
 ];

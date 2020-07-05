@@ -196,22 +196,26 @@ export const environment = {
             code: 'scn',
             name: 'Sicilian',
             default: true,
-            treeImageURL: './assets/img/languages/tree-scn.jpg'
+            sampleWordImageURL: './assets/img/languages/tree-scn.jpg',
+            sampleWordTranslation: 'tullei'
           },
           {
             code: 'yi',
             name: 'Yiddish',
-            treeImageURL: './assets/img/languages/tree-yi.jpg'
+            sampleWordImageURL: './assets/img/languages/tree-yi.jpg',
+            sampleWordTranslation: 'tullei'
           },
           {
             code: 'be',
             name: 'беларуская мова',
-            treeImageURL: './assets/img/languages/tree-be.jpg'
+            sampleWordImageURL: './assets/img/languages/tree-be.jpg',
+            sampleWordTranslation: 'tullei'
           },
           {
             code: 'zyg',
             name: '佒壯',
-            treeImageURL: './assets/img/languages/tree-zyg.jpg'
+            sampleWordImageURL: './assets/img/languages/tree-zyg.jpg',
+            sampleWordTranslation: 'ko máy'
           }
         ]
       }

@@ -8,8 +8,8 @@
     <ng-container *ngFor="let lang of endangeredLanguages">
       <div class="language" *appCarouselItem (click)="onLanguageClick(lang.code)">
         <div class="example">
-          <img [src]="lang.treeImageURL" [alt]="'Tree' | translate:'tree':{}" />
-          <span class="translation" [innerHTML]="'Tree' | translate:'tree':{}:lang.code"></span>
+          <img [src]="lang.sampleWordImageURL" [alt]="'Tree' | translate:'tree':{}" />
+          <span class="translation" [innerHTML]="lang.sampleWordTranslation"></span>
           <span class="original" [innerHTML]="'Tree' | translate:'tree':{}"></span>
         </div>
         <div class="info">
