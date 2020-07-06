@@ -94,6 +94,9 @@ export const environment = {
     termsAndPrivacy: {
       enabled: params.termsAndPrivacyEnabled,
       content: params.termsAndPrivacyContent
+    },
+    capture: {
+      instructionsDuration: 5000
     }
   },
   components: {
@@ -111,6 +114,16 @@ export const environment = {
       iosGBoardUrl: 'https://apps.apple.com/us/app/gboard-the-google-keyboard/id1091700242',
       keymanUrl: 'https://keyman.com/',
       progressAnimationInterval: 25
+    },
+    carousel: {
+      animationInterval: 25,
+      snapAcceleration: 10,
+      snapMaxSpeed: 2,
+      snapMinSpeed: 0.01,
+      snapDecelerationDistance: 200,
+      snapStickyDistance: 30,
+      targetPositionRatio: 0.2,
+      draggingMinDistance: 5
     },
     translationSelector: {
       scrollList: {
