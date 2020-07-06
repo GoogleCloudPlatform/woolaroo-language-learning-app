@@ -16,26 +16,29 @@ import { TechnologyPageComponent } from 'pages/technology/technology';
 import { ChangeLanguagePageComponent } from 'pages/languages/change/change-language';
 import { ListLanguagesPageComponent } from 'pages/languages/list/list-languages';
 import { ViewLanguagePageComponent} from 'pages/languages/view/view-language';
+import { languagePrefixMatcher } from '../util/routing';
 
 const routes: Routes = [
-  { path: '', redirectTo: AppRoutes.Splash, pathMatch: 'full' },
-  { path: AppRoutes.Splash, component: SplashPageComponent },
-  { path: AppRoutes.Intro, redirectTo: AppRoutes.IntroAbout, pathMatch: 'full' },
-  { path: AppRoutes.IntroAbout, component: IntroAboutPageComponent },
-  { path: AppRoutes.IntroTermsAndConditions, component: IntroTermsPageComponent },
-  { path: AppRoutes.TermsAndConditions, component: TermsPageComponent },
-  { path: AppRoutes.ImageSource, component: PhotoSourcePageComponent },
-  { path: AppRoutes.CaptureImage, component: CapturePageComponent },
-  { path: AppRoutes.CaptionImage, component: CaptionImagePageComponent },
-  { path: AppRoutes.Translate, component: TranslatePageComponent },
-  { path: AppRoutes.Feedback, component: FeedbackPageComponent },
-  { path: AppRoutes.About, component: AboutPageComponent },
-  { path: AppRoutes.Technology, component: TechnologyPageComponent },
-  { path: AppRoutes.AddWord, component: AddWordPageComponent },
-  { path: AppRoutes.ChangeLanguage, component: ChangeLanguagePageComponent },
-  { path: AppRoutes.ViewLanguage, component: ViewLanguagePageComponent },
-  { path: AppRoutes.ListLanguages, component: ListLanguagesPageComponent },
-  { path: '**', component: SplashPageComponent } // TODO: not found page
+  { matcher: languagePrefixMatcher(), children: [
+    { path: '', redirectTo: AppRoutes.Splash, pathMatch: 'full' },
+    { path: AppRoutes.Splash, component: SplashPageComponent },
+    { path: AppRoutes.Intro, redirectTo: AppRoutes.IntroAbout, pathMatch: 'full' },
+    { path: AppRoutes.IntroAbout, component: IntroAboutPageComponent },
+    { path: AppRoutes.IntroTermsAndConditions, component: IntroTermsPageComponent },
+    { path: AppRoutes.TermsAndConditions, component: TermsPageComponent },
+    { path: AppRoutes.ImageSource, component: PhotoSourcePageComponent },
+    { path: AppRoutes.CaptureImage, component: CapturePageComponent },
+    { path: AppRoutes.CaptionImage, component: CaptionImagePageComponent },
+    { path: AppRoutes.Translate, component: TranslatePageComponent },
+    { path: AppRoutes.Feedback, component: FeedbackPageComponent },
+    { path: AppRoutes.About, component: AboutPageComponent },
+    { path: AppRoutes.Technology, component: TechnologyPageComponent },
+    { path: AppRoutes.AddWord, component: AddWordPageComponent },
+    { path: AppRoutes.ChangeLanguage, component: ChangeLanguagePageComponent },
+    { path: AppRoutes.ViewLanguage, component: ViewLanguagePageComponent },
+    { path: AppRoutes.ListLanguages, component: ListLanguagesPageComponent },
+    { path: '**', component: SplashPageComponent } // TODO: not found page
+  ] }
 ];
 
 @NgModule({

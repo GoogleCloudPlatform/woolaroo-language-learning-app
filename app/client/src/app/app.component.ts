@@ -1,5 +1,5 @@
-import { Component, Inject, InjectionToken, OnInit } from '@angular/core';
-import { Router, NavigationStart } from '@angular/router';
+import { Component, Inject, OnInit } from '@angular/core';
+import { Router, NavigationStart, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { SessionService } from 'services/session';
 import { I18nService } from 'i18n/i18n.service';
 import { filter } from 'rxjs/operators';
@@ -15,7 +15,8 @@ import { Directionality } from '@angular/cdk/bidi';
 export class AppComponent implements OnInit {
   title = 'google-barnard';
 
-  constructor(private router: Router,
+  constructor(private route: ActivatedRoute,
+              private router: Router,
               private sessionService: SessionService,
               private i18nService: I18nService,
               private endangeredLanguageService: EndangeredLanguageService,
@@ -33,6 +34,20 @@ export class AppComponent implements OnInit {
       const navStart = e as NavigationStart;
       nav.extras.state = {...navStart.restoredState, navigationId: navStart.id };
     });
+    this.initLanguages();
+  }
+
+  ngOnInit(): void {
+    // set up install prompt
+    window.addEventListener('beforeinstallprompt', (ev) => {
+      ev.preventDefault();
+      this.sessionService.currentSession.installPrompt = ev;
+    });
+    // set document language direction
+    window.document.body.setAttribute('dir', this.i18nService.currentLanguage.direction);
+  }
+
+  initLanguages() {
     // load language settings
     this.profileService.loadProfile().then(
       profile => {
@@ -62,14 +77,24 @@ export class AppComponent implements OnInit {
         }
       );
     });
-  }
-
-  ngOnInit(): void {
-    window.addEventListener('beforeinstallprompt', (ev) => {
-      ev.preventDefault();
-      this.sessionService.currentSession.installPrompt = ev;
+    // set language based on URL
+    this.router.events.pipe(
+      filter((e) => e instanceof NavigationEnd)
+    ).subscribe(() => {
+      let route = this.route;
+      while(route.firstChild) {
+        route = route.firstChild;
+      }
+      route.paramMap.subscribe(map => {
+        const uiLanguage = map.get('uiLanguage');
+        if(uiLanguage) {
+          this.i18nService.setLanguage(uiLanguage);
+        }
+        const endangeredLanguage = map.get('endangeredLanguage');
+        if(endangeredLanguage) {
+          this.endangeredLanguageService.setLanguage(endangeredLanguage);
+        }
+      });
     });
-    // set document language direction
-    window.document.body.setAttribute('dir', this.i18nService.currentLanguage.direction);
   }
 }

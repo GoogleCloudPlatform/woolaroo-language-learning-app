@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { I18nService } from 'i18n/i18n.service';
 import { EndangeredLanguage, EndangeredLanguageService } from 'services/endangered-language';
-import { Router } from '@angular/router';
 import { AppRoutes } from 'app/routes';
 
 @Component({
