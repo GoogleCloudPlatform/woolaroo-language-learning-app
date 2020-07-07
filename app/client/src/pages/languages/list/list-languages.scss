@@ -46,7 +46,7 @@ mat-toolbar {
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 
     &:not(.current) {
-      opacity: 50%;
+      opacity: 0.5;
       transform: scale(0.8);
     }
   }
