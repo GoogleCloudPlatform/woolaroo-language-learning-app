@@ -3,16 +3,16 @@
   <li>
     About
     <ul>
-      <li><a [routerLink]="['/about']" [innerHTML]="'The app' | translate:'theApp'"></a></li>
-      <li><a [routerLink]="['/technology']" [innerHTML]="'The technology' | translate:'theTechnology'"></a></li>
-      <li><a [routerLink]="['/languages']" [innerHTML]="'The languages' | translate:'theLanguages'"></a></li>
+      <li><a [routerLink]="['/about']" [innerHTML]="'The App' | translate:'theApp'"></a></li>
+      <li><a [routerLink]="['/technology']" [innerHTML]="'The Technology' | translate:'theTechnology'"></a></li>
+      <li><a [routerLink]="['/languages']" [innerHTML]="'The Languages' | translate:'theLanguages'"></a></li>
       <li *ngIf="termsAndPrivacyEnabled"><a [routerLink]="['/terms']" [innerHTML]="'Terms &amp; Privacy' | translate:'termsAndPrivacyTitle'"></a></li>
     </ul>
   </li>
   <li>
     Feedback
     <ul>
-      <li><a [routerLink]="['/add-word']" [state]="{prevPageCssClass: 'capture'}" [innerHTML]="'Add a Word' | translate:'addWord'"></a></li>
+      <li><a [routerLink]="['/add-word']" [state]="{prevPageCssClass: 'capture'}" [innerHTML]="'Add a Word' | translate:'addAWord'"></a></li>
       <li><a [routerLink]="['/feedback']" [state]="{prevPageCssClass: 'capture'}" [innerHTML]="'Provide Feedback' | translate:'translationFeedback'"></a></li>
     </ul>
   </li>

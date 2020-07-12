@@ -13,7 +13,7 @@ export class TranslatePipe implements PipeTransform {
       //console.warn('Translation not found: ' + translateKey);
       translation = text;
     }
-    return translation.replace(/\$\{([^\}]+)\}/g, (substring, ...args) => {
+    return translation!.replace(/\$\{([^\}]+)\}/g, (substring, ...args) => {
       return replacements ? (replacements[args[0]] || '') : '';
     });
   }

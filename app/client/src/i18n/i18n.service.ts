@@ -54,12 +54,12 @@ export class I18nService {
     this.currentLanguageChanged.emit(lang);
   }
 
-  getTranslation(key: string) {
+  getTranslation(key: string): string|null {
     if(!this._translations) {
-      return key;
+      return null;
     } else if(!this._translations[key]) {
       console.warn("Translation not found: " + key);
-      return key;
+      return null;
     } else {
       return this._translations[key];
     }

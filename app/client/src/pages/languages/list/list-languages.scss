@@ -125,6 +125,12 @@ mat-toolbar {
         line-height: 55px;
         font-weight: bold;
         margin-bottom: 15px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+        width: 100%;
+        text-align: center;
       }
     }
   }

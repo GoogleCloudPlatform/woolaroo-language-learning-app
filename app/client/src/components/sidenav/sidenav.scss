@@ -1,3 +1,5 @@
+@import 'palette';
+
 :host {
   display: block;
   box-sizing: border-box;
@@ -22,10 +24,11 @@ ul {
     padding: 0;
     margin: 0;
     font-size: 18px;
-    color:  #303438;
+    color: rgba(map-get(map-get($app-theme, "foreground"), "text"), 0.5);
 
     li {
       font-weight: bold;
+      color: map-get(map-get($app-theme, "foreground"), "text");
     }
 
     a {

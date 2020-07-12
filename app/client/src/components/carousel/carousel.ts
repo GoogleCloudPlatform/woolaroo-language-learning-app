@@ -84,14 +84,34 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     this.centerItems();
     window.addEventListener('resize', this.onWindowResize);
+    document.addEventListener('keyup', this.onDocumentKeyUp);
   }
 
   ngOnDestroy() {
     window.removeEventListener('resize', this.onWindowResize);
+    document.removeEventListener('keyup', this.onDocumentKeyUp);
   }
 
   onWindowResize = () => {
     this.centerItems();
+  };
+
+  onDocumentKeyUp = (ev: KeyboardEvent) => {
+    ev.preventDefault();
+    switch(ev.key) {
+      case "ArrowLeft":
+        if(this.currentItem > 0) {
+          this.currentItem--;
+          this.scrollToItem(this.currentItem);
+        }
+        break;
+      case "ArrowRight":
+        if(this.currentItem < this.items.length - 1) {
+          this.currentItem++;
+          this.scrollToItem(this.currentItem);
+        }
+        break;
+    }
   };
 
   @HostListener('touchstart', ['$event'])
@@ -183,13 +203,13 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
       const velocity = this.dragInfo.velocityX;
       this.dragInfo = null;
       const snapItemIndex = this.getEndingSnapItemIndex(this.getScrollPosition(), velocity);
-      this.scrollToItem(snapItemIndex, velocity);
+      this.scrollToItem(snapItemIndex, velocity, true);
       this.updateTargetPosition();
     } else {
       const itemIndex = this.getItemIndexFromPosition(this.dragInfo.lastClientX, this.dragInfo.lastClientY);
       this.dragInfo = null;
       if(itemIndex >= 0 && this.items && itemIndex < this.items.length) {
-        this.scrollToItem(itemIndex);
+        this.scrollToItem(itemIndex, 0, true);
       }
     }
   }
@@ -215,9 +235,12 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
     this.setScrollPosition(centerX - currentItemCenterX);
   }
 
-  private scrollToItem(index: number, velocity: number = 0) {
+  private scrollToItem(index: number, velocity: number = 0, updateCurrentItem: boolean = false) {
+    if(this.snapInterval) {
+      clearInterval(this.snapInterval);
+    }
     const properties = {time: CarouselComponent.getTime(), position: this.getScrollPosition(), velocity};
-    this.snapInterval = setInterval(() => this.updateSnapPosition(properties, index), this.config.animationInterval);
+    this.snapInterval = setInterval(() => this.updateSnapPosition(properties, index, updateCurrentItem), this.config.animationInterval);
   }
 
   updateDrag(x: number, y: number) {
@@ -360,7 +383,8 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
     return -1;
   }
 
-  private updateSnapPosition(lastProperties: {position: number, velocity: number, time: number}, snapItemIndex: number) {
+  private updateSnapPosition(lastProperties: {position: number, velocity: number, time: number}, snapItemIndex: number,
+                             updateCurrentItem: boolean) {
     let velocity = lastProperties.velocity;
     if (Math.abs(velocity) > this.config.snapMaxSpeed) {
       velocity = Math.sign(velocity) * this.config.snapMaxSpeed;
@@ -389,14 +413,18 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
       this.setScrollPosition(snapPosition);
       clearInterval(this.snapInterval);
       this.snapInterval = null;
-      this.currentItem = this.getItemIndexFromScrollPosition(snapPosition);
+      if(updateCurrentItem) {
+        this.currentItem = this.getItemIndexFromScrollPosition(snapPosition);
+      }
     } else {
       const position = lastProperties.position + dx;
       this.setScrollPosition(position);
       lastProperties.velocity = velocity;
       lastProperties.position = position;
       lastProperties.time = t;
-      this.currentItem = this.getItemIndexFromScrollPosition(position);
+      if(updateCurrentItem) {
+        this.currentItem = this.getItemIndexFromScrollPosition(position);
+      }
     }
     this.updateTargetPosition();
   }
