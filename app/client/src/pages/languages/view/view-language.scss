@@ -111,6 +111,7 @@
 
 .other-languages {
   padding: 40px;
+  overflow: hidden;
 
   h2 {
     font-size: 20px;
@@ -119,7 +120,7 @@
   }
 
   app-scroll-list {
-    margin: 0 -40px;
+    overflow: visible;
 
     ::ng-deep ul li {
       margin-right: 10px;

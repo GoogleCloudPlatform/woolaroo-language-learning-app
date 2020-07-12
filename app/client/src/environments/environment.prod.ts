@@ -115,7 +115,7 @@ export const environment = {
       keymanUrl: 'https://keyman.com/',
       progressAnimationInterval: 25
     },
-    carousel: {
+    scrollList: {
       animationInterval: 25,
       snapAcceleration: 10,
       snapMaxSpeed: 2,

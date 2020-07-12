@@ -23,7 +23,7 @@
 </div>
 <div class="other-languages">
   <h2 [innerHTML]="'Other languages'|translate:'otherLanguages'"></h2>
-  <app-scroll-list [currentItem]="otherLanguages.length / 2">
+  <app-scroll-list [currentItem]="otherLanguages.length / 2" [snappingEnabled]="false" itemAlignment="start">
     <ng-container *ngFor="let lang of otherLanguages">
       <div class="language" *appScrollListItem (click)="onLanguageClick(lang.code)">
         <div class="example">

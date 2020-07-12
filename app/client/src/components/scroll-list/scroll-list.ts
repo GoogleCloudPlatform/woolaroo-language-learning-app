@@ -9,6 +9,7 @@ import {
   QueryList,
   TemplateRef, ViewChild
 } from '@angular/core';
+import { max } from 'rxjs/operators';
 
 @Directive({selector: '[appScrollListItem]'})
 export class ScrollListItem {
@@ -24,6 +25,7 @@ interface ScrollListConfig {
   snapMinSpeed: number;
   snapMaxSpeed: number;
   snapAcceleration: number;
+  snapDeceleration: number;
   snapDecelerationDistance: number;
   snapStickyDistance: number;
   targetPositionRatio: number;
@@ -52,12 +54,17 @@ interface DragInfo {
 })
 export class ScrollListComponent implements AfterViewInit, OnDestroy {
   private dragInfo: DragInfo|null = null;
-  private snapInterval: any = null;
+  private animationInterval: any = null;
 
   @ContentChildren(ScrollListItem, {descendants: true})
   items: QueryList<ScrollListItem> = new QueryList();
   @ViewChild('scrollContent', { static: true })
   public scrollContent: ElementRef|null = null;
+
+  @Input()
+  public snappingEnabled: boolean = true;
+  @Input()
+  public itemAlignment: 'start'|'center' = 'center';
 
   private _currentItem: number = 0;
   public get currentItem(): number { return this._currentItem; }
@@ -82,7 +89,7 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.centerItems();
+    this.alignItems();
     window.addEventListener('resize', this.onWindowResize);
     document.addEventListener('keyup', this.onDocumentKeyUp);
   }
@@ -93,7 +100,7 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
   }
 
   onWindowResize = () => {
-    this.centerItems();
+    this.alignItems();
   };
 
   onDocumentKeyUp = (ev: KeyboardEvent) => {
@@ -170,9 +177,9 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
   }
 
   startDrag(x: number, y: number) {
-    if(this.snapInterval) {
-      clearInterval(this.snapInterval);
-      this.snapInterval = null;
+    if(this.animationInterval) {
+      clearInterval(this.animationInterval);
+      this.animationInterval = null;
     }
     if (this.dragInfo && this.dragInfo.interval) {
       clearInterval(this.dragInfo.interval);
@@ -199,12 +206,20 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
     if(this.dragInfo.interval) {
       clearInterval(this.dragInfo.interval);
     }
-    if (this.isDragging) {
+    if(!this.snappingEnabled) {
+      if(this.isDragging) {
+        const velocity = this.dragInfo.velocityX;
+        this.dragInfo = null;
+        const decelerationInfo = { velocity: velocity, prevTime: ScrollListComponent.getTime() };
+        this.animationInterval = setInterval(() => this.updateDeceleration(decelerationInfo), this.config.animationInterval);
+      } else {
+        this.dragInfo = null;
+      }
+    } else if (this.isDragging) {
       const velocity = this.dragInfo.velocityX;
       this.dragInfo = null;
       const snapItemIndex = this.getEndingSnapItemIndex(this.getScrollPosition(), velocity);
       this.scrollToItem(snapItemIndex, velocity, true);
-      this.updateTargetPosition();
     } else {
       const itemIndex = this.getItemIndexFromPosition(this.dragInfo.lastClientX, this.dragInfo.lastClientY);
       this.dragInfo = null;
@@ -214,8 +229,8 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  private centerItems() {
-    if (!this.scrollContent || this.currentItem < 0) {
+  private alignItems() {
+    if (!this.scrollContent || this.currentItem < 0 || this.itemAlignment !== 'center') {
       return;
     }
     const scrollContainer = this.hostElement.nativeElement as HTMLElement;
@@ -225,7 +240,7 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
       return;
     }
     const currentItem = items[this.currentItem];
-    if(!currentItem) {
+    if (!currentItem) {
       return;
     }
     const containerBounds = scrollContainer.getBoundingClientRect();
@@ -236,11 +251,11 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
   }
 
   private scrollToItem(index: number, velocity: number = 0, updateCurrentItem: boolean = false) {
-    if(this.snapInterval) {
-      clearInterval(this.snapInterval);
+    if(this.animationInterval) {
+      clearInterval(this.animationInterval);
     }
     const properties = {time: ScrollListComponent.getTime(), position: this.getScrollPosition(), velocity};
-    this.snapInterval = setInterval(() => this.updateSnapPosition(properties, index, updateCurrentItem), this.config.animationInterval);
+    this.animationInterval = setInterval(() => this.updateSnapPosition(properties, index, updateCurrentItem), this.config.animationInterval);
   }
 
   updateDrag(x: number, y: number) {
@@ -254,7 +269,6 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
     this.dragInfo.lastClientY = y;
     this.setScrollPosition(scrollPosition);
     this.currentItem = this.getItemIndexFromScrollPosition(scrollPosition, this.currentItem);
-    this.updateTargetPosition();
   }
 
   private updateScrollVelocity(lastProperties: {position: number, time: number}) {
@@ -267,45 +281,6 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
     }
     lastProperties.position = positionX;
     lastProperties.time = t;
-  }
-
-  private updateTargetPosition() {
-    if (!this.scrollContent || this.currentItem < 0) {
-      return;
-    }
-    const scrollContainer = this.hostElement.nativeElement as HTMLElement;
-    const scrollContent = this.scrollContent.nativeElement;
-    const items = scrollContent.getElementsByTagName('li');
-    if (!items) {
-      return;
-    }
-    const itemIndex = Math.min(this.currentItem, items.length - 2);
-    if (itemIndex < 0) {
-      return;
-    }
-    const containerBounds = scrollContainer.getBoundingClientRect();
-    const centerX = containerBounds.left + containerBounds.width * 0.5;
-    const currentItem = items[itemIndex];
-    const currentItemBounds = currentItem.getBoundingClientRect();
-    const currentItemCenterX = currentItemBounds.left + currentItemBounds.width * 0.5;
-    const dx = centerX - currentItemCenterX;
-    let maxSnapDx = currentItemBounds.width * 0.5; // max distance before snapping to next element
-    let adjacentItem = null;
-    if (dx < 0 && itemIndex > 0) {
-      adjacentItem = items[itemIndex - 1];
-    } else if (dx > 0 && itemIndex < items.length - 1) {
-      adjacentItem = items[itemIndex + 1];
-    }
-    if (adjacentItem) {
-      // has adjacent item - adjust max snap distance to point between the items
-      const otherItemBounds = adjacentItem.getBoundingClientRect();
-      const otherItemCenterX = otherItemBounds.left + otherItemBounds.width * 0.5;
-      maxSnapDx = Math.abs(centerX - (centerX + otherItemCenterX) * 0.5) + this.config.snapStickyDistance;
-    }
-    const currentItemCenterY = currentItemBounds.top + currentItemBounds.height * 0.5;
-    const targetX = currentItemCenterX - currentItemBounds.width * 0.5 *
-      Math.max(-1, Math.min(1, this.config.targetPositionRatio * dx / maxSnapDx));
-    //this.targetPositionChanged.emit({ x: targetX, y: currentItemCenterY });
   }
 
   // predict where snap position will be after decelerating
@@ -383,6 +358,52 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
     return -1;
   }
 
+  private updateDeceleration(decelerationInfo: {velocity: number, prevTime: number}) {
+    // get target velocity
+    let targetVelocity = 0;
+    const scrollPos = this.getScrollPosition();
+    let outsideBounds = false;
+    const contentWidth = this.getScrollContentWidth();
+    const containerWidth = this.getScrollContainerWidth();
+    if(scrollPos > 0) {
+      // too far right - accelerate left
+      targetVelocity = -this.config.snapMaxSpeed * Math.min(1, scrollPos / this.config.snapDecelerationDistance);
+      outsideBounds = true;
+    } else {
+      const minScroll = Math.min(0, containerWidth - contentWidth);
+      if(scrollPos < minScroll) {
+        // too far left - accelerate right
+        targetVelocity = this.config.snapMaxSpeed * Math.min(1, (minScroll - scrollPos) / this.config.snapDecelerationDistance);
+        outsideBounds = true;
+      }
+    }
+    // accelerate towards target velocity
+    let velocity = decelerationInfo.velocity;
+    const t = ScrollListComponent.getTime();
+    const dt = t - decelerationInfo.prevTime;
+    const maxDV = this.config.snapDeceleration * dt;
+    if(Math.abs(velocity - targetVelocity) > maxDV) {
+      velocity = velocity > targetVelocity ? velocity - maxDV : velocity + maxDV;
+    } else {
+      velocity = targetVelocity;
+    }
+    // stop content from scrolling completely offscreen
+    if(scrollPos < -contentWidth) {
+      velocity = Math.max(0, velocity);
+    } else if(scrollPos > containerWidth) {
+      velocity = Math.min(0, velocity);
+    }
+    // update position
+    if(velocity != 0 || outsideBounds) {
+      decelerationInfo.prevTime = t;
+      decelerationInfo.velocity = velocity;
+      this.setScrollPosition(scrollPos + velocity * dt);
+    } else {
+      clearInterval(this.animationInterval);
+      this.animationInterval = 0;
+    }
+  }
+
   private updateSnapPosition(lastProperties: {position: number, velocity: number, time: number}, snapItemIndex: number,
                              updateCurrentItem: boolean) {
     let velocity = lastProperties.velocity;
@@ -411,8 +432,8 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
     if (Math.sign(dx) === Math.sign(snapDx) && Math.abs(dx) >= Math.abs(snapDx) && Math.abs(dx) < 10) {
       // close enough - end snap
       this.setScrollPosition(snapPosition);
-      clearInterval(this.snapInterval);
-      this.snapInterval = null;
+      clearInterval(this.animationInterval);
+      this.animationInterval = null;
       if(updateCurrentItem) {
         this.currentItem = this.getItemIndexFromScrollPosition(snapPosition);
       }
@@ -426,7 +447,20 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
         this.currentItem = this.getItemIndexFromScrollPosition(position);
       }
     }
-    this.updateTargetPosition();
+  }
+
+  private getScrollContainerWidth(): number {
+    return this.hostElement.nativeElement.clientWidth;
+  }
+
+  private getScrollContentWidth(): number {
+    if (!this.scrollContent || !this.scrollContent.nativeElement) {
+      return 0;
+    }
+    const childNodes = this.scrollContent.nativeElement.getElementsByTagName('*');
+    const firstChild = childNodes[0];
+    const lastChild = childNodes[childNodes.length - 1];
+    return lastChild.offsetLeft + lastChild.offsetWidth - firstChild.offsetLeft;
   }
 
   private getScrollPosition(): number {

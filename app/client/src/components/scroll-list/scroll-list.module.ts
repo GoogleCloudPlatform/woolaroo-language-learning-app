@@ -16,7 +16,7 @@ import { environment } from '../../environments/environment';
     CommonModule
   ],
   providers: [
-    { provide: SCROLL_LIST_CONFIG, useValue: environment.components.carousel }
+    { provide: SCROLL_LIST_CONFIG, useValue: environment.components.scrollList }
   ]
 })
 export class ScrollListModule {}
