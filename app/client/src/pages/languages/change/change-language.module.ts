@@ -6,7 +6,7 @@ import { I18nModule } from 'i18n/i18n.module';
 import { ChangeLanguagePageComponent } from './change-language';
 import { IconComponentModule } from 'components/icon/icon.module';
 import { CameraPreviewModule } from 'components/camera-preview/camera-preview.module';
-import { CarouselModule} from 'components/carousel/carousel.module';
+import { ScrollListModule } from 'components/scroll-list/scroll-list.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,7 @@ import { CarouselModule} from 'components/carousel/carousel.module';
     I18nModule,
     IconComponentModule,
     CameraPreviewModule,
-    CarouselModule
+    ScrollListModule
   ]
 })
 export class ChangeLanguageModule {}

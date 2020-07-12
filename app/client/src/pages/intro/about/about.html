@@ -1,8 +1,8 @@
 <app-logo></app-logo>
-<app-carousel [currentItem]="currentAboutItem" (currentItemChanged)="onCurrentAboutItemChanged($event)">
-  <p *appCarouselItem class="mat-body-1" [innerHTML]="'Woolaroo is a Google Arts and Culture experiment providing a new way to explore endangered indigenous languages via your camera.' | translate: 'intro1'"></p>
-  <p *appCarouselItem class="mat-body-1" [innerHTML]="'Powered by Machine Learning, Woolaroo recognises objects from your camera or camera roll, and translates them in real time.' | translate: 'intro2'"></p>
-</app-carousel>
+<app-scroll-list [currentItem]="currentAboutItem" (currentItemChanged)="onCurrentAboutItemChanged($event)">
+  <p *appScrollListItem class="mat-body-1" [innerHTML]="'Woolaroo is a Google Arts and Culture experiment providing a new way to explore endangered indigenous languages via your camera.' | translate: 'intro1'"></p>
+  <p *appScrollListItem class="mat-body-1" [innerHTML]="'Powered by Machine Learning, Woolaroo recognises objects from your camera or camera roll, and translates them in real time.' | translate: 'intro2'"></p>
+</app-scroll-list>
 <app-pagination-indicator [pageCount]="2" [selectedPage]="currentAboutItem"></app-pagination-indicator>
 <p class="mat-body-1 feedback" [innerHTML]="'As smart as advanced machine learning is, Woolaroo might get some objects wrong so you can help by giving feedback.' | translate: 'introFeedback'"></p>
 <button mat-flat-button color="primary" (click)="onNextClick()" class="next">

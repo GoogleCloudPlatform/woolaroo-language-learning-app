@@ -10,8 +10,8 @@ import {
   TemplateRef, ViewChild
 } from '@angular/core';
 
-@Directive({selector: '[appCarouselItem]'})
-export class CarouselItem {
+@Directive({selector: '[appScrollListItem]'})
+export class ScrollListItem {
   public itemTemplate: TemplateRef<any>;
 
   constructor(private templateRef: TemplateRef<any>) {
@@ -19,7 +19,7 @@ export class CarouselItem {
   }
 }
 
-interface CarouselConfig {
+interface ScrollListConfig {
   animationInterval: number;
   snapMinSpeed: number;
   snapMaxSpeed: number;
@@ -30,7 +30,7 @@ interface CarouselConfig {
   draggingMinDistance: number;
 }
 
-export const CAROUSEL_CONFIG = new InjectionToken<CarouselConfig>('Carousel config');
+export const SCROLL_LIST_CONFIG = new InjectionToken<ScrollListConfig>('Scroll list config');
 
 interface DragInfo {
   interval: any;
@@ -46,16 +46,16 @@ interface DragInfo {
 
 
 @Component({
-  selector: 'app-carousel',
-  templateUrl: './carousel.html',
-  styleUrls: ['./carousel.scss']
+  selector: 'app-scroll-list',
+  templateUrl: './scroll-list.html',
+  styleUrls: ['./scroll-list.scss']
 })
-export class CarouselComponent implements AfterViewInit, OnDestroy {
+export class ScrollListComponent implements AfterViewInit, OnDestroy {
   private dragInfo: DragInfo|null = null;
   private snapInterval: any = null;
 
-  @ContentChildren(CarouselItem, {descendants: true})
-  items: QueryList<CarouselItem> = new QueryList();
+  @ContentChildren(ScrollListItem, {descendants: true})
+  items: QueryList<ScrollListItem> = new QueryList();
   @ViewChild('scrollContent', { static: true })
   public scrollContent: ElementRef|null = null;
 
@@ -78,7 +78,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
       || Math.abs(this.dragInfo.minScrollPosition - this.dragInfo.startScrollPosition) > this.config.draggingMinDistance);
   }
 
-  constructor(@Inject(CAROUSEL_CONFIG) private config: CarouselConfig, private hostElement: ElementRef) {
+  constructor(@Inject(SCROLL_LIST_CONFIG) private config: ScrollListConfig, private hostElement: ElementRef) {
   }
 
   ngAfterViewInit() {
@@ -178,7 +178,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
       clearInterval(this.dragInfo.interval);
     }
     const positionX = this.getScrollPosition();
-    const properties = { position: positionX, time: CarouselComponent.getTime() };
+    const properties = { position: positionX, time: ScrollListComponent.getTime() };
     this.dragInfo = {
       velocityX: 0,
       offsetX: positionX - x,
@@ -239,7 +239,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
     if(this.snapInterval) {
       clearInterval(this.snapInterval);
     }
-    const properties = {time: CarouselComponent.getTime(), position: this.getScrollPosition(), velocity};
+    const properties = {time: ScrollListComponent.getTime(), position: this.getScrollPosition(), velocity};
     this.snapInterval = setInterval(() => this.updateSnapPosition(properties, index, updateCurrentItem), this.config.animationInterval);
   }
 
@@ -260,7 +260,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   private updateScrollVelocity(lastProperties: {position: number, time: number}) {
     const positionX = this.getScrollPosition();
     const dx = positionX - lastProperties.position;
-    const t = CarouselComponent.getTime();
+    const t = ScrollListComponent.getTime();
     const dt = t - lastProperties.time;
     if(this.dragInfo) {
       this.dragInfo.velocityX = dx / dt;
@@ -390,7 +390,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
       velocity = Math.sign(velocity) * this.config.snapMaxSpeed;
     }
     const snapPosition = this.getItemSnapPosition(snapItemIndex);
-    const t = CarouselComponent.getTime();
+    const t = ScrollListComponent.getTime();
     const dt = t - lastProperties.time;
     const snapDx = snapPosition - lastProperties.position;
     velocity += snapDx < 0 ? - this.config.snapAcceleration * dt : this.config.snapAcceleration * dt;

@@ -23,9 +23,9 @@
 </div>
 <div class="other-languages">
   <h2 [innerHTML]="'Other languages'|translate:'otherLanguages'"></h2>
-  <app-carousel [currentItem]="otherLanguages.length / 2">
+  <app-scroll-list [currentItem]="otherLanguages.length / 2">
     <ng-container *ngFor="let lang of otherLanguages">
-      <div class="language" *appCarouselItem (click)="onLanguageClick(lang.code)">
+      <div class="language" *appScrollListItem (click)="onLanguageClick(lang.code)">
         <div class="example">
           <img [src]="lang.sampleWordImageURL" [alt]="'Tree' | translate:'tree':{}" />
           <span class="translation" [innerHTML]="lang.sampleWordTranslation"></span>
@@ -34,5 +34,5 @@
         <div class="name">{{ lang.name }}</div>
       </div>
     </ng-container>
-  </app-carousel>
+  </app-scroll-list>
 </div>

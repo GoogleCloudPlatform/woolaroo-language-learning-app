@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { I18nModule } from 'i18n/i18n.module';
 import { ListLanguagesPageComponent } from './list-languages';
 import { IconComponentModule } from 'components/icon/icon.module';
-import { CarouselModule} from 'components/carousel/carousel.module';
+import { ScrollListModule} from 'components/scroll-list/scroll-list.module';
 import { PaginationIndicatorModule } from 'components/pagination-indicator/pagination-indicator.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
@@ -21,7 +21,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatToolbarModule,
     I18nModule,
     IconComponentModule,
-    CarouselModule,
+    ScrollListModule,
     PaginationIndicatorModule
   ]
 })

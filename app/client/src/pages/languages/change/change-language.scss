@@ -40,7 +40,7 @@ app-camera-preview {
     display: block;
   }
 
-  app-carousel ::ng-deep {
+  app-scroll-list ::ng-deep {
     li {
       button {
         @include text-button;
@@ -66,7 +66,7 @@ app-camera-preview {
 }
 
 .endangered-language {
-  app-carousel ::ng-deep {
+  app-scroll-list ::ng-deep {
     li button {
       font-size: 45px;
     }

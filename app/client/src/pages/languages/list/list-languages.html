@@ -4,9 +4,9 @@
   <span [innerHTML]="'The languages' | translate:'theLanguages'"></span>
 </mat-toolbar>
 <div class="content">
-  <app-carousel (currentItemChanged)="onLanguageChanged($event)">
+  <app-scroll-list (currentItemChanged)="onLanguageChanged($event)">
     <ng-container *ngFor="let lang of endangeredLanguages">
-      <div class="language" *appCarouselItem (click)="onLanguageClick(lang.code)">
+      <div class="language" *appScrollListItem (click)="onLanguageClick(lang.code)">
         <div class="example">
           <img [src]="lang.sampleWordImageURL" [alt]="'Tree' | translate:'tree':{}" />
           <span class="translation" [innerHTML]="lang.sampleWordTranslation"></span>
@@ -19,7 +19,7 @@
         </div>
       </div>
     </ng-container>
-  </app-carousel>
+  </app-scroll-list>
   <app-pagination-indicator [pageCount]="endangeredLanguages.length" [selectedPage]="currentLanguageIndex"></app-pagination-indicator>
   <div class="instructions" [innerHTML]="'Tap a language to learn more'|translate:'languageListInstructions'"></div>
 </div>

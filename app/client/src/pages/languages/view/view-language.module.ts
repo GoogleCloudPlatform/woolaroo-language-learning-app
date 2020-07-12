@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { I18nModule } from 'i18n/i18n.module';
 import { ViewLanguagePageComponent } from './view-language';
-import { CarouselModule} from 'components/carousel/carousel.module';
+import { ScrollListModule } from 'components/scroll-list/scroll-list.module';
 import { IconComponentModule } from 'components/icon/icon.module';
 
 @NgModule({
@@ -17,7 +17,7 @@ import { IconComponentModule } from 'components/icon/icon.module';
     RouterModule,
     CommonModule,
     I18nModule,
-    CarouselModule,
+    ScrollListModule,
     IconComponentModule
   ]
 })

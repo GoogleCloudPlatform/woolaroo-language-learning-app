@@ -39,7 +39,7 @@ mat-toolbar {
   }
 }
 
-.content app-carousel ::ng-deep {
+.content app-scroll-list ::ng-deep {
   margin: 0 0 50px 0;
 
   > ul > li {

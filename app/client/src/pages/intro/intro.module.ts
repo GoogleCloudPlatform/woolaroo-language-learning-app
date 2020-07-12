@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { CarouselModule } from 'components/carousel/carousel.module';
+import { ScrollListModule } from 'components/scroll-list/scroll-list.module';
 import { LogoModule } from 'components/logo/logo.module';
 import { PaginationIndicatorModule } from 'components/pagination-indicator/pagination-indicator.module';
 import { IntroAboutPageComponent } from './about/about';
@@ -18,7 +18,7 @@ import { I18nModule } from 'i18n/i18n.module';
     MatButtonModule,
     PaginationIndicatorModule,
     I18nModule,
-    CarouselModule,
+    ScrollListModule,
     LogoModule
   ]
 })

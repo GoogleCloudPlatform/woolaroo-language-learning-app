@@ -2,19 +2,19 @@
 <button (click)="onCloseClick()" class="close" aria-label="Close"><app-icon icon="close"></app-icon></button>
 <div class="ui-language">
   <span class="label" [innerHTML]="'I speak' | translate:'uiLanguageLabel'"></span>
-  <app-carousel [currentItem]="currentUILanguageIndex" (currentItemChanged)="onUILanguageChanged($event)" dir="ltr">
+  <app-scroll-list [currentItem]="currentUILanguageIndex" (currentItemChanged)="onUILanguageChanged($event)" dir="ltr">
     <ng-container *ngFor="let lang of uiLanguages">
-      <button *appCarouselItem>{{ lang.name }}</button>
+      <button *appScrollListItem>{{ lang.name }}</button>
     </ng-container>
-  </app-carousel>
+  </app-scroll-list>
 </div>
 <div class="endangered-language">
   <span class="label" [innerHTML]="'I\'d like to explore the language of' | translate:'endangeredLanguageLabel'"></span>
-  <app-carousel [currentItem]="currentEndangeredLanguageIndex" (currentItemChanged)="onEndangeredLanguageChanged($event)" dir="ltr">
+  <app-scroll-list [currentItem]="currentEndangeredLanguageIndex" (currentItemChanged)="onEndangeredLanguageChanged($event)" dir="ltr">
     <ng-container *ngFor="let lang of endangeredLanguages">
-      <button *appCarouselItem>{{ lang.name }}</button>
+      <button *appScrollListItem>{{ lang.name }}</button>
     </ng-container>
-  </app-carousel>
+  </app-scroll-list>
 </div>
 <button mat-flat-button color="accent" (click)="onNextClick()" class="next">
   <span [innerHTML]="'Go' | translate:'go'"></span>
