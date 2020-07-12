@@ -123,7 +123,6 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
 
   @HostListener('touchstart', ['$event'])
   onTouchStart(ev: TouchEvent) {
-    ev.preventDefault();
     window.document.body.addEventListener('touchmove', this.onTouchMove);
     window.document.body.addEventListener('touchend', this.onTouchEnd);
     const touch = ev.touches[0];
@@ -132,7 +131,6 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
 
   @HostListener('mousedown', ['$event'])
   onMouseDown(ev: MouseEvent) {
-    ev.preventDefault();
     window.document.body.addEventListener('mousemove', this.onMouseMove);
     window.document.body.addEventListener('mouseup', this.onMouseUp);
     this.startDrag(ev.clientX, ev.clientY);
@@ -143,6 +141,7 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
     window.document.body.removeEventListener('touchend', this.onTouchEnd);
     if(this.isDragging) {
       window.document.body.addEventListener('click', this.onMouseClick, true);
+      setTimeout(this.clearClickHandlers, 1);
     }
     this.stopDrag();
   };
@@ -152,8 +151,13 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
     window.document.body.removeEventListener('mouseup', this.onMouseUp);
     if(this.isDragging) {
       window.document.body.addEventListener('click', this.onMouseClick, true);
+      setTimeout(this.clearClickHandlers, 1);
     }
     this.stopDrag();
+  };
+
+  clearClickHandlers = () => {
+    window.document.body.removeEventListener('click', this.onMouseClick, true);
   };
 
   onMouseClick = (ev:MouseEvent) => {
