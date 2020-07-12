@@ -9,36 +9,6 @@
   }
 }
 
-mat-toolbar {
-  display: grid;
-  grid-template-columns: 0fr 1fr;
-  height: 100px;
-
-  button {
-    grid-row: 1 / span 2;
-    grid-column: 1;
-    padding: 8px;
-  }
-
-  span:first-of-type {
-    grid-row: 1;
-    grid-column: 2;
-    font-size: 18px;
-    color: #303438;
-    opacity: 0.5;
-    align-self: flex-end;
-  }
-
-  span:last-of-type {
-    grid-row: 2;
-    grid-column: 2;
-    font-size: 20px;
-    color: #303438;
-    font-weight: bold;
-    align-self: flex-start;
-  }
-}
-
 .content app-scroll-list ::ng-deep {
   margin: 0 0 50px 0;
 

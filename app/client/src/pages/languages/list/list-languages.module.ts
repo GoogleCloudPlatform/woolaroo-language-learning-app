@@ -6,7 +6,7 @@ import { ListLanguagesPageComponent } from './list-languages';
 import { IconComponentModule } from 'components/icon/icon.module';
 import { ScrollListModule} from 'components/scroll-list/scroll-list.module';
 import { PaginationIndicatorModule } from 'components/pagination-indicator/pagination-indicator.module';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { PageHeaderModule } from 'components/page-header/page-header.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   imports: [
     RouterModule,
     CommonModule,
-    MatToolbarModule,
+    PageHeaderModule,
     I18nModule,
     IconComponentModule,
     ScrollListModule,

@@ -60,7 +60,7 @@
 @mixin form-page {
   @include toolbar-page;
 
-  mat-toolbar.mat-toolbar-single-row {
+  ::ng-deep mat-toolbar.mat-toolbar-single-row {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -80,7 +80,7 @@
     }
   }
 
-  :host-context([dir=rtl]) mat-toolbar.mat-toolbar-single-row {
+  :host-context([dir=rtl]) ::ng-deep  mat-toolbar.mat-toolbar-single-row {
     padding-right: 20px;
     padding-left: 0;
 

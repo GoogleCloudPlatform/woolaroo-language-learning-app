@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { TechnologyPageComponent } from './technology';
-import { IconComponentModule } from 'components/icon/icon.module';
+import { PageHeaderModule } from 'components/page-header/page-header.module';
 import { I18nModule } from 'i18n/i18n.module';
 
 @NgModule({
@@ -9,8 +8,7 @@ import { I18nModule } from 'i18n/i18n.module';
     TechnologyPageComponent,
   ],
   imports: [
-    MatToolbarModule,
-    IconComponentModule,
+    PageHeaderModule,
     I18nModule
   ]
 })

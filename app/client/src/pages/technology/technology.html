@@ -1,7 +1,6 @@
-<mat-toolbar>
-  <button class="close" (click)="onCloseClick($event)"><app-icon icon="close"></app-icon></button>
+<app-page-header>
   <span [innerHTML]="'The Technology' | translate:'theTechnology'"></span>
-</mat-toolbar>
+</app-page-header>
 <div class="content">
   <p class="mat-body-2" [innerHTML]="'Built with Google Translate and Cloud Vision technology, Woolaroo uses advanced machine learning to understand the objects in your photos and translates them, in real time.' | translate:'technologyContent1'"></p>
   <p class="mat-body-1" [innerHTML]="'The resulting translation is based on the key object in the image. If multiple objects are detected, you can scroll through and select the correct translation.' | translate:'technologyContent2'"></p>

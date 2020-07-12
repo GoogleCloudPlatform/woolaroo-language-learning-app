@@ -1,7 +1,6 @@
-<mat-toolbar>
-  <button class="close" (click)="onCloseClick($event)"><app-icon icon="close"></app-icon></button>
-  <span [innerHTML]="'About the app' | translate:'aboutTitle'"></span>
-</mat-toolbar>
+<app-page-header>
+  <span [innerHTML]="'The App' | translate:'theApp'"></span>
+</app-page-header>
 <div class="content">
   <img class="arts-culture-logo" [src]="'assets/img/google_arts_culture_logo.png' | assetUrl" alt="" />
   <p class="mat-body-2 intro" [innerHTML]="'Woolaroo is an open source Google Arts & Culture Experiment that uses your phone’s camera to instantly translate objects into indigenous languages.' | translate:'aboutContent1'"></p>

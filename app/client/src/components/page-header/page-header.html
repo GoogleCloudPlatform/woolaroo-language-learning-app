@@ -1,0 +1,5 @@
+<mat-toolbar>
+  <button class="close" (click)="onCloseClick($event)"><app-icon icon="back"></app-icon></button>
+  <span [innerHTML]="'about' | translate:'about'"></span>
+  <ng-content></ng-content>
+</mat-toolbar>
