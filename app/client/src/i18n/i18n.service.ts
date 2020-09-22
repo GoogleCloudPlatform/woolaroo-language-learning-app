@@ -58,7 +58,7 @@ export class I18nService {
     if(!this._translations) {
       return null;
     } else if(!this._translations[key]) {
-      console.warn("Translation not found: " + key);
+      //console.warn("Translation not found: " + key);
       return null;
     } else {
       return this._translations[key];

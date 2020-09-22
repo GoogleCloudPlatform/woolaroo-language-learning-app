@@ -19,7 +19,7 @@ export const environment = {
         file: params.assetsBaseUrl + 'assets/locale/en.json',
         direction: 'ltr',
         default: params.language === 'en'
-      },
+      }/*,
       {
         code: 'fr',
         name: 'Français',
@@ -75,7 +75,7 @@ export const environment = {
         file: params.assetsBaseUrl + 'assets/locale/zh.json',
         direction: 'ltr',
         default: params.language === 'zh'
-      }
+      }*/
     ]
   },
   endangeredLanguage: params.endangeredLanguage,
@@ -197,7 +197,7 @@ export const environment = {
       config: {
         languages: [
           {
-            code: 'yum',
+            code: 'yug',
             name: 'Yugambeh',
             default: params.endangeredLanguage === 'yum',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-scn.jpg',

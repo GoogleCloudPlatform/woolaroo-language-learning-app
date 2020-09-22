@@ -4,6 +4,7 @@ import { LocalProfileService } from 'services/local-profile';
 import { APIFeedbackService } from 'services/api/feedback';
 import { SafeSearchLikelihood } from 'services/google/image-recognition';
 import { APIImageRecognitionService } from 'services/api/image-recognition';
+import { params } from './environment.prod.params';
 
 const baseEndpointUrl = 'https://us-central1-ggl-woolaroo-multilang-uat.cloudfunctions.net';
 const debugImageUrl = '/assets/debug/IMG_20190920_141505.jpg';
@@ -21,7 +22,7 @@ export const environment = {
         file: './assets/locale/en.json',
         direction: 'ltr',
         default: true
-      },
+      }/*,
       {
         code: 'fr',
         name: 'Français',
@@ -69,7 +70,7 @@ export const environment = {
         name: '普通话',
         file: './assets/locale/zh.json',
         direction: 'ltr'
-      }
+      }*/
     ]
   },
   pages: {
@@ -194,29 +195,60 @@ export const environment = {
       config: {
         languages: [
           {
-            code: 'scn',
-            name: 'Sicilian',
-            default: true,
+            code: 'yug',
+            name: 'Yugambeh',
+            default: false,
             sampleWordImageURL: './assets/img/languages/tree-scn.jpg',
             sampleWordTranslation: 'tullei'
           },
           {
             code: 'yi',
             name: 'Yiddish',
+            default: false,
             sampleWordImageURL: './assets/img/languages/tree-yi.jpg',
-            sampleWordTranslation: 'tullei'
+            sampleWordTranslation: 'דער בױםn'
           },
           {
-            code: 'be',
-            name: 'беларуская мова',
+            code: 'tzm',
+            name: 'Tamazight',
+            default: false,
             sampleWordImageURL: './assets/img/languages/tree-be.jpg',
-            sampleWordTranslation: 'tullei'
+            sampleWordTranslation: 'aseklu'
           },
           {
-            code: 'zyg',
-            name: '佒壯',
+            code: 'rap',
+            name: 'Rapa Nui',
+            default: false,
             sampleWordImageURL: './assets/img/languages/tree-zyg.jpg',
-            sampleWordTranslation: 'ko máy'
+            sampleWordTranslation: 'tumu'
+          },
+          {
+            code: 'ppl',
+            name: 'Nawat',
+            default: false,
+            sampleWordImageURL: './assets/img/languages/tree-zyg.jpg',
+            sampleWordTranslation: 'kwawit'
+          },
+          {
+            code: 'mi',
+            name: 'Māori',
+            default: false,
+            sampleWordImageURL: './assets/img/languages/tree-zyg.jpg',
+            sampleWordTranslation: 'rākau'
+          },
+          {
+            code: 'el-cal',
+            name: 'Calabrian Greek',
+            default: false,
+            sampleWordImageURL: './assets/img/languages/tree-zyg.jpg',
+            sampleWordTranslation: 'àrburo'
+          },
+          {
+            code: 'scn',
+            name: 'Sicilian',
+            default: true,
+            sampleWordImageURL: './assets/img/languages/tree-scn.jpg',
+            sampleWordTranslation: 'àrbulu'
           }
         ]
       }
