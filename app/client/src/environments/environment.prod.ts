@@ -197,9 +197,9 @@ export const environment = {
       config: {
         languages: [
           {
-            code: 'scn',
-            name: 'Sicilian',
-            default: params.endangeredLanguage === 'scn',
+            code: 'yum',
+            name: 'Yugambeh',
+            default: params.endangeredLanguage === 'yum',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-scn.jpg',
             sampleWordTranslation: 'tullei'
           },
@@ -208,21 +208,49 @@ export const environment = {
             name: 'Yiddish',
             default: params.endangeredLanguage === 'yi',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-yi.jpg',
-            sampleWordTranslation: 'tullei'
+            sampleWordTranslation: 'דער בױםn'
           },
           {
-            code: 'be',
-            name: 'беларуская мова',
-            default: params.endangeredLanguage === 'be',
+            code: 'tzm',
+            name: 'Tamazight',
+            default: params.endangeredLanguage === 'tzm',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-be.jpg',
-            sampleWordTranslation: 'tullei'
+            sampleWordTranslation: 'aseklu'
           },
           {
-            code: 'zyg',
-            name: '佒壯',
-            default: params.endangeredLanguage === 'zyg',
+            code: 'rap',
+            name: 'Rapa Nui',
+            default: params.endangeredLanguage === 'rap',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-zyg.jpg',
-            sampleWordTranslation: 'tullei'
+            sampleWordTranslation: 'tumu'
+          },
+          {
+            code: 'ppl',
+            name: 'Nawat',
+            default: params.endangeredLanguage === 'ppl',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-zyg.jpg',
+            sampleWordTranslation: 'kwawit'
+          },
+          {
+            code: 'mi',
+            name: 'Māori',
+            default: params.endangeredLanguage === 'mi',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-zyg.jpg',
+            sampleWordTranslation: 'rākau'
+          },
+          {
+            code: 'el-cal',
+            name: 'Calabrian Greek',
+            default: params.endangeredLanguage === 'el-cal',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-zyg.jpg',
+            sampleWordTranslation: 'àrburo'
+          },
+          {
+            code: 'scn',
+            name: 'Sicilian',
+            default: params.endangeredLanguage === 'scn',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-scn.jpg',
+            sampleWordTranslation: 'àrbulu'
           }
         ]
       }
