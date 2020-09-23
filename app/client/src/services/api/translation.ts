@@ -15,18 +15,28 @@ interface TranslationResponse {
   translation: string;
 }
 
+interface TranslateRequest {
+  words: string[];
+  primaryLanguage: string;
+  targetLanguage: string;
+}
+
 @Injectable()
 export class APITranslationService implements ITranslationService {
-  private lastTranslations: WordTranslation[]|null = null;
+  private lastRequest: TranslateRequest|null = null;
+  private lastResponse: WordTranslation[]|null = null;
 
   public constructor(private http: HttpClient, @Inject(TRANSLATION_CONFIG) private config: APITranslationConfig) {
   }
 
-  private static wordTranslationsAreEqual(words: string[], translations: WordTranslation[]): boolean {
-    if (words.length !== translations.length) {
+  private static requestsAreEqual(request1: TranslateRequest, request2: TranslateRequest): boolean {
+    if(request1.primaryLanguage !== request2.primaryLanguage || request1.targetLanguage !== request2.targetLanguage) {
       return false;
     }
-    return words.every(w => !!translations.find(tr =>  tr.original === w));
+    if (request1.words.length !== request2.words.length) {
+      return false;
+    }
+    return request1.words.every(w => request2.words.indexOf(w) >= 0);
   }
 
   private static formatSoundURL(url:string|null):string|null {
@@ -42,9 +52,10 @@ export class APITranslationService implements ITranslationService {
 
   public async translate(englishWords: string[], primaryLanguage: string, targetLanguage: string, maxTranslations: number = 0): Promise<WordTranslation[]> {
     const lowercaseWords = englishWords.map((w) => w.toLowerCase());
-    if (this.lastTranslations && APITranslationService.wordTranslationsAreEqual(lowercaseWords, this.lastTranslations)) {
+    const newRequest: TranslateRequest = { words: lowercaseWords, primaryLanguage: primaryLanguage, targetLanguage: targetLanguage };
+    if (this.lastRequest && this.lastResponse && APITranslationService.requestsAreEqual(this.lastRequest, newRequest)) {
       // use cached results
-      return Promise.resolve(this.lastTranslations);
+      return Promise.resolve(this.lastResponse);
     }
     const response = await this.http.post<TranslationResponse[]>(this.config.endpointURL, {
       english_words: lowercaseWords,
@@ -66,7 +77,8 @@ export class APITranslationService implements ITranslationService {
     // filter out empty translations
     translations = translations.filter(tr => tr.english);
     // cache results
-    this.lastTranslations = translations;
+    this.lastRequest = newRequest;
+    this.lastResponse = translations;
     return translations;
   }
 }
