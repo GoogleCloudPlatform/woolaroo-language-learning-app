@@ -249,6 +249,13 @@ export const environment = {
             default: true,
             sampleWordImageURL: './assets/img/languages/tree-scn.jpg',
             sampleWordTranslation: 'àrbulu'
+          },
+          {
+            code: 'lou',
+            name: 'Louisiana Creole',
+            default: false,
+            sampleWordImageURL: './assets/img/languages/tree-scn.jpg',
+            sampleWordTranslation: 'narb'
           }
         ]
       }

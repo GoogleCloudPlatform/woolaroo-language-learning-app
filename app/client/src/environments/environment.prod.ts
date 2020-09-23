@@ -251,6 +251,13 @@ export const environment = {
             default: params.endangeredLanguage === 'scn',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-scn.jpg',
             sampleWordTranslation: 'àrbulu'
+          },
+          {
+            code: 'lou',
+            name: 'Louisiana Creole',
+            default: params.endangeredLanguage === 'lou',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-scn.jpg',
+            sampleWordTranslation: 'narb'
           }
         ]
       }
