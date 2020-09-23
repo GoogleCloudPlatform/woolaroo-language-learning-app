@@ -9,7 +9,6 @@ import {
   QueryList,
   TemplateRef, ViewChild
 } from '@angular/core';
-import { max } from 'rxjs/operators';
 
 @Directive({selector: '[appScrollListItem]'})
 export class ScrollListItem {
@@ -123,6 +122,8 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
 
   @HostListener('touchstart', ['$event'])
   onTouchStart(ev: TouchEvent) {
+    ev.preventDefault();
+    ev.stopPropagation();
     window.document.body.addEventListener('touchmove', this.onTouchMove);
     window.document.body.addEventListener('touchend', this.onTouchEnd);
     const touch = ev.touches[0];
@@ -131,6 +132,8 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
 
   @HostListener('mousedown', ['$event'])
   onMouseDown(ev: MouseEvent) {
+    ev.preventDefault();
+    ev.stopPropagation();
     window.document.body.addEventListener('mousemove', this.onMouseMove);
     window.document.body.addEventListener('mouseup', this.onMouseUp);
     this.startDrag(ev.clientX, ev.clientY);
@@ -233,6 +236,19 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  updateDrag(x: number, y: number) {
+    if(!this.dragInfo) {
+      return;
+    }
+    const scrollPosition = x + this.dragInfo.offsetX;
+    this.dragInfo.minScrollPosition = Math.min(this.dragInfo.minScrollPosition, scrollPosition);
+    this.dragInfo.maxScrollPosition = Math.max(this.dragInfo.maxScrollPosition, scrollPosition);
+    this.dragInfo.lastClientX = x;
+    this.dragInfo.lastClientY = y;
+    this.setScrollPosition(scrollPosition);
+    this.currentItem = this.getItemIndexFromScrollPosition(scrollPosition, this.currentItem);
+  }
+
   private alignItems() {
     if (!this.scrollContent || this.currentItem < 0 || this.itemAlignment !== 'center') {
       return;
@@ -260,19 +276,6 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
     }
     const properties = {time: ScrollListComponent.getTime(), position: this.getScrollPosition(), velocity};
     this.animationInterval = setInterval(() => this.updateSnapPosition(properties, index, updateCurrentItem), this.config.animationInterval);
-  }
-
-  updateDrag(x: number, y: number) {
-    if(!this.dragInfo) {
-      return;
-    }
-    const scrollPosition = x + this.dragInfo.offsetX;
-    this.dragInfo.minScrollPosition = Math.min(this.dragInfo.minScrollPosition, scrollPosition);
-    this.dragInfo.maxScrollPosition = Math.max(this.dragInfo.maxScrollPosition, scrollPosition);
-    this.dragInfo.lastClientX = x;
-    this.dragInfo.lastClientY = y;
-    this.setScrollPosition(scrollPosition);
-    this.currentItem = this.getItemIndexFromScrollPosition(scrollPosition, this.currentItem);
   }
 
   private updateScrollVelocity(lastProperties: {position: number, time: number}) {

@@ -21,6 +21,7 @@ app-camera-preview {
   top: 0;
   left: 0;
   z-index: 0;
+  background-color: black;
 
   ::ng-deep video {
     filter: brightness(0.5) blur(10px);
@@ -49,6 +50,11 @@ app-camera-preview {
         font-weight: bold;
         margin: 0 30px;
         transition: color 0.3s ease-in-out;
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -webkit-tap-highlight-color: transparent;
       }
 
       &:not(.current) {
