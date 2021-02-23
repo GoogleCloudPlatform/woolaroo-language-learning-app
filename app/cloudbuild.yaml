@@ -1,3 +1,4 @@
+timeout: 1200s
 steps:
   # Terraform
   - id: 'create_terraform_state_storage'
@@ -72,6 +73,7 @@ steps:
   - id: 'build_client'
     waitFor: ['configure_client']
     name: node:10.16.3
+    timeout: 1200s
     entrypoint: "npm"
     args: ["run", "build", "--", "-c", "production", "--output-path=./dist",
            "--deploy-url=https://storage.googleapis.com/${_BUCKET_NAME}/"]
