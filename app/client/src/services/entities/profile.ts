@@ -3,5 +3,4 @@ export interface Profile {
   introViewed: boolean;
   language: string|null;
   endangeredLanguage: string|null;
-  captureInstructionsViewed: boolean;
 }

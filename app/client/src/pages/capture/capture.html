@@ -4,10 +4,7 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <app-camera-preview></app-camera-preview>
-    <div class="camera-frame">
-      <span [className]="'instructions ' + (instructionsVisible ? 'visible' : 'hidden')"
-            [innerHTML]="'Capture an object and Woolaroo will translate.' | translate:'captureInstructions'"></span>
-    </div>
+    <div class="camera-frame"></div>
     <button (click)="onOpenMenuClick()" class="open-menu" aria-label="Open Menu"><app-icon icon="menu"></app-icon></button>
     <button (click)="onCaptureClick()" class="capture" aria-label="Capture Photo"><app-icon icon="capture_photo"></app-icon></button>
     <button class="load-photo" [attr.aria-label]="'Pick photo' | translate:'pickPhoto'" (appFileUpload)="onImageUploaded($event)" accept="image/*">
