@@ -9,6 +9,7 @@ import {
   QueryList,
   TemplateRef, ViewChild
 } from '@angular/core';
+import { first } from 'rxjs/operators';
 
 @Directive({selector: '[appScrollListItem]'})
 export class ScrollListItem {
@@ -65,14 +66,16 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
   @Input()
   public itemAlignment: 'start'|'center' = 'center';
 
-  private _currentItem: number = 0;
-  public get currentItem(): number { return this._currentItem; }
+  private _currentItem: number = -1;
+  public get currentItem(): number { return Math.max(0, this._currentItem); }
   @Input()
   public set currentItem(value: number) {
     if(value != this._currentItem) {
+      const firstValue = this._currentItem < 0;
       this._currentItem = value;
       this.currentItemChanged.emit(value);
-      if(!this.dragInfo) {
+      if(!this.dragInfo && !firstValue) {
+        // not dragging and not the initial value - animate to this item
         this.scrollToItem(value);
       }
     }

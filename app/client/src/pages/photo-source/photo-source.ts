@@ -9,6 +9,7 @@ import { SessionService } from 'services/session';
 import { addOpenedListener } from 'util/dialog';
 import { ImageLoaderPageBase } from 'pages/capture/capture';
 import { cameraStreamIsAvailable } from 'util/camera';
+import { IProfileService, PROFILE_SERVICE } from '../../services/profile';
 
 @Component({
   selector: 'app-page-photo-source',
@@ -16,14 +17,17 @@ import { cameraStreamIsAvailable } from 'util/camera';
   styleUrls: ['./photo-source.scss']
 })
 export class PhotoSourcePageComponent extends ImageLoaderPageBase implements AfterViewInit {
+  private _profileService: IProfileService;
   public get cameraIsAvailable() { return cameraStreamIsAvailable(); }
 
   constructor( router: Router,
                dialog: MatDialog,
                sessionService: SessionService,
+               @Inject(PROFILE_SERVICE) profileService: IProfileService,
                @Inject(IMAGE_RECOGNITION_SERVICE) imageRecognitionService: IImageRecognitionService,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService) {
     super(router, dialog, sessionService, imageRecognitionService);
+    this._profileService = profileService;
   }
 
   ngAfterViewInit() {
@@ -31,12 +35,25 @@ export class PhotoSourcePageComponent extends ImageLoaderPageBase implements Aft
   }
 
   onCaptureClick() {
-    const loadingPopUp = this.dialog.open(LoadingPopUpComponent,
-      { closeOnNavigation: false, disableClose: true, panelClass: 'loading-popup' });
-    this.sessionService.currentSession.currentModal = loadingPopUp;
-    loadingPopUp.beforeClosed().subscribe({
-      complete: () => this.sessionService.currentSession.currentModal = null
-    });
-    addOpenedListener(loadingPopUp, () => this.router.navigateByUrl(AppRoutes.CaptureImage));
+    this._profileService.loadProfile().then(
+      profile => {
+        if(!profile.language || !profile.endangeredLanguage) {
+          // no language chosen - let user change language
+          this.router.navigateByUrl(AppRoutes.ChangeLanguage);
+        } else {
+          // language chosen - show loading popup then navigate to capture image
+          const loadingPopUp = this.dialog.open(LoadingPopUpComponent,
+            { closeOnNavigation: false, disableClose: true, panelClass: 'loading-popup' });
+          this.sessionService.currentSession.currentModal = loadingPopUp;
+          loadingPopUp.beforeClosed().subscribe({
+            complete: () => this.sessionService.currentSession.currentModal = null
+          });
+          addOpenedListener(loadingPopUp, () => this.router.navigateByUrl(AppRoutes.CaptureImage));
+        }
+      },
+      () => {
+        this.router.navigateByUrl(AppRoutes.ChangeLanguage);
+      }
+    );
   }
 }
