@@ -126,7 +126,7 @@ export const environment = {
     translationSelector: {
       scrollList: {
         animationInterval: 25,
-        snapAcceleration: 0.005,
+        snapAcceleration: 0.01,
         snapMaxSpeed: 2,
         snapMinSpeed: 0.01,
         snapDecelerationDistance: 200,

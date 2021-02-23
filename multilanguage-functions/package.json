@@ -10,7 +10,7 @@
     "logs": "firebase functions:log"
   },
   "engines": {
-    "node": "8"
+    "node": "10.16.3"
   },
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.0.20",

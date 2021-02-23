@@ -229,6 +229,10 @@ export class WordScrollListComponent implements AfterViewChecked {
 
   // predict where snap position will be after decelerating
   private getEndingSnapWordIndex(position: number, velocity: number): number {
+    if (Math.abs(velocity) > this.config.snapMaxSpeed) {
+      // over max speed
+      velocity = Math.sign(velocity) * this.config.snapMaxSpeed;
+    }
     const dt = this.config.animationInterval;
     const decelerationTime = dt * Math.ceil(Math.abs(velocity / this.config.snapAcceleration) / dt);
     const finalPosition = position + 0.5 * velocity * decelerationTime;
@@ -356,6 +360,9 @@ export class WordScrollListComponent implements AfterViewChecked {
 
   private updateSnapPosition(lastProperties: {position: number, velocity: number, time: number}, snapWordIndex: number) {
     let velocity = lastProperties.velocity;
+    if (Math.abs(velocity) > this.config.snapMaxSpeed) {
+      velocity = Math.sign(velocity) * this.config.snapMaxSpeed;
+    }
     const snapPosition = this.getWordSnapPosition(snapWordIndex);
     const t = WordScrollListComponent.getTime();
     const dt = t - lastProperties.time;

@@ -23,6 +23,10 @@ export class IntroAboutPageComponent implements AfterViewInit {
     this.analyticsService.logPageView(this.router.url, 'Intro - About');
   }
 
+  onItemClick(ev: MouseEvent) {
+    this.currentAboutItem = 1 - this.currentAboutItem;
+  }
+
   onCurrentAboutItemChanged(index: number) {
     this.currentAboutItem = index;
   }
