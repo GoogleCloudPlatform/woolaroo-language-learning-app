@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { CapturePageComponent } from './capture';
 import { CameraPreviewModule } from 'components/camera-preview/camera-preview.module';
 import { IconComponentModule } from 'components/icon/icon.module';
@@ -10,6 +11,7 @@ import { CapturePopUpModule } from 'components/capture-popup/capture-popup.modul
 import { I18nModule } from 'i18n/i18n.module';
 import { DirectivesModule } from 'directives/directives.module';
 import { CommonModule } from '@angular/common';
+import { LogoModule } from 'components/logo/logo.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,7 @@ import { CommonModule } from '@angular/common';
   imports: [
     CommonModule,
     MatSidenavModule,
+    MatToolbarModule,
     IconComponentModule,
     CameraPreviewModule,
     ErrorPopUpModule,
@@ -25,7 +28,8 @@ import { CommonModule } from '@angular/common';
     CapturePopUpModule,
     SidenavModule,
     DirectivesModule,
-    I18nModule
+    I18nModule,
+    LogoModule
   ]
 })
 export class CapturePageModule {}

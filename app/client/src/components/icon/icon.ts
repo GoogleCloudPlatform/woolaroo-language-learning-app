@@ -8,7 +8,7 @@ export type Icon = 'play_audio'|'record_audio'|'stop_audio'|'play_recording'|'ba
 
 @Component({
   selector: 'app-icon',
-  template: '<mat-icon class="shadow" [svgIcon]="icon" *ngIf="shadow"></mat-icon><mat-icon [svgIcon]="icon" [color]="color"></mat-icon>',
+  templateUrl: 'icon.html',
   styleUrls: ['./icon.scss']
 })
 export class IconComponent {
@@ -42,7 +42,7 @@ export class IconComponent {
       play_recording: 'play_arrow.svg',
       search: 'search.svg',
       add: 'add.svg',
-      language: 'language.svg'
+      language: 'translate.svg'
     };
     for (const iconID of Object.keys(icons)) {
       this.iconRegistry.addSvgIcon(iconID, this.domSanitizer.bypassSecurityTrustResourceUrl(baseUrl + icons[iconID]));
