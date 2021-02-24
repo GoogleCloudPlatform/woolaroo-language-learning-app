@@ -24,6 +24,11 @@ export class ChangeLanguagePageComponent {
   private _currentEndangeredLanguageIndex: number = 0;
   public get currentEndangeredLanguageIndex(): number { return this._currentEndangeredLanguageIndex; }
 
+  public get currentEndangeredLanguageDescriptionKey(): string {
+    const code = this.endangeredLanguages[this._currentEndangeredLanguageIndex].code;
+    return `shortDescription_${code}`;
+  }
+
   constructor(private router: Router,
               private i18nService: I18nService,
               private endangeredLanguageService: EndangeredLanguageService) {

@@ -16,7 +16,7 @@
     </div>
     <div class="field">
       <span class="label" [innerHTML]="'Native Speakers'|translate:'nativeSpeakers'"></span>
-      <span class="value" [innerHTML]="'Region name'|translate:'nativeSpeakers_' + (language ? language.code : '')"></span>
+      <span class="value" [innerHTML]="language.nativeSpeakers"></span>
     </div>
   </div>
   <div class="description" [innerHTML]="'Description'|translate:'description_' + (language ? language.code : '')"></div>

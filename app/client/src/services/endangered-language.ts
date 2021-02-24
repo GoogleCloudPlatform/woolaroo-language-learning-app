@@ -7,9 +7,7 @@ export interface EndangeredLanguage {
   apiURL: string;
   sampleWordImageURL: string;
   sampleWordTranslation: string;
-  region: string;
   nativeSpeakers: string;
-  description: string;
 }
 
 interface EndangeredLanguageConfig {

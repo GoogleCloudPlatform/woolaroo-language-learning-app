@@ -202,63 +202,80 @@ export const environment = {
             name: 'Yugambeh',
             default: params.endangeredLanguage === 'yum',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-scn.jpg',
-            sampleWordTranslation: 'tullei'
+            sampleWordTranslation: 'tullei',
+            nativeSpeakers: '100000'
           },
           {
             code: 'yi',
             name: 'Yiddish',
             default: params.endangeredLanguage === 'yi',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-yi.jpg',
-            sampleWordTranslation: 'דער בױםn'
+            sampleWordTranslation: 'דער בױםn',
+            nativeSpeakers: '100000'
           },
           {
             code: 'tzm',
             name: 'Tamazight',
             default: params.endangeredLanguage === 'tzm',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-be.jpg',
-            sampleWordTranslation: 'aseklu'
+            sampleWordTranslation: 'aseklu',
+            nativeSpeakers: '100000'
           },
           {
             code: 'rap',
             name: 'Rapa Nui',
             default: params.endangeredLanguage === 'rap',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-zyg.jpg',
-            sampleWordTranslation: 'tumu'
+            sampleWordTranslation: 'tumu',
+            nativeSpeakers: '100000'
           },
           {
             code: 'ppl',
             name: 'Nawat',
             default: params.endangeredLanguage === 'ppl',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-zyg.jpg',
-            sampleWordTranslation: 'kwawit'
+            sampleWordTranslation: 'kwawit',
+            nativeSpeakers: '100000'
           },
           {
             code: 'mi',
             name: 'Māori',
             default: params.endangeredLanguage === 'mi',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-zyg.jpg',
-            sampleWordTranslation: 'rākau'
+            sampleWordTranslation: 'rākau',
+            nativeSpeakers: '100000'
           },
           {
             code: 'el-cal',
             name: 'Calabrian Greek',
             default: params.endangeredLanguage === 'el-cal',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-zyg.jpg',
-            sampleWordTranslation: 'àrburo'
+            sampleWordTranslation: 'àrburo',
+            nativeSpeakers: '100000'
           },
           {
             code: 'scn',
             name: 'Sicilian',
             default: params.endangeredLanguage === 'scn',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-scn.jpg',
-            sampleWordTranslation: 'àrbulu'
+            sampleWordTranslation: 'àrbulu',
+            nativeSpeakers: '100000'
           },
           {
             code: 'lou',
             name: 'Louisiana Creole',
             default: params.endangeredLanguage === 'lou',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-scn.jpg',
-            sampleWordTranslation: 'narb'
+            sampleWordTranslation: 'narb',
+            nativeSpeakers: '100000'
+          },
+          {
+            code: 'zyg',
+            name: 'Yang Zhuang',
+            default: params.endangeredLanguage === 'zyg',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-zyg.jpg',
+            sampleWordTranslation: 'narb',
+            nativeSpeakers: '100000'
           }
         ]
       }

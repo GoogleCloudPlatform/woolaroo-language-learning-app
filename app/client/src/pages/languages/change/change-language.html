@@ -15,6 +15,7 @@
       <button *appScrollListItem>{{ lang.name }}</button>
     </ng-container>
   </app-scroll-list>
+  <span class="description" [innerHTML]="'Description'|translate:currentEndangeredLanguageDescriptionKey"></span>
 </div>
 <button mat-flat-button color="accent" (click)="onNextClick()" class="next">
   <span [innerHTML]="'Go' | translate:'go'"></span>

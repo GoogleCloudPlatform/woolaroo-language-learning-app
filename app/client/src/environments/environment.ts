@@ -4,7 +4,6 @@ import { LocalProfileService } from 'services/local-profile';
 import { APIFeedbackService } from 'services/api/feedback';
 import { SafeSearchLikelihood } from 'services/google/image-recognition';
 import { APIImageRecognitionService } from 'services/api/image-recognition';
-import { params } from './environment.prod.params';
 
 const baseEndpointUrl = 'https://us-central1-ggl-woolaroo-multilang-uat.cloudfunctions.net';
 const debugImageUrl = '/assets/debug/IMG_20190920_141505.jpg';
@@ -199,63 +198,80 @@ export const environment = {
             name: 'Yugambeh',
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-scn.jpg',
-            sampleWordTranslation: 'tullei'
+            sampleWordTranslation: 'tullei',
+            nativeSpeakers: '100000'
           },
           {
             code: 'yi',
             name: 'Yiddish',
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-yi.jpg',
-            sampleWordTranslation: 'דער בױםn'
+            sampleWordTranslation: 'דער בױםn',
+            nativeSpeakers: '100000'
           },
           {
             code: 'tzm',
             name: 'Tamazight',
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-be.jpg',
-            sampleWordTranslation: 'aseklu'
+            sampleWordTranslation: 'aseklu',
+            nativeSpeakers: '100000'
           },
           {
             code: 'rap',
             name: 'Rapa Nui',
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-zyg.jpg',
-            sampleWordTranslation: 'tumu'
+            sampleWordTranslation: 'tumu',
+            nativeSpeakers: '100000'
           },
           {
             code: 'ppl',
             name: 'Nawat',
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-zyg.jpg',
-            sampleWordTranslation: 'kwawit'
+            sampleWordTranslation: 'kwawit',
+            nativeSpeakers: '100000'
           },
           {
             code: 'mi',
             name: 'Māori',
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-zyg.jpg',
-            sampleWordTranslation: 'rākau'
+            sampleWordTranslation: 'rākau',
+            nativeSpeakers: '100000'
           },
           {
             code: 'el-cal',
             name: 'Calabrian Greek',
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-zyg.jpg',
-            sampleWordTranslation: 'àrburo'
+            sampleWordTranslation: 'àrburo',
+            nativeSpeakers: '100000'
           },
           {
             code: 'scn',
             name: 'Sicilian',
             default: true,
             sampleWordImageURL: './assets/img/languages/tree-scn.jpg',
-            sampleWordTranslation: 'àrbulu'
+            sampleWordTranslation: 'àrbulu',
+            nativeSpeakers: '100000'
           },
           {
             code: 'lou',
             name: 'Louisiana Creole',
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-scn.jpg',
-            sampleWordTranslation: 'narb'
+            sampleWordTranslation: 'narb',
+            nativeSpeakers: '100000'
+          },
+          {
+            code: 'zyg',
+            name: 'Yang Zhuang',
+            default: false,
+            sampleWordImageURL: './assets/img/languages/tree-zyg.jpg',
+            sampleWordTranslation: 'narb',
+            nativeSpeakers: '100000'
           }
         ]
       }
