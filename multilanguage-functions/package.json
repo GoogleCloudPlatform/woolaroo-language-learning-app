@@ -26,7 +26,6 @@
     "eslint": "^5.16.0",
     "eslint-plugin-flowtype": "^2.50.3",
     "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-promise": "^4.0.1",
     "firebase-functions-test": "^0.1.6"
   },
