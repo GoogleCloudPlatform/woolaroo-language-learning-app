@@ -49,8 +49,6 @@ export class WordScrollListComponent implements AfterViewChecked {
   public targetPositionChanged: EventEmitter<Point> = new EventEmitter();
   @Output()
   public selectedWordChanged: EventEmitter<WordTranslation|null> = new EventEmitter();
-  @Output()
-  public manualEntrySelected: EventEmitter<any> = new EventEmitter();
 
   private translationsChanged = false;
   private _translations: WordTranslation[]|null = null;
@@ -203,12 +201,6 @@ export class WordScrollListComponent implements AfterViewChecked {
     this.updateDrag(ev.clientX, ev.clientY);
   };
 
-  onManualEntryClick() {
-    if (!this.isDragging && !this.isSnappingToWord) {
-      this.manualEntrySelected.emit();
-    }
-  }
-
   private centerWords() {
     if (!this.scrollContent || this.selectedWordIndex < 0) {
       return;
@@ -324,7 +316,7 @@ export class WordScrollListComponent implements AfterViewChecked {
     if (!items) {
       return;
     }
-    const wordIndex = Math.min(this.selectedWordIndex, items.length - 2);
+    const wordIndex = Math.min(this.selectedWordIndex, items.length - 1);
     if (wordIndex < 0) {
       return;
     }

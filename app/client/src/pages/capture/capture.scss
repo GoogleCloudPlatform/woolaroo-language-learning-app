@@ -33,15 +33,13 @@ mat-toolbar {
     width: 36px;
     height: 36px;
 
-    ::ng-deep {
-      app-icon {
-        width: 30px;
-        height: 30px;
-      }
+    app-icon {
+      width: 30px;
+      height: 30px;
+    }
 
-      .mat-icon {
-        color: map-get(map-get($app-theme, "foreground"), "text");
-      }
+    .mat-icon {
+      color: map-get(map-get($app-theme, "foreground"), "text");
     }
   }
 

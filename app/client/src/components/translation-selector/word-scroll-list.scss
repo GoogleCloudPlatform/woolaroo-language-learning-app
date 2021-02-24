@@ -52,17 +52,6 @@ ul {
       transform: translate(-50%, -50%);
       transition: font-size 0.2s ease-in-out;
     }
-
-    &.manual-entry {
-      border: solid mat-contrast($app-inverted, 500);
-      border-width: 0 0 1px 0;
-      font-style: italic;
-      text-transform: none;
-
-      app-icon {
-        margin-left: 5px;
-      }
-    }
   }
 }
 

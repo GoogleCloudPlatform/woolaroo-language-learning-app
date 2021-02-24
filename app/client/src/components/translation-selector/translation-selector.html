@@ -18,9 +18,6 @@
   <button *ngIf="selectedWord.soundURL" class="play-audio" (click)="onPlayAudioClick()">
     <app-icon icon="play_audio" shadow="true"></app-icon>
   </button>
-  <button *ngIf="!selectedWord.soundURL" class="record-audio" (click)="onAddRecordingClick()">
-    <app-icon icon="record_audio" shadow="true"></app-icon>
-  </button>
   <audio #audioPlayer [src]="selectedWord.soundURL" preload="none"
          (play)="onAudioPlaying()" (ended)="onAudioStopped()" (pause)="onAudioStopped()"></audio>
 </div>

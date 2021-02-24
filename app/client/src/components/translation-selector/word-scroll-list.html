@@ -3,8 +3,4 @@
     <span class="selected-spacer">{{word.original || word.english}}</span>
     <span class="word">{{word.original || word.english}}</span>
   </li>
-  <li class="manual-entry" (click)="onManualEntryClick()">
-    <span [innerHTML]="'Enter something else' | translate:'enterSomethingElse'"></span>
-    <app-icon icon="search"></app-icon>
-  </li>
 </ul>

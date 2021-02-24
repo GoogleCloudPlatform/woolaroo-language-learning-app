@@ -3,7 +3,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from 'environments/environment';
 
-export type Icon = 'play_audio'|'record_audio'|'stop_audio'|'play_recording'|'back'|'add_feedback'|
+export type Icon = 'play_audio'|'record_audio'|'stop_audio'|'play_recording'|'arrow_back'|'back'|'add_feedback'|
   'add_to_home'|'brand'|'photo_library'|'capture_photo'|'menu'|'close'|'share'|'search'|'add'|'language'|'forward';
 
 @Component({
@@ -33,6 +33,7 @@ export class IconComponent {
       brand: 'radio_button_unchecked.svg',
       add_to_home: 'save_alt.svg',
       add_feedback: 'chat_bubble_outline.svg',
+      arrow_back: 'arrow_back.svg',
       back: 'back.svg',
       forward: 'arrow_forward.svg',
       share: 'share.svg',

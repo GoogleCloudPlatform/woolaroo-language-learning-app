@@ -18,18 +18,42 @@
   background-position: center center;
 }
 
-.back {
-  @include icon-button;
-  color: mat-contrast($app-inverted, 500);
-  position: absolute;
-  left: 0;
+mat-toolbar {
   top: 0;
-  width: 70px;
   height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 
-  app-icon {
-    width: 32px;
-    height: 32px;
+  .back,
+  .submit-feedback {
+    @include icon-button;
+    position: absolute;
+    top: 7px;
+    width: 36px;
+    height: 36px;
+
+    app-icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .mat-icon {
+      color: map-get(map-get($app-theme, "foreground"), "text");
+    }
+  }
+
+  .back {
+    left: 8px;
+  }
+
+  .submit-feedback {
+    right: 8px;
+  }
+
+  app-logo {
+    height: 16px;
   }
 }
 
@@ -37,21 +61,6 @@ app-translation-selector {
   position: absolute;
   bottom: 18%;
   max-height: 75%;
-}
-
-.submit-feedback {
-  text-shadow: 1px 1px 2px mat-color(map-get($app-theme, shadow), 500);
-  position: absolute;
-  bottom: 5px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: mat-contrast($app-inverted, 500);
-  padding-left: 7px;
-  letter-spacing: 0.09rem;
-
-  app-icon {
-    margin-right: 10px;
-  }
 }
 
 :host-context([dir=rtl]) {
