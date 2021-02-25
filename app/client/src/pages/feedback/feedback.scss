@@ -1,4 +1,5 @@
 @import 'components';
+@import 'palette';
 
 :host {
   @include form-page;
@@ -41,5 +42,13 @@ mat-toolbar.mat-toolbar-single-row {
 mat-form-field.textarea {
   textarea {
     height: 167px;
+  }
+}
+
+.legal {
+  padding: 0 30px 30px 30px;
+
+  ::ng-deep a {
+    color: mat-color($app-primary);
   }
 }
