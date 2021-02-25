@@ -5,6 +5,7 @@ export interface EndangeredLanguage {
   name: string;
   default: boolean;
   apiURL: string;
+  organizationURL: string;
   sampleWordImageURL: string;
   sampleWordTranslation: string;
   nativeSpeakers: string;

@@ -200,7 +200,8 @@ export const environment = {
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-scn.jpg',
             sampleWordTranslation: 'tullei',
-            nativeSpeakers: '100000'
+            nativeSpeakers: '100000',
+            organizationURL: 'https://google.com?q=Yugambeh'
           },
           {
             code: 'yi',
@@ -208,7 +209,8 @@ export const environment = {
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-yi.jpg',
             sampleWordTranslation: 'דער בױםn',
-            nativeSpeakers: '100000'
+            nativeSpeakers: '100000',
+            organizationURL: 'https://google.com?q=Yiddish'
           },
           {
             code: 'tzm',
@@ -216,7 +218,8 @@ export const environment = {
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-be.jpg',
             sampleWordTranslation: 'aseklu',
-            nativeSpeakers: '100000'
+            nativeSpeakers: '100000',
+            organizationURL: 'https://google.com?q=Tamazight'
           },
           {
             code: 'rap',

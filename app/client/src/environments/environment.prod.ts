@@ -203,7 +203,8 @@ export const environment = {
             default: params.endangeredLanguage === 'yum',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-scn.jpg',
             sampleWordTranslation: 'tullei',
-            nativeSpeakers: '100000'
+            nativeSpeakers: '100000',
+            organizationURL: 'https://google.com?q=Yugambeh'
           },
           {
             code: 'yi',
@@ -211,7 +212,8 @@ export const environment = {
             default: params.endangeredLanguage === 'yi',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-yi.jpg',
             sampleWordTranslation: 'דער בױםn',
-            nativeSpeakers: '100000'
+            nativeSpeakers: '100000',
+            organizationURL: 'https://google.com?q=Yugambeh'
           },
           {
             code: 'tzm',
@@ -219,7 +221,8 @@ export const environment = {
             default: params.endangeredLanguage === 'tzm',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-be.jpg',
             sampleWordTranslation: 'aseklu',
-            nativeSpeakers: '100000'
+            nativeSpeakers: '100000',
+            organizationURL: 'https://google.com?q=Yugambeh'
           },
           {
             code: 'rap',
@@ -227,7 +230,8 @@ export const environment = {
             default: params.endangeredLanguage === 'rap',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-zyg.jpg',
             sampleWordTranslation: 'tumu',
-            nativeSpeakers: '100000'
+            nativeSpeakers: '100000',
+            organizationURL: 'https://google.com?q=Yugambeh'
           },
           {
             code: 'ppl',
@@ -235,7 +239,8 @@ export const environment = {
             default: params.endangeredLanguage === 'ppl',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-zyg.jpg',
             sampleWordTranslation: 'kwawit',
-            nativeSpeakers: '100000'
+            nativeSpeakers: '100000',
+            organizationURL: 'https://google.com?q=Yugambeh'
           },
           {
             code: 'mi',
@@ -243,7 +248,8 @@ export const environment = {
             default: params.endangeredLanguage === 'mi',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-zyg.jpg',
             sampleWordTranslation: 'rākau',
-            nativeSpeakers: '100000'
+            nativeSpeakers: '100000',
+            organizationURL: 'https://google.com?q=Yugambeh'
           },
           {
             code: 'el-cal',
@@ -251,7 +257,8 @@ export const environment = {
             default: params.endangeredLanguage === 'el-cal',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-zyg.jpg',
             sampleWordTranslation: 'àrburo',
-            nativeSpeakers: '100000'
+            nativeSpeakers: '100000',
+            organizationURL: 'https://google.com?q=Yugambeh'
           },
           {
             code: 'scn',
@@ -259,7 +266,8 @@ export const environment = {
             default: params.endangeredLanguage === 'scn',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-scn.jpg',
             sampleWordTranslation: 'àrbulu',
-            nativeSpeakers: '100000'
+            nativeSpeakers: '100000',
+            organizationURL: 'https://google.com?q=Yugambeh'
           },
           {
             code: 'lou',
@@ -267,7 +275,8 @@ export const environment = {
             default: params.endangeredLanguage === 'lou',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-scn.jpg',
             sampleWordTranslation: 'narb',
-            nativeSpeakers: '100000'
+            nativeSpeakers: '100000',
+            organizationURL: 'https://google.com?q=Yugambeh'
           },
           {
             code: 'zyg',
@@ -275,7 +284,8 @@ export const environment = {
             default: params.endangeredLanguage === 'zyg',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-zyg.jpg',
             sampleWordTranslation: 'narb',
-            nativeSpeakers: '100000'
+            nativeSpeakers: '100000',
+            organizationURL: 'https://google.com?q=Yugambeh'
           }
         ]
       }

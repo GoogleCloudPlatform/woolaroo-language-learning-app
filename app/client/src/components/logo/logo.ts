@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-logo',
-  template: '<img [src]="\'assets/img/logo.svg\' | assetUrl" [alt]="\'Woolaroo\' | translate:\'logo\'" />',
+  templateUrl: './logo.html',
   styleUrls: ['./logo.scss']
 })
 export class LogoComponent {
+  @Input()
+  public attributionEnabled: boolean = false;
 }

@@ -33,12 +33,8 @@ export class ViewLanguagePageComponent {
     );
   }
 
-  onChangeLanguageClick() {
-    const currentLang = this.language;
-    if(currentLang) {
-      this.endangeredLanguageService.setLanguage(currentLang.code);
-      this.router.navigateByUrl(AppRoutes.CaptureImage);
-    }
+  onExploreLanguageClick() {
+    window.open(this.language!.organizationURL);
   }
 
   onLanguageClick(code: string) {
