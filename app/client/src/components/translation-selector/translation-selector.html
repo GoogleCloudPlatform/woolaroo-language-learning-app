@@ -28,6 +28,8 @@
   </div>
 </div>
 <app-selection-line [class.hidden]="!selectedWordVisible" [targetPosition]="lineTargetPosition"></app-selection-line>
-<app-word-scroll-list [translations]="translations" (selectedWordChanged)="onSelectedWordChanged($event)"
-  (targetPositionChanged)="onTargetPositionChanged($event)"
-  (manualEntrySelected)="onManualEntrySelected()"></app-word-scroll-list>
+<app-word-scroll-list [translations]="translations"
+                      [defaultSelectedWordIndex]="defaultSelectedWordIndex"
+                      (selectedWordChanged)="onSelectedWordChanged($event)"
+                      (targetPositionChanged)="onTargetPositionChanged($event)">
+</app-word-scroll-list>

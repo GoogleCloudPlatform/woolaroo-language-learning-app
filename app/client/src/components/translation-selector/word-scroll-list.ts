@@ -48,7 +48,7 @@ export class WordScrollListComponent implements AfterViewChecked {
   @Output()
   public targetPositionChanged: EventEmitter<Point> = new EventEmitter();
   @Output()
-  public selectedWordChanged: EventEmitter<WordTranslation|null> = new EventEmitter();
+  public selectedWordChanged: EventEmitter<{index: number, word: WordTranslation|null}> = new EventEmitter();
 
   private translationsChanged = false;
   private _translations: WordTranslation[]|null = null;
@@ -57,8 +57,12 @@ export class WordScrollListComponent implements AfterViewChecked {
   public set translations(value: WordTranslation[]|null) {
     this._translations = value;
     this.translationsChanged = true;
-    if  (this._translations) {
-      this.selectedWordIndex = Math.floor((this._translations.length - 1) / 2); // select center word (or left of center if even number)
+    if(this._translations) {
+      if(this._defaultSelectedWordIndex < 0) {
+        this.selectedWordIndex = Math.floor((this._translations.length - 1) / 2); // select center word (or left of center if even number)
+      } else {
+        this.selectedWordIndex = this._defaultSelectedWordIndex;
+      }
     }
   }
 
@@ -74,15 +78,27 @@ export class WordScrollListComponent implements AfterViewChecked {
 
   private _selectedWordIndex = -1;
   public get selectedWordIndex(): number { return this._selectedWordIndex; }
-  @Input('selectedWordIndex')
   public set selectedWordIndex(value: number) {
     if (value === this._selectedWordIndex) {
       return;
     }
     this._selectedWordIndex = value;
     const selectedWord = this._translations && value >= 0 ? this._translations[value] : null;
-    this.selectedWordChanged.emit(selectedWord);
+    this.selectedWordChanged.emit({index: value, word: selectedWord});
     this.updateTargetPosition();
+  }
+
+  private _defaultSelectedWordIndex = -1;
+  public get defaultSelectedWordIndex(): number { return this._defaultSelectedWordIndex; }
+  @Input('defaultSelectedWordIndex')
+  public set defaultSelectedWordIndex(value: number) {
+    if(value === this._defaultSelectedWordIndex) {
+      return;
+    }
+    this._defaultSelectedWordIndex = value;
+    if(this.translations && this._selectedWordIndex < 0) {
+      this._selectedWordIndex = this._defaultSelectedWordIndex;
+    }
   }
 
   @ViewChild('scrollContent', { static: true })

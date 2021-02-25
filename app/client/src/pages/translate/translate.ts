@@ -29,6 +29,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
   public backgroundImageData: Blob|null = null;
   public backgroundImageURL: string|null = null;
   public selectedWord: WordTranslation|null = null;
+  public defaultSelectedWordIndex: number = -1;
   public translations: WordTranslation[]|null = null;
 
   public get currentLanguage(): string {
@@ -50,6 +51,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.analyticsService.logPageView(this.router.url, 'Translate');
+    this.defaultSelectedWordIndex = history.state.selectedWordIndex !== undefined ? history.state.selectedWordIndex : -1;
     const image: Blob|undefined = history.state.image;
     const words: string[]|undefined = history.state.words || this.config.debugWords;
     let loadingPopUp: MatDialogRef<any>|undefined = this.sessionService.currentSession.currentModal;
@@ -154,8 +156,13 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
     history.back();
   }
 
-  onSelectedWordChanged(word: WordTranslation) {
-    this.selectedWord = word;
+  onSelectedWordChanged(ev: {index: number, word: WordTranslation|null}) {
+    if(ev.word) {
+      this.selectedWord = ev.word;
+    }
+    const state = history.state;
+    state.selectedWordIndex = ev.index;
+    history.replaceState(state, '');
   }
 
   onWordShared(word: WordTranslation) {

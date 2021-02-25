@@ -8,8 +8,11 @@
     <app-icon icon="add_feedback"></app-icon>
   </button>
 </mat-toolbar>
-<app-translation-selector [translations]="translations" (addRecording)="onAddRecording($event)"
-                          (addTranslation)="onAddTranslation($event)" (wordShared)="onWordShared($event)"
+<app-translation-selector [translations]="translations"
+                          [defaultSelectedWordIndex]="defaultSelectedWordIndex"
+                          (addRecording)="onAddRecording($event)"
+                          (addTranslation)="onAddTranslation($event)"
+                          (wordShared)="onWordShared($event)"
                           (selectedWordChanged)="onSelectedWordChanged($event)"
                           (manualEntrySelected)="onManualEntrySelected()">
 </app-translation-selector>

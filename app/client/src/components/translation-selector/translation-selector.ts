@@ -17,7 +17,7 @@ export class TranslationSelectorComponent {
   @Output()
   public addTranslation: EventEmitter<WordTranslation> = new EventEmitter<WordTranslation>();
   @Output()
-  public selectedWordChanged: EventEmitter<WordTranslation> = new EventEmitter<WordTranslation>();
+  public selectedWordChanged: EventEmitter<{index: number, word: WordTranslation|null}> = new EventEmitter<{index: number, word: WordTranslation|null}>();
   @Output()
   public manualEntrySelected: EventEmitter<any> = new EventEmitter();
   @ViewChild('audioPlayer')
@@ -27,6 +27,8 @@ export class TranslationSelectorComponent {
 
   public selectedWordVisible = false;
   public selectedWord: WordTranslation|null = null;
+  @Input()
+  public defaultSelectedWordIndex: number = -1;
 
   onPlayAudioClick() {
     if (!this.audioPlayer || !this.audioPlayer.nativeElement) {
@@ -55,7 +57,7 @@ export class TranslationSelectorComponent {
     this.audioPlaying = false;
   }
 
-  onSelectedWordChanged(translation: WordTranslation) {
+  onSelectedWordChanged(ev: {index: number, word: WordTranslation|null}) {
     if(this.audioPlaying) {
       this.audioPlaying = false;
       const audioPlayer = this.audioPlayer ? this.audioPlayer.nativeElement as HTMLAudioElement : null;
@@ -67,13 +69,13 @@ export class TranslationSelectorComponent {
     // will be fired immediately after "translations" is set, so need to delay changing
     // state again by a frame to avoid "expression changed after it was checked" error
     setTimeout(() => {
-      this.selectedWordVisible = !!translation;
+      this.selectedWordVisible = !!ev.word;
       // don't set selectedWord to null - we don't want to immediately hide translation, but transition out
-      if (translation) {
-        this.selectedWord = translation;
+      if (ev.word) {
+        this.selectedWord = ev.word;
       }
     }, 1);
-    this.selectedWordChanged.emit(translation);
+    this.selectedWordChanged.emit(ev);
   }
 
   onTargetPositionChanged(position: Point) {
