@@ -54,14 +54,17 @@ export class I18nService {
     this.currentLanguageChanged.emit(lang);
   }
 
-  getTranslation(key: string): string|null {
+  getTranslation(key: string, replacements?: {[index:string]:string}): string|null {
     if(!this._translations) {
       return null;
     } else if(!this._translations[key]) {
       //console.warn("Translation not found: " + key);
       return null;
     } else {
-      return this._translations[key];
+      const translation = this._translations[key];
+      return translation!.replace(/\$\{([^\}]+)\}/g, (substring, ...args) => {
+        return replacements ? (replacements[args[0]] || '') : '';
+      });
     }
   }
 }

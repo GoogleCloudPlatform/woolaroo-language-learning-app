@@ -8,13 +8,7 @@ export class TranslatePipe implements PipeTransform {
 
   transform(text: any, id?: string, replacements?: {[index:string]:string}, language?:string): string {
     const translateKey = id ? id : text;
-    let translation = this.i18nService.getTranslation(translateKey);
-    if(!translation) {
-      //console.warn('Translation not found: ' + translateKey);
-      translation = text;
-    }
-    return translation!.replace(/\$\{([^\}]+)\}/g, (substring, ...args) => {
-      return replacements ? (replacements[args[0]] || '') : '';
-    });
+    let translation = this.i18nService.getTranslation(translateKey, replacements);
+    return translation || text;
   }
 }

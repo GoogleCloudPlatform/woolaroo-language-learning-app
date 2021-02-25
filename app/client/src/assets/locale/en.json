@@ -74,6 +74,8 @@
   "captureImageError": "Unable to capture image",
   "feedbackSubmitted": "Feedback submitted",
   "submitFeedbackError": "Unable to save feedback",
+  "shareTitle": "I’ve learned ${translation} means ${original} in ${language} with #Woolaroo from #GoogleArts.",
+  "shareText": "Woolaroo provides a new way to explore endangered languages using your camera.",
   "region_yug": "Queensland, Australia",
   "description_yug": "<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>\n\n<p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>\n\n<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>",
   "shortDescription_yug": "An Australian Aboriginal language spoken by the Yugambeh people.",

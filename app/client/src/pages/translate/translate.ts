@@ -12,6 +12,7 @@ import { SessionService } from 'services/session';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
 import { I18nService } from '../../i18n/i18n.service';
 import { EndangeredLanguageService } from '../../services/endangered-language';
+import { share } from '../../util/share';
 
 interface TranslatePageConfig {
   debugImageUrl?: string;
@@ -174,11 +175,24 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
       window.innerWidth * window.devicePixelRatio,
       window.innerHeight * window.devicePixelRatio).then(
       (img) => {
-        try {
-          downloadFile(img, `woolaroo-translation-${word.original}.jpg`);
-        } catch (err) {
-          console.warn('Error downloading image', err);
-        }
+        const selectedWord = this.selectedWord;
+        const shareTitle = selectedWord ? this.i18n.getTranslation('shareTitle', {
+          original: selectedWord.original || selectedWord.english,
+          translation: selectedWord.translation,
+          language: this.endangeredLanguageService.currentLanguage.name}) || undefined : undefined;
+        const shareText = this.i18n.getTranslation('shareText') || undefined;
+        const files: File[] = [new File([img], `woolaroo-translation-${word.original}.jpg`)];
+        share({text: shareText, title: shareTitle, files: files}).then(
+          () => {},
+          ex => {
+            console.warn('Error sharing image', ex);
+            try {
+              downloadFile(img, `woolaroo-translation-${word.original}.jpg`);
+            } catch (err) {
+              console.warn('Error downloading image', err);
+            }
+          }
+        );
       },
       (err) => {
         console.warn('Error rendering image', err);
