@@ -10,10 +10,8 @@ import { AppRoutes } from 'app/routes';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
 import { SessionService } from 'services/session';
 import { addOpenedListener } from 'util/dialog';
-import { removeImageTransform } from 'util/image';
 import { I18nService } from 'i18n/i18n.service';
 import { IProfileService, PROFILE_SERVICE } from 'services/profile';
-import { environment } from '../../environments/environment';
 
 export class ImageLoaderPageBase {
   constructor( protected router: Router,
@@ -29,15 +27,7 @@ export class ImageLoaderPageBase {
     loadingPopUp.beforeClosed().subscribe({
       complete: () => this.sessionService.currentSession.currentModal = null
     });
-    addOpenedListener(loadingPopUp, () => {
-      removeImageTransform(image).then(
-        correctedImage => this.loadImageDescriptions(correctedImage, loadingPopUp),
-        err => {
-          console.warn('Error removing image rotation - defaulting to current rotation', err);
-          this.loadImageDescriptions(image, loadingPopUp);
-        }
-      );
-    });
+    addOpenedListener(loadingPopUp, () => this.loadImageDescriptions(image, loadingPopUp));
   }
 
   protected loadImageDescriptions(image: Blob, loadingPopUp: MatDialogRef<CapturePopUpComponent>) {
