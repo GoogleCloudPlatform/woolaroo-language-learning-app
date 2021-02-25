@@ -1,5 +1,5 @@
 <div class="translation-container" [class.hidden]="!selectedWordVisible" *ngIf="selectedWord && selectedWord.translation">
-  <div class="transliteration">
+  <div class="transliteration" *ngIf="selectedWord.transliteration">
     <span class="word">{{ selectedWord.transliteration }}</span>
     <span class="share">
       <button *ngIf="selectedWord.transliteration" (click)="onShareClick()">
@@ -7,7 +7,7 @@
       </button>
     </span>
   </div>
-  <div class="translation">
+  <div class="translation" *ngIf="selectedWord.translation !== selectedWord.transliteration">
     <span class="word">{{ selectedWord.translation }}</span>
     <span class="share">
       <button *ngIf="!selectedWord.transliteration" (click)="onShareClick()">
@@ -26,9 +26,6 @@
     <app-icon icon="add" shadow="true"></app-icon>
     <span [innerHTML]="'Add word' | translate:'addWord'"></span>
   </div>
-  <button *ngIf="!selectedWord.soundURL" class="add-translation" (click)="onAddTranslationClick()">
-    <app-icon icon="record_audio" shadow="true"></app-icon>
-  </button>
 </div>
 <app-selection-line [class.hidden]="!selectedWordVisible" [targetPosition]="lineTargetPosition"></app-selection-line>
 <app-word-scroll-list [translations]="translations" (selectedWordChanged)="onSelectedWordChanged($event)"

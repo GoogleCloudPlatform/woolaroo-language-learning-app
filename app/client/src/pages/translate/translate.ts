@@ -31,6 +31,10 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
   public selectedWord: WordTranslation|null = null;
   public translations: WordTranslation[]|null = null;
 
+  public get currentLanguage(): string {
+    return this.endangeredLanguageService.currentLanguage.name;
+  }
+
   constructor( @Inject(TRANSLATE_PAGE_CONFIG) private config: TranslatePageConfig,
                private http: HttpClient,
                private dialog: MatDialog,
@@ -140,6 +144,10 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 
   onSubmitFeedbackClick() {
     this.router.navigateByUrl(AppRoutes.Feedback, { state: { word: this.selectedWord }});
+  }
+
+  onSwitchLanguageClick() {
+    this.router.navigateByUrl(AppRoutes.ChangeLanguage);
   }
 
   onBackClick() {

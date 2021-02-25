@@ -13,4 +13,7 @@
                           (selectedWordChanged)="onSelectedWordChanged($event)"
                           (manualEntrySelected)="onManualEntrySelected()">
 </app-translation-selector>
-
+<div class="current-language" [innerHTML]="'In ${language}'|translate:'inLanguage':{language: currentLanguage}"></div>
+<button (click)="onSwitchLanguageClick()" class="change-language">
+  <span [innerHTML]="'Switch language'|translate:'switchLanguage'"></span> <app-icon icon="language"></app-icon>
+</button>

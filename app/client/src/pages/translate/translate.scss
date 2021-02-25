@@ -3,7 +3,11 @@
 
 :host {
   width: 100%;
-  display: block;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .background {
@@ -58,24 +62,41 @@ mat-toolbar {
 }
 
 app-translation-selector {
-  position: absolute;
-  bottom: 18%;
   max-height: 75%;
+  margin-bottom: 20px;
+  margin-top: 50vh;
+}
+
+.current-language {
+  flex: 1 1 auto;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: mat-contrast($app-inverted, 500);
+  font-size: 20px;
+}
+
+.change-language {
+  @include text-button;
+  margin-bottom: 20px;
+  color: mat-contrast($app-inverted, 500);
+  font-size: 20px;
+
+  app-icon {
+    margin-left: 10px;
+    vertical-align: middle;
+  }
 }
 
 :host-context([dir=rtl]) {
-  .back {
-    left: auto;
-    right: 0;
-  }
+  mat-toolbar {
+    .back {
+      right: 8px;
+    }
 
-  .submit-feedback {
-    padding-left: 20px;
-    padding-right: 7px;
-
-    app-icon {
-      margin-right: 0;
-      margin-left: 10px;
+    .submit-feedback {
+      left: 8px;
     }
   }
 }
