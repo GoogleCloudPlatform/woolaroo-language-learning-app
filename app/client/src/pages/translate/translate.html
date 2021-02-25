@@ -1,13 +1,12 @@
 <div class="background" [style.backgroundImage]="backgroundImageURL | styleUrl"></div>
-<mat-toolbar>
-  <button class="back" (click)="onBackClick()">
+<app-toolbar>
+  <button class="back" (click)="onBackClick()" slot="start">
     <app-icon icon="arrow_back"></app-icon>
   </button>
-  <app-logo></app-logo>
-  <button (click)="onSubmitFeedbackClick()" class="submit-feedback">
+  <button (click)="onSubmitFeedbackClick()" class="submit-feedback" slot="end">
     <app-icon icon="add_feedback"></app-icon>
   </button>
-</mat-toolbar>
+</app-toolbar>
 <app-translation-selector [translations]="translations"
                           [defaultSelectedWordIndex]="defaultSelectedWordIndex"
                           (addRecording)="onAddRecording($event)"

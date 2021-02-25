@@ -1,6 +1,12 @@
 <div class="background" [style.backgroundImage]="backgroundImageURL | styleUrl"></div>
-<button class="back" (click)="onBackClick()"><app-icon icon="back" [shadow]="true"></app-icon></button>
-<button class="add-feedback" (click)="onAddFeedbackClick()"><app-icon icon="add_feedback" [shadow]="true"></app-icon></button>
+<app-toolbar>
+  <button class="back" (click)="onBackClick()" slot="start">
+    <app-icon icon="arrow_back"></app-icon>
+  </button>
+  <button class="add-feedback" (click)="onAddFeedbackClick()" slot="end">
+    <app-icon icon="add_feedback"></app-icon>
+  </button>
+</app-toolbar>
 <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
   <mat-form-field class="text" appearance="outline" [hideRequiredMarker]="true">
     <input type="text" matInput name="caption" required formControlName="caption" [placeholder]="'What\'s this?' | translate:'imageCaptionLabel'" />

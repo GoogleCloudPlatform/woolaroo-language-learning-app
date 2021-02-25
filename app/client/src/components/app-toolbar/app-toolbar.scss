@@ -1,0 +1,65 @@
+@import 'components';
+@import 'palette';
+
+:host {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+mat-toolbar {
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  app-logo {
+    height: 16px;
+  }
+
+  ::ng-deep {
+    [slot="start"],
+    [slot="end"] {
+      @include icon-button;
+      position: absolute;
+      top: 7px;
+      width: 36px;
+      height: 36px;
+
+      app-icon {
+        width: 24px;
+        height: 24px;
+      }
+
+      .mat-icon {
+        color: map-get(map-get($app-theme, "foreground"), "text");
+      }
+    }
+
+    [slot="start"] {
+      left: 8px;
+    }
+
+    [slot="end"] {
+      right: 8px;
+    }
+  }
+}
+
+:host-context([dir=rtl]) {
+  mat-toolbar {
+    ::ng-deep {
+      [slot="start"] {
+        left: auto;
+        right: 8px;
+      }
+
+      [slot="end"] {
+        left: 8px;
+        right: auto;
+      }
+    }
+  }
+}
+

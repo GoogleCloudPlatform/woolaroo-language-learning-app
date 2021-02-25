@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslatePageComponent, TRANSLATE_PAGE_CONFIG } from './translate';
 import { ServicesModule } from 'services/services.module';
 import { IconComponentModule } from 'components/icon/icon.module';
@@ -8,7 +7,7 @@ import { TranslationSelectorModule } from 'components/translation-selector/trans
 import { PipesModule } from 'pipes/pipes.module';
 import { I18nModule } from 'i18n/i18n.module';
 import { environment } from 'environments/environment';
-import { LogoModule } from 'components/logo/logo.module';
+import { AppToolbarModule } from 'components/app-toolbar/app-toolbar.module';
 
 @NgModule({
   declarations: [
@@ -21,8 +20,7 @@ import { LogoModule } from 'components/logo/logo.module';
     TranslationSelectorModule,
     ServicesModule,
     I18nModule,
-    MatToolbarModule,
-    LogoModule
+    AppToolbarModule
   ],
   providers: [
     { provide: TRANSLATE_PAGE_CONFIG, useValue: environment.pages.translate }

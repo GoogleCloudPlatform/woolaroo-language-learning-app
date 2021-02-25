@@ -8,6 +8,7 @@ import { PipesModule } from 'pipes/pipes.module';
 import { IconComponentModule } from 'components/icon/icon.module';
 import { environment } from 'environments/environment';
 import { I18nModule } from 'i18n/i18n.module';
+import { AppToolbarModule } from 'components/app-toolbar/app-toolbar.module';
 import { CAPTION_IMAGE_PAGE_CONFIG, CaptionImagePageComponent } from './caption-image';
 
 @NgModule({
@@ -23,7 +24,8 @@ import { CAPTION_IMAGE_PAGE_CONFIG, CaptionImagePageComponent } from './caption-
     MatInputModule,
     MatDialogModule,
     CommonModule,
-    I18nModule
+    I18nModule,
+    AppToolbarModule
   ],
   providers: [
     { provide: CAPTION_IMAGE_PAGE_CONFIG, useValue: environment.pages.captionImage }

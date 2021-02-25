@@ -20,29 +20,6 @@
   background-position: center center;
 }
 
-.back,
-.add-feedback {
-  @include icon-button;
-  color: mat-contrast($app-inverted, 500);
-  position: absolute;
-  top: 0;
-  width: 70px;
-  height: 50px;
-
-  app-icon {
-    width: 32px;
-    height: 32px;
-  }
-}
-
-.back {
-  left: 0;
-}
-
-.add-feedback {
-  right: 0;
-}
-
 form {
   position: absolute;
   width: 100%;
@@ -71,17 +48,5 @@ form {
       background-color: mat-color($app-inverted);
       border-radius: 5px;
     }
-  }
-}
-
-:host-context([dir=rtl]) {
-  .back {
-    left: auto;
-    right: 0;
-  }
-
-  .add-feedback {
-    right: auto;
-    left: 0;
   }
 }

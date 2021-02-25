@@ -22,45 +22,6 @@
   background-position: center center;
 }
 
-mat-toolbar {
-  top: 0;
-  height: 50px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-
-  .back,
-  .submit-feedback {
-    @include icon-button;
-    position: absolute;
-    top: 7px;
-    width: 36px;
-    height: 36px;
-
-    app-icon {
-      width: 24px;
-      height: 24px;
-    }
-
-    .mat-icon {
-      color: map-get(map-get($app-theme, "foreground"), "text");
-    }
-  }
-
-  .back {
-    left: 8px;
-  }
-
-  .submit-feedback {
-    right: 8px;
-  }
-
-  app-logo {
-    height: 16px;
-  }
-}
-
 app-translation-selector {
   max-height: 75%;
   margin-bottom: 20px;

@@ -98,10 +98,15 @@ app-camera-preview {
   @include icon-button;
   color: mat-contrast($app-inverted, 500);
   position: absolute;
-  top: 30px;
-  right: 30px;
-  width: 30px;
-  height: 30px;
+  top: 8px;
+  right: 8px;
+  width: 36px;
+  height: 36px;
+
+  app-icon {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 .next {

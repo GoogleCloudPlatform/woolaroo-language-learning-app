@@ -17,37 +17,6 @@ app-camera-preview {
   display: block;
 }
 
-mat-toolbar {
-  top: 0;
-  height: 50px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-
-  .open-menu {
-    @include icon-button;
-    position: absolute;
-    top: 7px;
-    left: 8px;
-    width: 36px;
-    height: 36px;
-
-    app-icon {
-      width: 30px;
-      height: 30px;
-    }
-
-    .mat-icon {
-      color: map-get(map-get($app-theme, "foreground"), "text");
-    }
-  }
-
-  app-logo {
-    height: 16px;
-  }
-}
-
 .camera-frame {
   position: absolute;
   width: 60vw;
