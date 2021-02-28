@@ -10,10 +10,6 @@ const {google} = require('googleapis');
 ffmpeg.setFfmpegPath(ffmpegPath);
 const visionClient = new vision.v1p3beta1.ImageAnnotatorClient();
 
-const SUGGESTIONS_SPREADSHEET_ID = process.env['SUGGESTIONS_SPREADSHEET'];
-const FEEDBACK_SPREADSHEET_ID = process.env['FEEDBACK_SPREADSHEET'];
-const AUDIO_FOLDER_ID = process.env['AUDIO_FOLDER_ID'];
-
 async function getGoogleAPIAuthentication() {
     const auth = new google.auth.GoogleAuth({ scopes: ['https://www.googleapis.com/auth/drive'] });
     return await auth.getClient();
@@ -53,7 +49,7 @@ exports.saveAudioSuggestions = async (req, res) => {
         const drive = google.drive({version: 'v3', auth: await getGoogleAPIAuthentication()});
         const createResponse = (await drive.files.create({
             requestBody: {
-                parents: [ AUDIO_FOLDER_ID ],
+                parents: [ process.env['AUDIO_FOLDER_ID'] ],
                 mimeType: 'audio/mp3',
                 name: `${fileName}.mp3`
             },
@@ -105,7 +101,7 @@ async function saveFeedback(spreadsheetId, sheetTitle, data) {
 
 exports.addSuggestions = async (req, res) => {
     return cors(req, res, async () => {
-        await saveFeedback(SUGGESTIONS_SPREADSHEET_ID, req.body.native_language, [
+        await saveFeedback(process.env['SUGGESTIONS_SPREADSHEET'], req.body.native_language, [
             req.body.language || '',
             req.body.native_language || '',
             req.body.english_word || '',
@@ -121,7 +117,7 @@ exports.addSuggestions = async (req, res) => {
 
 exports.addFeedback = async (req, res) => {
     return cors(req, res, async () => {
-        await saveFeedback(FEEDBACK_SPREADSHEET_ID, req.body.native_language, [
+        await saveFeedback(process.env['FEEDBACK_SPREADSHEET'], req.body.native_language, [
             req.body.language || '',
             req.body.native_language || '',
             req.body.english_word || '',
