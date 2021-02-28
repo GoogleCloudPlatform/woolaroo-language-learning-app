@@ -1,25 +1,25 @@
 steps:
-  - name: 'gcloud'
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     dir: './multilanguage-functions'
     args: [ 'functions', 'deploy', 'saveAudioSuggestions', '--runtime', 'node14', '--project', '${PROJECT_ID}',
             '--trigger-http', '--set-build-env-vars',
             'suggestions.spreadsheet_id=${_SUGGESTIONS_SPREADSHEET},feedback.spreadsheet_id=${_FEEDBACK_SPREADSHEET},audio_suggestions.folder_id=${_AUDIO_FOLDER_ID}']
-  - name: 'gcloud'
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     dir: './multilanguage-functions'
     args: [ 'functions', 'deploy', 'addSuggestions', '--runtime', 'node14', '--project', '${PROJECT_ID}',
             '--trigger-http', '--set-build-env-vars',
             'suggestions.spreadsheet_id=${_SUGGESTIONS_SPREADSHEET},feedback.spreadsheet_id=${_FEEDBACK_SPREADSHEET},audio_suggestions.folder_id=${_AUDIO_FOLDER_ID}']
-  - name: 'gcloud'
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     dir: './multilanguage-functions'
     args: [ 'functions', 'deploy', 'addFeedback', '--runtime', 'node14', '--project', '${PROJECT_ID}',
             '--trigger-http', '--set-build-env-vars',
             'suggestions.spreadsheet_id=${_SUGGESTIONS_SPREADSHEET},feedback.spreadsheet_id=${_FEEDBACK_SPREADSHEET},audio_suggestions.folder_id=${_AUDIO_FOLDER_ID}']
-  - name: 'gcloud'
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     dir: './multilanguage-functions'
     args: [ 'functions', 'deploy', 'getTranslations', '--runtime', 'node14', '--project', '${PROJECT_ID}',
             '--trigger-http', '--set-build-env-vars',
             'suggestions.spreadsheet_id=${_SUGGESTIONS_SPREADSHEET},feedback.spreadsheet_id=${_FEEDBACK_SPREADSHEET},audio_suggestions.folder_id=${_AUDIO_FOLDER_ID}']
-  - name: 'gcloud'
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     dir: './multilanguage-functions'
     args: [ 'functions', 'deploy', 'visionAPI', '--runtime', 'node14', '--project', '${PROJECT_ID}',
             '--trigger-http', '--set-build-env-vars',
