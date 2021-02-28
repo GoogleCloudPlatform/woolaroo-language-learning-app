@@ -1,24 +1,26 @@
 steps:
-  - id: 'clone-community'
-    name: 'gcr.io/cloud-builders/git'
-    args: [ 'clone', 'https://github.com/GoogleCloudPlatform/cloud-builders-community']
-
-  - id: 'submit-firebase-container-image'
-    name: 'gcr.io/cloud-builders/gcloud'
-    args: [ 'builds', 'submit', '--config', 'cloudbuild.yaml', '.']
-    dir: './cloud-builders-community/firebase'
-
-  - name: 'node:8'
+  - name: 'gcloud'
     dir: './multilanguage-functions'
-    entrypoint: 'npm'
-    args: ['install']
-
-  - name: 'gcr.io/$PROJECT_ID/firebase'
+    args: [ 'functions', 'deploy', 'saveAudioSuggestions', '--runtime', 'node14', '--project', '${PROJECT_ID}',
+            '--trigger-http', '--set-build-env-vars',
+            'suggestions.spreadsheet_id=${_SUGGESTIONS_SPREADSHEET},feedback.spreadsheet_id=${_FEEDBACK_SPREADSHEET},audio_suggestions.folder_id=${_AUDIO_FOLDER_ID}']
+  - name: 'gcloud'
     dir: './multilanguage-functions'
-    args: [ 'functions:config:set', 'suggestions.spreadsheet_id=${_SUGGESTIONS_SPREADSHEET}',
-            'feedback.spreadsheet_id=${_FEEDBACK_SPREADSHEET}',
-            'audio_suggestions.folder_id=${_AUDIO_FOLDER_ID}', '--project', '${PROJECT_ID}']
-
-  - name: 'gcr.io/$PROJECT_ID/firebase'
+    args: [ 'functions', 'deploy', 'addSuggestions', '--runtime', 'node14', '--project', '${PROJECT_ID}',
+            '--trigger-http', '--set-build-env-vars',
+            'suggestions.spreadsheet_id=${_SUGGESTIONS_SPREADSHEET},feedback.spreadsheet_id=${_FEEDBACK_SPREADSHEET},audio_suggestions.folder_id=${_AUDIO_FOLDER_ID}']
+  - name: 'gcloud'
     dir: './multilanguage-functions'
-    args: [ 'deploy', '--only', 'functions', '--project', '${PROJECT_ID}']
+    args: [ 'functions', 'deploy', 'addFeedback', '--runtime', 'node14', '--project', '${PROJECT_ID}',
+            '--trigger-http', '--set-build-env-vars',
+            'suggestions.spreadsheet_id=${_SUGGESTIONS_SPREADSHEET},feedback.spreadsheet_id=${_FEEDBACK_SPREADSHEET},audio_suggestions.folder_id=${_AUDIO_FOLDER_ID}']
+  - name: 'gcloud'
+    dir: './multilanguage-functions'
+    args: [ 'functions', 'deploy', 'getTranslations', '--runtime', 'node14', '--project', '${PROJECT_ID}',
+            '--trigger-http', '--set-build-env-vars',
+            'suggestions.spreadsheet_id=${_SUGGESTIONS_SPREADSHEET},feedback.spreadsheet_id=${_FEEDBACK_SPREADSHEET},audio_suggestions.folder_id=${_AUDIO_FOLDER_ID}']
+  - name: 'gcloud'
+    dir: './multilanguage-functions'
+    args: [ 'functions', 'deploy', 'visionAPI', '--runtime', 'node14', '--project', '${PROJECT_ID}',
+            '--trigger-http', '--set-build-env-vars',
+            'suggestions.spreadsheet_id=${_SUGGESTIONS_SPREADSHEET},feedback.spreadsheet_id=${_FEEDBACK_SPREADSHEET},audio_suggestions.folder_id=${_AUDIO_FOLDER_ID}']

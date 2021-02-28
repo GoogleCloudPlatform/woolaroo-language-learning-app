@@ -1,7 +1,5 @@
 const fs = require('fs');
-const functions = require('firebase-functions');
 const uuidv1 = require('uuid/v1');
-const admin = require('firebase-admin');
 const cors = require('cors')({origin: true});
 const vision = require('@google-cloud/vision');
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
@@ -9,7 +7,6 @@ const ffmpeg = require('fluent-ffmpeg');
 const {google} = require('googleapis');
 
 ffmpeg.setFfmpegPath(ffmpegPath);
-admin.initializeApp();
 const visionClient = new vision.v1p3beta1.ImageAnnotatorClient();
 
 async function getGoogleAPIAuthentication() {
@@ -36,7 +33,7 @@ async function writeFileAsync(path, buffer) {
     });
 }
 
-exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
+exports.saveAudioSuggestions = async (req, res) => {
     return cors(req, res, async () => {
         // convert base64 body to blob of webm
         const nodeBuffer = Buffer.from(req.body, 'base64');
@@ -68,7 +65,7 @@ exports.saveAudioSuggestions = functions.https.onRequest(async (req, res) => {
         console.log(`Audio saved to ${file.webContentLink}.`);
         res.status(200).send(file.webContentLink);
     });
-});
+};
 
 async function saveFeedback(spreadsheetId, sheetTitle, data) {
     const sheets = google.sheets({version: 'v4', auth: await getGoogleAPIAuthentication()});
@@ -101,7 +98,7 @@ async function saveFeedback(spreadsheetId, sheetTitle, data) {
     });
 }
 
-exports.addSuggestions = functions.https.onRequest(async (req, res) => {
+exports.addSuggestions = async (req, res) => {
     return cors(req, res, async () => {
         await saveFeedback(functions.config().suggestions.spreadsheet_id, req.body.native_language, [
             req.body.language || '',
@@ -115,9 +112,9 @@ exports.addSuggestions = functions.https.onRequest(async (req, res) => {
         ]);
         res.status(200).send("Translation suggestions saved.");
     });
-});
+};
 
-exports.addFeedback = functions.https.onRequest(async (req, res) => {
+exports.addFeedback = async (req, res) => {
     return cors(req, res, async () => {
         await saveFeedback(functions.config().feedback.spreadsheet_id, req.body.native_language, [
             req.body.language || '',
@@ -133,9 +130,9 @@ exports.addFeedback = functions.https.onRequest(async (req, res) => {
         ]);
         res.status(200).send("Feedback saved.");
     });
-});
+};
 
-exports.getTranslations = functions.https.onRequest(async (req, res) => {
+exports.getTranslations = async (req, res) => {
     return cors(req, res, async () => {
         const english_words = req.body.english_words || [];
         const primary_language = req.body.primary_language || '';
@@ -152,7 +149,7 @@ exports.getTranslations = functions.https.onRequest(async (req, res) => {
             res.status(500).send(error)
         });
     });
-});
+};
 
 function createTranslationResponseForApp(doc, primary_language, target_language) {
     const data = doc.data();
@@ -167,7 +164,7 @@ function createTranslationResponseForApp(doc, primary_language, target_language)
     };
 }
 
-exports.visionAPI = functions.https.onRequest(async (req, res) => {
+exports.visionAPI = async (req, res) => {
     return cors(req, res, async () => {
         try {
             const requestVision = {
@@ -188,4 +185,4 @@ exports.visionAPI = functions.https.onRequest(async (req, res) => {
             res.status(500).send(err);
         }
     });
-});
+};
