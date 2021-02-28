@@ -2,6 +2,7 @@ const fs = require('fs');
 const uuidv1 = require('uuid/v1');
 const cors = require('cors')({origin: true});
 const vision = require('@google-cloud/vision');
+const {Datastore} = require('@google-cloud/datastore');
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 const ffmpeg = require('fluent-ffmpeg');
 const {google} = require('googleapis');
@@ -141,9 +142,10 @@ exports.getTranslations = async (req, res) => {
         const english_words = req.body.english_words || [];
         const primary_language = req.body.primary_language || '';
         const target_language = req.body.target_language || '';
-        const collectionRef = admin.firestore().collection("translations");
+        const datastore = new Datastore();
         const promises = english_words.map(async english_word => {
-            return collectionRef.doc(english_word).get()
+            const workKey = datastore.key(['translations', english_word]);
+            return { word: english_word, translations: await datastore.get(workKey) };
         });
         Promise.all(promises).then(docs => {
             const translations = docs.map(x => createTranslationResponseForApp(x, primary_language, target_language));
@@ -155,12 +157,11 @@ exports.getTranslations = async (req, res) => {
     });
 };
 
-function createTranslationResponseForApp(doc, primary_language, target_language) {
-    const data = doc.data();
-    const primaryTranslation = data ? data[primary_language] : null;
-    const targetTranslation = data ? data[target_language] : null;
+function createTranslationResponseForApp(data, primary_language, target_language) {
+    const primaryTranslation = data && data.translations ? data.translations[primary_language] : null;
+    const targetTranslation = data && data.translations ? data.translations[target_language] : null;
     return {
-        english_word: doc.id,
+        english_word: data.word,
         primary_word: primaryTranslation ? primaryTranslation.translation || '' : '',
         translation: targetTranslation ? targetTranslation.translation || '' : '',
         transliteration: targetTranslation ? targetTranslation.transliteration || '' : '',
