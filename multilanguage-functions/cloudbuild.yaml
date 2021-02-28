@@ -2,30 +2,30 @@ steps:
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     dir: './multilanguage-functions'
-    args: [ 'functions', 'deploy', 'saveAudioSuggestions', '--runtime', 'node14', '--project', '${PROJECT_ID}',
+    args: [ 'functions', 'deploy', 'saveAudioSuggestions', '--runtime', 'node12', '--project', '${PROJECT_ID}',
             '--trigger-http', '--set-build-env-vars',
             'SUGGESTIONS_SPREADSHEET=${_SUGGESTIONS_SPREADSHEET},FEEDBACK_SPREADSHEET=${_FEEDBACK_SPREADSHEET},AUDIO_FOLDER_ID=${_AUDIO_FOLDER_ID}']
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     dir: './multilanguage-functions'
-    args: [ 'functions', 'deploy', 'addSuggestions', '--runtime', 'node14', '--project', '${PROJECT_ID}',
+    args: [ 'functions', 'deploy', 'addSuggestions', '--runtime', 'node12', '--project', '${PROJECT_ID}',
             '--trigger-http', '--set-build-env-vars',
             'SUGGESTIONS_SPREADSHEET=${_SUGGESTIONS_SPREADSHEET},FEEDBACK_SPREADSHEET=${_FEEDBACK_SPREADSHEET},AUDIO_FOLDER_ID=${_AUDIO_FOLDER_ID}']
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     dir: './multilanguage-functions'
-    args: [ 'functions', 'deploy', 'addFeedback', '--runtime', 'node14', '--project', '${PROJECT_ID}',
+    args: [ 'functions', 'deploy', 'addFeedback', '--runtime', 'node12', '--project', '${PROJECT_ID}',
             '--trigger-http', '--set-build-env-vars',
             'SUGGESTIONS_SPREADSHEET=${_SUGGESTIONS_SPREADSHEET},FEEDBACK_SPREADSHEET=${_FEEDBACK_SPREADSHEET},AUDIO_FOLDER_ID=${_AUDIO_FOLDER_ID}']
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     dir: './multilanguage-functions'
-    args: [ 'functions', 'deploy', 'getTranslations', '--runtime', 'node14', '--project', '${PROJECT_ID}',
+    args: [ 'functions', 'deploy', 'getTranslations', '--runtime', 'node12', '--project', '${PROJECT_ID}',
             '--trigger-http', '--set-build-env-vars',
             'SUGGESTIONS_SPREADSHEET=${_SUGGESTIONS_SPREADSHEET},FEEDBACK_SPREADSHEET=${_FEEDBACK_SPREADSHEET},AUDIO_FOLDER_ID=${_AUDIO_FOLDER_ID}']
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     dir: './multilanguage-functions'
-    args: [ 'functions', 'deploy', 'visionAPI', '--runtime', 'node14', '--project', '${PROJECT_ID}',
+    args: [ 'functions', 'deploy', 'visionAPI', '--runtime', 'node12', '--project', '${PROJECT_ID}',
             '--trigger-http', '--set-build-env-vars',
             'SUGGESTIONS_SPREADSHEET=${_SUGGESTIONS_SPREADSHEET},FEEDBACK_SPREADSHEET=${_FEEDBACK_SPREADSHEET},AUDIO_FOLDER_ID=${_AUDIO_FOLDER_ID}']
