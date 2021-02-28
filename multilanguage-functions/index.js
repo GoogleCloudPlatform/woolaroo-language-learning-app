@@ -144,7 +144,7 @@ exports.getTranslations = async (req, res) => {
         const target_language = req.body.target_language || '';
         const datastore = new Datastore();
         const promises = english_words.map(async english_word => {
-            const workKey = datastore.key(['translations', english_word]);
+            const workKey = datastore.key(['Translation', english_word]);
             return { word: english_word, translations: await datastore.get(workKey) };
         });
         Promise.all(promises).then(docs => {
