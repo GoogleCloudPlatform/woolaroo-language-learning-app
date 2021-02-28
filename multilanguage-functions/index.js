@@ -10,7 +10,7 @@ const {google} = require('googleapis');
 ffmpeg.setFfmpegPath(ffmpegPath);
 const visionClient = new vision.v1p3beta1.ImageAnnotatorClient();
 
-const SUGGESTIONS_SPREADSHEET_ID = process.env['SUGGESIONS_SPREADSHEET'];
+const SUGGESTIONS_SPREADSHEET_ID = process.env['SUGGESTIONS_SPREADSHEET'];
 const FEEDBACK_SPREADSHEET_ID = process.env['FEEDBACK_SPREADSHEET'];
 const AUDIO_FOLDER_ID = process.env['AUDIO_FOLDER_ID'];
 
