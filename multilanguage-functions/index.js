@@ -144,8 +144,9 @@ exports.getTranslations = async (req, res) => {
         const target_language = req.body.target_language || '';
         const datastore = new Datastore();
         const promises = english_words.map(async english_word => {
-            const workKey = datastore.key(['Translation', english_word]);
-            return { word: english_word, translations: await datastore.get(workKey) };
+            const wordKey = datastore.key(['Translation', english_word]);
+            const translations = await datastore.get(wordKey);
+            return { word: english_word, translations: translations && translations.length > 0 ? translations[0] : null };
         });
         Promise.all(promises).then(docs => {
             const translations = docs.map(x => createTranslationResponseForApp(x, primary_language, target_language));
