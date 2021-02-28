@@ -3,7 +3,7 @@
   "description": "Cloud Functions for Firebase",
   "scripts": {
     "lint": "eslint .",
-    "start": "npm run shell",
+    "start": "npm run shell"
   },
   "engines": {
     "node": "12"
