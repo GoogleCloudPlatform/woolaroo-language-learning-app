@@ -198,7 +198,7 @@ export const environment = {
             code: 'yug',
             name: 'Yugambeh',
             default: false,
-            sampleWordImageURL: './assets/img/languages/tree-scn.jpg',
+            sampleWordImageURL: './assets/img/languages/tree-yug.jpg',
             sampleWordTranslation: 'tullei',
             nativeSpeakers: '100000',
             organizationURL: 'https://google.com?q=Yugambeh'
@@ -216,7 +216,7 @@ export const environment = {
             code: 'tzm',
             name: 'Tamazight',
             default: false,
-            sampleWordImageURL: './assets/img/languages/tree-be.jpg',
+            sampleWordImageURL: './assets/img/languages/tree-tzm.jpg',
             sampleWordTranslation: 'aseklu',
             nativeSpeakers: '100000',
             organizationURL: 'https://google.com?q=Tamazight'
@@ -225,7 +225,7 @@ export const environment = {
             code: 'rap',
             name: 'Rapa Nui',
             default: false,
-            sampleWordImageURL: './assets/img/languages/tree-zyg.jpg',
+            sampleWordImageURL: './assets/img/languages/tree-rap.jpg',
             sampleWordTranslation: 'tumu',
             nativeSpeakers: '100000'
           },
@@ -233,7 +233,7 @@ export const environment = {
             code: 'ppl',
             name: 'Nawat',
             default: false,
-            sampleWordImageURL: './assets/img/languages/tree-zyg.jpg',
+            sampleWordImageURL: './assets/img/languages/tree-ppl.jpg',
             sampleWordTranslation: 'kwawit',
             nativeSpeakers: '100000'
           },
@@ -241,7 +241,7 @@ export const environment = {
             code: 'mi',
             name: 'Māori',
             default: false,
-            sampleWordImageURL: './assets/img/languages/tree-zyg.jpg',
+            sampleWordImageURL: './assets/img/languages/tree-mi.jpg',
             sampleWordTranslation: 'rākau',
             nativeSpeakers: '100000'
           },
@@ -249,7 +249,7 @@ export const environment = {
             code: 'el-cal',
             name: 'Calabrian Greek',
             default: false,
-            sampleWordImageURL: './assets/img/languages/tree-zyg.jpg',
+            sampleWordImageURL: './assets/img/languages/tree-el-cal.jpg',
             sampleWordTranslation: 'àrburo',
             nativeSpeakers: '100000'
           },
@@ -265,7 +265,7 @@ export const environment = {
             code: 'lou',
             name: 'Louisiana Creole',
             default: false,
-            sampleWordImageURL: './assets/img/languages/tree-scn.jpg',
+            sampleWordImageURL: './assets/img/languages/tree-lou.jpg',
             sampleWordTranslation: 'narb',
             nativeSpeakers: '100000'
           },
