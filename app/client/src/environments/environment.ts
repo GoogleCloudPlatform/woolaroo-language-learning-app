@@ -169,25 +169,41 @@ export const environment = {
         dropShadowDistance: 1,
         dropShadowColor: 'rgba(0, 0, 0, 0.5)',
         foregroundColor: 'white',
+        languages: {
+          font: '30px Product Sans',
+          lineHeight: 25,
+          lineSpacing: 10,
+          marginBottom: 25
+        },
         transliteration: {
-          font: '43px Roboto',
+          font: '43px Product Sans',
           lineHeight: 35,
           lineSpacing: 10,
           marginBottom: 25
         },
         translation: {
-          font: '30px Roboto',
+          font: '30px Product Sans',
           lineHeight: 25,
           lineSpacing: 10,
           marginBottom: 25
         },
         originalWord: {
-          font: '30px Roboto',
+          font: '30px Product Sans',
           lineHeight: 25,
           lineSpacing: 10,
           marginBottom: 85
         },
         line: { width: 1, height: 80, marginBottom: 20 },
+        banner: {
+          backgroundColor: 'white',
+          height: 50,
+          logoY: 8,
+          logoHeight: 20,
+          logoURL: '/assets/img/logo.png',
+          attributionHeight: 20,
+          attributionURL: '/assets/img/google_arts_culture_logo.png',
+          spacing: 0,
+        },
         padding: 20
       }
     },

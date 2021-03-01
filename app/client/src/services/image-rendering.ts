@@ -1,15 +1,28 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { WordTranslation } from './entities/translation';
 import { canvasToBlob } from 'util/image';
+import { I18nService, Language } from '../i18n/i18n.service';
+import { EndangeredLanguage } from './endangered-language';
 
 interface ImageRenderingConfig {
   dropShadowDistance: number;
   dropShadowColor: string;
   foregroundColor: string;
+  languages: ImageRenderingTextConfig;
   transliteration: ImageRenderingTextConfig;
   translation: ImageRenderingTextConfig;
   originalWord: ImageRenderingTextConfig;
   line: { width: number, height: number, marginBottom: number };
+  banner: {
+    backgroundColor: string,
+    height: number,
+    logoY: number,
+    logoHeight: number,
+    logoURL: string,
+    attributionHeight: number,
+    attributionURL: string,
+    spacing: number
+  };
   padding: number;
 }
 
@@ -48,33 +61,29 @@ export class ImageRenderingService {
     return lines;
   }
 
-  constructor(@Inject(IMAGE_RENDERING_CONFIG) private config: ImageRenderingConfig) {
-  }
-
-  async renderImage(imageData: Blob, word: WordTranslation, width: number, height: number): Promise<Blob> {
+  private static async _loadImage(url: string): Promise<HTMLImageElement> {
     return new Promise((resolve, reject) => {
       const image: HTMLImageElement = document.createElement('img');
-      image.onload = () => {
-        this._renderImage(image, word, width, height).then(
-          (b) => {
-            URL.revokeObjectURL(image.src);
-            resolve(b);
-          },
-          (err) => {
-            URL.revokeObjectURL(image.src);
-            reject(err);
-          }
-        );
-      };
-      image.onerror = err => {
-        URL.revokeObjectURL(image.src);
-        reject(err);
-      };
-      image.src = URL.createObjectURL(imageData);
+      image.onload = () => resolve(image);
+      image.onerror = reject;
+      image.src = url;
     });
   }
 
-  private async _renderImage(image: HTMLImageElement, word: WordTranslation, width: number, height: number): Promise<Blob> {
+  constructor(@Inject(IMAGE_RENDERING_CONFIG) private config: ImageRenderingConfig,
+              private i18n: I18nService) {
+  }
+
+  async renderImage(imageData: Blob, word: WordTranslation, sourceLanguage: Language,
+                    endangeredLanguage: EndangeredLanguage, width: number, height: number): Promise<Blob> {
+    const imageURL = URL.createObjectURL(imageData);
+    let image: HTMLImageElement;
+    try {
+      image = await ImageRenderingService._loadImage(imageURL);
+    } catch(ex) {
+      URL.revokeObjectURL(imageURL);
+      throw ex;
+    }
     const canvas: HTMLCanvasElement = document.createElement('canvas');
     canvas.width = width;
     canvas.height = height;
@@ -91,23 +100,53 @@ export class ImageRenderingService {
     const croppedImageDx = (imageWidth - croppedImageWidth) * 0.5;
     const croppedImageDy = (imageHeight - croppedImageHeight) * 0.5;
     context.drawImage(image, croppedImageDx, croppedImageDy, croppedImageWidth, croppedImageHeight, 0, 0, width, height);
+    await this._renderBanner(context, width);
     if (!word) {
       return canvasToBlob(canvas);
     }
     const scale = Math.min(width / window.innerWidth, height / window.innerHeight);
-    const centerX = width * 0.5 / scale;
     context.setTransform(scale, 0, 0, scale, 0, 0);
+    this._renderTranslations(context, word, sourceLanguage, endangeredLanguage, width, height, scale);
+    return canvasToBlob(canvas);
+  }
+
+  private _renderTranslations(context: CanvasRenderingContext2D, word: WordTranslation, sourceLanguage: Language,
+                              endangeredLanguage: EndangeredLanguage, width: number, height: number, scale: number) {
+    const centerX = width * 0.5 / scale;
     let y = height / scale; // start at bottom
     const maxTextWidth = (width - 2 * this.config.padding) / scale;
     y = this._renderText(context, word.original || word.english, this.config.originalWord, centerX, y, maxTextWidth);
-    y = this._renderLine(context, centerX, y);
-    if (word.translation) {
+    if (word.translation && word.translation !== word.transliteration) {
       y = this._renderText(context, word.translation, this.config.translation, centerX, y, maxTextWidth);
     }
     if (word.transliteration) {
-      this._renderText(context, word.transliteration, this.config.transliteration, centerX, y, maxTextWidth);
+      y = this._renderText(context, word.transliteration, this.config.transliteration, centerX, y, maxTextWidth);
     }
-    return canvasToBlob(canvas);
+    y = this._renderLine(context, centerX, y);
+    const languagesText = this.i18n.getTranslation('languageToEndangeredLanguage', {sourceLanguage: sourceLanguage.name, endangeredLanguage: endangeredLanguage.name})
+      || `${sourceLanguage.name} to ${endangeredLanguage.name}`;
+    this._renderText(context, languagesText, this.config.languages, centerX, y, maxTextWidth);
+  }
+
+  private async _renderBanner(context: CanvasRenderingContext2D, width: number) {
+    const bannerConfig = this.config.banner;
+    // draw background
+    context.fillStyle = bannerConfig.backgroundColor;
+    context.fillRect(0, 0, width, bannerConfig.height);
+    // draw logo image
+    const logoImage = await ImageRenderingService._loadImage(bannerConfig.logoURL);
+    let y = bannerConfig.logoY;
+    const logoScale = bannerConfig.logoHeight / logoImage.naturalHeight;
+    const logoWidth = logoImage.naturalWidth * logoScale;
+    const logoX = width * 0.5 - logoWidth * 0.5;
+    context.drawImage(logoImage, logoX, y, logoWidth, bannerConfig.logoHeight);
+    // draw attribution image
+    y += bannerConfig.logoHeight + bannerConfig.spacing;
+    const attributionImage = await ImageRenderingService._loadImage(bannerConfig.attributionURL);
+    const attributionScale = bannerConfig.attributionHeight / attributionImage.naturalHeight;
+    const attributionWidth = attributionImage.naturalWidth * attributionScale;
+    const attributionX = width * 0.5 - attributionWidth * 0.5;
+    context.drawImage(attributionImage, attributionX, y, attributionWidth, bannerConfig.attributionHeight);
   }
 
   private _renderLine(context: CanvasRenderingContext2D, centerX: number, bottomY: number): number {

@@ -171,7 +171,9 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
       console.warn('Background image data not found');
       return;
     }
-    this.imageRenderingService.renderImage(this.backgroundImageData, word,
+    const language = this.i18n.currentLanguage;
+    const endangeredLanguage = this.endangeredLanguageService.currentLanguage;
+    this.imageRenderingService.renderImage(this.backgroundImageData, word, language, endangeredLanguage,
       window.innerWidth * window.devicePixelRatio,
       window.innerHeight * window.devicePixelRatio).then(
       (img) => {
