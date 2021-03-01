@@ -66,6 +66,19 @@ export class WordScrollListComponent implements AfterViewChecked {
     }
   }
 
+  private get minScrollPosition(): number {
+    const scrollContainer = this.hostElement.nativeElement as HTMLElement;
+    const scrollContent = this.scrollContent?.nativeElement;
+    if (!scrollContent || !scrollContainer) {
+      return 0;
+    }
+    const childNodes = scrollContent.getElementsByTagName('li');
+    const firstChild = childNodes[0];
+    const lastChild = childNodes[childNodes.length - 1];
+    const contentWidth = lastChild.offsetLeft + lastChild.offsetWidth - firstChild.offsetLeft;
+    return scrollContainer.clientWidth - contentWidth;
+  }
+
   public get isDragging(): boolean {
     return !!this.dragInfo && (
       Math.abs(this.dragInfo.maxScrollPosition - this.dragInfo.startScrollPosition) > this.config.draggingMinDistance
@@ -368,7 +381,11 @@ export class WordScrollListComponent implements AfterViewChecked {
 
   private updateSnapPosition(lastProperties: {position: number, velocity: number, time: number}, snapWordIndex: number) {
     let velocity = lastProperties.velocity;
-    if (Math.abs(velocity) > this.config.snapMaxSpeed) {
+    if(lastProperties.position < this.minScrollPosition && velocity < 0) {
+      velocity = 0;
+    } else if(lastProperties.position > 0 && velocity > 0) {
+      velocity = 0;
+    } else if (Math.abs(velocity) > this.config.snapMaxSpeed) {
       velocity = Math.sign(velocity) * this.config.snapMaxSpeed;
     }
     const snapPosition = this.getWordSnapPosition(snapWordIndex);

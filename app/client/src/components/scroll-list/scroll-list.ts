@@ -9,7 +9,6 @@ import {
   QueryList,
   TemplateRef, ViewChild
 } from '@angular/core';
-import { first } from 'rxjs/operators';
 
 @Directive({selector: '[appScrollListItem]'})
 export class ScrollListItem {
@@ -83,6 +82,10 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
 
   @Output()
   public currentItemChanged: EventEmitter<number> = new EventEmitter();
+
+  private get minScrollPosition(): number {
+    return this.getScrollContainerWidth() - this.getScrollContentWidth();
+  }
 
   public get isDragging(): boolean {
     return !!this.dragInfo && (
@@ -420,7 +423,11 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
   private updateSnapPosition(lastProperties: {position: number, velocity: number, time: number}, snapItemIndex: number,
                              updateCurrentItem: boolean) {
     let velocity = lastProperties.velocity;
-    if (Math.abs(velocity) > this.config.snapMaxSpeed) {
+    if(lastProperties.position < this.minScrollPosition && velocity < 0) {
+      velocity = 0;
+    } else if(lastProperties.position > 0 && velocity > 0) {
+      velocity = 0;
+    } else if (Math.abs(velocity) > this.config.snapMaxSpeed) {
       velocity = Math.sign(velocity) * this.config.snapMaxSpeed;
     }
     const snapPosition = this.getItemSnapPosition(snapItemIndex);
@@ -470,7 +477,7 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
     if (!this.scrollContent || !this.scrollContent.nativeElement) {
       return 0;
     }
-    const childNodes = this.scrollContent.nativeElement.getElementsByTagName('*');
+    const childNodes = this.scrollContent.nativeElement.getElementsByTagName('li');
     const firstChild = childNodes[0];
     const lastChild = childNodes[childNodes.length - 1];
     return lastChild.offsetLeft + lastChild.offsetWidth - firstChild.offsetLeft;
