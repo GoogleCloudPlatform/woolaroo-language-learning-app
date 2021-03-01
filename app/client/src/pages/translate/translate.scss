@@ -8,6 +8,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
+
+  &:before {
+    content: "";
+    flex: 0 0 auto;
+    height: 40%;
+  }
 }
 
 .background {
@@ -23,9 +29,10 @@
 }
 
 app-translation-selector {
-  max-height: 75%;
+  flex: 1 1 auto;
+  min-height: 270px;
+  max-height: 300px;
   margin-bottom: 20px;
-  margin-top: 50vh;
 }
 
 .current-language {
