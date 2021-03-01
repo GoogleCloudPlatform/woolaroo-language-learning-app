@@ -217,7 +217,7 @@ export const environment = {
             code: 'yug',
             name: 'Yugambeh',
             default: params.endangeredLanguage === 'yum',
-            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-scn.jpg',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-yug.jpg',
             sampleWordTranslation: 'tullei',
             nativeSpeakers: '100000',
             organizationURL: 'https://google.com?q=Yugambeh'
@@ -235,7 +235,7 @@ export const environment = {
             code: 'tzm',
             name: 'Tamazight',
             default: params.endangeredLanguage === 'tzm',
-            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-be.jpg',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-tzm.jpg',
             sampleWordTranslation: 'aseklu',
             nativeSpeakers: '100000',
             organizationURL: 'https://google.com?q=Yugambeh'
@@ -244,7 +244,7 @@ export const environment = {
             code: 'rap',
             name: 'Rapa Nui',
             default: params.endangeredLanguage === 'rap',
-            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-zyg.jpg',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-rap.jpg',
             sampleWordTranslation: 'tumu',
             nativeSpeakers: '100000',
             organizationURL: 'https://google.com?q=Yugambeh'
@@ -253,7 +253,7 @@ export const environment = {
             code: 'ppl',
             name: 'Nawat',
             default: params.endangeredLanguage === 'ppl',
-            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-zyg.jpg',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-ppl.jpg',
             sampleWordTranslation: 'kwawit',
             nativeSpeakers: '100000',
             organizationURL: 'https://google.com?q=Yugambeh'
@@ -262,7 +262,7 @@ export const environment = {
             code: 'mi',
             name: 'Māori',
             default: params.endangeredLanguage === 'mi',
-            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-zyg.jpg',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-mi.jpg',
             sampleWordTranslation: 'rākau',
             nativeSpeakers: '100000',
             organizationURL: 'https://google.com?q=Yugambeh'
@@ -271,7 +271,7 @@ export const environment = {
             code: 'el-cal',
             name: 'Calabrian Greek',
             default: params.endangeredLanguage === 'el-cal',
-            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-zyg.jpg',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-el-cal.jpg',
             sampleWordTranslation: 'àrburo',
             nativeSpeakers: '100000',
             organizationURL: 'https://google.com?q=Yugambeh'
@@ -289,7 +289,7 @@ export const environment = {
             code: 'lou',
             name: 'Louisiana Creole',
             default: params.endangeredLanguage === 'lou',
-            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-scn.jpg',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-lou.jpg',
             sampleWordTranslation: 'narb',
             nativeSpeakers: '100000',
             organizationURL: 'https://google.com?q=Yugambeh'
