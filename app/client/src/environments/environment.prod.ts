@@ -124,7 +124,7 @@ export const environment = {
       snapDecelerationDistance: 200,
       snapStickyDistance: 30,
       targetPositionRatio: 0.2,
-      draggingMinDistance: 5
+      draggingMinDistance: 10
     },
     translationSelector: {
       scrollList: {
@@ -135,7 +135,7 @@ export const environment = {
         snapDecelerationDistance: 200,
         snapStickyDistance: 30,
         targetPositionRatio: 0.2,
-        draggingMinDistance: 5
+        draggingMinDistance: 10
       },
       selectionLine: {
         animationInterval: 25,

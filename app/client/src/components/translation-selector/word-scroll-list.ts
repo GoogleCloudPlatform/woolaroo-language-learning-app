@@ -192,8 +192,6 @@ export class WordScrollListComponent implements AfterViewChecked {
 
   @HostListener('touchstart', ['$event'])
   onTouchStart(ev: TouchEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
     window.document.body.addEventListener('touchmove', this.onTouchMove);
     window.document.body.addEventListener('touchend', this.onTouchEnd);
     const touch = ev.touches[0];

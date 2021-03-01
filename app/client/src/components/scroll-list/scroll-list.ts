@@ -131,8 +131,6 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
 
   @HostListener('touchstart', ['$event'])
   onTouchStart(ev: TouchEvent) {
-    ev.preventDefault();
-    ev.stopPropagation();
     window.document.body.addEventListener('touchmove', this.onTouchMove);
     window.document.body.addEventListener('touchend', this.onTouchEnd);
     const touch = ev.touches[0];
@@ -149,6 +147,7 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
   }
 
   onTouchEnd = () => {
+    console.log('touch end');
     window.document.body.removeEventListener('touchmove', this.onTouchMove);
     window.document.body.removeEventListener('touchend', this.onTouchEnd);
     if(this.isDragging) {
