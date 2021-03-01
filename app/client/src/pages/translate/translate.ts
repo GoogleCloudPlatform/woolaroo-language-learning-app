@@ -183,7 +183,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
           translation: selectedWord.translation,
           language: this.endangeredLanguageService.currentLanguage.name}) || undefined : undefined;
         const shareText = this.i18n.getTranslation('shareText') || undefined;
-        const files: File[] = [new File([img], `woolaroo-translation-${word.original}.jpg`)];
+        const files: File[] = [new File([img], `woolaroo-translation-${word.original}.jpg`, { type: img.type })];
         share({text: shareText, title: shareTitle, files: files}).then(
           () => {},
           ex => {
