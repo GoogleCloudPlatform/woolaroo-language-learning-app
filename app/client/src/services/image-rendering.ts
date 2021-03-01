@@ -100,11 +100,11 @@ export class ImageRenderingService {
     const croppedImageDx = (imageWidth - croppedImageWidth) * 0.5;
     const croppedImageDy = (imageHeight - croppedImageHeight) * 0.5;
     context.drawImage(image, croppedImageDx, croppedImageDy, croppedImageWidth, croppedImageHeight, 0, 0, width, height);
-    await this._renderBanner(context, width);
+    const scale = Math.min(width / window.innerWidth, height / window.innerHeight);
+    await this._renderBanner(context, width, scale);
     if (!word) {
       return canvasToBlob(canvas);
     }
-    const scale = Math.min(width / window.innerWidth, height / window.innerHeight);
     context.setTransform(scale, 0, 0, scale, 0, 0);
     this._renderTranslations(context, word, sourceLanguage, endangeredLanguage, width, height, scale);
     return canvasToBlob(canvas);
@@ -128,25 +128,27 @@ export class ImageRenderingService {
     this._renderText(context, languagesText, this.config.languages, centerX, y, maxTextWidth);
   }
 
-  private async _renderBanner(context: CanvasRenderingContext2D, width: number) {
+  private async _renderBanner(context: CanvasRenderingContext2D, width: number, scale: number) {
     const bannerConfig = this.config.banner;
     // draw background
     context.fillStyle = bannerConfig.backgroundColor;
-    context.fillRect(0, 0, width, bannerConfig.height);
+    context.fillRect(0, 0, width, bannerConfig.height * scale);
     // draw logo image
     const logoImage = await ImageRenderingService._loadImage(bannerConfig.logoURL);
-    let y = bannerConfig.logoY;
-    const logoScale = bannerConfig.logoHeight / logoImage.naturalHeight;
+    let y = bannerConfig.logoY * scale;
+    const logoHeight = bannerConfig.logoHeight * scale;
+    const logoScale = logoHeight / logoImage.naturalHeight;
     const logoWidth = logoImage.naturalWidth * logoScale;
     const logoX = width * 0.5 - logoWidth * 0.5;
-    context.drawImage(logoImage, logoX, y, logoWidth, bannerConfig.logoHeight);
+    context.drawImage(logoImage, logoX, y, logoWidth, logoHeight);
     // draw attribution image
-    y += bannerConfig.logoHeight + bannerConfig.spacing;
+    y += logoHeight + bannerConfig.spacing * scale;
     const attributionImage = await ImageRenderingService._loadImage(bannerConfig.attributionURL);
-    const attributionScale = bannerConfig.attributionHeight / attributionImage.naturalHeight;
+    const attributionHeight = bannerConfig.attributionHeight * scale;
+    const attributionScale = attributionHeight / attributionImage.naturalHeight;
     const attributionWidth = attributionImage.naturalWidth * attributionScale;
     const attributionX = width * 0.5 - attributionWidth * 0.5;
-    context.drawImage(attributionImage, attributionX, y, attributionWidth, bannerConfig.attributionHeight);
+    context.drawImage(attributionImage, attributionX, y, attributionWidth, attributionHeight);
   }
 
   private _renderLine(context: CanvasRenderingContext2D, centerX: number, bottomY: number): number {
