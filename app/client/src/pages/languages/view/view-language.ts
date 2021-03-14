@@ -10,8 +10,8 @@ import { AppRoutes } from 'app/routes';
   styleUrls: ['./view-language.scss']
 })
 export class ViewLanguagePageComponent {
-  public get endangeredLanguages():EndangeredLanguage[] { return this.endangeredLanguageService.languages; }
-  public get otherLanguages():EndangeredLanguage[] {
+  public get endangeredLanguages(): EndangeredLanguage[] { return this.endangeredLanguageService.languages; }
+  public get otherLanguages(): EndangeredLanguage[] {
     const currentLang = this.language;
     if(!currentLang) {
       return this.endangeredLanguageService.languages;
@@ -34,7 +34,10 @@ export class ViewLanguagePageComponent {
   }
 
   onExploreLanguageClick() {
-    window.open(this.language!.organizationURL);
+    const lang = this.language;
+    if (lang) {
+      window.open(lang.organizationURL);
+    }
   }
 
   onLanguageClick(code: string) {
@@ -42,7 +45,7 @@ export class ViewLanguagePageComponent {
     this.router.navigate([AppRoutes.ListLanguages, code]);
   }
 
-  onBackClick(ev:MouseEvent) {
+  onBackClick(ev: MouseEvent) {
     ev.stopPropagation();
     history.back();
   }

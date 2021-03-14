@@ -7,7 +7,7 @@
   </div>
   <div class="title">
     <h1>{{ language ? language.name : '' }}</h1>
-    <button class="explore" [innerHTML]="'Explore this language'|translate:'exploreThisLanguage'" (click)="onExploreLanguageClick()" *ngIf="language.organizationURL"></button>
+    <button class="explore" (click)="onExploreLanguageClick()" *ngIf="language.organizationURL">{{language.organizationName}}</button>
   </div>
   <div class="details">
     <div class="field">

@@ -217,7 +217,8 @@ export const environment = {
             sampleWordImageURL: './assets/img/languages/tree-yug.jpg',
             sampleWordTranslation: 'tullei',
             nativeSpeakers: '100000',
-            organizationURL: 'https://google.com?q=Yugambeh'
+            organizationURL: 'https://www.yugambeh.com/',
+            organizationName: 'Yugambeh Museum'
           },
           {
             code: 'yi',
@@ -226,7 +227,8 @@ export const environment = {
             sampleWordImageURL: './assets/img/languages/tree-yi.jpg',
             sampleWordTranslation: 'דער בױםn',
             nativeSpeakers: '100000',
-            organizationURL: 'https://google.com?q=Yiddish'
+            organizationURL: 'https://nytf.org/',
+            organizationName: 'National Yiddish Theatre'
           },
           {
             code: 'tzm',
@@ -235,7 +237,8 @@ export const environment = {
             sampleWordImageURL: './assets/img/languages/tree-tzm.jpg',
             sampleWordTranslation: 'aseklu',
             nativeSpeakers: '100000',
-            organizationURL: 'https://google.com?q=Tamazight'
+            organizationURL: 'https://www.congres-mondial-amazigh.org/',
+            organizationName: 'Congres Mondial Amazigh'
           },
           {
             code: 'rap',
@@ -243,7 +246,9 @@ export const environment = {
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-rap.jpg',
             sampleWordTranslation: 'tumu',
-            nativeSpeakers: '100000'
+            nativeSpeakers: '100000',
+            organizationURL: null,
+            organizationName: 'Council of the Elders of Rapa Nui'
           },
           {
             code: 'ppl',
@@ -251,7 +256,9 @@ export const environment = {
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-ppl.jpg',
             sampleWordTranslation: 'kwawit',
-            nativeSpeakers: '100000'
+            nativeSpeakers: '100000',
+            organizationURL: null,
+            organizationName: null
           },
           {
             code: 'mi',
@@ -259,7 +266,9 @@ export const environment = {
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-mi.jpg',
             sampleWordTranslation: 'rākau',
-            nativeSpeakers: '100000'
+            nativeSpeakers: '100000',
+            organizationURL: 'https://temurumara.org.nz/',
+            organizationName: 'Te Murumāra Foundation'
           },
           {
             code: 'el-cal',
@@ -267,7 +276,9 @@ export const environment = {
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-el-cal.jpg',
             sampleWordTranslation: 'àrburo',
-            nativeSpeakers: '100000'
+            nativeSpeakers: '100000',
+            organizationURL: 'https://www.jalotuvua.com/',
+            organizationName: 'Associazione Ellenofona Jalò tu Vua'
           },
           {
             code: 'scn',
@@ -275,7 +286,9 @@ export const environment = {
             default: true,
             sampleWordImageURL: './assets/img/languages/tree-scn.jpg',
             sampleWordTranslation: 'àrbulu',
-            nativeSpeakers: '100000'
+            nativeSpeakers: '100000',
+            organizationURL: 'https://cademiasiciliana.org/',
+            organizationName: 'Cademia Siciliana'
           },
           {
             code: 'lou',
@@ -283,7 +296,9 @@ export const environment = {
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-lou.jpg',
             sampleWordTranslation: 'narb',
-            nativeSpeakers: '100000'
+            nativeSpeakers: '100000',
+            organizationURL: null,
+            organizationName: null
           },
           {
             code: 'zyg',
@@ -291,7 +306,9 @@ export const environment = {
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-zyg.jpg',
             sampleWordTranslation: 'narb',
-            nativeSpeakers: '100000'
+            nativeSpeakers: '100000',
+            organizationURL: null,
+            organizationName: 'Museum of Ethnic Cultures at Minzu University'
           }
         ]
       }
