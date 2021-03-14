@@ -81,7 +81,7 @@ export const environment = {
   endangeredLanguage: params.endangeredLanguage,
   pages: {
     splash: {
-      logosDuration: 4000,
+      logosDuration: 4500,
       videoMaxStartTime: 3000,
       maxLogosDelay: 3000,
       showLogosVideoPosition: 0.5,

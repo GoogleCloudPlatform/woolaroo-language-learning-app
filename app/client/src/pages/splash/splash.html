@@ -2,11 +2,21 @@
        [class.hidden]="!videoStarted || videoComplete" oncanplay="this.play()" onloadedmetadata="this.muted=true">
   <source [src]="'assets/videos/splash.mp4' | assetUrl" type="video/mp4" />
 </video>
-<app-animation class="logo" #logoAnimation [class.hidden]="!logosVisible" [autoplay]="false"
-               [sourcePath]="'assets/animations/logo/data.json' | assetUrl"></app-animation>
-<div class="partner-logo" [class.hidden]="!logosVisible" *ngIf="partnerLogoUrl">
-  <img [src]="partnerLogoUrl | assetUrl" alt="Sponsor logo" />
+<div class="logos">
+  <app-animation class="app-logo" #logoAnimation [class.hidden]="!logosVisible" [autoplay]="false"
+                 [sourcePath]="'assets/animations/logo/data.json' | assetUrl"></app-animation>
+  <div class="arts-culture-logo" [class.hidden]="!logosVisible">
+    <img [src]="'assets/img/google_arts_culture_logo.png' | assetUrl" alt="" />
+  </div>
 </div>
-<div class="arts-culture-logo" [class.hidden]="!logosVisible">
-  <img [src]="'assets/img/google_arts_culture_logo.png' | assetUrl" alt="" />
-</div>
+<ul class="credits" [class.hidden]="!logosVisible">
+  <li>Associazione Ellenofona Jalò tu Vua</li>
+  <li>Cademia Siciliana</li>
+  <li>Congres Mondial Amazigh</li>
+  <li>Council of the Elders of Rapa Nui</li>
+  <li>Language Landscape</li>
+  <li>Museum of Ethnic Cultures at Minzu University</li>
+  <li>National Yiddish Theatre</li>
+  <li>Te Murumāra Foundation</li>
+  <li>Yugambeh Museum</li>
+</ul>

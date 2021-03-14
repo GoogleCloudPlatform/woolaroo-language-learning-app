@@ -24,7 +24,6 @@ export const SPLASH_PAGE_CONFIG = new InjectionToken<SplashPageConfig>('Splash p
 })
 export class SplashPageComponent implements AfterViewInit, OnDestroy {
   private timeout: any = null;
-  public partnerLogoUrl?: string;
   public videoStarted = false;
   public videoComplete = false;
   public logosVisible = false;
@@ -35,7 +34,6 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
                private router: Router,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
                @Inject(PROFILE_SERVICE) private profileService: IProfileService) {
-    this.partnerLogoUrl = config.partnerLogoUrl;
   }
 
   ngAfterViewInit() {

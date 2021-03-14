@@ -15,50 +15,59 @@
   }
 }
 
-video {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: -1;
-}
-
-app-logo {
-  width: 75%;
-  margin-bottom: 180px;
-}
-
-.partner-logo {
-  width: 65%;
-
-  img {
-    display: block;
-    width: 100%;
-  }
-}
-
-.arts-culture-logo {
-  position: absolute;
-  bottom: 20px;
-  width: 50%;
-  left: 50%;
-  transform: translateX(-50%);
-
-  img {
-    display: block;
-    width: 100%;
-  }
-}
-
 video,
-.logo,
-.partner-logo,
-.arts-culture-logo {
+.app-logo,
+.arts-culture-logo,
+.credits {
   opacity: 1;
   transition: opacity 0.5s ease-in-out;
 
   &.hidden {
     opacity: 0;
   }
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+}
+
+.logos {
+  width: 75%;
+  position: relative;
+
+  .arts-culture-logo {
+    width: 70%;
+    position: absolute;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    transition-delay: 1.5s;
+
+    img {
+      display: block;
+      width: 100%;
+    }
+  }
+}
+
+.credits {
+  margin: 0;
+  padding: 0 20px;
+  list-style-type: none;
+  transition-delay: 2s;
+  text-align: center;
+  position: absolute;
+  bottom: 40px;
+
+  li {
+    margin: 0;
+    padding: 0;
+  }
+
 }
