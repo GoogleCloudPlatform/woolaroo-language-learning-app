@@ -31,30 +31,29 @@
 app-translation-selector {
   flex: 1 1 auto;
   min-height: 270px;
-  max-height: 300px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
-.current-language {
-  flex: 1 1 auto;
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  color: mat-contrast($app-inverted, 500);
-  font-size: 20px;
-}
-
+.current-language,
 .change-language {
   @include text-button;
   margin-bottom: 20px;
   color: mat-contrast($app-inverted, 500);
   font-size: 20px;
 
-  app-icon {
-    margin-left: 10px;
+  span {
     vertical-align: middle;
   }
+
+  app-icon {
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+}
+
+.current-language app-icon {
+  width: 30px;
+  height: 30px;
 }
 
 :host-context([dir=rtl]) {

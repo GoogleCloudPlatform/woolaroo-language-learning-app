@@ -146,7 +146,12 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
   }
 
   onSubmitFeedbackClick() {
+    this.router.createUrlTree([], {})
     this.router.navigateByUrl(AppRoutes.Feedback, { state: { word: this.selectedWord }});
+  }
+
+  onViewLanguageClick() {
+    this.router.navigate([AppRoutes.ListLanguages, this.endangeredLanguageService.currentLanguage.code ]);
   }
 
   onSwitchLanguageClick() {
