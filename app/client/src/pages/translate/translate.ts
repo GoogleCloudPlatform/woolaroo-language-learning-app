@@ -183,11 +183,11 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
       window.innerHeight * window.devicePixelRatio).then(
       (img) => {
         const selectedWord = this.selectedWord;
-        const shareTitle = selectedWord ? this.i18n.getTranslation('shareTitle', {
+        const shareTitle = this.i18n.getTranslation('shareTitle' ) || undefined;
+        const shareText = selectedWord ? this.i18n.getTranslation('shareText', {
           original: selectedWord.original || selectedWord.english,
           translation: selectedWord.translation,
           language: this.endangeredLanguageService.currentLanguage.name}) || undefined : undefined;
-        const shareText = this.i18n.getTranslation('shareText') || undefined;
         const files: File[] = [new File([img], `woolaroo-translation-${word.original}.jpg`, { type: img.type })];
         share({text: shareText, title: shareTitle, files: files}).then(
           () => {},
