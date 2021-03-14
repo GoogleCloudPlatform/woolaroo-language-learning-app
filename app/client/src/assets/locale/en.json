@@ -1,10 +1,10 @@
 {
-  "intro1": "Woolaroo provides a new way to explore endangered indigenous languages via your camera.",
+  "intro1": "Woolaroo provides a new way to explore indigenous languages via your camera.",
   "intro2": "Powered by machine learning, it recognises objects from your camera or camera roll, and translates them in real time.",
   "getStarted": "Let’s get started",
   "next": "Next",
   "skip": "Skip",
-  "introFeedback": "As smart as advanced machine learning is, Woolaroo might get some objects wrong so you can help by giving feedback.",
+  "introFeedback": "As smart as advanced machine learning is, <b>this educational experiment</b> might get some objects wrong so you can help by giving feedback.",
   "termsAndPrivacyTitle": "Terms &amp; Privacy",
   "introTermsAndPrivacy": "By using Woolaroo you are accepting the <a href=\"${termsUrl}\">Terms and Conditions</a> and <a href=\"${termsUrl}\">Privacy Policy</a>.",
   "accept": "Accept",
