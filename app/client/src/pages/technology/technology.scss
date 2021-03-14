@@ -7,12 +7,12 @@
 .content {
   padding-top: 63px;
 
-  .intro {
-    margin-bottom: 38px;
-  }
-
-  .instructions {
+  .mat-body-1 {
     letter-spacing: -0.025rem;
     line-height: 2.15rem;
+
+    &:first-child {
+      margin-top: 20px;
+    }
   }
 }
