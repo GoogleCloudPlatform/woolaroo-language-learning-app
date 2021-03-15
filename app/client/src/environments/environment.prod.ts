@@ -216,7 +216,7 @@ export const environment = {
           {
             code: 'yug',
             name: 'Yugambeh',
-            default: params.endangeredLanguage === 'yum',
+            default: params.endangeredLanguage === 'yug',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-yug.jpg',
             sampleWordTranslation: 'tullei',
             nativeSpeakers: '100000',
@@ -308,7 +308,7 @@ export const environment = {
             name: 'Yang Zhuang',
             default: params.endangeredLanguage === 'zyg',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-zyg.jpg',
-            sampleWordTranslation: 'narb',
+            sampleWordTranslation: 'ko máy',
             nativeSpeakers: '100000',
             organizationURL: null,
             organizationName: 'Museum of Ethnic Cultures at Minzu University'
