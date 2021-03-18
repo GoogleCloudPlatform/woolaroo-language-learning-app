@@ -7,6 +7,8 @@ import { TranslationsPageWithRouter } from './translations/TranslationsPage';
 import ContributionsPage from './contributions/ContributionsPage';
 import ThemePage from './theme/ThemePage';
 import AuthUtils from './utils/AuthUtils';
+import ApiUtils from "../utils/ApiUtils";
+import AuthUtils from "../utils/AuthUtils";
 import SharingPage from './sharing/SharingPage';
 import ManagementPage from './management/ManagementPage';
 import Header from './header/Header';
@@ -56,6 +58,7 @@ class App extends React.Component {
   
 
   componentDidMount() {
+    this.setFirstUserAsAdmin_();
     this.authUtils_.getFirebaseAuth().onAuthStateChanged(async (user) => {
       if (!user) {
         this.setState({email: null, authInitializing: false});
@@ -89,6 +92,14 @@ class App extends React.Component {
         mainApp.setState({newuser: true, newuseremail:newuseremail});
       }
     });
+  }
+  
+  setFirstUserAsAdmin_() {
+    try {
+      fetch(`${ApiUtils.origin}${ApiUtils.path}setFirstUserAsAdmin`);
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   async logIn_() {
