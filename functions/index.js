@@ -595,6 +595,18 @@ exports.getUsers = functions.https.onRequest(async (req, res) => {
 
 // Auth Methods
 
+exports.setFirstUserAsAdmin = functions.https.onRequest(async (req, res) => {
+  return cors(req, res, async () => {
+    try {
+      await setFirstUserAsAdmin();
+      res.status(200).send("Admins set.");
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
+});
+
 exports.onUserCreated = functions.auth.user().onCreate(async (user) => {
   await setFirstUserAsAdmin();
 });
