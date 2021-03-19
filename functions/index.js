@@ -607,10 +607,6 @@ exports.setFirstUserAsAdmin = functions.https.onRequest(async (req, res) => {
 
 });
 
-exports.onUserCreated = functions.auth.user().onCreate(async (user) => {
-  await setFirstUserAsAdmin();
-});
-
 exports.createTrigger = functions.https.onRequest(async (req, res) => {
   return cors(req, res, async () => {
     console.log("Reading settings");
