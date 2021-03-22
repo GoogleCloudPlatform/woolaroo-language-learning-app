@@ -28,8 +28,8 @@ firebase logout || true
 CURRENT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "${CURRENT_PATH}/./config.sh"
 
-if [ -d "${CURRENT_PATH}/barnard-language-learning-app" ];
-  then rm -Rf ${CURRENT_PATH}/barnard-language-learning-app; fi
+if [ -d "${CURRENT_PATH}/woolaroo-language-learning-app" ];
+  then rm -Rf ${CURRENT_PATH}/woolaroo-language-learning-app; fi
 
 gcloud auth login
 gcloud components update
@@ -87,13 +87,15 @@ curl --request POST -H "Authorization: Bearer $BEARER_ACCESS_TOKEN" \
   --data '{"locationId":"us-central"}'
 
 read -p "Visit \
-  https://firebase.corp.google.com/u/0/project/${PROJECT_ID}/database/firestore/indexes \
-  to create the database. Choose start in test mode. \
+  https://console.cloud.google.com/datastore/entities/query/kind?project=${PROJECT_ID} \
+  and click on SWITCH TO NATIVE MODE. Wait until done. \
   Then come back here and press [Enter] to continue ..."
+
+sleep 90
 
 BUCKET_NAME=${PROJECT_ID}.appspot.com
 git clone $GIT_REPOSITORY
-cd ${CURRENT_PATH}/barnard-language-learning-app
+cd ${CURRENT_PATH}/woolaroo-language-learning-app
 
 firebase use ${PROJECT_ID}
 sed -i "" -e "s/barnard-project/${PROJECT_ID}/g" .firebaserc
@@ -140,7 +142,7 @@ echo $CONFIG
 PROJECT_NUMBER="$(echo $CONFIG | jq '.messagingSenderId' | sed 's/\"//g')"
 echo $PROJECT_NUMBER
 
-cd ${CURRENT_PATH}/barnard-language-learning-app
+cd ${CURRENT_PATH}/woolaroo-language-learning-app
 
 sed -i "" -e "s/\"_CONFIG_PLACEHOLDER_\"/$(echo $CONFIG | \
   sed -e 's/\\/\\\\/g; s/\//\\\//g; s/&/\\\&/g')/g" ./src/config.json
@@ -165,16 +167,5 @@ read -p "Enable Google and email/password sign-in by visiting \
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
  --member serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com \
  --role roles/editor
-
-# Link project to mirror github
-read -p "Visit https://console.cloud.google.com/cloud-build/triggers?project=${PROJECT_ID} \
-  and connect repository choosing Github mirrored.  \
- Then come back here and press [Enter] to continue ..."
-
-gcloud beta builds triggers create cloud-source-repositories \
- --repo="github_googlecloudplatform_barnard-language-learning-app" \
- --branch-pattern="^master$" \
- --build-config="app/cloudbuild.yaml" \
- --substitutions _API_URL=https://us-central1-${PROJECT_ID}.cloudfunctions.net,_BUCKET_LOCATION=us,_BUCKET_NAME=${PROJECT_ID}-dev5,_GOOGLE_API_KEY=placeholder,_GOOGLE_REGION=en,_ENDANGERED_LANGUAGE=${LANGUAGE_NAME},_LANGUAGE=en,_TERRAFORM_BUCKET_NAME=${PROJECT_ID}-terraform-dev5,_THEME=red
 
 echo "CREATION COMPLETE!"
