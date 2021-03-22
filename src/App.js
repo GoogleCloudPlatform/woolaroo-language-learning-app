@@ -7,7 +7,7 @@ import { TranslationsPageWithRouter } from './translations/TranslationsPage';
 import ContributionsPage from './contributions/ContributionsPage';
 import ThemePage from './theme/ThemePage';
 import AuthUtils from './utils/AuthUtils';
-import ApiUtils from "../utils/ApiUtils";
+import ApiUtils from "./utils/ApiUtils";
 import SharingPage from './sharing/SharingPage';
 import ManagementPage from './management/ManagementPage';
 import Header from './header/Header';
