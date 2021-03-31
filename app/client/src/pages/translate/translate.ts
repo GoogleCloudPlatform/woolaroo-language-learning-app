@@ -13,6 +13,7 @@ import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
 import { I18nService } from '../../i18n/i18n.service';
 import { EndangeredLanguageService } from '../../services/endangered-language';
 import { share } from '../../util/share';
+import { NotSupportedError } from '../../util/errors';
 
 interface TranslatePageConfig {
   debugImageUrl?: string;
@@ -193,10 +194,12 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
           () => {},
           ex => {
             console.warn('Error sharing image', ex);
-            try {
-              downloadFile(img, `woolaroo-translation-${word.original}.jpg`);
-            } catch (err) {
-              console.warn('Error downloading image', err);
+            if(ex instanceof NotSupportedError) {
+              try {
+                downloadFile(img, `woolaroo-translation-${word.original}.jpg`);
+              } catch (err) {
+                console.warn('Error downloading image', err);
+              }
             }
           }
         );
