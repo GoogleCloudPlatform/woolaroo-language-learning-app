@@ -28,6 +28,7 @@ export const TRANSLATE_PAGE_CONFIG = new InjectionToken<TranslatePageConfig>('Tr
   styleUrls: ['./translate.scss']
 })
 export class TranslatePageComponent implements OnInit, OnDestroy {
+  private _sharedImage: Blob|null = null;
   public backgroundImageData: Blob|null = null;
   public backgroundImageURL: string|null = null;
   public selectedWord: WordTranslation|null = null;
@@ -120,6 +121,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
   setImageData(image: Blob) {
     this.backgroundImageData = image;
     this.backgroundImageURL = URL.createObjectURL(image);
+    this.renderShareImage();
   }
 
   loadTranslations(words: string[], loadingPopUp?: MatDialogRef<any>) {
@@ -163,6 +165,25 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
     history.back();
   }
 
+  renderShareImage() {
+    if (!this.backgroundImageData || !this.selectedWord) {
+      return;
+    }
+    const language = this.i18n.currentLanguage;
+    const endangeredLanguage = this.endangeredLanguageService.currentLanguage;
+    this.imageRenderingService.renderImage(this.backgroundImageData, this.selectedWord, language, endangeredLanguage,
+      window.innerWidth * window.devicePixelRatio,
+      window.innerHeight * window.devicePixelRatio).then(
+      (img) => {
+        this._sharedImage = img;
+      },
+      (err) => {
+        console.warn('Error rendering image', err);
+        this._sharedImage = null;
+      }
+    );
+  }
+
   onSelectedWordChanged(ev: {index: number, word: WordTranslation|null}) {
     if(ev.word) {
       this.selectedWord = ev.word;
@@ -170,42 +191,33 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
     const state = history.state;
     state.selectedWordIndex = ev.index;
     history.replaceState(state, '');
+    this.renderShareImage();
   }
 
   onWordShared(word: WordTranslation) {
-    if (!this.backgroundImageData) {
-      console.warn('Background image data not found');
+    const img = this._sharedImage;
+    if (!img) {
+      console.warn('Shared image data not found');
       return;
     }
-    const language = this.i18n.currentLanguage;
-    const endangeredLanguage = this.endangeredLanguageService.currentLanguage;
-    this.imageRenderingService.renderImage(this.backgroundImageData, word, language, endangeredLanguage,
-      window.innerWidth * window.devicePixelRatio,
-      window.innerHeight * window.devicePixelRatio).then(
-      (img) => {
-        const selectedWord = this.selectedWord;
-        const shareTitle = this.i18n.getTranslation('shareTitle' ) || undefined;
-        const shareText = selectedWord ? this.i18n.getTranslation('shareText', {
-          original: selectedWord.original || selectedWord.english,
-          translation: selectedWord.translation,
-          language: this.endangeredLanguageService.currentLanguage.name}) || undefined : undefined;
-        const files: File[] = [new File([img], `woolaroo-translation-${word.original}.jpg`, { type: img.type })];
-        share({text: shareText, title: shareTitle, files: files}).then(
-          () => {},
-          ex => {
-            console.warn('Error sharing image', ex);
-            if(ex instanceof NotSupportedError) {
-              try {
-                downloadFile(img, `woolaroo-translation-${word.original}.jpg`);
-              } catch (err) {
-                console.warn('Error downloading image', err);
-              }
-            }
+    const selectedWord = this.selectedWord;
+    const shareTitle = this.i18n.getTranslation('shareTitle' ) || undefined;
+    const shareText = selectedWord ? this.i18n.getTranslation('shareText', {
+      original: selectedWord.original || selectedWord.english,
+      translation: selectedWord.translation,
+      language: this.endangeredLanguageService.currentLanguage.name}) || undefined : undefined;
+    const files: File[] = [new File([img], `woolaroo-translation-${word.original}.jpg`, { type: img.type })];
+    share({text: shareText, title: shareTitle, files: files}).then(
+      () => {},
+      ex => {
+        console.warn('Error sharing image', ex);
+        if(ex instanceof NotSupportedError) {
+          try {
+            downloadFile(img, `woolaroo-translation-${word.original}.jpg`);
+          } catch (err) {
+            console.warn('Error downloading image', err);
           }
-        );
-      },
-      (err) => {
-        console.warn('Error rendering image', err);
+        }
       }
     );
   }
