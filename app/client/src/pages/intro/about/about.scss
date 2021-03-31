@@ -4,76 +4,60 @@
 
 :host {
   @include centered-page;
+  justify-content: space-between;
+  padding: 0 20px;
 
+  &:after,
   &:before {
-    flex-basis: 30px;
-  }
-
-  &:after {
-    flex-basis: 30px;
+    display: none;
   }
 
   app-logo {
-    height: 22px;
-    margin-bottom: 50px;
+    height: 60px;
+    margin: 20px 0 20px 0;
   }
 
-  app-scroll-list ::ng-deep {
+  .intro {
     margin-bottom: 40px;
     width: 100%;
+    background-color: mat-color($app-accent);
+    color: mat-contrast($app-accent, 800);
     flex: 0 0 auto;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    max-width: 307px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
     p {
       text-align: center;
-      padding: 15px 15px;
-      box-sizing: border-box;
-      border-radius: 8px;
-      background-color: mat-color($app-accent);
-      color: mat-contrast($app-accent, 800);
-      font-size: 24px;
-      line-height: 140.4%;
-      max-width: 307px;
-      width: 100%;
-      min-height: 293px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      font-size: 22px;
+      line-height: 120%;
       letter-spacing: -0.02em;
-      margin: 0 -5px;
-    }
+      margin-bottom: 30px;
 
-    li {
-      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-
-      &:not(.current) {
-        opacity: 0.5;
-        transform: scale(0.8, 0.8);
-      }
-
-      &:nth-child(n + 2) p {
-        background-color: mat-color($app-secondary);
+      &:last-child {
+        margin-bottom: 0;
       }
     }
-  }
-
-  app-pagination-indicator {
-    margin-bottom: 60px;
-  }
-
-  .feedback {
-    font-size: 16px;
-    line-height: 140.4%;
-    text-align: center;
-    max-width: 300px;
-    margin: 0 auto 50px auto;
-    padding: 0 20px;
-    color: #767777;
   }
 
   button.next {
-    max-width: 320px;
+    max-width: 300px;
     width: 100%;
-    margin: 0 30px 27px 30px;
+    margin-bottom: 27px;
+  }
+
+  .feedback {
+    font-size: 14px;
+    line-height: 140.4%;
+    text-align: center;
+    max-width: 300px;
+    margin: 0 auto 30px auto;
+    padding: 0 20px;
+    color: #767777;
   }
 }
