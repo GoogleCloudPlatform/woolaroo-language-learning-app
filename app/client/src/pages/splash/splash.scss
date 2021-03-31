@@ -38,22 +38,10 @@ video {
 }
 
 .logos {
-  width: 75%;
+  width: 300px;
+  max-width: 100%;
+  padding: 0 20px;
   position: relative;
-
-  .arts-culture-logo {
-    width: 70%;
-    position: absolute;
-    bottom: 15%;
-    left: 50%;
-    transform: translateX(-50%);
-    transition-delay: 1.5s;
-
-    img {
-      display: block;
-      width: 100%;
-    }
-  }
 }
 
 .credits {
@@ -68,6 +56,13 @@ video {
   li {
     margin: 0;
     padding: 0;
+
+    &.arts-culture-logo {
+      img {
+        width: 250px;
+        max-width: 100%;
+      }
+    }
   }
 
 }

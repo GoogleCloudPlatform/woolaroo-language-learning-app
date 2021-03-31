@@ -5,11 +5,9 @@
 <div class="logos">
   <app-animation class="app-logo" #logoAnimation [class.hidden]="!logosVisible" [autoplay]="false"
                  [sourcePath]="'assets/animations/logo/data.json' | assetUrl"></app-animation>
-  <div class="arts-culture-logo" [class.hidden]="!logosVisible">
-    <img [src]="'assets/img/google_arts_culture_logo.png' | assetUrl" alt="" />
-  </div>
 </div>
 <ul class="credits" [class.hidden]="!logosVisible">
+  <li class="arts-culture-logo"><img [src]="'assets/img/google_arts_culture_logo.png' | assetUrl" alt="" /></li>
   <li>Associazione Ellenofona Jalò tu Vua</li>
   <li>Cademia Siciliana</li>
   <li>Congres Mondial Amazigh</li>
