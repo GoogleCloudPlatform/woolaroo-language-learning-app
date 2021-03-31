@@ -9,6 +9,10 @@
 img.main {
   flex: 1 1 auto;
   height: 45%;
+
+  &.no-attribution {
+    height: 100%;
+  }
 }
 
 img.attribution {
