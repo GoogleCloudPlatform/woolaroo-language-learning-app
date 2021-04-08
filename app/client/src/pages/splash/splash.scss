@@ -57,6 +57,10 @@ video {
   flex-direction: column;
   justify-content: flex-end;
 
+  &.hidden {
+    transition-delay: 0s;
+  }
+
   li {
     margin: 0;
     padding: 0;

@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, Inject, InjectionToken, OnDestroy, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Inject,
+  InjectionToken,
+  OnDestroy,
+  ViewChild
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
 import { IProfileService, PROFILE_SERVICE } from 'services/profile';
@@ -27,6 +35,8 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
   public videoStarted = false;
   public videoComplete = false;
   public logosVisible = false;
+  @ViewChild('video', { static: true })
+  public video: ElementRef|null = null;
   @ViewChild('logoAnimation', { static: true })
   public logoAnimation: AnimationComponent|null = null;
 
@@ -38,6 +48,37 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.analyticsService.logPageView(this.router.url, 'Splash');
+    this.startAnimations();
+    window.addEventListener('focus', this.onWindowFocus);
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener('focus', this.onWindowFocus);
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+      this.timeout = null;
+    }
+  }
+
+  onWindowFocus = () => {
+    this.startAnimations();
+  };
+
+  startAnimations() {
+    this.videoStarted = false;
+    this.videoComplete = false;
+    this.logosVisible = false;
+    if(this.video?.nativeElement) {
+      const videoEl = this.video.nativeElement as HTMLVideoElement;
+      videoEl.play();
+      videoEl.currentTime = 0;
+    }
+    if (this.logoAnimation) {
+      this.logoAnimation.stop();
+    }
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
     // if video hasn't started playing before timeout, skip it
     this.timeout = setTimeout(() => {
       this.videoComplete = true;
@@ -45,13 +86,6 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
         this._showLogos();
       }
     }, this.config.videoMaxStartTime);
-  }
-
-  ngOnDestroy() {
-    if (this.timeout) {
-      clearTimeout(this.timeout);
-      this.timeout = null;
-    }
   }
 
   onVideoUpdate(ev: Event) {

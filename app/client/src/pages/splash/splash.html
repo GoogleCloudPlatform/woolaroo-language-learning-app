@@ -1,4 +1,4 @@
-<video autoplay muted playsinline (playing)="onVideoPlaying()" (ended)="onVideoEnded()" (timeupdate)="onVideoUpdate($event)"
+<video autoplay muted playsinline #video (playing)="onVideoPlaying()" (ended)="onVideoEnded()" (timeupdate)="onVideoUpdate($event)"
        [class.hidden]="!videoStarted || videoComplete" oncanplay="this.play()" onloadedmetadata="this.muted=true">
   <source [src]="'assets/videos/splash.mp4' | assetUrl" type="video/mp4" />
 </video>

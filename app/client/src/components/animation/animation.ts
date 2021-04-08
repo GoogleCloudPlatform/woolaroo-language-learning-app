@@ -16,6 +16,8 @@ export class AnimationComponent implements AfterViewInit {
   @Output()
   public playbackEnded: EventEmitter<any> = new EventEmitter<any>();
 
+  public blarf = 1;
+
   constructor(private container: ElementRef) {
   }
 
@@ -37,5 +39,12 @@ export class AnimationComponent implements AfterViewInit {
       throw new Error('Animation not loaded');
     }
     this.animation.play();
+  }
+
+  public stop() {
+    if (!this.animation) {
+      throw new Error('Animation not loaded');
+    }
+    this.animation.stop();
   }
 }

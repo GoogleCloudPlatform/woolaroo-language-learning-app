@@ -77,8 +77,8 @@ export const environment = {
     splash: {
       logosDuration: 4500,
       videoMaxStartTime: 3000,
-      maxLogosDelay: 3000,
-      showLogosVideoPosition: 0.5,
+      maxLogosDelay: 2000,
+      showLogosVideoPosition: 0.2,
       partnerLogoUrl: '/assets/debug/partner-logo.png'
     },
     translate: {
