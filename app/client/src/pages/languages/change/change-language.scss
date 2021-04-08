@@ -32,12 +32,14 @@ app-camera-preview {
 
 .ui-language,
 .endangered-language {
+  flex: 1 1 auto;
   position: relative;
   text-align: center;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 40px;
 
   .label {
     font-size: 18px;
@@ -46,8 +48,6 @@ app-camera-preview {
   }
 
   app-scroll-list ::ng-deep {
-    margin-bottom: 80px;
-
     li {
       button {
         @include text-button;
@@ -78,16 +78,21 @@ app-camera-preview {
     font-size: 22px;
     line-height: 30px;
     max-width: 300px;
-    min-height: 150px;
   }
 }
 
 .ui-language {
-  margin-top: 100px;
+  margin-top: 40px;
+  justify-content: center;
 }
 
 .endangered-language {
+  justify-content: flex-start;
+  min-height: 250px;
+
   app-scroll-list ::ng-deep {
+    margin-bottom: 40px;
+
     li button {
       font-size: 45px;
     }
@@ -113,4 +118,5 @@ app-camera-preview {
   width: calc(100vw - 80px);
   max-width: 320px;
   margin-bottom: 40px;
+  flex: 0 0 auto;
 }
