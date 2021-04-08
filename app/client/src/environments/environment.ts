@@ -217,7 +217,7 @@ export const environment = {
             sampleWordImageURL: './assets/img/languages/tree-yug.jpg',
             sampleWordTranslation: 'tullei',
             nativeSpeakers: '100000',
-            organizationURL: 'https://www.yugambeh.com/',
+            organizationURL: 'https://www.yugambeh.com/learn-the-language',
             organizationName: 'Yugambeh Museum'
           },
           {
@@ -225,17 +225,17 @@ export const environment = {
             name: 'Yiddish',
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-yi.jpg',
-            sampleWordTranslation: 'דער בױםn',
+            sampleWordTranslation: 'דער מילגרױם',
             nativeSpeakers: '100000',
-            organizationURL: 'https://nytf.org/',
-            organizationName: 'National Yiddish Theatre'
+            organizationURL: 'https://jewishstudies.rutgers.edu/yiddish/102-department-of-jewish-studies/yiddish/159-yiddish-faqs',
+            organizationName: 'Department of Jewish Studies'
           },
           {
             code: 'tzm',
             name: 'Tamazight',
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-tzm.jpg',
-            sampleWordTranslation: 'aseklu',
+            sampleWordTranslation: 'Argan',
             nativeSpeakers: '100000',
             organizationURL: 'https://www.congres-mondial-amazigh.org/',
             organizationName: 'Congres Mondial Amazigh'
@@ -245,7 +245,7 @@ export const environment = {
             name: 'Rapa Nui',
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-rap.jpg',
-            sampleWordTranslation: 'tumu',
+            sampleWordTranslation: 'Toromiro',
             nativeSpeakers: '100000',
             organizationURL: null,
             organizationName: 'Council of the Elders of Rapa Nui'
@@ -255,9 +255,9 @@ export const environment = {
             name: 'Nawat',
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-ppl.jpg',
-            sampleWordTranslation: 'kwawit',
+            sampleWordTranslation: 'Puchut',
             nativeSpeakers: '100000',
-            organizationURL: null,
+            organizationURL: 'http://www.tushik.org',
             organizationName: null
           },
           {
@@ -265,7 +265,7 @@ export const environment = {
             name: 'Māori',
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-mi.jpg',
-            sampleWordTranslation: 'rākau',
+            sampleWordTranslation: 'kōwhai',
             nativeSpeakers: '100000',
             organizationURL: 'https://temurumara.org.nz/',
             organizationName: 'Te Murumāra Foundation'
@@ -275,9 +275,9 @@ export const environment = {
             name: 'Calabrian Greek',
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-el-cal.jpg',
-            sampleWordTranslation: 'àrburo',
+            sampleWordTranslation: 'Pero selvatico',
             nativeSpeakers: '100000',
-            organizationURL: 'https://www.jalotuvua.com/',
+            organizationURL: 'https://calabriagreca.it/',
             organizationName: 'Associazione Ellenofona Jalò tu Vua'
           },
           {
@@ -285,9 +285,9 @@ export const environment = {
             name: 'Sicilian',
             default: true,
             sampleWordImageURL: './assets/img/languages/tree-scn.jpg',
-            sampleWordTranslation: 'àrbulu',
+            sampleWordTranslation: 'Ficu d\'Innia',
             nativeSpeakers: '100000',
-            organizationURL: 'https://cademiasiciliana.org/',
+            organizationURL: 'https://cademiasiciliana.org',
             organizationName: 'Cademia Siciliana'
           },
           {
@@ -295,9 +295,9 @@ export const environment = {
             name: 'Louisiana Creole',
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-lou.jpg',
-            sampleWordTranslation: 'narb',
+            sampleWordTranslation: 'sip',
             nativeSpeakers: '100000',
-            organizationURL: null,
+            organizationURL: 'https://learnlouisianacreole.com/',
             organizationName: null
           },
           {
