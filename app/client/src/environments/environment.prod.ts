@@ -265,7 +265,7 @@ export const environment = {
           },
           {
             code: 'mi',
-            name: 'kōwhai',
+            name: 'Māori',
             default: params.endangeredLanguage === 'mi',
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-mi.jpg',
             sampleWordTranslation: 'kōwhai',
