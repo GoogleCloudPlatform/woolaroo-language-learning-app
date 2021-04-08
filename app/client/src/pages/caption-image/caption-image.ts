@@ -20,7 +20,7 @@ export const CAPTION_IMAGE_PAGE_CONFIG = new InjectionToken<CaptionImagePageConf
   templateUrl: './caption-image.html',
   styleUrls: ['./caption-image.scss']
 })
-export class CaptionImagePageComponent implements OnInit, OnDestroy {
+export class CaptionImagePageComponent implements OnInit {
   public readonly form: FormGroup;
   public backgroundImageURL: string|null = null;
   public image: Blob|null = null;
@@ -41,31 +41,25 @@ export class CaptionImagePageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.analyticsService.logPageView(this.router.url, 'Caption Image');
-    const image: Blob = history.state.image;
+    const image: Blob|undefined = history.state.image;
+    const imageURL: string|undefined = history.state.imageURL;
     if (!image) {
       const debugImageUrl = this.config.debugImageUrl;
       if (!debugImageUrl) {
         console.warn('Image not found in state - returning to previous screen');
-        history.back();
+        this.router.navigateByUrl(AppRoutes.CaptureImage, { replaceUrl: true });
       } else {
         this.loadImage(debugImageUrl);
       }
     } else {
-      this.setImageData(image);
-    }
-  }
-
-  ngOnDestroy(): void {
-    if (this.backgroundImageURL) {
-      URL.revokeObjectURL(this.backgroundImageURL);
-      this.backgroundImageURL = null;
+      this.setImageData(image, imageURL);
     }
   }
 
   loadImage(url: string) {
     this.http.get(url, { responseType: 'blob' }).subscribe({
       next: response => {
-        this.setImageData(response);
+        this.setImageData(response, url);
       },
       error: () => {
         this.router.navigateByUrl(AppRoutes.CaptureImage, { replaceUrl: true });
@@ -73,9 +67,9 @@ export class CaptionImagePageComponent implements OnInit, OnDestroy {
     });
   }
 
-  setImageData(image: Blob) {
+  setImageData(image: Blob, imageURL: string|undefined) {
     this.image = image;
-    this.backgroundImageURL = URL.createObjectURL(image);
+    this.backgroundImageURL = imageURL || URL.createObjectURL(image);
   }
 
   onFormSubmit() {
@@ -89,7 +83,8 @@ export class CaptionImagePageComponent implements OnInit, OnDestroy {
       next: () => this.sessionService.currentSession.currentModal = null
     });
     addOpenedListener(loadingPopUp, () => {
-      this.router.navigateByUrl(AppRoutes.Translate, {state: {image: this.image, words: [this.form.value.caption]}});
+      this.router.navigateByUrl(AppRoutes.Translate, {state: {
+        image: this.image, imageURL: this.backgroundImageURL, words: [this.form.value.caption]}});
     });
   }
 

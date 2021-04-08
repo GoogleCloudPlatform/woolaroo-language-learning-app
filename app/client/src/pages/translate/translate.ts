@@ -56,6 +56,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
     this.analyticsService.logPageView(this.router.url, 'Translate');
     this.defaultSelectedWordIndex = history.state.selectedWordIndex !== undefined ? history.state.selectedWordIndex : -1;
     const image: Blob|undefined = history.state.image;
+    const imageURL: string|undefined = history.state.imageURL;
     const words: string[]|undefined = history.state.words || this.config.debugWords;
     let loadingPopUp: MatDialogRef<any>|undefined = this.sessionService.currentSession.currentModal;
     if (!loadingPopUp) {
@@ -72,7 +73,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
         if (loadingPopUp) {
           loadingPopUp.close();
         }
-        history.back();
+        this.router.navigateByUrl(AppRoutes.CaptureImage, { replaceUrl: true });
       } else if (words) {
         this.loadImage(debugImageUrl, words, loadingPopUp);
       } else {
@@ -87,7 +88,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
       }
       this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image } });
     } else {
-      this.setImageData(image);
+      this.setImageData(image, imageURL);
       this.loadTranslations(words, loadingPopUp);
     }
   }
@@ -97,16 +98,12 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
     if (loadingPopUp) {
       loadingPopUp.close();
     }
-    if (this.backgroundImageURL) {
-      URL.revokeObjectURL(this.backgroundImageURL);
-      this.backgroundImageURL = null;
-    }
   }
 
   loadImage(url: string, words: string[], loadingPopUp?: MatDialogRef<any>) {
     this.http.get(url, { responseType: 'blob' }).subscribe({
       next: response => {
-        this.setImageData(response);
+        this.setImageData(response, url);
         this.loadTranslations(words, loadingPopUp);
       },
       error: () => {
@@ -118,9 +115,9 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
     });
   }
 
-  setImageData(image: Blob) {
+  setImageData(image: Blob, imageURL: string|undefined) {
     this.backgroundImageData = image;
-    this.backgroundImageURL = URL.createObjectURL(image);
+    this.backgroundImageURL = imageURL || URL.createObjectURL(image);
     this.renderShareImage();
   }
 

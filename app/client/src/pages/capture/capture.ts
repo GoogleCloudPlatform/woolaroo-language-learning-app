@@ -34,7 +34,8 @@ export class ImageLoaderPageBase {
     this.imageRecognitionService.loadDescriptions(image).then(
       (descriptions) => {
         if (descriptions.length > 0) {
-          this.router.navigateByUrl(AppRoutes.Translate, { state: { image, words: descriptions.map(d => d.description) } }).then(
+          this.router.navigateByUrl(AppRoutes.Translate, { state: {
+            image, imageURL: URL.createObjectURL(image), words: descriptions.map(d => d.description) } }).then(
             (success) => {
               if (!success) {
                 loadingPopUp.close();
@@ -43,7 +44,7 @@ export class ImageLoaderPageBase {
             () => loadingPopUp.close()
           );
         } else {
-          this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image } }).finally(
+          this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image, imageURL: URL.createObjectURL(image) } }).finally(
             () => loadingPopUp.close()
           );
         }
@@ -51,7 +52,7 @@ export class ImageLoaderPageBase {
       (err) => {
         console.warn('Error loading image descriptions', err);
         loadingPopUp.close();
-        this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image } }).finally(
+        this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image, imageURL: URL.createObjectURL(image) } }).finally(
           () => loadingPopUp.close()
         );
       }
