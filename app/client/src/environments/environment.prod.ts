@@ -261,7 +261,7 @@ export const environment = {
             sampleWordTranslation: 'Puchut',
             nativeSpeakers: '100000',
             organizationURL: 'http://www.tushik.org',
-            organizationName: null
+            organizationName: 'Tushik'
           },
           {
             code: 'mi',
@@ -301,7 +301,7 @@ export const environment = {
             sampleWordTranslation: 'sip',
             nativeSpeakers: '100000',
             organizationURL: 'https://learnlouisianacreole.com/',
-            organizationName: null
+            organizationName: 'Ti Liv Kréyòl'
           },
           {
             code: 'zyg',
