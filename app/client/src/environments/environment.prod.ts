@@ -250,7 +250,7 @@ export const environment = {
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-rap.jpg',
             sampleWordTranslation: 'Toromiro',
             nativeSpeakers: '100000',
-            organizationURL: null,
+            organizationURL: 'https://en.unesco.org/courier/2019-1/rapa-nui-back-brink',
             organizationName: 'Council of the Elders of Rapa Nui'
           },
           {
@@ -310,7 +310,7 @@ export const environment = {
             sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-zyg.jpg',
             sampleWordTranslation: 'ko máy',
             nativeSpeakers: '100000',
-            organizationURL: null,
+            organizationURL: 'https://www.youtube.com/watch?v=WuN43huPnuM',
             organizationName: 'Museum of Ethnic Cultures at Minzu University'
           }
         ]
