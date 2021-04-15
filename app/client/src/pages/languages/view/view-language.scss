@@ -102,10 +102,12 @@
   .label {
     font-weight: bold;
     color: mat-color($app-secondary);
+    margin-right: 10px;
   }
 
   .value {
     color: #767777;
+    text-align: right;
   }
 }
 
