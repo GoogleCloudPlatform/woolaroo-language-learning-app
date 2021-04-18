@@ -38,7 +38,7 @@
   "theApp": "The App",
   "languageToEndangeredLanguage": "${sourceLanguage} to ${endangeredLanguage}",
   "about": "About",
-  "aboutContent1": "Woolaroo is an open source Google Arts &amp; Culture Experiment that uses your phone’s camera to instantly translate objects into indigenous languages.",
+  "aboutContent1": "Woolaroo is an open source <a href=\"https://artsandculture.google.com/\" target=\"_blank\">Google Arts &amp; Culture</a> Experiment that uses your phone’s camera to instantly translate objects into indigenous languages.",
   "aboutContent2": "It’s easy to use - just take a photo of an object or upload your own to see it translated in real time. You can save the translated image, share it or have another go.",
   "theTechnology": "The Technology",
   "technologyContent1": "Built with Google Translate and Cloud Vision technology, Woolaroo uses advanced machine learning to understand the objects in your photos and translates them, in real time.",
