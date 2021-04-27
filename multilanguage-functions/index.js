@@ -9,6 +9,7 @@ const {google} = require('googleapis');
 
 ffmpeg.setFfmpegPath(ffmpegPath);
 const visionClient = new vision.v1p3beta1.ImageAnnotatorClient();
+const datastore = new Datastore();
 
 async function getGoogleAPIAuthentication() {
     const auth = new google.auth.GoogleAuth({ scopes: ['https://www.googleapis.com/auth/drive'] });
@@ -138,7 +139,6 @@ exports.getTranslations = async (req, res) => {
         const english_words = req.body.english_words || [];
         const primary_language = req.body.primary_language || '';
         const target_language = req.body.target_language || '';
-        const datastore = new Datastore();
         const promises = english_words.map(async english_word => {
             const wordKey = datastore.key(['Translation', english_word]);
             const translations = await datastore.get(wordKey);
