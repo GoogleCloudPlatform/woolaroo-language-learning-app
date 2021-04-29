@@ -143,10 +143,13 @@ export class AddWordFieldsetComponent {
     play(this.recording).then(
       (stream) => {
         console.log('Playback started');
-        const duration = Number.isFinite(stream.getDuration()) ? stream.getDuration() : this.config.maxRecordingDuration * 0.001;
         this.audioStream = stream;
         const progressInterval = setInterval(() => {
           this.zone.run(() => {
+            let duration = stream.getDuration();
+            if(!Number.isFinite(duration)) {
+              duration = this.config.maxRecordingDuration * 0.001;
+            }
             this.audioStreamProgress = stream.getCurrentTime() / duration;
           });
         }, this.config.progressAnimationInterval);
