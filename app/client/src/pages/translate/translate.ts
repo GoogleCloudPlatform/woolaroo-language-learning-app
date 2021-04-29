@@ -192,23 +192,29 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
   }
 
   onWordShared(word: WordTranslation) {
-    const img = this._sharedImage;
-    if (!img) {
-      console.warn('Shared image data not found');
-      return;
-    }
     const selectedWord = this.selectedWord;
     const shareTitle = this.i18n.getTranslation('shareTitle' ) || undefined;
     const shareText = selectedWord ? this.i18n.getTranslation('shareText', {
       original: selectedWord.original || selectedWord.english,
       translation: selectedWord.translation,
       language: this.endangeredLanguageService.currentLanguage.name}) || undefined : undefined;
+    const img = this._sharedImage;
+    if (!img) {
+      // image not rendered - default to sharing text
+      console.warn('Shared image data not found');
+      share({text: shareText, title: shareTitle}).then(
+        () => {},
+        ex => console.warn('Error sharing image', ex)
+      );
+      return;
+    }
     const files: File[] = [new File([img], `woolaroo-translation-${word.original}.jpg`, { type: img.type })];
     share({text: shareText, title: shareTitle, files: files}).then(
       () => {},
       ex => {
         console.warn('Error sharing image', ex);
         if(ex instanceof NotSupportedError) {
+          // sharing not supported - default to downloading image
           try {
             downloadFile(img, `woolaroo-translation-${word.original}.jpg`);
           } catch (err) {
