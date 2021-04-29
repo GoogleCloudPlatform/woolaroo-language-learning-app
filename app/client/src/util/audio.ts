@@ -36,9 +36,9 @@ export async function startRecording(bufferSize: number, mimeTypes?: string[]): 
   return new Promise<RecordingStream>((resolve, reject) => {
     navigator.mediaDevices.getUserMedia({video: false, audio: true}).then(
       (stream) => {
-        if (typeof(MediaRecorder) !== 'undefined') {
+       if (typeof(MediaRecorder) !== 'undefined') {
           console.log('Starting MediaRecorder recording');
-          startMediaRecorderRecording(stream, bufferSize, mimeTypes).then(
+          startMediaRecorderRecording(stream, mimeTypes).then(
             str => resolve(str),
             ex => reject(ex)
           );
@@ -58,8 +58,8 @@ export async function startRecording(bufferSize: number, mimeTypes?: string[]): 
   });
 }
 
-function startMediaRecorderRecording(stream: MediaStream, bufferSize: number, mimeTypes?: string[]): Promise<RecordingStream> {
-  const options: MediaRecorderOptions = {};
+function startMediaRecorderRecording(stream: MediaStream, mimeTypes?: string[]): Promise<RecordingStream> {
+  const options: MediaRecorderOptions = {audioBitsPerSecond: 8096};
   if (mimeTypes) {
     const type = getSupportedMimeType(mimeTypes);
     if (type) {
@@ -75,14 +75,22 @@ function startMediaRecorderRecording(stream: MediaStream, bufferSize: number, mi
       recorder.stop();
     }
   };
+  const chunks: Blob[] = [];
   recorder.ondataavailable = (dataEvent: BlobEvent) => {
     console.log('Recording data available');
-    if (recordingStream.onended) {
-      recordingStream.onended(dataEvent.data);
+    if(dataEvent.data.size > 0) {
+      chunks.push(dataEvent.data);
     }
   };
   recorder.onstop = () => {
     console.log('Recording stopped');
+    for(const track of stream.getAudioTracks()) {
+      track.stop();
+    }
+    if (recordingStream.onended) {
+      const data = chunks.length === 1 ? chunks[0] : new Blob(chunks);
+      recordingStream.onended(data);
+    }
   };
   return new Promise<RecordingStream>((resolve, reject) => {
     recorder.onstart = () => {
@@ -110,7 +118,9 @@ async function startAudioContextRecording(stream: MediaStream, bufferSize: numbe
     onended: null,
     stop: () => {
       if (stream) {
-        stream.getAudioTracks()[0].stop();
+        for(const track of stream.getAudioTracks()) {
+          track.stop();
+        }
       }
       streamNode.disconnect();
       processorNode.disconnect();
@@ -207,6 +217,7 @@ export async function playWithAudioElement(buffer: Blob): Promise<PlaybackStream
   return new Promise<any>((resolve, reject) => {
     audio.addEventListener('error', () => {
       reject(new Error('Error playing audio'));
+      URL.revokeObjectURL(audio.src);
       if (stream.onended) {
         stream.onended();
       }

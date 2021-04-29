@@ -109,7 +109,7 @@ export const environment = {
     addWordFieldset: {
       maxRecordingDuration: 5000,
       recordingBufferSize: 4096,
-      recordingMimeTypes: [ 'audio/mpeg', 'audio/wav', 'audio/webm' ],
+      recordingMimeTypes: [ 'audio/mpeg', 'audio/mp4', 'audio/webm', 'audio/wav', 'audio/x-aiff' ],
       androidGBoardUrl: 'https://play.google.com/store/apps/details?id=com.google.android.inputmethod.latin',
       iosGBoardUrl: 'https://apps.apple.com/us/app/gboard-the-google-keyboard/id1091700242',
       keymanUrl: 'https://keyman.com/',

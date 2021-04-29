@@ -97,14 +97,25 @@ export class AddWordFieldsetComponent {
       console.log('Recording complete');
       clearTimeout(recordingTimeout);
       clearInterval(progressInterval);
-      if (this.formGroup) {
-        this.formGroup.controls.recording.setValue(buffer);
+      if(buffer.size > 0) {
+        if (this.formGroup) {
+          this.formGroup.controls.recording.setValue(buffer);
+        }
+        this.recording = buffer;
+        this.audioStream = null;
+        this.zone.run(() => {
+          this.recordingState = RecordingState.Finished;
+        });
+      } else {
+        if (this.formGroup) {
+          this.formGroup.controls.recording.setValue(null);
+        }
+        this.recording = null;
+        this.audioStream = null;
+        this.zone.run(() => {
+          this.recordingState = RecordingState.Idle;
+        });
       }
-      this.recording = buffer;
-      this.audioStream = null;
-      this.zone.run(() => {
-        this.recordingState = RecordingState.Finished;
-      });
     };
   };
 
@@ -124,6 +135,7 @@ export class AddWordFieldsetComponent {
     console.log('Starting playback');
     if (!this.recording) {
       console.warn('No audio recorded');
+      alert('no audio');
       return false;
     }
     this.audioStreamProgress = 0;
@@ -148,6 +160,7 @@ export class AddWordFieldsetComponent {
       },
       (err) => {
         console.warn('Error playing recording', err);
+        alert(err);
         this.zone.run(() => {
           this.recordingState = RecordingState.Finished;
         });
