@@ -43,7 +43,7 @@ export class GoogleAnalyticsService implements IAnalyticsService {
   }
 
   public async logPageView(path: string, title: string) {
-    this.log('config', this.config.trackerID, { 'page_title': title, 'page_path': path });
+    this.log('event', 'page_view', { 'page_title': title, 'page_path': path, 'page_location': document.location.href });
   }
 
   public async logButtonClick(buttonID: string) {

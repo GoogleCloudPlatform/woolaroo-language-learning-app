@@ -4,6 +4,7 @@
 PROJECT_ID=`gcloud config get-value project`
 
 # Enable required APIs
+gcloud services enable cloudfunctions.googleapis.com
 gcloud services enable firebase.googleapis.com
 gcloud services enable firestore.googleapis.com
 gcloud services enable cloudresourcemanager.googleapis.com
