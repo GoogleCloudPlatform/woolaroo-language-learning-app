@@ -1,6 +1,17 @@
 @import 'components';
 @import 'palette';
 
+// center error popup within camera frame
+::ng-deep .capture-camera-error .mat-dialog-container {
+  position: relative;
+  top: -10vh;
+}
+
+:host-context(body) app-root {
+  position: relative;
+  top: -10vh;
+}
+
 .mat-drawer-container {
   background-color: mat-color($app-inverted, 100);
   height: 100%;

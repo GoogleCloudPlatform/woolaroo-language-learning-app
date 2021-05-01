@@ -213,7 +213,7 @@ export const environment = {
           {
             code: 'yug',
             name: 'Yugambeh',
-            default: false,
+            default: true,
             sampleWordImageURL: './assets/img/languages/tree-yug.jpg',
             sampleWordTranslation: 'tullei',
             nativeSpeakers: '100000',
@@ -283,7 +283,7 @@ export const environment = {
           {
             code: 'scn',
             name: 'Sicilian',
-            default: true,
+            default: false,
             sampleWordImageURL: './assets/img/languages/tree-scn.jpg',
             sampleWordTranslation: 'Ficu d\'Innia',
             nativeSpeakers: '100000',

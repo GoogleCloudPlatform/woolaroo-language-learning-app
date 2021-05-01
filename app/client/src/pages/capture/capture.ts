@@ -112,7 +112,7 @@ export class CapturePageComponent extends ImageLoaderPageBase implements AfterVi
           loadingPopUp.close();
         }
         const errorMessage = this.i18n.getTranslation('startCameraError') || 'Unable to start camera';
-        const errorDialog = this.dialog.open(ErrorPopUpComponent, { data: { message: errorMessage } });
+        const errorDialog = this.dialog.open(ErrorPopUpComponent, { data: { message: errorMessage }, panelClass: 'capture-camera-error' });
         errorDialog.afterClosed().subscribe({ complete: () => this.router.navigateByUrl(AppRoutes.ImageSource, { replaceUrl: true }) });
       }
     );

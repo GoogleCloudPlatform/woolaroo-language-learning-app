@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import { CameraPreviewComponent } from 'components/camera-preview/camera-preview';
 import { I18nService, Language } from 'i18n/i18n.service';
 import { EndangeredLanguage, EndangeredLanguageService } from 'services/endangered-language';
@@ -10,18 +10,18 @@ import { AppRoutes } from 'app/routes';
   templateUrl: './change-language.html',
   styleUrls: ['./change-language.scss']
 })
-export class ChangeLanguagePageComponent {
+export class ChangeLanguagePageComponent implements AfterViewInit {
   @ViewChild(CameraPreviewComponent)
   private cameraPreview: CameraPreviewComponent|null = null;
 
   public get uiLanguages(): Language[] { return this.i18nService.languages; }
 
-  private _currentUILanguageIndex: number = 0;
+  private _currentUILanguageIndex = 0;
   public get currentUILanguageIndex(): number { return this._currentUILanguageIndex; }
 
-  public get endangeredLanguages():EndangeredLanguage[] { return this.endangeredLanguageService.languages; }
+  public get endangeredLanguages(): EndangeredLanguage[] { return this.endangeredLanguageService.languages; }
 
-  private _currentEndangeredLanguageIndex: number = 0;
+  private _currentEndangeredLanguageIndex = 0;
   public get currentEndangeredLanguageIndex(): number { return this._currentEndangeredLanguageIndex; }
 
   public get currentEndangeredLanguageDescriptionKey(): string {
@@ -62,6 +62,9 @@ export class ChangeLanguagePageComponent {
   }
 
   onNextClick() {
+    // save the language preferences, in case use did not change language
+    this.i18nService.setLanguage(this.i18nService.languages[this.currentUILanguageIndex].code);
+    this.endangeredLanguageService.setLanguage(this.endangeredLanguageService.languages[this.currentEndangeredLanguageIndex].code);
     this.router.navigateByUrl(AppRoutes.CaptureImage);
   }
 }

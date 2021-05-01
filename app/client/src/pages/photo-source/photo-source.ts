@@ -37,7 +37,7 @@ export class PhotoSourcePageComponent extends ImageLoaderPageBase implements Aft
   onCaptureClick() {
     this._profileService.loadProfile().then(
       profile => {
-        if(!profile.language || !profile.endangeredLanguage) {
+        if (!profile.language || !profile.endangeredLanguage) {
           // no language chosen - let user change language
           this.router.navigateByUrl(AppRoutes.ChangeLanguage);
         } else {

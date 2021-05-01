@@ -99,10 +99,15 @@ export class CameraPreviewComponent implements OnDestroy {
       this.videoStream = stream;
       video.srcObject = stream;
     } catch (err) {
-      console.warn('Unable to get video stream with ideal dimensions, trying default dimensions.', err);
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: 'environment' } });
-      this.videoStream = stream;
-      video.srcObject = stream;
+      if (err instanceof DOMException) {
+        console.warn('Unable to get video stream with ideal dimensions, trying default dimensions.', err);
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: 'environment' } });
+        this.videoStream = stream;
+        video.srcObject = stream;
+      } else {
+        console.warn('Unable to start video stream.', err);
+        throw err;
+      }
     }
     await video.play();
     console.log(`Video stream started at ${video.videoWidth}x${video.videoHeight}`);

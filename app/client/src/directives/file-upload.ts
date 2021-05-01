@@ -6,7 +6,7 @@ import { Directive, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Ou
 export class FileUploadDirective implements OnDestroy {
   private readonly uploadField: HTMLInputElement;
 
-  private _acceptedFileTypes: string = '';
+  private _acceptedFileTypes = '';
   public get acceptedFileTypes(): string { return this._acceptedFileTypes; }
   @Input('accept')
   public set acceptedFileTypes(value: string) {
@@ -14,12 +14,12 @@ export class FileUploadDirective implements OnDestroy {
     this.uploadField.accept = value;
   }
 
-  private _capture: boolean = false;
+  private _capture = false;
   public get capture(): boolean { return this._capture; }
   @Input()
   public set capture(value: boolean) {
     this._capture = value;
-    if(value) {
+    if (value) {
       this.uploadField.setAttribute('capture', '');
     } else {
       this.uploadField.removeAttribute('capture');
@@ -34,7 +34,7 @@ export class FileUploadDirective implements OnDestroy {
     const upload = document.createElement('input');
     upload.type = 'file';
     upload.accept = this.acceptedFileTypes;
-    if(this.capture) {
+    if (this.capture) {
       upload.setAttribute('capture', '');
     }
     upload.style.display = 'none';
@@ -50,15 +50,15 @@ export class FileUploadDirective implements OnDestroy {
     }
     const file = files[0];
     this.fileUploaded.emit(file);
-  };
+  }
 
   @HostListener('click')
   onClick = () => {
     this.uploadField.click();
-  };
+  }
 
   ngOnDestroy(): void {
-    if(this.uploadField) {
+    if (this.uploadField) {
       this.uploadField.removeEventListener('change', this.onFileUploaded);
     }
   }
