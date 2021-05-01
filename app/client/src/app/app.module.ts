@@ -44,7 +44,7 @@ import { environment } from 'environments/environment';
     ViewLanguageModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('service-worker.js', { enabled: environment.production })
   ],
   bootstrap: [AppComponent]
 })
