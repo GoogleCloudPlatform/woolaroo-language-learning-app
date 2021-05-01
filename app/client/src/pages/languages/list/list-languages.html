@@ -2,7 +2,7 @@
   <span [innerHTML]="'The Languages' | translate:'theLanguages'"></span>
 </app-page-header>
 <div class="content">
-  <app-scroll-list (currentItemChanged)="onLanguageChanged($event)">
+  <app-scroll-list [currentItem]="currentLanguageIndex" (currentItemChanged)="onLanguageChanged($event)">
     <ng-container *ngFor="let lang of endangeredLanguages">
       <div class="language" *appScrollListItem (click)="onLanguageClick(lang.code)">
         <div class="example">

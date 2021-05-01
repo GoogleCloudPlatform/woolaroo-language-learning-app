@@ -10,13 +10,21 @@ import { AppRoutes } from 'app/routes';
   styleUrls: ['./list-languages.scss']
 })
 export class ListLanguagesPageComponent {
-  public get endangeredLanguages():EndangeredLanguage[] { return this.endangeredLanguageService.languages; }
+  public get endangeredLanguages(): EndangeredLanguage[] { return this.endangeredLanguageService.languages; }
 
-  public currentLanguageIndex = 0;
+  private _currentLanguageIndex = 0;
+  public get currentLanguageIndex() { return this._currentLanguageIndex; }
+  public set currentLanguageIndex(value: number) {
+    this._currentLanguageIndex = value;
+    const state = history.state;
+    state.languageIndex = value;
+    history.replaceState(state, '');
+  }
 
   constructor(private router: Router,
               private i18nService: I18nService,
               private endangeredLanguageService: EndangeredLanguageService) {
+    this._currentLanguageIndex = history.state.languageIndex || 0;
   }
 
   onLanguageChanged(index: number) {

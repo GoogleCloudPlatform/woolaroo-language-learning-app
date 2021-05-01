@@ -5,6 +5,7 @@ import { APIFeedbackService } from 'services/api/feedback';
 import { SafeSearchLikelihood } from 'services/google/image-recognition';
 import { APIImageRecognitionService } from 'services/api/image-recognition';
 import { MockTranslationService } from '../services/mock/translation';
+import {MockImageRecognitionService} from "../services/mock/image-recognition";
 
 const baseEndpointUrl = 'https://us-central1-ggl-woolaroo-multilang-uat.cloudfunctions.net';
 const debugImageUrl = '/assets/debug/IMG_20190920_141505.jpg';
@@ -145,7 +146,7 @@ export const environment = {
       type: LocalProfileService,
       config: null
     },
-    imageRecognition: {
+    /*imageRecognition: {
       type: APIImageRecognitionService,
       config: {
         endpointURL: `${baseEndpointUrl}/visionAPI`,
@@ -163,6 +164,10 @@ export const environment = {
           violence: SafeSearchLikelihood.POSSIBLE,
         }
       }
+    },*/
+    imageRecognition: {
+      type: MockImageRecognitionService,
+      config: null
     },
     imageRendering: {
       config: {
