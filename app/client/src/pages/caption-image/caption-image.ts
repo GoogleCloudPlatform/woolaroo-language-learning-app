@@ -8,6 +8,7 @@ import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
 import { SessionService } from 'services/session';
 import { MatDialog } from '@angular/material/dialog';
 import { addOpenedListener } from 'util/dialog';
+import {validateImageURL} from "../../util/image";
 
 interface CaptionImagePageConfig {
   debugImageUrl?: string;
@@ -68,8 +69,32 @@ export class CaptionImagePageComponent implements OnInit {
   }
 
   setImageData(image: Blob, imageURL: string|undefined) {
+    if (imageURL) {
+      validateImageURL(imageURL).then(
+        valid => {
+          if (valid) {
+            this.backgroundImageURL = imageURL;
+          } else {
+            URL.revokeObjectURL(imageURL);
+            this.setImageURL(URL.createObjectURL(image));
+          }
+        },
+        () => {
+          URL.revokeObjectURL(imageURL);
+          this.setImageURL(URL.createObjectURL(image));
+        }
+      );
+    } else {
+      this.setImageURL(URL.createObjectURL(image));
+    }
     this.image = image;
-    this.backgroundImageURL = imageURL || URL.createObjectURL(image);
+  }
+
+  setImageURL(url: string) {
+    this.backgroundImageURL = url;
+    const state = history.state;
+    state.imageURL = url;
+    history.replaceState(state, '');
   }
 
   onFormSubmit() {

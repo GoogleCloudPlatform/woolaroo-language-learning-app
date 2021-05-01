@@ -36,3 +36,15 @@ export async function resizeImage(imageData: Blob, maxWidth: number, maxHeight: 
     }, { maxWidth, maxHeight, canvas: true });
   });
 }
+
+// Validate that an image URL is able to load
+// URLs created with URL.createObjectURL can become invalid after page
+// refreshes, so need to validate them before usage
+export async function validateImageURL(url: string): Promise<boolean> {
+  return new Promise((resolve) => {
+    const img = document.createElement('img');
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+    img.src = url;
+  });
+}

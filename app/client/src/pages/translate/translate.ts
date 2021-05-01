@@ -14,6 +14,7 @@ import { I18nService } from 'i18n/i18n.service';
 import { EndangeredLanguageService } from 'services/endangered-language';
 import { share } from 'util/share';
 import { NotSupportedError } from 'util/errors';
+import {validateImageURL} from "../../util/image";
 
 interface TranslatePageConfig {
   debugImageUrl?: string;
@@ -32,7 +33,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
   public backgroundImageData: Blob|null = null;
   public backgroundImageURL: string|null = null;
   public selectedWord: WordTranslation|null = null;
-  public defaultSelectedWordIndex: number = -1;
+  public defaultSelectedWordIndex = -1;
   public translations: WordTranslation[]|null = null;
 
   public get currentLanguage(): string {
@@ -116,9 +117,33 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
   }
 
   setImageData(image: Blob, imageURL: string|undefined) {
+    if (imageURL) {
+      validateImageURL(imageURL).then(
+        valid => {
+          if (valid) {
+            this.backgroundImageURL = imageURL;
+          } else {
+            URL.revokeObjectURL(imageURL);
+            this.setImageURL(URL.createObjectURL(image));
+          }
+        },
+        () => {
+          URL.revokeObjectURL(imageURL);
+          this.setImageURL(URL.createObjectURL(image));
+        }
+      );
+    } else {
+      this.setImageURL(URL.createObjectURL(image));
+    }
     this.backgroundImageData = image;
-    this.backgroundImageURL = imageURL || URL.createObjectURL(image);
     this.renderShareImage();
+  }
+
+  setImageURL(url: string) {
+    this.backgroundImageURL = url;
+    const state = history.state;
+    state.imageURL = url;
+    history.replaceState(state, '');
   }
 
   loadTranslations(words: string[], loadingPopUp?: MatDialogRef<any>) {
@@ -146,7 +171,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
   }
 
   onSubmitFeedbackClick() {
-    this.router.createUrlTree([], {})
+    this.router.createUrlTree([], {});
     this.router.navigateByUrl(AppRoutes.Feedback, { state: { word: this.selectedWord }});
   }
 
@@ -209,11 +234,11 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
       return;
     }
     const files: File[] = [new File([img], `woolaroo-translation-${word.original}.jpg`, { type: img.type })];
-    share({text: shareText, title: shareTitle, files: files}).then(
+    share({text: shareText, title: shareTitle, files}).then(
       () => {},
       ex => {
         console.warn('Error sharing image', ex);
-        if(ex instanceof NotSupportedError) {
+        if (ex instanceof NotSupportedError) {
           // sharing not supported - default to downloading image
           try {
             downloadFile(img, `woolaroo-translation-${word.original}.jpg`);
