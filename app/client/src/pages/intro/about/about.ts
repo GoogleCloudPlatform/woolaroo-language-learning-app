@@ -41,10 +41,8 @@ export class IntroAboutPageComponent implements AfterViewInit {
   nextPage(profile: Profile|null = null) {
     if ((!profile || !profile.termsAgreed) && environment.pages.termsAndPrivacy.enabled) {
       this.router.navigateByUrl(AppRoutes.IntroTermsAndConditions);
-    } else if(!profile || !profile.endangeredLanguage || !profile.language) {
-      this.router.navigateByUrl(AppRoutes.ChangeLanguage);
     } else {
-      this.router.navigateByUrl(AppRoutes.ImageSource);
+      this.router.navigateByUrl(AppRoutes.ChangeLanguage);
     }
   }
 }

@@ -62,13 +62,13 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
 
   onWindowFocus = () => {
     this.startAnimations();
-  };
+  }
 
   startAnimations() {
     this.videoStarted = false;
     this.videoComplete = false;
     this.logosVisible = false;
-    if(this.video?.nativeElement) {
+    if (this.video?.nativeElement) {
       const videoEl = this.video.nativeElement as HTMLVideoElement;
       videoEl.play();
       videoEl.currentTime = 0;
@@ -133,6 +133,8 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
             || (!environment.pages.termsAndPrivacy.enabled && profile.introViewed);
           if (!skipIntro) {
             this.router.navigateByUrl(AppRoutes.Intro);
+          } else if (!profile.language || !profile.endangeredLanguage) {
+            this.router.navigateByUrl(AppRoutes.ChangeLanguage);
           } else if (cameraStreamIsAvailable()) {
             this.router.navigateByUrl(AppRoutes.CaptureImage);
           } else {
