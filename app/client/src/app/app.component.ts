@@ -6,6 +6,7 @@ import { filter } from 'rxjs/operators';
 import { EndangeredLanguageService } from '../services/endangered-language';
 import { IProfileService, PROFILE_SERVICE } from '../services/profile';
 import { Directionality } from '@angular/cdk/bidi';
+import {disablePinchZoom, disableTouchSelection, isInStandaloneMode} from 'util/platform';
 
 @Component({
   selector: 'app-root',
@@ -51,6 +52,10 @@ export class AppComponent implements OnInit {
         () => console.log('Screen locked in portrait mode'),
         () => console.warn('Failed locking screen orientation')
       );
+    }
+    if (isInStandaloneMode()) {
+      disableTouchSelection();
+      disablePinchZoom();
     }
   }
 

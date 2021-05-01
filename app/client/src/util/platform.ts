@@ -35,3 +35,23 @@ export function getOperatingSystem(): OperatingSystem {
     return OperatingSystem.Other;
   }
 }
+
+export function isInStandaloneMode() {
+  return (window.matchMedia('(display-mode: standalone)').matches)
+    || ('standalone' in window.navigator && (window.navigator as any).standalone)
+    || document.referrer.includes('android-app://');
+}
+
+export function disableTouchSelection() {
+  (document.body.style as any)['-webkit-user-select'] = 'none';
+}
+
+export function disablePinchZoom() {
+  let viewportMeta = document.querySelector('meta[name="viewport"]');
+  if (!viewportMeta) {
+    viewportMeta = document.createElement('meta');
+  }
+  let content = viewportMeta.getAttribute('content') || '';
+  content = content ? content + ', user-scalable=no' : 'user-scalable=no';
+  viewportMeta.setAttribute('content', content);
+}
