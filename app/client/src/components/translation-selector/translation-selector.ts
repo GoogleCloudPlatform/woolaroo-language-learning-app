@@ -2,6 +2,12 @@ import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@
 import { WordTranslation } from 'services/entities/translation';
 import { Point } from 'util/geometry';
 
+enum AudioState {
+  Stopped,
+  Loading,
+  Playing
+}
+
 @Component({
   selector: 'app-translation-selector',
   templateUrl: './translation-selector.html',
@@ -17,18 +23,20 @@ export class TranslationSelectorComponent {
   @Output()
   public addTranslation: EventEmitter<WordTranslation> = new EventEmitter<WordTranslation>();
   @Output()
-  public selectedWordChanged: EventEmitter<{index: number, word: WordTranslation|null}> = new EventEmitter<{index: number, word: WordTranslation|null}>();
+  public selectedWordChanged: EventEmitter<{index: number, word: WordTranslation|null}>
+    = new EventEmitter<{index: number, word: WordTranslation|null}>();
   @Output()
   public manualEntrySelected: EventEmitter<any> = new EventEmitter();
   @ViewChild('audioPlayer')
   public audioPlayer: ElementRef|null = null;
-  public audioPlaying = false;
+  public audioStateValues = AudioState;
+  public audioState: AudioState = AudioState.Stopped;
   public lineTargetPosition: Point|null = null;
 
   public selectedWordVisible = false;
   public selectedWord: WordTranslation|null = null;
   @Input()
-  public defaultSelectedWordIndex: number = -1;
+  public defaultSelectedWordIndex = -1;
 
   onPlayAudioClick() {
     if (!this.audioPlayer || !this.audioPlayer.nativeElement) {
@@ -36,32 +44,36 @@ export class TranslationSelectorComponent {
       return;
     }
     const audioPlayer = this.audioPlayer.nativeElement as HTMLAudioElement;
-    if (!this.audioPlaying) {
-      audioPlayer.play().then(
-        () => console.log('Audio started'),
-        err => console.warn('Unable to start audio: ' + err.toString())
-      );
-    } else {
-      audioPlayer.pause();
-      audioPlayer.currentTime = 0;
+    switch (this.audioState) {
+      case AudioState.Stopped:
+        this.audioState = AudioState.Loading;
+        audioPlayer.play().then(
+          () => console.log('Audio started'),
+          err => console.warn('Unable to start audio: ' + err.toString())
+        );
+        break;
+      default:
+        audioPlayer.pause();
+        audioPlayer.currentTime = 0;
+        break;
     }
   }
 
   onAudioPlaying() {
     console.log('Audio playing');
-    this.audioPlaying = true;
+    this.audioState = AudioState.Playing;
   }
 
   onAudioStopped() {
     console.log('Audio stopped');
-    this.audioPlaying = false;
+    this.audioState = AudioState.Stopped;
   }
 
   onSelectedWordChanged(ev: {index: number, word: WordTranslation|null}) {
-    if(this.audioPlaying) {
-      this.audioPlaying = false;
+    if (this.audioState !== AudioState.Stopped) {
+      this.audioState = AudioState.Stopped;
       const audioPlayer = this.audioPlayer ? this.audioPlayer.nativeElement as HTMLAudioElement : null;
-      if(audioPlayer) {
+      if (audioPlayer) {
         audioPlayer.pause();
         audioPlayer.currentTime = 0;
       }

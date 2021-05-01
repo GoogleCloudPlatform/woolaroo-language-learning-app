@@ -7,6 +7,7 @@ import { SelectionLineComponent, SELECTION_LINE_CONFIG } from './selection-line'
 import { WordScrollListComponent, WORD_SCROLL_LIST_CONFIG } from './word-scroll-list';
 import { I18nModule } from 'i18n/i18n.module';
 import { environment } from 'environments/environment';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -17,12 +18,13 @@ import { environment } from 'environments/environment';
   exports: [
     TranslationSelectorComponent
   ],
-  imports: [
-    CommonModule,
-    IconComponentModule,
-    MatInputModule,
-    I18nModule
-  ],
+    imports: [
+        CommonModule,
+        IconComponentModule,
+        MatInputModule,
+        I18nModule,
+        MatProgressSpinnerModule
+    ],
   providers: [
     { provide: SELECTION_LINE_CONFIG, useValue: environment.components.translationSelector.selectionLine },
     { provide: WORD_SCROLL_LIST_CONFIG, useValue: environment.components.translationSelector.scrollList }

@@ -86,6 +86,10 @@
     color: mat-contrast($app-inverted, 500);
     width: 45px;
     height: 45px;
+
+    .loading {
+      stroke: mat-contrast($app-inverted, 500);
+    }
   }
 }
 
