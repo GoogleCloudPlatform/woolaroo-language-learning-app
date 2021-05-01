@@ -45,6 +45,13 @@ export class AppComponent implements OnInit {
     });
     // set document language direction
     window.document.body.setAttribute('dir', this.i18nService.currentLanguage.direction);
+    // lock to portrait mode
+    if ('orientation' in window.screen && 'lock' in window.screen.orientation) {
+      window.screen.orientation.lock('portrait').then(
+        () => console.log('Screen locked in portrait mode'),
+        () => console.warn('Failed locking screen orientation')
+      );
+    }
   }
 
   initLanguages() {
