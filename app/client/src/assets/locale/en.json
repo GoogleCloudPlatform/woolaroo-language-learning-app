@@ -106,5 +106,7 @@
   "shortDescription_lou": "A French-based creole language mostly spoken in Louisiana, USA.",
   "region_zyg": "Guangxi, China and Vietnam",
   "description_zyg": "<p>Yang Zhuang (aka Dejing Zhuang, endonym Qyaang [ˀja:ŋ1/2]) is spoken mainly in  Debao County, Jingxi City, and Napo County in Guangxi, China, also in Vietnam's Cao Banh, Bac Can and Ha Giang provinces, where the language is referred to as Nung Giang [nʊŋ2 ja:ŋ1]. According to estimates, the total population of Yang Zhuang is over 1 million. It belongs to the Tai language family, meaning that it is related to Thai and Lao.</p>\n\n<p>The language has a long history of oral literature and antiphonal singing tradition —— ngyam sley (literally poem chanting). Its original writing system is sloey ndep (or sawndip in Standard Zhuang), developed based on Chinese characters in the Ming Dynasty (1368 －1644). Also, Romanized orthographies have been created since the 1980s.</p>\n\n<p>In Woolaroo, Yang Zhuang is written with the orthography developed by two linguists, Sampson Lee Chun Yin and Liao Hanbo (who himself is a Yang Zhuang community member) in 2018. The audio is in the Urban accent of Debao County.</p>",
-  "shortDescription_zyg": "A Tai language spoken in China’s southwestern Guangxi region."
+  "shortDescription_zyg": "A Tai language spoken in China’s southwestern Guangxi region.",
+  "imageRecognitionErrorTitle": "Unable to connect",
+  "imageRecognitionErrorMessage": "Please check network connection"
 }

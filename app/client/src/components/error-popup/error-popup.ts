@@ -8,7 +8,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class ErrorPopUpComponent {
   constructor( private dialogRef: MatDialogRef<ErrorPopUpComponent>,
-               @Inject(MAT_DIALOG_DATA) public data: {message: string} ) {
+               @Inject(MAT_DIALOG_DATA) public data: {message: string, title?: string} ) {
   }
 
   onCloseClick() {

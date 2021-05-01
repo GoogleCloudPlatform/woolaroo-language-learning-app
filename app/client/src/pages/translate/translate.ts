@@ -10,10 +10,10 @@ import { ImageRenderingService } from 'services/image-rendering';
 import { downloadFile } from 'util/file';
 import { SessionService } from 'services/session';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
-import { I18nService } from '../../i18n/i18n.service';
-import { EndangeredLanguageService } from '../../services/endangered-language';
-import { share } from '../../util/share';
-import { NotSupportedError } from '../../util/errors';
+import { I18nService } from 'i18n/i18n.service';
+import { EndangeredLanguageService } from 'services/endangered-language';
+import { share } from 'util/share';
+import { NotSupportedError } from 'util/errors';
 
 interface TranslatePageConfig {
   debugImageUrl?: string;
@@ -182,7 +182,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
   }
 
   onSelectedWordChanged(ev: {index: number, word: WordTranslation|null}) {
-    if(ev.word) {
+    if (ev.word) {
       this.selectedWord = ev.word;
     }
     const state = history.state;

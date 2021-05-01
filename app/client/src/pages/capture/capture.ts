@@ -15,6 +15,7 @@ import { IProfileService, PROFILE_SERVICE } from 'services/profile';
 
 export class ImageLoaderPageBase {
   constructor( protected router: Router,
+               protected i18n: I18nService,
                protected dialog: MatDialog,
                protected sessionService: SessionService,
                @Inject(IMAGE_RECOGNITION_SERVICE) protected imageRecognitionService: IImageRecognitionService) {
@@ -52,9 +53,10 @@ export class ImageLoaderPageBase {
       (err) => {
         console.warn('Error loading image descriptions', err);
         loadingPopUp.close();
-        this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image, imageURL: URL.createObjectURL(image) } }).finally(
-          () => loadingPopUp.close()
-        );
+        const errorTitle = this.i18n.getTranslation('imageRecognitionErrorTitle') || 'Unable to connect';
+        const errorMessage = this.i18n.getTranslation('imageRecognitionErrorMessage') || 'Please check network connection';
+        this.dialog.open(ErrorPopUpComponent, { data: { message: errorMessage, title: errorTitle } });
+        this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image, imageURL: URL.createObjectURL(image) } });
       }
     );
   }
@@ -75,11 +77,11 @@ export class CapturePageComponent extends ImageLoaderPageBase implements AfterVi
   constructor( router: Router,
                dialog: MatDialog,
                sessionService: SessionService,
-               private i18n: I18nService,
+               i18n: I18nService,
                @Inject(PROFILE_SERVICE) private profileService: IProfileService,
                @Inject(IMAGE_RECOGNITION_SERVICE) imageRecognitionService: IImageRecognitionService,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService) {
-    super(router, dialog, sessionService, imageRecognitionService);
+    super(router, i18n, dialog, sessionService, imageRecognitionService);
   }
 
   ngAfterViewInit() {

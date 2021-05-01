@@ -9,7 +9,8 @@ import { SessionService } from 'services/session';
 import { addOpenedListener } from 'util/dialog';
 import { ImageLoaderPageBase } from 'pages/capture/capture';
 import { cameraStreamIsAvailable } from 'util/camera';
-import { IProfileService, PROFILE_SERVICE } from '../../services/profile';
+import { IProfileService, PROFILE_SERVICE } from 'services/profile';
+import {I18nService} from 'i18n/i18n.service';
 
 @Component({
   selector: 'app-page-photo-source',
@@ -22,11 +23,12 @@ export class PhotoSourcePageComponent extends ImageLoaderPageBase implements Aft
 
   constructor( router: Router,
                dialog: MatDialog,
+               i18n: I18nService,
                sessionService: SessionService,
                @Inject(PROFILE_SERVICE) profileService: IProfileService,
                @Inject(IMAGE_RECOGNITION_SERVICE) imageRecognitionService: IImageRecognitionService,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService) {
-    super(router, dialog, sessionService, imageRecognitionService);
+    super(router, i18n, dialog, sessionService, imageRecognitionService);
     this._profileService = profileService;
   }
 

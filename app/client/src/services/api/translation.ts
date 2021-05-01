@@ -30,7 +30,7 @@ export class APITranslationService implements ITranslationService {
   }
 
   private static requestsAreEqual(request1: TranslateRequest, request2: TranslateRequest): boolean {
-    if(request1.primaryLanguage !== request2.primaryLanguage || request1.targetLanguage !== request2.targetLanguage) {
+    if (request1.primaryLanguage !== request2.primaryLanguage || request1.targetLanguage !== request2.targetLanguage) {
       return false;
     }
     if (request1.words.length !== request2.words.length) {
@@ -39,20 +39,21 @@ export class APITranslationService implements ITranslationService {
     return request1.words.every(w => request2.words.indexOf(w) >= 0);
   }
 
-  private static formatSoundURL(url:string|null):string|null {
-    if(!url) {
+  private static formatSoundURL(url: string|null): string|null {
+    if (!url) {
       return url;
     }
-    if(url.indexOf('?') >= 0) {
+    if (url.indexOf('?') >= 0) {
       return `${url}&ngsw-bypass`;
     } else {
       return `${url}?ngsw-bypass`;
     }
   }
 
-  public async translate(englishWords: string[], primaryLanguage: string, targetLanguage: string, maxTranslations: number = 0): Promise<WordTranslation[]> {
+  public async translate(englishWords: string[], primaryLanguage: string, targetLanguage: string,
+                         maxTranslations: number = 0): Promise<WordTranslation[]> {
     const lowercaseWords = englishWords.map((w) => w.toLowerCase());
-    const newRequest: TranslateRequest = { words: lowercaseWords, primaryLanguage: primaryLanguage, targetLanguage: targetLanguage };
+    const newRequest: TranslateRequest = { words: lowercaseWords, primaryLanguage, targetLanguage };
     if (this.lastRequest && this.lastResponse && APITranslationService.requestsAreEqual(this.lastRequest, newRequest)) {
       // use cached results
       return Promise.resolve(this.lastResponse);
@@ -60,7 +61,8 @@ export class APITranslationService implements ITranslationService {
     const response = await this.http.post<TranslationResponse[]>(this.config.endpointURL, {
       english_words: lowercaseWords,
       primary_language: primaryLanguage,
-      target_language: targetLanguage }).toPromise();
+      target_language: targetLanguage
+    }).toPromise();
     let translations = response.map(tr => ({
       english: tr.english_word,
       original: tr.primary_word,
