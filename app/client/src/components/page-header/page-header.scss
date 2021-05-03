@@ -1,3 +1,5 @@
+@import 'components';
+
 mat-toolbar {
   display: grid;
   grid-template-columns: 0fr 1fr;
@@ -25,5 +27,9 @@ mat-toolbar {
     color: #303438;
     font-weight: bold;
     align-self: flex-start;
+  }
+
+  .close {
+    @extend %directional;
   }
 }

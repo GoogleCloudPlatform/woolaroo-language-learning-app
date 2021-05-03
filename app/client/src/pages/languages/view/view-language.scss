@@ -21,6 +21,10 @@
     padding: 15px;
     width: 44px;
     height: 44px;
+
+    app-icon {
+      @extend %directional;
+    }
   }
 
   img {

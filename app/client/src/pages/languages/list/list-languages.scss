@@ -101,6 +101,10 @@
         width: 100%;
         text-align: center;
       }
+
+      app-icon {
+        @extend %directional;
+      }
     }
   }
 

@@ -50,3 +50,23 @@ form {
     }
   }
 }
+
+:host-context([dir=rtl]) {
+  mat-toolbar {
+    .back {
+      right: 8px;
+
+      app-icon {
+        @extend %directional;
+      }
+    }
+
+    .add-feedback {
+      left: 8px;
+
+      app-icon {
+        @extend %directional;
+      }
+    }
+  }
+}

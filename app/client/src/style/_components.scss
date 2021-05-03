@@ -91,5 +91,9 @@
   }
 }
 
-
+%directional {
+  :host-context([dir=rtl]) ::ng-deep & {
+    transform: scaleX(-1);
+  }
+}
 
