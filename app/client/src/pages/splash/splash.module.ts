@@ -4,6 +4,7 @@ import { SPLASH_PAGE_CONFIG, SplashPageComponent } from './splash';
 import { PipesModule } from 'pipes/pipes.module';
 import { AnimationModule } from 'components/animation/animation.module';
 import { environment } from 'environments/environment';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { environment } from 'environments/environment';
   imports: [
     CommonModule,
     PipesModule,
-    AnimationModule
+    AnimationModule,
+    MatProgressSpinnerModule
   ]
 })
 export class SplashPageModule {}

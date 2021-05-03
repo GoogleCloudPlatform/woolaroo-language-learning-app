@@ -18,13 +18,13 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
   exports: [
     TranslationSelectorComponent
   ],
-    imports: [
-        CommonModule,
-        IconComponentModule,
-        MatInputModule,
-        I18nModule,
-        MatProgressSpinnerModule
-    ],
+  imports: [
+    CommonModule,
+    IconComponentModule,
+    MatInputModule,
+    I18nModule,
+    MatProgressSpinnerModule
+  ],
   providers: [
     { provide: SELECTION_LINE_CONFIG, useValue: environment.components.translationSelector.selectionLine },
     { provide: WORD_SCROLL_LIST_CONFIG, useValue: environment.components.translationSelector.scrollList }

@@ -35,6 +35,7 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
   public videoStarted = false;
   public videoComplete = false;
   public logosVisible = false;
+  public spinnerVisible = false;
   @ViewChild('video', { static: true })
   public video: ElementRef|null = null;
   @ViewChild('logoAnimation', { static: true })
@@ -62,9 +63,12 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
 
   onWindowFocus = () => {
     this.startAnimations();
-  }
+  };
 
   startAnimations() {
+    // start spinner hidden, then change to visible after 1 frame, so it fades in
+    this.spinnerVisible = false;
+    setTimeout(() => this.spinnerVisible = true, 1);
     this.videoStarted = false;
     this.videoComplete = false;
     this.logosVisible = false;

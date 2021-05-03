@@ -1,3 +1,4 @@
+<mat-progress-spinner class="loading-spinner" [diameter]="45" mode="indeterminate" [class.hidden]="videoStarted || logosVisible || !spinnerVisible"></mat-progress-spinner>
 <video autoplay muted playsinline #video (playing)="onVideoPlaying()" (ended)="onVideoEnded()" (timeupdate)="onVideoUpdate($event)"
        [class.hidden]="!videoStarted || videoComplete" oncanplay="this.play()" onloadedmetadata="this.muted=true">
   <source [src]="'assets/videos/splash.mp4' | assetUrl" type="video/mp4" />

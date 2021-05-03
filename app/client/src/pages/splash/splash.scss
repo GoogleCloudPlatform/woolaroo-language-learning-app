@@ -1,4 +1,5 @@
 @import 'components';
+@import 'palette';
 
 :host {
   @include centered-page;
@@ -19,6 +20,7 @@
 }
 
 video,
+.loading-spinner,
 .app-logo,
 .arts-culture-logo,
 .credits {
@@ -28,6 +30,15 @@ video,
   &.hidden {
     opacity: 0;
   }
+}
+
+.loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  stroke: mat-color($app-accent);
+  transform: translate(-50%, -50%);
+  z-index: 1;
 }
 
 video {
