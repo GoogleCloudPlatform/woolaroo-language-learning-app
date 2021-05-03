@@ -58,6 +58,11 @@
   }
 }
 
+:host-context([dir=rtl]) .banner .back {
+  right: 20px;
+  left: auto;
+}
+
 .title,
 .details,
 .description {

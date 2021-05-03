@@ -40,14 +40,14 @@ export const environment = {
         file: params.assetsBaseUrl + 'assets/locale/hi.json',
         direction: 'ltr',
         default: params.language === 'hi'
-      },
+      },*/
       {
         code: 'ar',
         name: 'اَلْعَرَبِيَّةُ',
         file: params.assetsBaseUrl + 'assets/locale/ar.json',
         direction: 'rtl',
         default: params.language === 'ar'
-      },*/
+      },
       {
         code: 'it',
         name: 'Italiano',

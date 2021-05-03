@@ -41,13 +41,13 @@ export const environment = {
         name: 'हिन्दी',
         file: './assets/locale/hi.json',
         direction: 'ltr'
-      },
+      },*/
       {
         code: 'ar',
         name: 'اَلْعَرَبِيَّةُ',
         file: './assets/locale/ar.json',
         direction: 'rtl'
-      },*/
+      },
       {
         code: 'it',
         name: 'Italiano',
