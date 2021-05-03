@@ -4,10 +4,10 @@ import { LocalProfileService } from 'services/local-profile';
 import { APIFeedbackService } from 'services/api/feedback';
 import { SafeSearchLikelihood } from 'services/google/image-recognition';
 import { APIImageRecognitionService } from 'services/api/image-recognition';
-import { MockTranslationService } from '../services/mock/translation';
-import {MockImageRecognitionService} from "../services/mock/image-recognition";
+import { MockTranslationService } from 'services/mock/translation';
+import {MockImageRecognitionService} from 'services/mock/image-recognition';
 
-const baseEndpointUrl = 'https://us-central1-ggl-woolaroo-multilang-uat.cloudfunctions.net';
+const baseEndpointUrl = '';
 const debugImageUrl = '/assets/debug/IMG_20190920_141505.jpg';
 
 export const environment = {
@@ -23,7 +23,7 @@ export const environment = {
         file: './assets/locale/en.json',
         direction: 'ltr',
         default: true
-      }/*,
+      },
       {
         code: 'fr',
         name: 'Français',
@@ -36,7 +36,7 @@ export const environment = {
         file: './assets/locale/es.json',
         direction: 'ltr'
       },
-      {
+      /*{
         code: 'hi',
         name: 'हिन्दी',
         file: './assets/locale/hi.json',
@@ -47,14 +47,14 @@ export const environment = {
         name: 'اَلْعَرَبِيَّةُ',
         file: './assets/locale/ar.json',
         direction: 'rtl'
-      },
+      },*/
       {
         code: 'it',
         name: 'Italiano',
         file: './assets/locale/it.json',
         direction: 'ltr'
       },
-      {
+      /*{
         code: 'pt',
         name: 'Português',
         file: './assets/locale/pt.json',

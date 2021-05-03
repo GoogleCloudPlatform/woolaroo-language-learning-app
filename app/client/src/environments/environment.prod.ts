@@ -19,7 +19,7 @@ export const environment = {
         file: params.assetsBaseUrl + 'assets/locale/en.json',
         direction: 'ltr',
         default: params.language === 'en'
-      }/*,
+      },
       {
         code: 'fr',
         name: 'Français',
@@ -34,7 +34,7 @@ export const environment = {
         direction: 'ltr',
         default: params.language === 'es'
       },
-      {
+      /*{
         code: 'hi',
         name: 'हिन्दी',
         file: params.assetsBaseUrl + 'assets/locale/hi.json',
@@ -47,7 +47,7 @@ export const environment = {
         file: params.assetsBaseUrl + 'assets/locale/ar.json',
         direction: 'rtl',
         default: params.language === 'ar'
-      },
+      },*/
       {
         code: 'it',
         name: 'Italiano',
@@ -55,7 +55,7 @@ export const environment = {
         direction: 'ltr',
         default: params.language === 'it'
       },
-      {
+      /*{
         code: 'pt',
         name: 'Português',
         file: params.assetsBaseUrl + 'assets/locale/pt.json',
