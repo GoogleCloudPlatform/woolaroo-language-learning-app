@@ -17,6 +17,7 @@ import { ChangeLanguagePageComponent } from 'pages/languages/change/change-langu
 import { ListLanguagesPageComponent } from 'pages/languages/list/list-languages';
 import { ViewLanguagePageComponent} from 'pages/languages/view/view-language';
 import { languagePrefixMatcher } from '../util/routing';
+import { UnsupportedPageComponent } from '../pages/unsupported/unsupported';
 
 const routes: Routes = [
   { matcher: languagePrefixMatcher(), children: [
@@ -37,6 +38,7 @@ const routes: Routes = [
     { path: AppRoutes.ChangeLanguage, component: ChangeLanguagePageComponent },
     { path: AppRoutes.ViewLanguage, component: ViewLanguagePageComponent },
     { path: AppRoutes.ListLanguages, component: ListLanguagesPageComponent },
+    { path: AppRoutes.Unsupported, component: UnsupportedPageComponent },
     { path: '**', component: SplashPageComponent } // TODO: not found page
   ] }
 ];

@@ -14,6 +14,7 @@ import { AppRoutes } from 'app/routes';
 import { AnimationComponent } from 'components/animation/animation';
 import { environment } from 'environments/environment';
 import { cameraStreamIsAvailable } from 'util/camera';
+import { isMobileDevice } from 'util/platform';
 
 interface SplashPageConfig {
   partnerLogoUrl?: string;
@@ -48,6 +49,11 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
+    if(!isMobileDevice()) {
+      // device not supported - redirect to unsupported message
+      this.router.navigateByUrl(AppRoutes.Unsupported, { replaceUrl: true });
+      return;
+    }
     this.analyticsService.logPageView(this.router.url, 'Splash');
     this.startAnimations();
     window.addEventListener('focus', this.onWindowFocus);

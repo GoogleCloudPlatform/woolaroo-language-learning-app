@@ -55,3 +55,8 @@ export function disablePinchZoom() {
   content = content ? content + ', user-scalable=no' : 'user-scalable=no';
   viewportMeta.setAttribute('content', content);
 }
+
+export function isMobileDevice(): boolean {
+  // use media queries
+  return !!window.matchMedia("only screen and (hover: none) and (pointer: coarse)").matches;
+}

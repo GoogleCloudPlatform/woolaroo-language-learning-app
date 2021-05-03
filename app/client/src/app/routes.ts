@@ -14,5 +14,6 @@ export enum AppRoutes {
   Feedback = 'feedback',
   Technology = 'technology',
   AddWord = 'add-word',
-  About = 'about'
+  About = 'about',
+  Unsupported = 'unsupported'
 }
