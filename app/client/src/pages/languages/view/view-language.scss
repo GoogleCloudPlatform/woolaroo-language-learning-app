@@ -120,6 +120,11 @@
   }
 }
 
+:host-context([dir=rtl]) .details .label {
+  margin-right: 0;
+  margin-left: 10px;
+}
+
 .description {
   font-size: 18px;
   color: #767777;

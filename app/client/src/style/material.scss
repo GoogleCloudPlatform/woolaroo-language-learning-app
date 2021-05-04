@@ -39,15 +39,15 @@ mat-toolbar.mat-toolbar-single-row {
   white-space: normal;
   z-index: 1;
 
-  span {
+  > span {
     margin: 0 10px;
   }
 
   .mat-button-base {
     height: 100%;
     border-radius: 0;
-    padding-right: 24px;
-    padding-left: 24px;
+    padding-right: 10px;
+    padding-left: 10px;
   }
 
   .close {
