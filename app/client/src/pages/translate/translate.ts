@@ -14,12 +14,15 @@ import { I18nService } from 'i18n/i18n.service';
 import { EndangeredLanguageService } from 'services/endangered-language';
 import { share } from 'util/share';
 import { NotSupportedError } from 'util/errors';
-import { validateImageURL } from "util/image";
+import { validateImageData, validateImageURL } from 'util/image';
 import { getCapturePageURL } from "util/camera";
 
 interface TranslatePageConfig {
   debugImageUrl?: string;
   debugWords?: string[];
+}
+
+class WordsNotFoundError extends Error {
 }
 
 export const TRANSLATE_PAGE_CONFIG = new InjectionToken<TranslatePageConfig>('Translate page config');
@@ -68,31 +71,19 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
         next: () => this.sessionService.currentSession.currentModal = null
       });
     }
-    if (!image) {
-      const debugImageUrl = this.config.debugImageUrl;
-      if (!debugImageUrl) {
-        console.warn('Image not found in state - returning to previous screen');
-        if (loadingPopUp) {
-          loadingPopUp.close();
+    this.initImageTranslations(image, imageURL, words).then(
+      () => {
+        loadingPopUp?.close();
+      },
+      ex => {
+        loadingPopUp?.close();
+        if(ex instanceof WordsNotFoundError) {
+          this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image } });
+        } else {
+          this.router.navigateByUrl(getCapturePageURL(), {replaceUrl: true});
         }
-        this.router.navigateByUrl(getCapturePageURL(), { replaceUrl: true });
-      } else if (words) {
-        this.loadImage(debugImageUrl, words, loadingPopUp);
-      } else {
-        if (loadingPopUp) {
-          loadingPopUp.close();
-        }
-        this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image } });
       }
-    } else if (!words) {
-      if (loadingPopUp) {
-        loadingPopUp.close();
-      }
-      this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image } });
-    } else {
-      this.setImageData(image, imageURL);
-      this.loadTranslations(words, loadingPopUp);
-    }
+    );
   }
 
   ngOnDestroy(): void {
@@ -102,37 +93,44 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
     }
   }
 
-  loadImage(url: string, words: string[], loadingPopUp?: MatDialogRef<any>) {
-    this.http.get(url, { responseType: 'blob' }).subscribe({
-      next: response => {
-        this.setImageData(response, url);
-        this.loadTranslations(words, loadingPopUp);
-      },
-      error: () => {
-        if (loadingPopUp) {
-          loadingPopUp.close();
-        }
-        this.router.navigateByUrl(getCapturePageURL(), { replaceUrl: true });
+  async initImageTranslations(image: Blob|undefined, imageURL: string|undefined, words: string[]|undefined): Promise<void> {
+    if (!image) {
+      const debugImageUrl = this.config.debugImageUrl;
+      if (!debugImageUrl) {
+        console.warn('Image not found in state - returning to previous screen');
+        throw new Error('Image not found');
+      } else if (words) {
+        const image = await this.loadImage(debugImageUrl);
+        await this.setImageData(image, debugImageUrl);
+        await this.loadTranslations(words);
+      } else {
+        throw new WordsNotFoundError('Words not set');
       }
-    });
+    } else if (!words) {
+      throw new WordsNotFoundError('Words not set');
+    } else {
+      await this.setImageData(image, imageURL);
+      await this.loadTranslations(words);
+    }
   }
 
-  setImageData(image: Blob, imageURL: string|undefined) {
+  async loadImage(url: string): Promise<Blob> {
+    return await this.http.get(url, { responseType: 'blob' }).toPromise();
+  }
+
+  async setImageData(image: Blob, imageURL: string|undefined): Promise<void> {
+    const valid = await validateImageData(image);
+    if(!valid) {
+      throw new Error("Invalid image data");
+    }
     if (imageURL) {
-      validateImageURL(imageURL).then(
-        valid => {
-          if (valid) {
-            this.backgroundImageURL = imageURL;
-          } else {
-            URL.revokeObjectURL(imageURL);
-            this.setImageURL(URL.createObjectURL(image));
-          }
-        },
-        () => {
-          URL.revokeObjectURL(imageURL);
-          this.setImageURL(URL.createObjectURL(image));
-        }
-      );
+      const urlValid = await validateImageURL(imageURL);
+      if (urlValid) {
+        this.setImageURL(imageURL);
+      } else {
+        URL.revokeObjectURL(imageURL);
+        this.setImageURL(URL.createObjectURL(image));
+      }
     } else {
       this.setImageURL(URL.createObjectURL(image));
     }
@@ -147,28 +145,22 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
     history.replaceState(state, '');
   }
 
-  loadTranslations(words: string[], loadingPopUp?: MatDialogRef<any>) {
-    this.translationService.translate(words, this.i18n.currentLanguage.code, this.endangeredLanguageService.currentLanguage.code, 1).then(
-      translations => {
-        console.log('Translations loaded');
-        if (loadingPopUp) {
-          loadingPopUp.close();
-        }
-        this.zone.run(() => {
-          this.translations = translations;
-        });
-      },
-      err => {
-        console.warn('Error loading translations', err);
-        if (loadingPopUp) {
-          loadingPopUp.close();
-        }
-        // show words as if none had translations
-        this.zone.run(() => {
-          this.translations = words.map(w => ({ original: w, english: '', translation: '', transliteration: '', soundURL: null }));
-        });
-      }
-    );
+  async loadTranslations(words: string[]): Promise<void> {
+    let translations: WordTranslation[];
+    try {
+      translations = await this.translationService.translate(words, this.i18n.currentLanguage.code, this.endangeredLanguageService.currentLanguage.code, 1);
+    } catch(ex) {
+      console.warn('Error loading translations', ex);
+      // show words as if none had translations
+      this.zone.run(() => {
+        this.translations = words.map(w => ({ original: w, english: '', translation: '', transliteration: '', soundURL: null }));
+      });
+      return;
+    }
+    console.log('Translations loaded');
+    this.zone.run(() => {
+      this.translations = translations;
+    });
   }
 
   onSubmitFeedbackClick() {

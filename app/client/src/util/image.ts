@@ -37,6 +37,25 @@ export async function resizeImage(imageData: Blob, maxWidth: number, maxHeight: 
   });
 }
 
+// Validate that image data is able to load
+// Images loaded from nav state can become invalid
+export async function validateImageData(data: Blob): Promise<boolean> {
+  const url = URL.createObjectURL(data);
+  return new Promise((resolve, reject) => {
+    const image = document.createElement('img');
+    image.onload = () => {
+      URL.revokeObjectURL(url);
+      resolve(true);
+    };
+    image.onerror = ex => {
+      URL.revokeObjectURL(url);
+      reject(ex);
+    };
+    image.src = url;
+  });
+}
+
+
 // Validate that an image URL is able to load
 // URLs created with URL.createObjectURL can become invalid after page
 // refreshes, so need to validate them before usage
