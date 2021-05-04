@@ -57,7 +57,7 @@ form {
       right: 8px;
 
       app-icon {
-        @extend %directional;
+        @include directional;
       }
     }
 
@@ -65,7 +65,7 @@ form {
       left: 8px;
 
       app-icon {
-        @extend %directional;
+        @include directional;
       }
     }
   }

@@ -23,7 +23,7 @@
     height: 44px;
 
     app-icon {
-      @extend %directional;
+      @include directional;
     }
   }
 

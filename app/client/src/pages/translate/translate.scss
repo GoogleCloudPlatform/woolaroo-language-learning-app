@@ -55,27 +55,26 @@ app-translation-selector {
 }
 
 .current-language app-icon {
-  @extend %directional;
+  @include directional;
   width: 30px;
   height: 30px;
+}
+
+mat-toolbar {
+  .back app-icon,
+  .submit-feedback app-icon {
+    @include directional;
+  }
 }
 
 :host-context([dir=rtl]) {
   mat-toolbar {
     .back {
       right: 8px;
-
-      app-icon {
-        @extend %directional;
-      }
     }
 
     .submit-feedback {
       left: 8px;
-
-      app-icon {
-        @extend %directional;
-      }
     }
   }
 }

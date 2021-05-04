@@ -30,6 +30,6 @@ mat-toolbar {
   }
 
   .close {
-    @extend %directional;
+    @include directional;
   }
 }

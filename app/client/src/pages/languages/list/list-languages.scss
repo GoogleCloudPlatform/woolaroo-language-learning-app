@@ -103,7 +103,7 @@
       }
 
       app-icon {
-        @extend %directional;
+        @include directional;
       }
     }
   }
