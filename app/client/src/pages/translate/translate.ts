@@ -14,7 +14,8 @@ import { I18nService } from 'i18n/i18n.service';
 import { EndangeredLanguageService } from 'services/endangered-language';
 import { share } from 'util/share';
 import { NotSupportedError } from 'util/errors';
-import {validateImageURL} from "../../util/image";
+import { validateImageURL } from "util/image";
+import { getCapturePageURL } from "util/camera";
 
 interface TranslatePageConfig {
   debugImageUrl?: string;
@@ -74,7 +75,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
         if (loadingPopUp) {
           loadingPopUp.close();
         }
-        this.router.navigateByUrl(AppRoutes.CaptureImage, { replaceUrl: true });
+        this.router.navigateByUrl(getCapturePageURL(), { replaceUrl: true });
       } else if (words) {
         this.loadImage(debugImageUrl, words, loadingPopUp);
       } else {
@@ -111,7 +112,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
         if (loadingPopUp) {
           loadingPopUp.close();
         }
-        this.router.navigateByUrl(AppRoutes.CaptureImage, { replaceUrl: true });
+        this.router.navigateByUrl(getCapturePageURL(), { replaceUrl: true });
       }
     });
   }

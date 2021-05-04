@@ -13,7 +13,7 @@ import { IProfileService, PROFILE_SERVICE } from 'services/profile';
 import { AppRoutes } from 'app/routes';
 import { AnimationComponent } from 'components/animation/animation';
 import { environment } from 'environments/environment';
-import { cameraStreamIsAvailable } from 'util/camera';
+import { getCapturePageURL } from 'util/camera';
 import { isMobileDevice } from 'util/platform';
 
 interface SplashPageConfig {
@@ -145,10 +145,8 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
             this.router.navigateByUrl(AppRoutes.Intro);
           } else if (!profile.language || !profile.endangeredLanguage) {
             this.router.navigateByUrl(AppRoutes.ChangeLanguage);
-          } else if (cameraStreamIsAvailable()) {
-            this.router.navigateByUrl(AppRoutes.CaptureImage);
           } else {
-            this.router.navigateByUrl(AppRoutes.ImageSource);
+            this.router.navigateByUrl(getCapturePageURL());
           }
         },
         () => this.router.navigateByUrl(AppRoutes.Intro)

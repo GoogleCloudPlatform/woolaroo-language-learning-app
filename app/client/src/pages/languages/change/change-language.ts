@@ -1,9 +1,9 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { CameraPreviewComponent } from 'components/camera-preview/camera-preview';
 import { I18nService, Language } from 'i18n/i18n.service';
 import { EndangeredLanguage, EndangeredLanguageService } from 'services/endangered-language';
 import { Router } from '@angular/router';
-import { AppRoutes } from 'app/routes';
+import { getCapturePageURL } from 'util/camera';
 
 @Component({
   selector: 'app-change-language',
@@ -58,13 +58,13 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
   }
 
   onCloseClick() {
-    this.router.navigateByUrl(AppRoutes.CaptureImage);
+    this.router.navigateByUrl(getCapturePageURL());
   }
 
   onNextClick() {
     // save the language preferences, in case use did not change language
     this.i18nService.setLanguage(this.i18nService.languages[this.currentUILanguageIndex].code);
     this.endangeredLanguageService.setLanguage(this.endangeredLanguageService.languages[this.currentEndangeredLanguageIndex].code);
-    this.router.navigateByUrl(AppRoutes.CaptureImage);
+    this.router.navigateByUrl(getCapturePageURL());
   }
 }
