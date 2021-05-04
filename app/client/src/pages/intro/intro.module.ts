@@ -7,6 +7,7 @@ import { PaginationIndicatorModule } from 'components/pagination-indicator/pagin
 import { IntroAboutPageComponent } from './about/about';
 import { IntroTermsPageComponent } from './terms/terms';
 import { I18nModule } from 'i18n/i18n.module';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { I18nModule } from 'i18n/i18n.module';
   ],
   imports: [
     RouterModule,
+    CommonModule,
     MatButtonModule,
     PaginationIndicatorModule,
     I18nModule,

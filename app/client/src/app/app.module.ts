@@ -20,7 +20,6 @@ import { AddWordPageModule } from 'pages/add-word/add-word.module';
 import { CaptionImagePageModule } from 'pages/caption-image/caption-image.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from 'environments/environment';
-import { UnsupportedPageModule } from 'pages/unsupported/unsupported.module';
 
 @NgModule({
   declarations: [
@@ -40,7 +39,6 @@ import { UnsupportedPageModule } from 'pages/unsupported/unsupported.module';
     FeedbackPageModule,
     AddWordPageModule,
     CaptionImagePageModule,
-    UnsupportedPageModule,
     ChangeLanguageModule,
     ListLanguagesModule,
     ViewLanguageModule,

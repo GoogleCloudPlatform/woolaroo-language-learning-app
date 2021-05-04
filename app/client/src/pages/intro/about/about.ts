@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, Inject } from '@angular/core';
+import { AfterViewInit, Component, HostBinding, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppRoutes } from 'app/routes';
 import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
 import { environment } from 'environments/environment';
-import { IProfileService, PROFILE_SERVICE } from '../../../services/profile';
+import { IProfileService, PROFILE_SERVICE } from 'services/profile';
 import { Profile } from 'services/entities/profile';
+import { isMobileDevice } from 'util/platform';
 
 @Component({
   selector: 'app-page-intro-about',
@@ -12,7 +13,8 @@ import { Profile } from 'services/entities/profile';
   styleUrls: ['./about.scss']
 })
 export class IntroAboutPageComponent implements AfterViewInit {
-  currentAboutItem: number = 0;
+  @HostBinding('class.supported')
+  public get deviceSupported(): boolean { return isMobileDevice(); }
 
   constructor( private router: Router,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
@@ -21,14 +23,6 @@ export class IntroAboutPageComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.analyticsService.logPageView(this.router.url, 'Intro - About');
-  }
-
-  onItemClick(ev: MouseEvent) {
-    this.currentAboutItem = 1 - this.currentAboutItem;
-  }
-
-  onCurrentAboutItemChanged(index: number) {
-    this.currentAboutItem = index;
   }
 
   onNextClick() {
