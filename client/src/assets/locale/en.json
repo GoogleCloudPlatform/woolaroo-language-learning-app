@@ -71,7 +71,7 @@
   "specialCharsInstructions": "Want to type special characters? Try <a>GBoard</a> or <a>Keyman</a>",
   "wordSubmitted": "Submitted for review",
   "addWordError": "Unable to add word",
-  "startCameraError": "Unable to start camera",
+  "startCameraError": "Unable to start camera, please try refreshing browser",
   "captureImageError": "Unable to capture image",
   "feedbackSubmitted": "Feedback submitted",
   "submitFeedbackError": "Unable to save feedback",
