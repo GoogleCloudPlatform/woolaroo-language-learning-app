@@ -58,5 +58,6 @@ export function disablePinchZoom() {
 
 export function isMobileDevice(): boolean {
   // use media queries
-  return !!window.matchMedia("only screen and (hover: none) and (pointer: coarse)").matches;
+  return window.matchMedia('only screen and (hover: none) and (pointer: coarse)').matches ||
+    window.matchMedia('only screen and (hover: none) and (pointer: fine)').matches;
 }
