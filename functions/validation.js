@@ -1,5 +1,5 @@
 const VALID_PRIMARY_LANGUAGES = ['en', 'fr', 'es', 'ar', 'it'];
-const VALID_TARGET_LANGUAGES = ['yug', 'yi', 'tzm', 'rap', 'ppl', 'el-cal', 'scn', 'lou', 'zyg'];
+const VALID_TARGET_LANGUAGES = ['yug', 'mi', 'yi', 'tzm', 'rap', 'ppl', 'el-cal', 'scn', 'lou', 'zyg'];
 
 exports.isTargetLanguage = function(code) {
     return VALID_TARGET_LANGUAGES.indexOf(code) >= 0;
