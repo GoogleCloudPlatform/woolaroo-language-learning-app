@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
 import { CameraPreviewComponent } from 'components/camera-preview/camera-preview';
 import { I18nService, Language } from 'i18n/i18n.service';
 import { EndangeredLanguage, EndangeredLanguageService } from 'services/endangered-language';
 import { Router } from '@angular/router';
 import { loadCapturePageURL } from 'util/camera';
 import {AppRoutes} from 'app/routes';
+import {IProfileService, PROFILE_SERVICE} from 'services/profile';
 
 @Component({
   selector: 'app-change-language',
@@ -32,6 +33,7 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 
   constructor(private router: Router,
               private i18nService: I18nService,
+              @Inject(PROFILE_SERVICE) private profileService: IProfileService,
               private endangeredLanguageService: EndangeredLanguageService) {
     this._currentUILanguageIndex = this.i18nService.languages.indexOf(this.i18nService.currentLanguage);
     this._currentEndangeredLanguageIndex = this.endangeredLanguageService.languages.indexOf(this.endangeredLanguageService.currentLanguage);
@@ -66,12 +68,21 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
   }
 
   onNextClick() {
-    // save the language preferences, in case use did not change language
-    this.i18nService.setLanguage(this.i18nService.languages[this.currentUILanguageIndex].code);
-    this.endangeredLanguageService.setLanguage(this.endangeredLanguageService.languages[this.currentEndangeredLanguageIndex].code);
-    loadCapturePageURL().then(
-      url => this.router.navigateByUrl(url),
-      () => this.router.navigateByUrl(AppRoutes.CaptureImage)
+    this.saveSelectedLanguages().finally(
+      () => {
+        loadCapturePageURL().then(
+          url => this.router.navigateByUrl(url),
+          () => this.router.navigateByUrl(AppRoutes.CaptureImage)
+        );
+      }
     );
+  }
+
+  async saveSelectedLanguages() {
+    // save the language preferences, in case use did not change language
+    const profile = await this.profileService.loadProfile();
+    profile.language = this.i18nService.languages[this.currentUILanguageIndex].code;
+    profile.endangeredLanguage = this.endangeredLanguageService.languages[this.currentEndangeredLanguageIndex].code;
+    await this.profileService.saveProfile(profile);
   }
 }
