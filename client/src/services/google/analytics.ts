@@ -20,7 +20,7 @@ export class GoogleAnalyticsService implements IAnalyticsService {
     script.src = `https://www.googletagmanager.com/gtag/js?id=${config.trackerID}`;
     script.async = true;
     script.onload = () => {
-      logger.('Google Analytics initialized');
+      logger.log('Google Analytics initialized');
       const queuedEvents: Array<any> = this._dataLayer;
       this._dataLayer = (window as any).dataLayer = (window as any).dataLayer || [];
       this.log('js', new Date());
@@ -36,7 +36,7 @@ export class GoogleAnalyticsService implements IAnalyticsService {
     };
     const head = document.getElementsByTagName('head')[0];
     head.appendChild(script);
-    logger.('Initializing Google Analytics');
+    logger.log('Initializing Google Analytics');
   }
 
   private log(...args: any[]) {
