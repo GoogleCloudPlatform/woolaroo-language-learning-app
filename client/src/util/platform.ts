@@ -57,7 +57,13 @@ export function disablePinchZoom() {
 }
 
 export function isMobileDevice(): boolean {
-  // use media queries
-  return window.matchMedia('only screen and (hover: none) and (pointer: coarse)').matches ||
-    window.matchMedia('only screen and (hover: none) and (pointer: fine)').matches;
+  switch (getOperatingSystem()) {
+    case OperatingSystem.iOS:
+    case OperatingSystem.Android:
+      return true;
+    default:
+      // default to using media queries
+      return window.matchMedia('only screen and (hover: none) and (pointer: coarse)').matches ||
+        window.matchMedia('only screen and (hover: none) and (pointer: fine)').matches;
+  }
 }
