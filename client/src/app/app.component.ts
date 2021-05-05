@@ -6,7 +6,7 @@ import { filter } from 'rxjs/operators';
 import { EndangeredLanguageService } from 'services/endangered-language';
 import { IProfileService, PROFILE_SERVICE } from 'services/profile';
 import { Directionality } from '@angular/cdk/bidi';
-import { disableTouchScrolling, disablePinchZoom, disableTouchSelection, isInStandaloneMode } from 'util/platform';
+import { disablePinchZoom, disableTouchSelection, isInStandaloneMode } from 'util/platform';
 import {getLogger} from 'util/logging';
 
 const logger = getLogger('ChangeLanguagePageComponent');
@@ -57,7 +57,6 @@ export class AppComponent implements OnInit {
       );
     }
     if (isInStandaloneMode()) {
-      disableTouchScrolling();
       disableTouchSelection();
       disablePinchZoom();
     }
