@@ -1,5 +1,5 @@
 const fs = require('fs');
-const uuidv1 = require('uuid/v1');
+const uuid = require('uuid');
 const cors = require('cors')({origin: true});
 const vision = require('@google-cloud/vision');
 const {Datastore} = require('@google-cloud/datastore');
@@ -45,7 +45,7 @@ exports.saveAudioSuggestions = async (req, res) => {
         // convert base64 body to blob of webm
         const nodeBuffer = Buffer.from(req.body, 'base64');
         // convert to mp3
-        const fileName = uuidv1();
+        const fileName = uuid.v1();
         const tempLocalPath = `/tmp/${fileName}.webm`;
         const targetTempFilePath =  `/tmp/${fileName}.mp3`;
         await writeFileAsync(tempLocalPath, nodeBuffer);

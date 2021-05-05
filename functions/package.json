@@ -22,7 +22,8 @@
     "@google-cloud/vision": "^2.3.1",
     "cors": "^2.8.5",
     "fluent-ffmpeg": "^2.1.2",
-    "googleapis": "^49.0.0"
+    "googleapis": "^49.0.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
