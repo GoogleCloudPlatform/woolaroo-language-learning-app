@@ -20,7 +20,7 @@ provider "google" {
   project = var.google_project
 }
 
-resource "google_storage_b`ucket" "app-store" {
+resource "google_storage_bucket" "app-store" {
   name = var.bucket_name
   location = var.bucket_location
   storage_class = "MULTI_REGIONAL"
