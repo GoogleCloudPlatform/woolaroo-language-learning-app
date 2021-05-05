@@ -72,3 +72,7 @@ function hasTouchscreen(): boolean {
   return window.matchMedia('only screen and (hover: none) and (pointer: coarse)').matches ||
     window.matchMedia('only screen and (hover: none) and (pointer: fine)').matches;
 }
+
+export function disableTouchScrolling() {
+  document.body.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+}
