@@ -7,7 +7,7 @@
 </div>
 <div class="messages">
   <p class="unsupported" *ngIf="!deviceSupported">{{ 'This PWA has been designed for mobile devices, please use your mobile for the optimized experience.' | translate: 'unsupportedMessage' }}</p>
-  <p class="ios-version" *ngIf="isOldIOSVersion">{{ 'For the optimized experience please your ensure device is running the latest operating system.' | translate: 'iosVersionMessage' }}</p>
+  <p class="ios-version" *ngIf="isOldIOSVersion">{{ 'For the optimized experience please ensure your device is running the latest operating system.' | translate: 'iosVersionMessage' }}</p>
 </div>
 <button mat-flat-button color="primary" (click)="onNextClick()" class="next">
   <span [innerHTML]="'Let’s get started' | translate:'getStarted'"></span>
