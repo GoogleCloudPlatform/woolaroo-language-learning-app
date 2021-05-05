@@ -40,6 +40,7 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
   public video: ElementRef|null = null;
   @ViewChild('logoAnimation', { static: true })
   public logoAnimation: AnimationComponent|null = null;
+  public get isLoading(): boolean { return !this.videoStarted && !this.logosVisible; }
 
   constructor( @Inject(SPLASH_PAGE_CONFIG) private config: SplashPageConfig,
                private router: Router,
@@ -63,7 +64,7 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
 
   onWindowFocus = () => {
     this.startAnimations();
-  };
+  }
 
   startAnimations() {
     // start spinner hidden, then change to visible after 1 frame, so it fades in
