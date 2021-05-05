@@ -36,7 +36,7 @@ async function writeFileAsync(path, buffer) {
 }
 
 function addSecurityHeaders(res) {
-    res.headers['X-Frame-Options'] = 'SAMEORIGIN';
+    res.set('X-Frame-Options', 'SAMEORIGIN');
 }
 
 exports.saveAudioSuggestions = async (req, res) => {
