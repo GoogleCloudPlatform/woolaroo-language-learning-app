@@ -1,0 +1,7 @@
+<h2 mat-dialog-title [innerHTML]="data.title || ('Error' | translate:'errorTitle')"></h2>
+<mat-dialog-content>
+  <p>{{data.message}}</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button color="warn" (click)="this.onCloseClick()" [innerHTML]="'Close' | translate:'close'"></button>
+</mat-dialog-actions>

@@ -1,0 +1,15 @@
+<div class="background" [style.backgroundImage]="backgroundImageURL | styleUrl"></div>
+<app-toolbar>
+  <button class="back" (click)="onBackClick()" slot="start">
+    <app-icon icon="arrow_back"></app-icon>
+  </button>
+  <button class="add-feedback" (click)="onAddFeedbackClick()" slot="end">
+    <app-icon icon="add_feedback"></app-icon>
+  </button>
+</app-toolbar>
+<form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+  <mat-form-field class="text" appearance="outline" [hideRequiredMarker]="true">
+    <input type="text" matInput name="caption" required formControlName="caption" [placeholder]="'What\'s this?' | translate:'imageCaptionLabel'" />
+    <mat-error *ngIf="form.controls['caption'].hasError('required')" [innerHTML]="'Image caption is required' | translate:'imageCaptionRequired'"></mat-error>
+  </mat-form-field>
+</form>

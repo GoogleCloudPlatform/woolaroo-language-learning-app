@@ -1,0 +1,23 @@
+@import 'components';
+
+:host {
+  @include centered-page;
+
+  &:before {
+    flex-basis: 282px;
+  }
+
+  &:after {
+    flex-basis: 146px;
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 22px;
+  }
+
+  p {
+    margin: 0 60px 135px 60px;
+    font-size: 1.5rem;
+  }
+}

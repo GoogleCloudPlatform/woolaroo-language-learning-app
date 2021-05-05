@@ -1,0 +1,14 @@
+<form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+  <mat-toolbar>
+    <button class="close" (click)="onCloseClick($event)"><app-icon icon="close"></app-icon></button>
+    <span [innerHTML]="'Add word' | translate: 'addWord'">Add word</span>
+    <button mat-button color="primary" class="submit" type="submit">
+      <span [innerHTML]="'Add' | translate: 'add'"></span>
+    </button>
+  </mat-toolbar>
+  <div class="content">
+    <p class="mat-body-1 instructions" [innerHTML]="'Contribute to the app by adding new words in ${endangeredLanguage} and their translations' | translate: 'addWordInstructions':{endangeredLanguage:endangeredLanguage}">
+    </p>
+    <app-add-word-fieldset [formGroup]="form"></app-add-word-fieldset>
+  </div>
+</form>

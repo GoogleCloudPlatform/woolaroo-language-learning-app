@@ -1,0 +1,126 @@
+@import 'components';
+@import 'palette';
+
+// center error popup within camera frame
+::ng-deep .capture-camera-error .mat-dialog-container {
+  position: relative;
+  top: -10vh;
+}
+
+:host-context(body) app-root {
+  position: relative;
+  top: -10vh;
+}
+
+.mat-drawer-container {
+  background-color: mat-color($app-inverted, 100);
+  height: 100%;
+
+  .mat-sidenav {
+    width: 375px;
+    max-width: 80%;
+  }
+}
+
+app-camera-preview {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.camera-frame {
+  position: absolute;
+  width: 60vw;
+  height: 60vw;
+  max-width: 207px;
+  max-height: 207px;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  background: url(assets/img/camera-frame.svg) no-repeat center center;
+  background-size: contain;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .instructions {
+    text-align: center;
+    font-size: 20px;
+    line-height: 138.2%;
+    color: mat-contrast($app-inverted, 500);
+    width: 180px;
+    transition: opacity 0.5s ease-in-out;
+    pointer-events: none;
+
+    &.hidden {
+      opacity: 0;
+    }
+  }
+}
+
+.capture {
+  @include icon-button;
+  position: absolute;
+  bottom: 15px;
+  width: 100px;
+  height: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+
+  ::ng-deep {
+    app-icon {
+      width: 80px;
+      height: 80px;
+    }
+
+    .mat-icon {
+      color: mat-contrast($app-inverted, 500);
+    }
+  }
+}
+
+.load-photo,
+.language {
+  @include icon-button;
+  position: absolute;
+  bottom: 10px;
+  width: 60px;
+  height: 60px;
+  padding: 15px;
+  box-sizing: border-box;
+
+  ::ng-deep {
+    .mat-icon {
+      color: mat-contrast($app-inverted, 500);
+    }
+  }
+}
+
+.load-photo {
+  left: 20px;
+  bottom: 10px;
+}
+
+.language {
+  right: 20px;
+  bottom: 10px;
+}
+
+:host-context([dir=rtl]) {
+  .open-menu {
+    left: auto;
+    right: 8px;
+  }
+
+  .load-photo {
+    left: auto;
+    right: 35px;
+  }
+
+  .language {
+    right: auto;
+    left: 20px;
+  }
+}

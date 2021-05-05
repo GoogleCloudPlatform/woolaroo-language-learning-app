@@ -1,0 +1,39 @@
+<form [formGroup]="feedbackForm" (ngSubmit)="onFormSubmit()">
+  <mat-toolbar>
+    <button class="close" (click)="onCloseClick($event)"><app-icon icon="close"></app-icon></button>
+    <span [innerHTML]="'Feedback' | translate:'feedbackTitle'"></span>
+    <button mat-button color="primary" class="submit" type="submit">
+      <span [innerHTML]="'Submit' | translate:'submit'"></span>
+    </button>
+  </mat-toolbar>
+  <div class="content">
+    <p class="mat-body-1 instructions" [innerHTML]="'Help us improve Woolaroo\'s translations by sharing your feedback with us:' | translate:'feedbackInstructions'"></p>
+    <div class="feedback-types">
+      <ul>
+        <li>
+          <mat-checkbox (change)="onFeedbackTypeChange($event, FeedbackType.IncorrectTranslation)"
+                        [checked]="typeIsSelected(FeedbackType.IncorrectTranslation)">
+            <span [innerHTML]="'Incorrect translation' | translate:'incorrectTranslation'"></span>
+          </mat-checkbox>
+        </li>
+        <li>
+          <mat-checkbox (change)="onFeedbackTypeChange($event, FeedbackType.OffensiveTranslation)"
+                        [checked]="typeIsSelected(FeedbackType.OffensiveTranslation)">
+            <span [innerHTML]="'Offensive translation' | translate:'offensiveTranslation'"></span>
+          </mat-checkbox>
+        </li>
+      </ul>
+      <mat-error *ngIf="feedbackForm.controls['types'].hasError('required')" [innerHTML]="'No feedback type selected' | translate:'feedbackTypeRequired'"></mat-error>
+    </div>
+    <app-add-word-fieldset [formGroup]="feedbackForm"></app-add-word-fieldset>
+    <mat-form-field class="textarea" appearance="outline">
+      <mat-label [innerHTML]="'Enter feedback' | translate:'enterFeedback'"></mat-label>
+      <textarea matInput name="content" required formControlName="content"></textarea>
+      <mat-error *ngIf="feedbackForm.controls['content'].hasError('required')" [innerHTML]="'Feedback required' | translate:'feedbackRequired'"></mat-error>
+    </mat-form-field>
+  </div>
+</form>
+<section class="legal">
+  <p [innerHTML]="'Go to the <a href=https://support.google.com/legal/answer/3110420>Legal Help page</a> to request content changes for legal reasons.'|translate:'feedbackLegal1'"></p>
+  <p [innerHTML]="'We will use the information you give us to improve our services, subject to our <a href=https://policies.google.com/privacy?hl=en>Privacy Policy</a> and <a href=https://policies.google.com/terms?hl=en>Terms of Service</a>.'|translate:'feedbackLegal2'"></p>
+</section>

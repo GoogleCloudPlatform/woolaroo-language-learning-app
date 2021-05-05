@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile-dev
+    ports:
+      - "4200:4200"
+    tty: true
+    volumes:
+      - ./client:/var/www/app
+      - /var/www/app/node_modules/

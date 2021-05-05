@@ -1,0 +1,23 @@
+<app-logo class="brand-logo" [attributionEnabled]="true"></app-logo>
+<ul>
+  <li>
+    {{ 'About' | translate: 'about' }}
+    <ul>
+      <li><a [routerLink]="['/about']" [innerHTML]="'The App' | translate:'theApp'"></a></li>
+      <li><a [routerLink]="['/technology']" [innerHTML]="'The Technology' | translate:'theTechnology'"></a></li>
+      <li><a [routerLink]="['/languages']" [innerHTML]="'The Languages' | translate:'theLanguages'"></a></li>
+      <li *ngIf="termsAndPrivacyEnabled"><a [routerLink]="['/terms']" [innerHTML]="'Terms &amp; Privacy' | translate:'termsAndPrivacyTitle'"></a></li>
+    </ul>
+  </li>
+  <li>
+    {{ 'Feedback' | translate: 'feedbackTitle' }}
+    <ul>
+      <li><a [routerLink]="['/add-word']" [state]="{prevPageCssClass: 'capture'}" [innerHTML]="'Add a Word' | translate:'addAWord'"></a></li>
+      <li><a [routerLink]="['/feedback']" [state]="{prevPageCssClass: 'capture'}" [innerHTML]="'Provide Feedback' | translate:'translationFeedback'"></a></li>
+    </ul>
+  </li>
+</ul>
+<button *ngIf="addToHomeScreenEnabled" class="home-screen" mat-button (click)="onAddToHomeScreenClick()">
+  <app-icon icon="add_to_home"></app-icon>
+  <span [innerHTML]="'Add to home screen' | translate:'addToHomeScreen'"></span>
+</button>

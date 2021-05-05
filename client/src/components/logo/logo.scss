@@ -1,0 +1,22 @@
+:host {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  height: 50px;
+  position: relative;
+}
+
+img.main {
+  flex: 1 1 auto;
+  height: 45%;
+
+  &.no-attribution {
+    height: 100%;
+  }
+}
+
+img.attribution {
+  flex: 1 1 auto;
+  height: 55%;
+  margin-top: -1%;
+}

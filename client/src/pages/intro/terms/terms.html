@@ -1,0 +1,7 @@
+<h1 [innerHTML]="'Terms &amp; Privacy' | translate:'termsAndPrivacyTitle'"></h1>
+<p #agreement class="mat-body-1">
+  <span [innerHTML]="'By using Woolaroo you are accepting the <a href=\'${termsUrl}\'>Terms and Conditions</a> and <a href=\'${termsUrl}\'>Privacy Policy</a>' | translate:'introTermsAndPrivacy':{termsUrl:termsUrl}"></span>
+</p>
+<button mat-flat-button color="primary" (click)="onAcceptClick()" class="accept">
+  <span [innerHTML]="'Accept' | translate:'accept'"></span>
+</button>

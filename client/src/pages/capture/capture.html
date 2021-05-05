@@ -1,0 +1,21 @@
+<mat-sidenav-container>
+  <mat-sidenav (openedStart)="onSidenavOpenStart()" (closed)="onSidenavClosed()" mode="over" [opened]="sidenavOpen">
+    <app-sidenav></app-sidenav>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-camera-preview></app-camera-preview>
+    <app-toolbar>
+      <button (click)="onOpenMenuClick()" class="open-menu" aria-label="Open Menu" slot="start">
+        <app-icon icon="menu"></app-icon>
+      </button>
+    </app-toolbar>
+    <div class="camera-frame"></div>
+    <button (click)="onCaptureClick()" class="capture" aria-label="Capture Photo"><app-icon icon="capture_photo"></app-icon></button>
+    <button class="load-photo" [attr.aria-label]="'Pick photo' | translate:'pickPhoto'" (appFileUpload)="onImageUploaded($event)" accept="image/*">
+      <app-icon icon="photo_library"></app-icon>
+    </button>
+    <button class="language" [attr.aria-label]="'Change language' | translate:'changeLanguage'" (click)="onChangeLanguageClick()">
+      <app-icon icon="language"></app-icon>
+    </button>
+  </mat-sidenav-content>
+</mat-sidenav-container>

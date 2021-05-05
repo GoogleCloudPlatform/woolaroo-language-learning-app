@@ -1,0 +1,32 @@
+timeout: 1200s
+steps:
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    dir: './functions'
+    args: [ 'functions', 'deploy', 'saveAudioSuggestions', '--runtime', 'nodejs12', '--project', '${PROJECT_ID}',
+            '--region=${_REGION}', '--trigger-http', '--allow-unauthenticated', '--set-env-vars',
+            'SUGGESTIONS_SPREADSHEET=${_SUGGESTIONS_SPREADSHEET},FEEDBACK_SPREADSHEET=${_FEEDBACK_SPREADSHEET},AUDIO_FOLDER_ID=${_AUDIO_FOLDER_ID}']
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    dir: './functions'
+    args: [ 'functions', 'deploy', 'addSuggestions', '--runtime', 'nodejs12', '--project', '${PROJECT_ID}',
+            '--region=${_REGION}', '--trigger-http', '--allow-unauthenticated', '--set-env-vars',
+            'SUGGESTIONS_SPREADSHEET=${_SUGGESTIONS_SPREADSHEET},FEEDBACK_SPREADSHEET=${_FEEDBACK_SPREADSHEET},AUDIO_FOLDER_ID=${_AUDIO_FOLDER_ID}']
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    dir: './functions'
+    args: [ 'functions', 'deploy', 'addFeedback', '--runtime', 'nodejs12', '--project', '${PROJECT_ID}',
+            '--region=${_REGION}', '--trigger-http', '--allow-unauthenticated', '--set-env-vars',
+            'SUGGESTIONS_SPREADSHEET=${_SUGGESTIONS_SPREADSHEET},FEEDBACK_SPREADSHEET=${_FEEDBACK_SPREADSHEET},AUDIO_FOLDER_ID=${_AUDIO_FOLDER_ID}']
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    dir: './functions'
+    args: [ 'functions', 'deploy', 'getTranslations', '--runtime', 'nodejs12', '--project', '${PROJECT_ID}',
+            '--region=${_REGION}', '--trigger-http', '--allow-unauthenticated', '--set-env-vars',
+            'SUGGESTIONS_SPREADSHEET=${_SUGGESTIONS_SPREADSHEET},FEEDBACK_SPREADSHEET=${_FEEDBACK_SPREADSHEET},AUDIO_FOLDER_ID=${_AUDIO_FOLDER_ID}']
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    dir: './functions'
+    args: [ 'functions', 'deploy', 'visionAPI', '--runtime', 'nodejs12', '--project', '${PROJECT_ID}',
+            '--region=${_REGION}', '--trigger-http', '--allow-unauthenticated', '--set-env-vars',
+            'SUGGESTIONS_SPREADSHEET=${_SUGGESTIONS_SPREADSHEET},FEEDBACK_SPREADSHEET=${_FEEDBACK_SPREADSHEET},AUDIO_FOLDER_ID=${_AUDIO_FOLDER_ID}']

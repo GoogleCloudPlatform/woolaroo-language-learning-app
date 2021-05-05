@@ -1,0 +1,87 @@
+@import 'components';
+@import 'palette';
+
+:host {
+  @include centered-page;
+  justify-content: space-between;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+
+  &:before {
+    flex-basis: 50%;
+  }
+
+  &:after {
+    display: none;
+  }
+}
+
+video,
+.loading-spinner,
+.app-logo,
+.arts-culture-logo,
+.credits {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+
+  &.hidden {
+    opacity: 0;
+  }
+}
+
+.loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  stroke: mat-color($app-accent);
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+}
+
+.logos {
+  width: 300px;
+  max-width: 100%;
+  position: relative;
+}
+
+.credits {
+  flex: 1 1 50%;
+  margin: 0 0 40px 0;
+  padding: 0;
+  list-style-type: none;
+  transition-delay: 2s;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  &.hidden {
+    transition-delay: 0s;
+  }
+
+  li {
+    margin: 0;
+    padding: 0;
+
+    &.arts-culture-logo {
+      img {
+        width: 250px;
+        max-width: 100%;
+      }
+    }
+  }
+
+}

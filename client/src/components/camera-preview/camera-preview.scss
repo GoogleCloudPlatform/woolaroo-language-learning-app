@@ -1,0 +1,33 @@
+@import 'palette';
+
+:host {
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  display: block;
+}
+
+video {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: mat-color($app-inverted, 100);
+  object-fit: cover;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+:host-context([dir=rtl]) video {
+  left: -50%;
+  transform: translate(50%, -50%);
+}
+
+.captured-image {
+  position: absolute;
+  z-index: -100;
+  visibility: hidden; /* canvas must have dimensions to render image, but doesn't need to be visible */
+  top: 0;
+  left: 0;
+}

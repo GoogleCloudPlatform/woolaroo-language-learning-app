@@ -1,0 +1,80 @@
+@import 'components';
+@import 'palette';
+
+:host {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+
+  &:before {
+    content: "";
+    flex: 0 0 auto;
+    height: 40%;
+  }
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+app-translation-selector {
+  flex: 1 1 auto;
+  min-height: 270px;
+  margin-bottom: 40px;
+}
+
+.current-language,
+.change-language {
+  @include text-button;
+  flex: 0 0 auto;
+  margin-bottom: 20px;
+  color: mat-contrast($app-inverted, 500);
+  font-size: 20px;
+
+  span {
+    vertical-align: middle;
+  }
+
+  app-icon {
+    margin-left: 8px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+}
+
+.current-language app-icon {
+  @include directional;
+  width: 30px;
+  height: 30px;
+}
+
+mat-toolbar {
+  .back app-icon,
+  .submit-feedback app-icon {
+    @include directional;
+  }
+}
+
+:host-context([dir=rtl]) {
+  mat-toolbar {
+    .back {
+      right: 8px;
+    }
+
+    .submit-feedback {
+      left: 8px;
+    }
+  }
+}

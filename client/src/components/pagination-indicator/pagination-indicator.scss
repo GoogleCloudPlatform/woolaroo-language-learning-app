@@ -1,0 +1,29 @@
+@import 'palette';
+
+:host {
+  display: block;
+  text-align: center;
+}
+
+ul {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+}
+
+li {
+  flex: 0 0 auto;
+  padding: 0;
+  margin: 0 10px;
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  background-color: mat-color($app-secondary, 100);
+
+  &.selected {
+    background-color: mat-color($app-secondary);
+  }
+}
