@@ -12,10 +12,11 @@ export function getOperatingSystem(): OperatingSystem {
   const platform = navigator.platform;
   switch (platform) {
     case 'Macintosh':
-    case 'MacIntel':
     case 'MacPPC':
     case 'Mac68K':
       return OperatingSystem.MacOS;
+    case 'MacIntel':
+      return hasTouchscreen() ? OperatingSystem.iOS : OperatingSystem.MacOS;
     case 'iPhone':
     case 'iPad':
     case 'iPod':
@@ -63,7 +64,11 @@ export function isMobileDevice(): boolean {
       return true;
     default:
       // default to using media queries
-      return window.matchMedia('only screen and (hover: none) and (pointer: coarse)').matches ||
-        window.matchMedia('only screen and (hover: none) and (pointer: fine)').matches;
+      return hasTouchscreen();
   }
+}
+
+function hasTouchscreen(): boolean {
+  return window.matchMedia('only screen and (hover: none) and (pointer: coarse)').matches ||
+    window.matchMedia('only screen and (hover: none) and (pointer: fine)').matches;
 }
