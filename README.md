@@ -1,4 +1,4 @@
-![alt text](public/logo2200.png)
+![alt text](logo.png)
 
 ## Project Woolaroo - Exploring Indigenous language through photos.
 
