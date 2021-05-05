@@ -12,8 +12,11 @@ import { FeedbackType, Feedback } from 'services/entities/feedback';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
 import { environment } from 'environments/environment';
 import { I18nService } from 'i18n/i18n.service';
-import { EndangeredLanguageService } from '../../services/endangered-language';
-import { DEFAULT_LOCALE } from '../../util/locale';
+import { EndangeredLanguageService } from 'services/endangered-language';
+import { DEFAULT_LOCALE } from 'util/locale';
+import {getLogger} from 'util/logging';
+
+const logger = getLogger('FeedbackPageComponent');
 
 @Component({
   selector: 'app-page-feedback',
@@ -69,14 +72,14 @@ export class FeedbackPageComponent implements AfterViewInit {
     this.submittingForm = true;
     const loadingPopup = this.dialog.open(LoadingPopUpComponent, { panelClass: 'loading-popup' });
     const feedback: Feedback = this.feedbackForm.value;
-    if(!feedback.word && this.i18n.currentLanguage.code == DEFAULT_LOCALE) {
+    if (!feedback.word && this.i18n.currentLanguage.code == DEFAULT_LOCALE) {
       feedback.word = feedback.englishWord;
     }
     feedback.language = this.i18n.currentLanguage.code;
     feedback.nativeLanguage = this.endangeredLanguageService.currentLanguage.code;
     this.feedbackService.sendFeedback(feedback).then(
       () => {
-        console.log('Feedback submitted');
+        logger.log('Feedback submitted');
         this.location.back();
         const snackbarCssClass = this.prevPageCssClass ? `${this.prevPageCssClass}-snack-bar` : '';
         this.snackBar.open(this.i18n.getTranslation('feedbackSubmitted') || 'Feedback submitted', '',
@@ -87,7 +90,7 @@ export class FeedbackPageComponent implements AfterViewInit {
         }, environment.components.snackBar.duration + 500);
       },
       err => {
-        console.warn('Failed submitting feedback', err);
+        logger.warn('Failed submitting feedback', err);
         const errorMessage = this.i18n.getTranslation('submitFeedbackError') || 'Unable to save feedback';
         this.dialog.open(ErrorPopUpComponent, { data: { message: errorMessage } });
       }

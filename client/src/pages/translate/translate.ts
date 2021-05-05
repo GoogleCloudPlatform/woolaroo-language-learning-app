@@ -16,6 +16,9 @@ import { share } from 'util/share';
 import { NotSupportedError } from 'util/errors';
 import { validateImageData, validateImageURL } from 'util/image';
 import { loadCapturePageURL } from 'util/camera';
+import {getLogger} from 'util/logging';
+
+const logger = getLogger('TranslatePageComponent');
 
 interface TranslatePageConfig {
   debugImageUrl?: string;
@@ -100,7 +103,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
     if (!image) {
       const debugImageUrl = this.config.debugImageUrl;
       if (!debugImageUrl) {
-        console.warn('Image not found in state - returning to previous screen');
+        logger.warn('Image not found in state - returning to previous screen');
         throw new Error('Image not found');
       } else if (words) {
         const debugImage = await this.loadImage(debugImageUrl);
@@ -154,14 +157,14 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
       translations = await this.translationService.translate(words, this.i18n.currentLanguage.code,
         this.endangeredLanguageService.currentLanguage.code, 1);
     } catch (ex) {
-      console.warn('Error loading translations', ex);
+      logger.warn('Error loading translations', ex);
       // show words as if none had translations
       this.zone.run(() => {
         this.translations = words.map(w => ({ original: w, english: '', translation: '', transliteration: '', soundURL: null }));
       });
       return;
     }
-    console.log('Translations loaded');
+    logger.log('Translations loaded');
     this.zone.run(() => {
       this.translations = translations;
     });
@@ -197,7 +200,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
         this._sharedImage = img;
       },
       (err) => {
-        console.warn('Error rendering image', err);
+        logger.warn('Error rendering image', err);
         this._sharedImage = null;
       }
     );
@@ -223,10 +226,10 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
     const img = this._sharedImage;
     if (!img) {
       // image not rendered - default to sharing text
-      console.warn('Shared image data not found');
+      logger.warn('Shared image data not found');
       share({text: shareText, title: shareTitle}).then(
         () => {},
-        ex => console.warn('Error sharing image', ex)
+        ex => logger.warn('Error sharing image', ex)
       );
       return;
     }
@@ -234,13 +237,13 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
     share({text: shareText, title: shareTitle, files}).then(
       () => {},
       ex => {
-        console.warn('Error sharing image', ex);
+        logger.warn('Error sharing image', ex);
         if (ex instanceof NotSupportedError) {
           // sharing not supported - default to downloading image
           try {
             downloadFile(img, `woolaroo-translation-${word.original}.jpg`);
           } catch (err) {
-            console.warn('Error downloading image', err);
+            logger.warn('Error downloading image', err);
           }
         }
       }

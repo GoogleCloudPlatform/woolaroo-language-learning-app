@@ -1,6 +1,9 @@
 import { IProfileService } from './profile';
 import { Profile } from './entities/profile';
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
+import {getLogger} from 'util/logging';
+
+const logger = getLogger('LocalProfileService');
 
 @Injectable()
 export class LocalProfileService implements IProfileService {
@@ -11,7 +14,7 @@ export class LocalProfileService implements IProfileService {
       try {
        profile = JSON.parse(serializedProfile);
       } catch (err) {
-        console.warn('Error parsing profile', err);
+        logger.warn('Error parsing profile', err);
       }
     }
     if (!profile) {

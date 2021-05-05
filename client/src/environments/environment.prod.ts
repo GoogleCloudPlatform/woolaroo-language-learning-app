@@ -8,6 +8,7 @@ import { params } from './environment.prod.params';
 
 export const environment = {
   production: true,
+  loggingEnabled: false,
   assets: {
     baseUrl: params.assetsBaseUrl,
   },

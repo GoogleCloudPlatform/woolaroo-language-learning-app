@@ -1,13 +1,16 @@
-import { Injectable } from "@angular/core";
-import { IAnalyticsService } from "../analytics";
+import { Injectable } from '@angular/core';
+import { IAnalyticsService } from '../analytics';
+import {getLogger} from 'util/logging';
+
+const logger = getLogger('EndangeredLanguageService');
 
 @Injectable()
 export class MockAnalyticsService implements IAnalyticsService {
   public async logPageView(path: string, title: string) {
-    console.log(`Logged page view: ${path} - ${title}`);
+    logger.log(`Logged page view: ${path} - ${title}`);
   }
 
   public async logButtonClick(buttonID: string) {
-    console.log(`Logged button click: ${buttonID}`);
+    logger.log(`Logged button click: ${buttonID}`);
   }
 }

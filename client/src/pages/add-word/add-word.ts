@@ -10,10 +10,13 @@ import { FEEDBACK_SERVICE, IFeedbackService } from 'services/feedback';
 import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
 import { WordTranslation } from 'services/entities/translation';
 import { environment } from 'environments/environment';
-import { DEFAULT_LOCALE } from "../../util/locale";
+import { DEFAULT_LOCALE } from 'util/locale';
 import { I18nService } from 'i18n/i18n.service';
-import { EndangeredLanguageService } from '../../services/endangered-language';
-import { AddedWord } from '../../services/entities/feedback';
+import { EndangeredLanguageService } from 'services/endangered-language';
+import { AddedWord } from 'services/entities/feedback';
+import {getLogger} from 'util/logging';
+
+const logger = getLogger('AddWordPageComponent');
 
 @Component({
   selector: 'app-page-add-word',
@@ -38,7 +41,7 @@ export class AddWordPageComponent implements AfterViewInit {
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {
     const word: WordTranslation = history.state.word;
     this.form = new FormGroup({
-      word: new FormControl(word ? word.original : '', this.i18n.currentLanguage.code != DEFAULT_LOCALE ? [
+      word: new FormControl(word ? word.original : '', this.i18n.currentLanguage.code !== DEFAULT_LOCALE ? [
         Validators.required
       ] : []),
       nativeWord: new FormControl(word ? word.translation : '', [
@@ -70,14 +73,14 @@ export class AddWordPageComponent implements AfterViewInit {
     this.submittingForm = true;
     const loadingPopup = this.dialog.open(LoadingPopUpComponent, { panelClass: 'loading-popup' });
     const addedWord: AddedWord = this.form.value;
-    if(!addedWord.word && this.i18n.currentLanguage.code == DEFAULT_LOCALE) {
+    if (!addedWord.word && this.i18n.currentLanguage.code == DEFAULT_LOCALE) {
       addedWord.word = addedWord.englishWord;
     }
     addedWord.language = this.i18n.currentLanguage.code;
     addedWord.nativeLanguage = this.endangeredLanguageService.currentLanguage.code;
     this.feedbackService.addWord(this.form.value).then(
       () => {
-        console.log('Added word submitted');
+        logger.log('Added word submitted');
         this.location.back();
         const snackbarCssClass = this.prevPageCssClass ? `${this.prevPageCssClass}-snack-bar` : '';
         this.snackBar.open(this.i18n.getTranslation('wordSubmitted') || 'Submitted for review', '',
@@ -88,7 +91,7 @@ export class AddWordPageComponent implements AfterViewInit {
         }, environment.components.snackBar.duration + 500);
       },
       err => {
-        console.warn('Failed adding word', err);
+        logger.warn('Failed adding word', err);
         const errorMessage = this.i18n.getTranslation('addWordError') || 'Unable to add word';
         this.dialog.open(ErrorPopUpComponent, { data: { message: errorMessage } });
       }

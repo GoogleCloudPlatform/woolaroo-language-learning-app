@@ -12,6 +12,7 @@ const debugImageUrl = '/assets/debug/IMG_20190920_141505.jpg';
 
 export const environment = {
   production: false,
+  loggingEnabled: true,
   assets: {
     baseUrl: '/',
   },

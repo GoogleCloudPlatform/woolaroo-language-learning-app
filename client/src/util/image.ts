@@ -1,4 +1,7 @@
 import { default as loadImage } from 'blueimp-load-image';
+import {getLogger} from 'util/logging';
+
+const logger = getLogger('image');
 
 export async function canvasToBlob(canvas: HTMLCanvasElement, quality: number = 0.8): Promise<Blob> {
   return new Promise<Blob>((resolve, reject) => {
@@ -11,7 +14,7 @@ export async function canvasToBlob(canvas: HTMLCanvasElement, quality: number = 
         resolve(dataURItoBlob(dataUrl));
       }
     } catch (err) {
-      console.warn('Converting canvas to blob failed', err);
+      logger.warn('Converting canvas to blob failed', err);
       reject(err);
     }
   });

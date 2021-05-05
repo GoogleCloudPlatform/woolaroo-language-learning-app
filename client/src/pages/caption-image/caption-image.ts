@@ -8,7 +8,10 @@ import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
 import { SessionService } from 'services/session';
 import { MatDialog } from '@angular/material/dialog';
 import { addOpenedListener } from 'util/dialog';
-import {validateImageURL} from "../../util/image";
+import {validateImageURL} from 'util/image';
+import {getLogger} from 'util/logging';
+
+const logger = getLogger('CaptionImagePageComponent');
 
 interface CaptionImagePageConfig {
   debugImageUrl?: string;
@@ -47,7 +50,7 @@ export class CaptionImagePageComponent implements OnInit {
     if (!image) {
       const debugImageUrl = this.config.debugImageUrl;
       if (!debugImageUrl) {
-        console.warn('Image not found in state - returning to previous screen');
+        logger.warn('Image not found in state - returning to previous screen');
         this.router.navigateByUrl(AppRoutes.CaptureImage, { replaceUrl: true });
       } else {
         this.loadImage(debugImageUrl);

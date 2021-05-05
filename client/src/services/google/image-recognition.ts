@@ -4,6 +4,7 @@ import { retry } from 'rxjs/operators';
 import { InvalidFormatError, InappropriateContentError } from '../entities/errors';
 import { IImageRecognitionService, IMAGE_RECOGNITION_CONFIG, ImageDescription } from '../image-recognition';
 import { resizeImage } from 'util/image';
+import {getLogger} from 'util/logging';
 
 export enum SafeSearchLikelihood {
   VERY_UNLIKELY = 'VERY_UNLIKELY',
@@ -47,6 +48,8 @@ export interface RecognitionResponse {
   error: {code: number, message: string}|null;
 }
 
+const logger = getLogger('GoogleImageRecognitionServiceBase');
+
 const VISION_URL = 'https://vision.googleapis.com/v1/images:annotate?key=';
 
 export class GoogleImageRecognitionServiceBase implements IImageRecognitionService {
@@ -86,10 +89,10 @@ export class GoogleImageRecognitionServiceBase implements IImageRecognitionServi
       throw new InvalidFormatError('Image is not in supported format');
     }
     if (imageData.size > this.baseConfig.maxFileSize) {
-      console.log('Image file size is too large - resizing: ' + imageData.size);
+      logger.log('Image file size is too large - resizing: ' + imageData.size);
       imageData = await resizeImage(imageData, this.baseConfig.resizedImageDimension,
         this.baseConfig.resizedImageDimension, this.baseConfig.resizedImageQuality);
-      console.log('New image size: ' + imageData.size);
+      logger.log('New image size: ' + imageData.size);
     }
     return new Promise<ImageDescription[]>((resolve, reject) => {
       const reader = new FileReader();
@@ -102,7 +105,7 @@ export class GoogleImageRecognitionServiceBase implements IImageRecognitionServi
             try {
               descriptions = this.filterImageDescriptions(response);
             } catch (err) {
-              console.warn('Error in image response', err);
+              logger.warn('Error in image response', err);
               reject(err);
               return;
             }
@@ -110,7 +113,7 @@ export class GoogleImageRecognitionServiceBase implements IImageRecognitionServi
           }, reject);
       };
       reader.onerror = err => {
-        console.warn('Error reading image data', err);
+        logger.warn('Error reading image data', err);
         reject(err);
       };
       reader.readAsDataURL(imageData);
@@ -123,7 +126,7 @@ export class GoogleImageRecognitionServiceBase implements IImageRecognitionServi
 
   private filterImageDescriptions(response: RecognitionResponse|null): ImageDescription[] {
     if (!response) {
-      console.warn('No Labels detected');
+      logger.warn('No Labels detected');
       throw new Error('No Labels detected');
     }
     // check if image as flagged as inappropriate
@@ -132,13 +135,13 @@ export class GoogleImageRecognitionServiceBase implements IImageRecognitionServi
       if (response.safeSearchAnnotation[cat] && maxLikelihoods[cat]
         && GoogleImageRecognitionServiceBase.getSafeSearchLikelihoodIndex(response.safeSearchAnnotation[cat])
         > GoogleImageRecognitionServiceBase.getSafeSearchLikelihoodIndex(maxLikelihoods[cat])) {
-        console.warn('Error loading image descriptions: image is inappropriate');
+        logger.warn('Error loading image descriptions: image is inappropriate');
         throw new InappropriateContentError('Image is inappropriate');
       }
     }
     // check if image has no annotations
     if (!response || !response.labelAnnotations || response.labelAnnotations.length === 0) {
-      console.warn('No Labels detected');
+      logger.warn('No Labels detected');
       throw new Error('No Labels detected');
     }
     // filter out any annotations with multiple words
@@ -173,13 +176,13 @@ export class GoogleImageRecognitionService extends GoogleImageRecognitionService
         .subscribe(response => {
           // check that image has at least one annotation
           if (!response.responses) {
-            console.warn('Empty response from Cloud Vision');
+            logger.warn('Empty response from Cloud Vision');
             resolve(null);
           }
           // check errors
           const firstResponse = response.responses[0];
           if (firstResponse.error) {
-            console.warn('Error loading image descriptions: ' + firstResponse.error);
+            logger.warn('Error loading image descriptions: ' + firstResponse.error);
             reject(new Error(firstResponse.error.message));
             return;
           }

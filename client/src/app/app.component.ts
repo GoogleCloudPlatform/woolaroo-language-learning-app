@@ -3,10 +3,13 @@ import { Router, NavigationStart, NavigationEnd, ActivatedRoute } from '@angular
 import { SessionService } from 'services/session';
 import { I18nService } from 'i18n/i18n.service';
 import { filter } from 'rxjs/operators';
-import { EndangeredLanguageService } from '../services/endangered-language';
-import { IProfileService, PROFILE_SERVICE } from '../services/profile';
+import { EndangeredLanguageService } from 'services/endangered-language';
+import { IProfileService, PROFILE_SERVICE } from 'services/profile';
 import { Directionality } from '@angular/cdk/bidi';
 import {disablePinchZoom, disableTouchSelection, isInStandaloneMode} from 'util/platform';
+import {getLogger} from 'util/logging';
+
+const logger = getLogger('ChangeLanguagePageComponent');
 
 @Component({
   selector: 'app-root',
@@ -49,8 +52,8 @@ export class AppComponent implements OnInit {
     // lock to portrait mode
     if ('orientation' in window.screen && 'lock' in window.screen.orientation) {
       window.screen.orientation.lock('portrait').then(
-        () => console.log('Screen locked in portrait mode'),
-        () => console.warn('Failed locking screen orientation')
+        () => logger.log('Screen locked in portrait mode'),
+        () => logger.warn('Failed locking screen orientation')
       );
     }
     if (isInStandaloneMode()) {
@@ -63,10 +66,10 @@ export class AppComponent implements OnInit {
     // load language settings
     this.profileService.loadProfile().then(
       profile => {
-        if(profile.language) {
+        if (profile.language) {
           this.i18nService.setLanguage(profile.language);
         }
-        if(profile.endangeredLanguage) {
+        if (profile.endangeredLanguage) {
           this.endangeredLanguageService.setLanguage(profile.endangeredLanguage);
         }
       }
@@ -94,16 +97,16 @@ export class AppComponent implements OnInit {
       filter((e) => e instanceof NavigationEnd)
     ).subscribe(() => {
       let route = this.route;
-      while(route.firstChild) {
+      while (route.firstChild) {
         route = route.firstChild;
       }
       route.paramMap.subscribe(map => {
         const uiLanguage = map.get('uiLanguage');
-        if(uiLanguage) {
+        if (uiLanguage) {
           this.i18nService.setLanguage(uiLanguage);
         }
         const endangeredLanguage = map.get('endangeredLanguage');
-        if(endangeredLanguage) {
+        if (endangeredLanguage) {
           this.endangeredLanguageService.setLanguage(endangeredLanguage);
         }
       });

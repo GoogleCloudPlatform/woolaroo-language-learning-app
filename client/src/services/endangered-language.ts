@@ -1,4 +1,7 @@
 import { EventEmitter, Inject, Injectable, InjectionToken } from '@angular/core';
+import {getLogger} from 'util/logging';
+
+const logger = getLogger('EndangeredLanguageService');
 
 export interface EndangeredLanguage {
   code: string;
@@ -27,7 +30,8 @@ export class EndangeredLanguageService {
 
   public get languages(): EndangeredLanguage[] { return this.config.languages; }
 
-  constructor(@Inject(ENDANGERED_LANGUAGE_CONFIG) private config: EndangeredLanguageConfig) {
+  constructor(
+    @Inject(ENDANGERED_LANGUAGE_CONFIG) private config: EndangeredLanguageConfig) {
     const defaultLanguage = this.config.languages.find(lang => lang.default);
     this._currentLanguage = defaultLanguage || this.config.languages[0];
   }
@@ -40,7 +44,7 @@ export class EndangeredLanguageService {
     if (!newLanguage) {
       throw new Error('Language not found: ' + code);
     }
-    console.log('Endangered language changed: ' + code);
+    logger.log('Endangered language changed: ' + code);
     this._currentLanguage = newLanguage;
     this.currentLanguageChanged.emit(this._currentLanguage.code);
   }

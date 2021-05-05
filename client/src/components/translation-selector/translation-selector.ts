@@ -1,12 +1,15 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import {Component, ElementRef, EventEmitter, Inject, Input, Output, ViewChild} from '@angular/core';
 import { WordTranslation } from 'services/entities/translation';
 import { Point } from 'util/geometry';
+import {getLogger} from 'util/logging';
 
 enum AudioState {
   Stopped,
   Loading,
   Playing
 }
+
+const logger = getLogger('TranslationSelectorComponent');
 
 @Component({
   selector: 'app-translation-selector',
@@ -38,9 +41,12 @@ export class TranslationSelectorComponent {
   @Input()
   public defaultSelectedWordIndex = -1;
 
+  constructor() {
+  }
+
   onPlayAudioClick() {
     if (!this.audioPlayer || !this.audioPlayer.nativeElement) {
-      console.warn('Audio player not initialized');
+      logger.warn('Audio player not initialized');
       return;
     }
     const audioPlayer = this.audioPlayer.nativeElement as HTMLAudioElement;
@@ -48,8 +54,8 @@ export class TranslationSelectorComponent {
       case AudioState.Stopped:
         this.audioState = AudioState.Loading;
         audioPlayer.play().then(
-          () => console.log('Audio started'),
-          err => console.warn('Unable to start audio: ' + err.toString())
+          () => logger.log('Audio started'),
+          err => logger.warn('Unable to start audio: ' + err.toString())
         );
         break;
       default:
@@ -60,12 +66,12 @@ export class TranslationSelectorComponent {
   }
 
   onAudioPlaying() {
-    console.log('Audio playing');
+    logger.log('Audio playing');
     this.audioState = AudioState.Playing;
   }
 
   onAudioStopped() {
-    console.log('Audio stopped');
+    logger.log('Audio stopped');
     this.audioState = AudioState.Stopped;
   }
 

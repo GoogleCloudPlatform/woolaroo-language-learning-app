@@ -1,5 +1,9 @@
 /// <reference types="@types/dom-mediacapture-record" />
 
+import {getLogger} from 'util/logging';
+
+const logger = getLogger('audio');
+
 export interface AudioStream {
   stop(): void;
 }
@@ -37,13 +41,13 @@ export async function startRecording(bufferSize: number, mimeTypes?: string[]): 
     navigator.mediaDevices.getUserMedia({video: false, audio: true}).then(
       (stream) => {
        if (typeof(MediaRecorder) !== 'undefined') {
-          console.log('Starting MediaRecorder recording');
+          logger.log('Starting MediaRecorder recording');
           startMediaRecorderRecording(stream, mimeTypes).then(
             str => resolve(str),
             ex => reject(ex)
           );
         } else {
-          console.log('Starting AudioContext recording');
+          logger.log('Starting AudioContext recording');
           startAudioContextRecording(stream, bufferSize).then(
             str => resolve(str),
             ex => reject(ex)
@@ -51,7 +55,7 @@ export async function startRecording(bufferSize: number, mimeTypes?: string[]): 
         }
       },
       (err) => {
-        console.warn('Error creating audio stream', err);
+        logger.warn('Error creating audio stream', err);
         reject(err);
       }
     );
@@ -65,7 +69,7 @@ function startMediaRecorderRecording(stream: MediaStream, mimeTypes?: string[]):
     if (type) {
       options.mimeType = type;
     } else {
-      console.warn('No supported mime type found - using default type');
+      logger.warn('No supported mime type found - using default type');
     }
   }
   const recorder = new MediaRecorder(stream, options);
@@ -77,13 +81,13 @@ function startMediaRecorderRecording(stream: MediaStream, mimeTypes?: string[]):
   };
   const chunks: Blob[] = [];
   recorder.ondataavailable = (dataEvent: BlobEvent) => {
-    console.log('Recording data available');
+    logger.log('Recording data available');
     if(dataEvent.data.size > 0) {
       chunks.push(dataEvent.data);
     }
   };
   recorder.onstop = () => {
-    console.log('Recording stopped');
+    logger.log('Recording stopped');
     for(const track of stream.getAudioTracks()) {
       track.stop();
     }
@@ -94,11 +98,11 @@ function startMediaRecorderRecording(stream: MediaStream, mimeTypes?: string[]):
   };
   return new Promise<RecordingStream>((resolve, reject) => {
     recorder.onstart = () => {
-      console.log('Recording started');
+      logger.log('Recording started');
       resolve(recordingStream);
     };
     recorder.onerror = (ev) => {
-      console.warn('Recording error', ev.error);
+      logger.warn('Recording error', ev.error);
       reject(ev.error);
     };
     recorder.start();
@@ -198,7 +202,7 @@ export async function play(buffer: Blob): Promise<PlaybackStream> {
 }
 
 export async function playWithAudioElement(buffer: Blob): Promise<PlaybackStream> {
-  console.log('Playing with audio element');
+  logger.log('Playing with audio element');
   const audio = new Audio();
   const stream: PlaybackStream = {
     onended: null,

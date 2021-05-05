@@ -12,6 +12,9 @@ import { SessionService } from 'services/session';
 import { addOpenedListener } from 'util/dialog';
 import { I18nService } from 'i18n/i18n.service';
 import { IProfileService, PROFILE_SERVICE } from 'services/profile';
+import {getLogger} from 'util/logging';
+
+const logger = getLogger('CapturePageComponent');
 
 export class ImageLoaderPageBase {
   constructor( protected router: Router,
@@ -51,7 +54,7 @@ export class ImageLoaderPageBase {
         }
       },
       (err) => {
-        console.warn('Error loading image descriptions', err);
+        logger.warn('Error loading image descriptions', err);
         loadingPopUp.close();
         const errorTitle = this.i18n.getTranslation('imageRecognitionErrorTitle') || 'Unable to connect';
         const errorMessage = this.i18n.getTranslation('imageRecognitionErrorMessage') || 'Please check network connection';
@@ -88,7 +91,7 @@ export class CapturePageComponent extends ImageLoaderPageBase implements AfterVi
     let loadingPopUp: MatDialogRef<any>|undefined = this.sessionService.currentSession.currentModal;
     this.analyticsService.logPageView(this.router.url, 'Capture');
     if (!this.cameraPreview) {
-      console.error('Camera preview not found');
+      logger.error('Camera preview not found');
       if (loadingPopUp) {
         loadingPopUp.close();
       }
@@ -103,13 +106,13 @@ export class CapturePageComponent extends ImageLoaderPageBase implements AfterVi
     });
     this.cameraPreview.start().then(
       () => {
-        console.log('Camera started');
+        logger.log('Camera started');
         if (loadingPopUp) {
           loadingPopUp.close();
         }
       },
       err => {
-        console.warn('Error starting camera', err);
+        logger.warn('Error starting camera', err);
         if (loadingPopUp) {
           loadingPopUp.close();
         }
@@ -144,11 +147,11 @@ export class CapturePageComponent extends ImageLoaderPageBase implements AfterVi
     addOpenedListener(loadingPopUp, () => {
       preview.capture().then(
         image => {
-          console.log('Image captured');
+          logger.log('Image captured');
           this.loadImageDescriptions(image, loadingPopUp);
         },
         err => {
-          console.warn('Failed to capture image', err);
+          logger.warn('Failed to capture image', err);
           this.captureInProgress = false;
           loadingPopUp.close();
           const errorMessage = this.i18n.getTranslation('captureImageError') || 'Unable to capture image';

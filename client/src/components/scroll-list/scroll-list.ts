@@ -9,6 +9,7 @@ import {
   QueryList,
   TemplateRef, ViewChild
 } from '@angular/core';
+import {getLogger} from 'util/logging';
 
 @Directive({selector: '[appScrollListItem]'})
 export class ScrollListItem {
@@ -45,6 +46,7 @@ interface DragInfo {
   startScrollPosition: number;
 }
 
+const logger = getLogger('ScrollListComponent');
 
 @Component({
   selector: 'app-scroll-list',
@@ -61,15 +63,15 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
   public scrollContent: ElementRef|null = null;
 
   @Input()
-  public snappingEnabled: boolean = true;
+  public snappingEnabled = true;
   @Input()
   public itemAlignment: 'start'|'center' = 'center';
 
-  private _currentItem: number = -1;
+  private _currentItem = -1;
   public get currentItem(): number { return Math.max(0, this._currentItem); }
   @Input()
   public set currentItem(value: number) {
-    if(value != this._currentItem) {
+    if (value !== this._currentItem) {
       const firstValue = this._currentItem < 0;
       this._currentItem = value;
       this.currentItemChanged.emit(value);
@@ -93,7 +95,9 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
       || Math.abs(this.dragInfo.minScrollPosition - this.dragInfo.startScrollPosition) > this.config.draggingMinDistance);
   }
 
-  constructor(@Inject(SCROLL_LIST_CONFIG) private config: ScrollListConfig, private hostElement: ElementRef) {
+  constructor(
+    @Inject(SCROLL_LIST_CONFIG) private config: ScrollListConfig,
+    private hostElement: ElementRef) {
   }
 
   ngAfterViewInit() {
@@ -147,7 +151,7 @@ export class ScrollListComponent implements AfterViewInit, OnDestroy {
   }
 
   onTouchEnd = () => {
-    console.log('touch end');
+    logger.log('touch end');
     window.document.body.removeEventListener('touchmove', this.onTouchMove);
     window.document.body.removeEventListener('touchend', this.onTouchEnd);
     if(this.isDragging) {

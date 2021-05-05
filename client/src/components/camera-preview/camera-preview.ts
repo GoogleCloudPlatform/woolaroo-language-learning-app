@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { canvasToBlob } from 'util/image';
 import { cameraStreamIsAvailable } from 'util/camera';
+import {getLogger} from 'util/logging';
 
 interface CameraPreviewConfig {
   resizeDelay: number;
@@ -20,6 +21,8 @@ export enum CameraPreviewStatus {
   Started,
   Starting
 }
+
+const logger = getLogger('CameraPreviewComponent');
 
 @Component({
   selector: 'app-camera-preview',
@@ -40,7 +43,8 @@ export class CameraPreviewComponent implements OnDestroy {
   @Output()
   videoError: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(@Inject(CAMERA_PREVIEW_CONFIG) private config: CameraPreviewConfig) {
+  constructor(
+    @Inject(CAMERA_PREVIEW_CONFIG) private config: CameraPreviewConfig) {
     this._status = CameraPreviewStatus.Stopped;
   }
 
@@ -78,7 +82,7 @@ export class CameraPreviewComponent implements OnDestroy {
     } else if (!this.video) {
       throw new Error('Component not ready');
     }
-    console.log('Starting video stream');
+    logger.log('Starting video stream');
     this._status = CameraPreviewStatus.Starting;
     // assume full window size
     const windowWidth = window.innerWidth;
@@ -92,7 +96,7 @@ export class CameraPreviewComponent implements OnDestroy {
       desiredHeight = tmp;
     }
     const video = this.video;
-    console.log(`Requesting video at ${desiredWidth}x${desiredHeight}`);
+    logger.log(`Requesting video at ${desiredWidth}x${desiredHeight}`);
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: false, video:
           { width: desiredWidth, height: desiredHeight, facingMode: 'environment' } });
@@ -100,23 +104,23 @@ export class CameraPreviewComponent implements OnDestroy {
       video.srcObject = stream;
     } catch (err) {
       if (err instanceof DOMException) {
-        console.warn('Unable to get video stream with ideal dimensions, trying default dimensions.', err);
+        logger.warn('Unable to get video stream with ideal dimensions, trying default dimensions.', err);
         const stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: 'environment' } });
         this.videoStream = stream;
         video.srcObject = stream;
       } else {
-        console.warn('Unable to start video stream.', err);
+        logger.warn('Unable to start video stream.', err);
         throw err;
       }
     }
     await video.play();
-    console.log(`Video stream started at ${video.videoWidth}x${video.videoHeight}`);
+    logger.log(`Video stream started at ${video.videoWidth}x${video.videoHeight}`);
     this._status = CameraPreviewStatus.Started;
     for (const track of this.videoStream.getTracks()) {
       track.addEventListener('ended', this.onVideoStreamEnded);
     }
     if (windowWidth !== window.innerWidth || windowHeight !== window.innerHeight) {
-      console.log('Window size has changed - restarting video');
+      logger.log('Window size has changed - restarting video');
       await this.restart();
     }
   }
@@ -128,7 +132,7 @@ export class CameraPreviewComponent implements OnDestroy {
 
   stop() {
     if (this.videoStream) {
-      console.log('Stopping video stream');
+      logger.log('Stopping video stream');
       for (const track of this.videoStream.getTracks()) {
         track.removeEventListener('ended', this.onVideoStreamEnded);
         track.stop();
@@ -143,10 +147,10 @@ export class CameraPreviewComponent implements OnDestroy {
   }
 
   private onVideoStreamEnded = () => {
-    console.warn('Video stream ended');
+    logger.warn('Video stream ended');
     this.stop();
     this.videoError.emit(new Error('Video ended'));
-  };
+  }
 
   private startVideoResizeTimer() {
     if (this.videoResizeTimer) {
@@ -166,9 +170,9 @@ export class CameraPreviewComponent implements OnDestroy {
     switch (this._status) {
       case CameraPreviewStatus.Started:
         this.restart().then(
-          () => console.log('Video restarted'),
+          () => logger.log('Video restarted'),
           err => {
-            console.log('Error restarting video: ' + err);
+            logger.log('Error restarting video: ' + err);
             this.videoError.emit(err);
           }
         );

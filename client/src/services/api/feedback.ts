@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IFeedbackService, FEEDBACK_CONFIG } from 'services/feedback';
 import { AddedWord, Feedback } from 'services/entities/feedback';
+import {getLogger} from 'util/logging';
 
 interface APIFeedbackConfig {
   addWordAudioEndpointURL: string;
@@ -9,18 +10,22 @@ interface APIFeedbackConfig {
   feedbackEndpointURL: string;
 }
 
+const logger = getLogger('APIFeedbackService');
+
 @Injectable()
 export class APIFeedbackService implements IFeedbackService {
-  public constructor(private http: HttpClient, @Inject(FEEDBACK_CONFIG) private config: APIFeedbackConfig) {
+  public constructor(
+    private http: HttpClient,
+    @Inject(FEEDBACK_CONFIG) private config: APIFeedbackConfig) {
   }
 
   public async sendFeedback(feedback: Feedback): Promise<any> {
     let soundUrl: string|null = null;
     if (feedback.recording) {
-      console.log('Sending audio');
+      logger.log('Sending audio');
       soundUrl = await this.http.post(this.config.addWordAudioEndpointURL, feedback.recording, { responseType: 'text' }).toPromise();
     }
-    console.log('Sending feedback');
+    logger.log('Sending feedback');
     const requestBody = {
       primary_word: feedback.word ? feedback.word.toLowerCase() : feedback.word,
       english_word: feedback.englishWord ? feedback.englishWord.toLowerCase() : feedback.englishWord,
@@ -33,16 +38,16 @@ export class APIFeedbackService implements IFeedbackService {
       content: feedback.content
     };
     await this.http.post(this.config.feedbackEndpointURL, requestBody, { responseType: 'text' }).toPromise();
-    console.log('Feedback sent');
+    logger.log('Feedback sent');
   }
 
   public async addWord(word: AddedWord): Promise<any> {
     let soundUrl: string|null = null;
     if (word.recording) {
-      console.log('Sending audio');
+      logger.log('Sending audio');
       soundUrl = await this.http.post(this.config.addWordAudioEndpointURL, word.recording, { responseType: 'text' }).toPromise();
     }
-    console.log('Adding word');
+    logger.log('Adding word');
     const requestBody = {
       primary_word: word.word ? word.word.toLowerCase() : word.word,
       english_word: word.englishWord ? word.englishWord.toLowerCase() : word.englishWord,
@@ -53,6 +58,6 @@ export class APIFeedbackService implements IFeedbackService {
       sound_link: soundUrl
     };
     await this.http.post(this.config.addWordEndpointURL, requestBody, { responseType: 'text' }).toPromise();
-    console.log('Word added');
+    logger.log('Word added');
   }
 }

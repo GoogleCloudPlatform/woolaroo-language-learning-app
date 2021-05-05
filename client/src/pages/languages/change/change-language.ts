@@ -6,6 +6,9 @@ import { Router } from '@angular/router';
 import { loadCapturePageURL } from 'util/camera';
 import {AppRoutes} from 'app/routes';
 import {IProfileService, PROFILE_SERVICE} from 'services/profile';
+import {getLogger} from 'util/logging';
+
+const logger = getLogger('ChangeLanguagePageComponent');
 
 @Component({
   selector: 'app-change-language',
@@ -41,11 +44,11 @@ export class ChangeLanguagePageComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     if (!this.cameraPreview) {
-      console.error('Camera preview not found');
+      logger.error('Camera preview not found');
     } else {
       this.cameraPreview.start().then(
-        () => console.log('Camera started'),
-        err => console.warn('Error starting camera', err)
+        () => logger.log('Camera started'),
+        err => logger.warn('Error starting camera', err)
       );
     }
   }

@@ -4,6 +4,7 @@ import { getOperatingSystem, OperatingSystem } from 'util/platform';
 import { DEFAULT_LOCALE } from 'util/locale';
 import { FormGroup } from '@angular/forms';
 import { I18nService } from 'i18n/i18n.service';
+import {getLogger} from 'util/logging';
 
 interface AddWordFieldsetConfig {
   maxRecordingDuration: number;
@@ -23,6 +24,8 @@ enum RecordingState {
   Finished,
   Playing
 }
+
+const logger = getLogger('AddWordFieldsetComponent');
 
 @Component({
   selector: 'app-add-word-fieldset',
@@ -54,7 +57,7 @@ export class AddWordFieldsetComponent {
     this.operatingSystem = getOperatingSystem();
     this.keymanUrl = this.config.keymanUrl;
     this.gboardUrl = this.operatingSystem === OperatingSystem.Android ?
-      this.config.androidGBoardUrl : this.config.iosGBoardUrl;
+    this.config.androidGBoardUrl : this.config.iosGBoardUrl;
   }
 
   public fieldHasError(field: string, error: string): boolean {
@@ -67,13 +70,13 @@ export class AddWordFieldsetComponent {
   onStartRecordingClick(ev: MouseEvent) {
     ev.preventDefault();
     ev.stopPropagation();
-    console.log('Starting recording');
+    logger.log('Starting recording');
     this.audioStreamProgress = 0;
     this.recordingState = RecordingState.Recording;
     startRecording(this.config.recordingBufferSize, this.config.recordingMimeTypes).then(
       this.onRecordingStarted,
       (err) => {
-        console.warn('Error starting recording', err);
+        logger.warn('Error starting recording', err);
         this.zone.run(() => {
           this.recordingState = RecordingState.Idle;
         });
@@ -82,7 +85,7 @@ export class AddWordFieldsetComponent {
   }
 
   onRecordingStarted = (stream: RecordingStream) => {
-    console.log('Recording started');
+    logger.log('Recording started');
     this.audioStream = stream;
     const recordingTimeout = setTimeout(() => {
       stream.stop();
@@ -94,10 +97,10 @@ export class AddWordFieldsetComponent {
       });
     }, this.config.progressAnimationInterval);
     stream.onended = (buffer) => {
-      console.log('Recording complete');
+      logger.log('Recording complete');
       clearTimeout(recordingTimeout);
       clearInterval(progressInterval);
-      if(buffer.size > 0) {
+      if (buffer.size > 0) {
         if (this.formGroup) {
           this.formGroup.controls.recording.setValue(buffer);
         }
@@ -117,12 +120,12 @@ export class AddWordFieldsetComponent {
         });
       }
     };
-  };
+  }
 
   onStopRecordingClick(ev: MouseEvent) {
     ev.preventDefault();
     ev.stopPropagation();
-    console.log('Stopping audio');
+    logger.log('Stopping audio');
     if (this.audioStream) {
       this.audioStream.stop();
     }
@@ -132,9 +135,9 @@ export class AddWordFieldsetComponent {
   onPlayRecordingClick(ev: MouseEvent) {
     ev.preventDefault();
     ev.stopPropagation();
-    console.log('Starting playback');
+    logger.log('Starting playback');
     if (!this.recording) {
-      console.warn('No audio recorded');
+      logger.warn('No audio recorded');
       alert('no audio');
       return false;
     }
@@ -142,19 +145,19 @@ export class AddWordFieldsetComponent {
     this.recordingState = RecordingState.Playing;
     play(this.recording).then(
       (stream) => {
-        console.log('Playback started');
+        logger.log('Playback started');
         this.audioStream = stream;
         const progressInterval = setInterval(() => {
           this.zone.run(() => {
             let duration = stream.getDuration();
-            if(!Number.isFinite(duration)) {
+            if (!Number.isFinite(duration)) {
               duration = this.config.maxRecordingDuration * 0.001;
             }
             this.audioStreamProgress = stream.getCurrentTime() / duration;
           });
         }, this.config.progressAnimationInterval);
         stream.onended = () => {
-          console.log('Playback ended');
+          logger.log('Playback ended');
           clearInterval(progressInterval);
           this.zone.run(() => {
             this.recordingState = RecordingState.Finished;
@@ -162,7 +165,7 @@ export class AddWordFieldsetComponent {
         };
       },
       (err) => {
-        console.warn('Error playing recording', err);
+        logger.warn('Error playing recording', err);
         alert(err);
         this.zone.run(() => {
           this.recordingState = RecordingState.Finished;
