@@ -6,6 +6,7 @@ const {Datastore} = require('@google-cloud/datastore');
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 const ffmpeg = require('fluent-ffmpeg');
 const {google} = require('googleapis');
+const validation = require('./validation');
 
 ffmpeg.setFfmpegPath(ffmpegPath);
 const visionClient = new vision.v1p3beta1.ImageAnnotatorClient();
@@ -107,6 +108,13 @@ async function saveFeedback(spreadsheetId, sheetTitle, data) {
 
 exports.addSuggestions = async (req, res) => {
     addSecurityHeaders(res);
+    if (!validation.isTargetLanguage(req.body.native_language)) {
+        res.status(400).send("Invalid target language");
+        return;
+    } else if(!validation.isPrimaryLanguage(req.body.language)) {
+        res.status(400).send("Invalid primary language");
+        return;
+    }
     return cors(req, res, async () => {
         await saveFeedback(process.env['SUGGESTIONS_SPREADSHEET'], req.body.native_language, [
             req.body.language || '',
@@ -124,6 +132,13 @@ exports.addSuggestions = async (req, res) => {
 
 exports.addFeedback = async (req, res) => {
     addSecurityHeaders(res);
+    if (!validation.isTargetLanguage(req.body.native_language)) {
+        res.status(400).send("Invalid target language");
+        return;
+    } else if(!validation.isPrimaryLanguage(req.body.language)) {
+        res.status(400).send("Invalid primary language");
+        return;
+    }
     return cors(req, res, async () => {
         await saveFeedback(process.env['FEEDBACK_SPREADSHEET'], req.body.native_language, [
             req.body.language || '',
@@ -143,10 +158,26 @@ exports.addFeedback = async (req, res) => {
 
 exports.getTranslations = async (req, res) => {
     addSecurityHeaders(res);
+    const english_words = req.body.english_words;
+    const primary_language = req.body.primary_language;
+    const target_language = req.body.target_language;
+    if (!validation.isTargetLanguage(target_language)) {
+        res.status(400).send("Invalid target language");
+        return;
+    } else if(!validation.isPrimaryLanguage(primary_language)) {
+        res.status(400).send("Invalid primary language");
+        return;
+    } else if(!english_words) {
+        res.status(400).send("No words found");
+        return;
+    }
+    for(const w of english_words) {
+        if(validation.containsHTML(w)) {
+            res.status(400).send("Words cannot contain HTML tags");
+            return;
+        }
+    }
     return cors(req, res, async () => {
-        const english_words = req.body.english_words || [];
-        const primary_language = req.body.primary_language || '';
-        const target_language = req.body.target_language || '';
         const promises = english_words.map(async english_word => {
             const wordKey = datastore.key(['Translation', english_word]);
             const translations = await datastore.get(wordKey);
