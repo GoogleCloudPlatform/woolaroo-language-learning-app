@@ -5,7 +5,8 @@ import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
 import { environment } from 'environments/environment';
 import { IProfileService, PROFILE_SERVICE } from 'services/profile';
 import { Profile } from 'services/entities/profile';
-import { isMobileDevice } from 'util/platform';
+import {getOperatingSystem, isMobileDevice, OperatingSystem} from 'util/platform';
+import {cameraStreamIsAvailable} from 'util/camera';
 
 @Component({
   selector: 'app-page-intro-about',
@@ -13,8 +14,8 @@ import { isMobileDevice } from 'util/platform';
   styleUrls: ['./about.scss']
 })
 export class IntroAboutPageComponent implements AfterViewInit {
-  @HostBinding('class.supported')
   public get deviceSupported(): boolean { return isMobileDevice(); }
+  public get isOldIOSVersion(): boolean { return getOperatingSystem() === OperatingSystem.iOS && !cameraStreamIsAvailable(); }
 
   constructor( private router: Router,
                @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,

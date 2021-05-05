@@ -19,7 +19,7 @@ app-logo {
 }
 
 .intro {
-  margin: 20px 0;
+  margin: 40px 0;
   width: 100%;
   background-color: mat-color($app-accent);
   color: mat-contrast($app-accent, 800);
@@ -46,21 +46,17 @@ app-logo {
   }
 }
 
-:host.supported .intro {
-  margin-bottom: auto;
-}
-
-.unsupported-message {
+.messages {
+  margin-bottom: 40px;
   max-width: 300px;
   text-align: center;
   color: mat-color($app-primary);
-  margin-bottom: auto;
 }
 
 button.next {
   max-width: 300px;
   width: 100%;
-  margin: 40px 0 auto 0;
+  margin: auto 0 auto 0;
 }
 
 .feedback {

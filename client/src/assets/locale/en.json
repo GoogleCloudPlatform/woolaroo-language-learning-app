@@ -109,5 +109,6 @@
   "shortDescription_zyg": "A Tai language spoken in China’s southwestern Guangxi region.",
   "imageRecognitionErrorTitle": "Unable to connect",
   "imageRecognitionErrorMessage": "Please check network connection",
-  "unsupportedMessage": "This PWA has been designed for mobile devices, please use your mobile for the optimized experience."
+  "unsupportedMessage": "This PWA has been designed for mobile devices, please use your mobile for the optimized experience.",
+  "iosVersionMessage": "For the optimized experience please your ensure device is running the latest operating system."
 }
