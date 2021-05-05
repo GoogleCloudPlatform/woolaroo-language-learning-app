@@ -105,26 +105,14 @@ steps:
     args: ["cors", "set", "./client_cors.json", "gs://${_BUCKET_NAME}"]
     dir: "./"
   # Server
-  - id: 'install_server_dependencies'
-    waitFor: ['run_terraform']
-    name: node:10.16.3
-    entrypoint: "npm"
-    args: ["install"]
-    dir: "./server"
   - id: 'configure_server'
     waitFor: ['run_terraform']
     name: node:10.16.3
     entrypoint: "node"
     args: ["./configure_server.js", "${_APP_SERVICE}", "../server/app.yaml"]
     dir: "./deploy"
-  - id: 'build_server'
-    waitFor: ['install_server_dependencies', 'configure_server']
-    name: node:10.16.3
-    entrypoint: "npm"
-    args: ["run", "build"]
-    dir: "./server"
   - id: 'copy_server_files'
-    waitFor: ['build_server', 'build_client']
+    waitFor: ['configure_server', 'build_client']
     name: node:10.16.3
     entrypoint: "node"
     args: ["./copy_server_files.js",
