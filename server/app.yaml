@@ -27,4 +27,4 @@ handlers:
     redirect_http_response_code: 301
     secure: always
     http_headers:
-      X-Frame-Optiona: SAMEORIGIN
+      X-Frame-Options: SAMEORIGIN

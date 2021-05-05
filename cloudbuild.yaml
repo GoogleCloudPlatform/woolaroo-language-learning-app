@@ -131,9 +131,11 @@ steps:
            "../client/dist/index.html",
            "../server/build/index.html",
            "../client/dist/ngsw-worker.js",
+           "../client/dist/service-worker.js",
            "../client/dist/ngsw.json",
            "../client/dist/manifest.webmanifest",
            "../client/dist/favicon.ico",
+           "../client/dist/apple-touch-icon.png",
            "https://storage.googleapis.com/${_BUCKET_NAME}/",
            "../server/build/static/"]
     dir: "./deploy"

@@ -35,7 +35,12 @@ async function writeFileAsync(path, buffer) {
     });
 }
 
+function addSecurityHeaders(res) {
+    res.headers['X-Frame-Options'] = 'SAMEORIGIN';
+}
+
 exports.saveAudioSuggestions = async (req, res) => {
+    addSecurityHeaders(res);
     return cors(req, res, async () => {
         // convert base64 body to blob of webm
         const nodeBuffer = Buffer.from(req.body, 'base64');
@@ -101,6 +106,7 @@ async function saveFeedback(spreadsheetId, sheetTitle, data) {
 }
 
 exports.addSuggestions = async (req, res) => {
+    addSecurityHeaders(res);
     return cors(req, res, async () => {
         await saveFeedback(process.env['SUGGESTIONS_SPREADSHEET'], req.body.native_language, [
             req.body.language || '',
@@ -117,6 +123,7 @@ exports.addSuggestions = async (req, res) => {
 };
 
 exports.addFeedback = async (req, res) => {
+    addSecurityHeaders(res);
     return cors(req, res, async () => {
         await saveFeedback(process.env['FEEDBACK_SPREADSHEET'], req.body.native_language, [
             req.body.language || '',
@@ -135,6 +142,7 @@ exports.addFeedback = async (req, res) => {
 };
 
 exports.getTranslations = async (req, res) => {
+    addSecurityHeaders(res);
     return cors(req, res, async () => {
         const english_words = req.body.english_words || [];
         const primary_language = req.body.primary_language || '';
@@ -167,6 +175,7 @@ function createTranslationResponseForApp(data, primary_language, target_language
 }
 
 exports.visionAPI = async (req, res) => {
+    addSecurityHeaders(res);
     return cors(req, res, async () => {
         try {
             const requestVision = {
