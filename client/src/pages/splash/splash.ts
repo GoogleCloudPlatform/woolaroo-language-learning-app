@@ -13,7 +13,7 @@ import { IProfileService, PROFILE_SERVICE } from 'services/profile';
 import { AppRoutes } from 'app/routes';
 import { AnimationComponent } from 'components/animation/animation';
 import { environment } from 'environments/environment';
-import { getCapturePageURL } from 'util/camera';
+import { loadCapturePageURL } from 'util/camera';
 
 interface SplashPageConfig {
   partnerLogoUrl?: string;
@@ -140,7 +140,10 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
           } else if (!profile.language || !profile.endangeredLanguage) {
             this.router.navigateByUrl(AppRoutes.ChangeLanguage);
           } else {
-            this.router.navigateByUrl(getCapturePageURL());
+            loadCapturePageURL().then(
+              url => this.router.navigateByUrl(url),
+              () => this.router.navigateByUrl(AppRoutes.CaptureImage)
+            );
           }
         },
         () => this.router.navigateByUrl(AppRoutes.Intro)

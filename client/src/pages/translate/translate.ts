@@ -15,7 +15,7 @@ import { EndangeredLanguageService } from 'services/endangered-language';
 import { share } from 'util/share';
 import { NotSupportedError } from 'util/errors';
 import { validateImageData, validateImageURL } from 'util/image';
-import { getCapturePageURL } from "util/camera";
+import { loadCapturePageURL } from 'util/camera';
 
 interface TranslatePageConfig {
   debugImageUrl?: string;
@@ -77,10 +77,13 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
       },
       ex => {
         loadingPopUp?.close();
-        if(ex instanceof WordsNotFoundError) {
+        if (ex instanceof WordsNotFoundError) {
           this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image } });
         } else {
-          this.router.navigateByUrl(getCapturePageURL(), {replaceUrl: true});
+          loadCapturePageURL().then(
+            url => this.router.navigateByUrl(url, {replaceUrl: true}),
+            () => this.router.navigateByUrl(AppRoutes.CaptureImage, {replaceUrl: true}),
+          );
         }
       }
     );
@@ -100,8 +103,8 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
         console.warn('Image not found in state - returning to previous screen');
         throw new Error('Image not found');
       } else if (words) {
-        const image = await this.loadImage(debugImageUrl);
-        await this.setImageData(image, debugImageUrl);
+        const debugImage = await this.loadImage(debugImageUrl);
+        await this.setImageData(debugImage, debugImageUrl);
         await this.loadTranslations(words);
       } else {
         throw new WordsNotFoundError('Words not set');
@@ -120,8 +123,8 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 
   async setImageData(image: Blob, imageURL: string|undefined): Promise<void> {
     const valid = await validateImageData(image);
-    if(!valid) {
-      throw new Error("Invalid image data");
+    if (!valid) {
+      throw new Error('Invalid image data');
     }
     if (imageURL) {
       const urlValid = await validateImageURL(imageURL);
@@ -148,8 +151,9 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
   async loadTranslations(words: string[]): Promise<void> {
     let translations: WordTranslation[];
     try {
-      translations = await this.translationService.translate(words, this.i18n.currentLanguage.code, this.endangeredLanguageService.currentLanguage.code, 1);
-    } catch(ex) {
+      translations = await this.translationService.translate(words, this.i18n.currentLanguage.code,
+        this.endangeredLanguageService.currentLanguage.code, 1);
+    } catch (ex) {
       console.warn('Error loading translations', ex);
       // show words as if none had translations
       this.zone.run(() => {
