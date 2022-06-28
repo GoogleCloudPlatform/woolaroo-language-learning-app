@@ -325,16 +325,6 @@ export const environment = {
             organizationName: 'Museum of Ethnic Cultures at Minzu University'
           },
           {
-            code: 'kum',
-            name: 'Kumeyaay/Diegueño',
-            default: false,
-            sampleWordImageURL: './assets/img/languages/tree-kum.jpg',
-            sampleWordTranslation: 'ily',
-            nativeSpeakers: '500',
-            organizationURL: 'https://www.baronamuseum.com/',
-            organizationName: 'Barona Cultural Center & Museum'
-          },
-          {
             code: 'tep',
             name: 'Tepehua',
             default: false,
@@ -383,6 +373,16 @@ export const environment = {
             nativeSpeakers: '14135',
             organizationURL: '',
             organizationName: '-'
+          },
+          {
+            code: 'kum',
+            name: 'Kumeyaay / Diegueño',
+            default: false,
+            sampleWordImageURL: './assets/img/languages/tree-kum.jpg',
+            sampleWordTranslation: 'ily',
+            nativeSpeakers: '500',
+            organizationURL: 'https://www.baronamuseum.com/',
+            organizationName: 'Barona Cultural Center & Museum'
           },
         ]
       }

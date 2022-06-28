@@ -328,7 +328,7 @@ export const environment = {
           },
           {
             code: 'kum',
-            name: 'Kumeyaay/Diegueño',
+            name: 'Kumeyaay / Diegueño',
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-kum.jpg',
             sampleWordTranslation: 'ily',
@@ -357,16 +357,6 @@ export const environment = {
             organizationName: 'University of Newcastle'
           },
           {
-            code: 'pot',
-            name: 'Potawatomi (Bodéwadmimwen)',
-            default: false,
-            sampleWordImageURL: './assets/img/languages/tree-pot.jpg',
-            sampleWordTranslation: 'mtek',
-            nativeSpeakers: '7000',
-            organizationURL: 'https://www.potawatomi.org/',
-            organizationName: 'Citizen Potawatomi Nation'
-          },
-          {
             code: 'rom',
             name: 'Serravallese',
             default: false,
@@ -385,6 +375,16 @@ export const environment = {
             nativeSpeakers: '14135',
             organizationURL: '',
             organizationName: '-'
+          },
+          {
+            code: 'pot',
+            name: 'Potawatomi\n(Bodéwadmimwen)',
+            default: false,
+            sampleWordImageURL: './assets/img/languages/tree-pot.jpg',
+            sampleWordTranslation: 'mtek',
+            nativeSpeakers: '7000',
+            organizationURL: 'https://www.potawatomi.org/',
+            organizationName: 'Citizen Potawatomi Nation'
           },
         ]
       }
