@@ -92,14 +92,14 @@
       }
 
       .name {
-        font-size: 32px;
+        font-size: 28px;
         line-height: 55px;
         font-weight: bold;
         margin-bottom: 15px;
-        white-space: nowrap;
         display: block;
         width: 100%;
         text-align: center;
+        word-wrap: break-word;
       }
 
       app-icon {
