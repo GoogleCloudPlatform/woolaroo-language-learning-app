@@ -378,7 +378,7 @@ export const environment = {
           },
           {
             code: 'pot',
-            name: 'Potawatomi\n(Bodéwadmimwen)',
+            name: 'Potawatomi',
             default: false,
             sampleWordImageURL: './assets/img/languages/tree-pot.jpg',
             sampleWordTranslation: 'mtek',
