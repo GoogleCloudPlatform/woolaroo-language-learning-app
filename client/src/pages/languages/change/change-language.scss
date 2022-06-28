@@ -94,7 +94,9 @@ app-camera-preview {
     margin-bottom: 40px;
 
     li button {
-      font-size: 45px;
+      font-size: 34px;
+      max-width: 200px;
+      text-align: center;
     }
   }
 }

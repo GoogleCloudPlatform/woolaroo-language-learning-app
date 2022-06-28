@@ -225,6 +225,16 @@ export const environment = {
             organizationName: 'Yugambeh Museum'
           },
           {
+            code: 'may',
+            name: 'Maya',
+            default: params.endangeredLanguage === 'may',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-yug.jpg',
+            sampleWordTranslation: 'Ché',
+            nativeSpeakers: '6000000',
+            organizationURL: 'http://alin.inali.gob.mx/xmlui/',
+            organizationName: 'INALI'
+          },
+          {
             code: 'yi',
             name: 'Yiddish',
             default: params.endangeredLanguage === 'yi',
@@ -313,7 +323,67 @@ export const environment = {
             nativeSpeakers: '100000',
             organizationURL: 'https://www.youtube.com/watch?v=WuN43huPnuM',
             organizationName: 'Museum of Ethnic Cultures at Minzu University'
-          }
+          },
+          {
+            code: 'tep',
+            name: 'Tepehua',
+            default: false,
+            sampleWordImageURL: './assets/img/languages/tree-tep.jpg',
+            sampleWordTranslation: 'k\'iu',
+            nativeSpeakers: '9000',
+            organizationURL: 'http://alin.inali.gob.mx/xmlui/',
+            organizationName: 'INALI'
+          },
+          {
+            code: 'vm',
+            name: 'Vurës',
+            default: false,
+            sampleWordImageURL: './assets/img/languages/tree-vm.jpg',
+            sampleWordTranslation: 'rēntenge',
+            nativeSpeakers: '2000',
+            organizationURL: 'https://www.newcastle.edu.au/research/centre/endangered-languages-documentation-theory-and-application',
+            organizationName: 'University of Newcastle'
+          },
+          {
+            code: 'pot',
+            name: 'Potawatomi',
+            default: false,
+            sampleWordImageURL: './assets/img/languages/tree-pot.jpg',
+            sampleWordTranslation: 'mtek',
+            nativeSpeakers: '7000',
+            organizationURL: 'https://www.potawatomi.org/',
+            organizationName: 'Citizen Potawatomi Nation'
+          },
+          {
+            code: 'rom',
+            name: 'Serravallese',
+            default: false,
+            sampleWordImageURL: './assets/img/languages/tree-rom.jpg',
+            sampleWordTranslation: 'öibri',
+            nativeSpeakers: '7000',
+            organizationURL: 'https://www.dialettoromagnolo.it/',
+            organizationName: 'Friedrich Schürr Institute'
+          },
+          {
+            code: 'san',
+            name: 'Sanskrit',
+            default: false,
+            sampleWordImageURL: './assets/img/languages/tree-san.jpg',
+            sampleWordTranslation: 'vr̥kṣaḥ',
+            nativeSpeakers: '14135',
+            organizationURL: '',
+            organizationName: '-'
+          },
+          {
+            code: 'kum',
+            name: 'Kumeyaay / Diegueño',
+            default: false,
+            sampleWordImageURL: './assets/img/languages/tree-kum.jpg',
+            sampleWordTranslation: 'ily',
+            nativeSpeakers: '500',
+            organizationURL: 'https://www.baronamuseum.com/',
+            organizationName: 'Barona Cultural Center & Museum'
+          },
         ]
       }
     },
