@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
-import { IconComponentModule } from 'components/icon/icon.module';
+import { IconComponentModule } from '../../components/icon/icon.module';
 import { TranslationSelectorComponent } from './translation-selector';
 import { SelectionLineComponent, SELECTION_LINE_CONFIG } from './selection-line';
 import { WordScrollListComponent, WORD_SCROLL_LIST_CONFIG } from './word-scroll-list';
-import { I18nModule } from 'i18n/i18n.module';
-import { environment } from 'environments/environment';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { I18nModule } from '../../i18n/i18n.module';
+import { environment } from '../../environments/environment';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     IconComponentModule,
     MatInputModule,
     I18nModule,
+    PipesModule,
     MatProgressSpinnerModule
   ],
   providers: [
@@ -30,4 +32,4 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     { provide: WORD_SCROLL_LIST_CONFIG, useValue: environment.components.translationSelector.scrollList }
   ]
 })
-export class TranslationSelectorModule {}
+export class TranslationSelectorModule { }

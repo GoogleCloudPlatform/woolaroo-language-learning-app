@@ -1,19 +1,23 @@
 import { NgModule } from '@angular/core';
 import { AssetUrlPipe } from './asset-url';
 import { StyleUrlPipe } from './style-url';
+import { GcsUrlPipe } from './gcs-url.pipe';
 
 @NgModule({
   declarations: [
     AssetUrlPipe,
-    StyleUrlPipe
+    StyleUrlPipe,
+    GcsUrlPipe
   ],
   providers: [
     AssetUrlPipe,
-    StyleUrlPipe
+    StyleUrlPipe,
+    GcsUrlPipe
   ],
   exports: [
     AssetUrlPipe,
-    StyleUrlPipe
+    StyleUrlPipe,
+    GcsUrlPipe
   ]
 })
-export class PipesModule {}
+export class PipesModule { }
