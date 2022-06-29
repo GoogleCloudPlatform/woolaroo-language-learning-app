@@ -15,21 +15,24 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Pipe({
   name: 'gcsUrl'
 })
 export class GcsUrlPipe implements PipeTransform {
 
-  transform(url: string | null): string {
+  constructor(private sanitizer: DomSanitizer) { }
+
+  transform(url: string | null): SafeUrl {
 
     if (!url) {
       return '';
     }
-
-    return url.replace(
+    const output = url.replace(
       'https://storage.cloud.google.com', ' https://storage.googleapis.com'
     );
+    return this.sanitizer.bypassSecurityTrustUrl(output);
   }
 
 }
