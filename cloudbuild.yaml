@@ -124,7 +124,7 @@ steps:
   #     - |-
   #       sed -i "s/base href=\"\/\"/base href=\"$_BASEURL\"/g" index.html
   - id: "deploy_client"
-    waitFor: ["fix_client_asset_paths", "apply_base_url"]
+    waitFor: ["fix_client_asset_paths"]
     name: gcr.io/cloud-builders/gsutil
     args: ["-m", "rsync", "-r", "-c", "-d", "./dist", "gs://${_BUCKET_NAME}"]
     dir: "./client"
