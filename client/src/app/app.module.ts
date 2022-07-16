@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { APP_BASE_HREF } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -19,6 +20,7 @@ import { ViewLanguageModule } from '../pages/languages/view/view-language.module
 import { AddWordPageModule } from '../pages/add-word/add-word.module';
 import { CaptionImagePageModule } from '../pages/caption-image/caption-image.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
+
 import { environment } from '../environments/environment';
 
 
@@ -48,6 +50,7 @@ import { environment } from '../environments/environment';
     BrowserAnimationsModule,
     ServiceWorkerModule.register('service-worker.js', { enabled: environment.production })
   ],
+  providers: [{ provide: APP_BASE_HREF, useValue: '/woolaroo' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
