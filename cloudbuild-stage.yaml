@@ -46,14 +46,7 @@ steps:
     name: node:12
     timeout: 1200s
     entrypoint: "npm"
-    args:
-      [
-        "run",
-        "build",
-        "--",
-        "--output-path=./dist",
-        "--deploy-url=https://storage.googleapis.com/${_BUCKET_NAME}/",
-      ]
+    args: ["run", "build", "--", "--output-path=./dist"]
     dir: "./client"
   - id: "fix_client_asset_paths"
     waitFor: ["build_client"]
