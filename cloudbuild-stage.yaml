@@ -61,7 +61,9 @@ steps:
     dir: "./deploy"
 
   - id: "deploy_server"
-    waitFor: ["build_client"]
+    waitFor:
+      - "build_client"
+      - "configure_server"
     name: gcr.io/cloud-builders/gcloud
     args:
       - app
