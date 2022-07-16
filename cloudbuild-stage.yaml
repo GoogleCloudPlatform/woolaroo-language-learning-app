@@ -69,5 +69,5 @@ steps:
       - app
       - deploy
       - ../client/dist
-      - --appyaml="./app.yaml"
+      - --appyaml=./app.yaml
     dir: "server"
