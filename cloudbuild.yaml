@@ -97,7 +97,8 @@ steps:
     args:
       - "-c"
       - |-
-        sed -i "s/base href=\"\/\"/base href=\"${_BASEURL}\"/g" index.html
+        sed -i "s/base href=\"\/\"/base href=\"${_BASEURL}\"/g" index.html && \
+        cat index.html
   - id: "build_client"
     waitFor: ["configure_client"]
     name: node:10.16.3
