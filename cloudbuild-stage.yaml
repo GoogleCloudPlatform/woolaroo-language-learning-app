@@ -1,0 +1,77 @@
+timeout: 1200s
+options:
+  machineType: "N1_HIGHCPU_8"
+steps:
+  # Client
+  - id: "install_client_dependencies"
+    name: node:12
+    entrypoint: "npm"
+    args: ["install"]
+    dir: "./client"
+  - id: "download_partner_logo"
+    name: gcr.io/cloud-builders/gsutil
+    waitFor: ["-"]
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        if [ "${_PARTNER_LOGO_URL}" != "" ]
+        then
+          gsutil cp ${_PARTNER_LOGO_URL} ./src/assets/img/partner_logo.png
+        else
+          true
+        fi
+    dir: "./client"
+  - id: "configure_client"
+    waitFor: ["install_client_dependencies", "download_partner_logo"]
+    name: node:12
+    entrypoint: "node"
+    args:
+      [
+        "./configure_client.js",
+        "../client/src/environments/environment.prod.params.ts",
+        "${_API_URL}",
+        "https://storage.googleapis.com/${_BUCKET_NAME}/",
+        "${_GOOGLE_TRACKER_ID}",
+        "${_LANGUAGE}",
+        "${_ENDANGERED_LANGUAGE}",
+        "${_TERMS_AND_CONDITIONS}",
+        "/assets/img/partner_logo.png",
+        "../client/src/style/theme-config.scss",
+        "${_THEME}",
+      ]
+    dir: "./deploy"
+  - id: "build_client"
+    waitFor: ["configure_client"]
+    name: node:12
+    timeout: 1200s
+    entrypoint: "npm"
+    args:
+      [
+        "run",
+        "build",
+        "--",
+        "--output-path=./dist",
+        "--deploy-url=https://storage.googleapis.com/${_BUCKET_NAME}/",
+      ]
+    dir: "./client"
+  - id: "fix_client_asset_paths"
+    waitFor: ["build_client"]
+    name: node:12
+    entrypoint: "node"
+    args:
+      [
+        "./fix_asset_paths.js",
+        "../client/dist/index.html",
+        "https://storage.googleapis.com/${_BUCKET_NAME}",
+      ]
+    dir: "./deploy"
+  - id: "deploy_server"
+    waitFor: ["copy_server_files"]
+    name: gcr.io/cloud-builders/gcloud
+    args:
+      - app
+      - deploy
+      - ../client/dist
+      - --appyaml=./app.yaml
+    dir: "deploy"
