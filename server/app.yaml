@@ -80,7 +80,7 @@ handlers:
       X-Content-Type-Options: "nosniff"
       X-XSS-Protection: "1; mode=block"
       Content-Security-Policy: >-
-        default-src 'self'
+        default-src 'self' https://woolaroo-project.ts.r.appspot.com;
         media-src 'self' https://woolaroo-project.ts.r.appspot.com;
         img-src 'self' *.googleusercontent.com https://www.google-analytics.com https://woolaroo-project.ts.r.appspot.com;
         frame-src 'self';
