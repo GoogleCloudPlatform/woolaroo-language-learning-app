@@ -49,7 +49,7 @@ steps:
     args: ["run", "build", "--", "--output-path=./dist"]
     dir: "./client"
   - id: "deploy_server"
-    waitFor: ["set_service"]
+    waitFor: ["build_client"]
     name: gcr.io/cloud-builders/gcloud
     args:
       - app
