@@ -146,29 +146,3 @@ steps:
     name: gcr.io/cloud-builders/gsutil
     args: ["cors", "set", "./client_cors.json", "gs://${_BUCKET_NAME}"]
     dir: "./"
-  # Server
-  - id: "configure_server"
-    waitFor: ["run_terraform"]
-    name: node:10.16.3
-    entrypoint: "node"
-    args: ["./configure_server.js", "${_APP_SERVICE}", "../server/app.yaml"]
-    dir: "./deploy"
-  - id: "copy_server_files"
-    waitFor: ["configure_server", "build_client"]
-    name: node:10.16.3
-    entrypoint: "node"
-    args:
-      [
-        "./copy_server_files.js",
-        "../client/dist/index.html",
-        "../server/build/index.html",
-        "../client/dist/ngsw-worker.js",
-        "../client/dist/service-worker.js",
-        "../client/dist/ngsw.json",
-        "../client/dist/manifest.webmanifest",
-        "../client/dist/favicon.ico",
-        "../client/dist/apple-touch-icon.png",
-        "https://storage.googleapis.com/${_BUCKET_NAME}/",
-        "../server/build/static/",
-      ]
-    dir: "./deploy"
