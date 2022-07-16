@@ -48,17 +48,6 @@ steps:
     entrypoint: "npm"
     args: ["run", "build", "--", "--output-path=./dist"]
     dir: "./client"
-  - id: "fix_client_asset_paths"
-    waitFor: ["build_client"]
-    name: node:12
-    entrypoint: "node"
-    args:
-      [
-        "./fix_asset_paths.js",
-        "../client/dist/index.html",
-        "https://storage.googleapis.com/${_BUCKET_NAME}",
-      ]
-    dir: "./deploy"
   - id: "deploy_server"
     waitFor: ["fix_client_asset_paths"]
     name: gcr.io/cloud-builders/gcloud
