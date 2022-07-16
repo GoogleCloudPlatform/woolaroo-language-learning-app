@@ -31,7 +31,7 @@ steps:
         "./configure_client.js",
         "../client/src/environments/environment.prod.params.ts",
         "${_API_URL}",
-        "/",
+        "${_APP_URL}",
         "${_GOOGLE_TRACKER_ID}",
         "${_LANGUAGE}",
         "${_ENDANGERED_LANGUAGE}",
