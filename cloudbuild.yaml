@@ -113,16 +113,16 @@ steps:
       ]
     dir: "./deploy"
     # SET BASE URL
-  # - id: "apply_base_url"
-  #   waitFor:
-  #     - "build_client"
-  #   name: gcr.io/cloud-builders/gcloud
-  #   entrypoint: /bin/bash
-  #   dir: "client/dist"
-  #   args:
-  #     - "-c"
-  #     - |-
-  #       sed -i "s/base href=\"\/\"/base href=\"$_BASEURL\"/g" index.html
+  - id: "apply_base_url"
+    waitFor:
+      - "build_client"
+    name: gcr.io/cloud-builders/gcloud
+    entrypoint: /bin/bash
+    dir: "client/dist"
+    args:
+      - "-c"
+      - |-
+        sed -i "s/base href=\"\/\"/base href=\"${_BASEURL}\"/g" index.html
   - id: "deploy_client"
     waitFor: ["fix_client_asset_paths"]
     name: gcr.io/cloud-builders/gsutil
