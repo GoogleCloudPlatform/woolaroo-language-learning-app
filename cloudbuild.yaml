@@ -2,51 +2,6 @@ timeout: 1200s
 options:
   machineType: "N1_HIGHCPU_8"
 steps:
-  # Terraform
-  - id: "create_terraform_state_storage"
-    name: gcr.io/cloud-builders/gsutil
-    entrypoint: "bash"
-    args:
-      - "-c"
-      - |
-        if [ 0 -eq $(gsutil ls -p "${PROJECT_ID}" | grep -c "gs://${_TERRAFORM_BUCKET_NAME}") ]; then
-          gsutil mb -p "${PROJECT_ID}" "gs://${_TERRAFORM_BUCKET_NAME}/"
-        else
-          echo "Terraform state bucket named ${_TERRAFORM_BUCKET_NAME} already exists, skipping gsutil mb"
-        fi
-  - id: "configure_terraform"
-    name: node:10.16.3
-    entrypoint: "node"
-    args:
-      [
-        "./create_terraform_config.js",
-        "../terraform/override.tf",
-        "${_TERRAFORM_BUCKET_NAME}",
-        "${_TERRAFORM_BUCKET_PATH}",
-      ]
-    dir: "./deploy"
-  - id: "init_terraform"
-    name: hashicorp/terraform:light
-    args: ["init"]
-    dir: "./terraform"
-  - id: "run_terraform"
-    name: hashicorp/terraform:light
-    args:
-      [
-        "apply",
-        "-auto-approve",
-        "-var",
-        "google_project=$PROJECT_ID",
-        "-var",
-        "bucket_name=${_BUCKET_NAME}",
-        "-var",
-        "bucket_location=${_BUCKET_LOCATION}",
-        "-var",
-        "google_region=${_GOOGLE_REGION}",
-        "-var",
-        "app_location=${_APP_LOCATION}",
-      ]
-    dir: "./terraform"
   # Client
   - id: "install_client_dependencies"
     waitFor: ["run_terraform"]
