@@ -48,6 +48,18 @@ steps:
     entrypoint: "npm"
     args: ["run", "build", "--", "--output-path=./dist"]
     dir: "./client"
+  # Server
+  - id: "configure_server"
+    waitFor: ["download_partner_logo"]
+    name: node:12
+    entrypoint: "node"
+    args:
+      - "./configure_server.js"
+      - ${_APP_SERVICE}
+      - "../server/app.yaml"
+      - ${_APP_CACHE}
+    dir: "./deploy"
+
   - id: "deploy_server"
     waitFor: ["build_client"]
     name: gcr.io/cloud-builders/gcloud
@@ -55,5 +67,5 @@ steps:
       - app
       - deploy
       - ../client/dist
-      - --appyaml=./app-${_TARGET_SERVICE}.yaml
-    dir: "deploy"
+      - --appyaml="./app.yaml"
+    dir: "server"
