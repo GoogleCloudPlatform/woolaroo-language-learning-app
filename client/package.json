@@ -26,6 +26,7 @@
     "lottie-web": "^5.5.9",
     "rxjs": "~6.5.5",
     "tslib": "^1.10.0",
+    "web-animations-js": "^2.3.2",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
@@ -34,10 +35,10 @@
     "@angular/compiler-cli": "~9.1.1",
     "@angular/language-service": "~9.1.1",
     "@types/blueimp-load-image": "^2.23.4",
+    "@types/dom-mediacapture-record": "^1.0.1",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
-    "@types/dom-mediacapture-record": "^1.0.1",
     "codelyzer": "^5.1.2",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
