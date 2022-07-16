@@ -46,7 +46,14 @@ steps:
     name: node:12
     timeout: 1200s
     entrypoint: "npm"
-    args: ["run", "build", "--", "--output-path=./dist"]
+    args:
+      [
+        "run",
+        "build",
+        "--",
+        "--output-path=./dist",
+        "--deploy-url=${_DEPLOY_URL}",
+      ]
     dir: "./client"
   # Server
   - id: "configure_server"
