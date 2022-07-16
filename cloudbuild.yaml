@@ -172,8 +172,3 @@ steps:
         "../server/build/static/",
       ]
     dir: "./deploy"
-  - id: "deploy_server"
-    waitFor: ["copy_server_files"]
-    name: gcr.io/cloud-builders/gcloud
-    args: ["-q", "app", "deploy"]
-    dir: "./server"
