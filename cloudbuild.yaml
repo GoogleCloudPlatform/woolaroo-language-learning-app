@@ -87,18 +87,6 @@ steps:
         "${_THEME}",
       ]
     dir: "./deploy"
-  # SET BASE URL
-  - id: "apply_base_url"
-    waitFor:
-      - "run_terraform"
-    name: gcr.io/cloud-builders/gcloud
-    entrypoint: /bin/bash
-    dir: "client/src"
-    args:
-      - "-c"
-      - |-
-        sed -i "s/base href=\"\/\"/base href=\"${_BASEURL}\"/g" index.html && \
-        cat index.html
   - id: "build_client"
     waitFor: ["configure_client"]
     name: node:10.16.3
