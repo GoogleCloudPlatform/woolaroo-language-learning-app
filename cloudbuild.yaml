@@ -4,7 +4,6 @@ options:
 steps:
   # Client
   - id: "install_client_dependencies"
-    waitFor: ["run_terraform"]
     name: node:10.16.3
     entrypoint: "npm"
     args: ["install"]
