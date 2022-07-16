@@ -78,7 +78,7 @@ handlers:
       X-XSS-Protection: "1; mode=block"
       Content-Security-Policy: >-
         default-src 'self';
-        img-src 'self' *.googleusercontent.com;
+        img-src 'self' *.googleusercontent.com https://www.google-analytics.com;
         frame-src 'self' https://ithaca-prod.firebaseapp.com/;
         object-src 'none';
         script-src-elem 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.gstatic.com/ https://www.google-analytics.com https://apis.google.com;
