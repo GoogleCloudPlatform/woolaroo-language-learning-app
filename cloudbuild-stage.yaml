@@ -48,16 +48,6 @@ steps:
     entrypoint: "npm"
     args: ["run", "build", "--", "--output-path=./dist"]
     dir: "./client"
-  - id: "set_service"
-    name: gcr.io/cloud-builders/gcloud
-    waitFor:
-      - "build_client"
-    entrypoint: /bin/bash
-    dir: deploy
-    args:
-      - "-c"
-      - |
-        sed -i /{ { TARGET_SERVICE } }/${_TARGET_SERVICE}/g app.yaml
   - id: "deploy_server"
     waitFor: ["set_service"]
     name: gcr.io/cloud-builders/gcloud
@@ -65,5 +55,5 @@ steps:
       - app
       - deploy
       - ../client/dist
-      - --appyaml=./app.yaml
+      - --appyaml=./app-${_TARGET_SERVICE}.yaml
     dir: "deploy"
