@@ -18,7 +18,7 @@ service: $SERVICE
 default_expiration: "$CACHE"
 
 handlers:
-  - url: /assets/(.*)
+  - url: woolaroo/assets/(.*)
     static_files: assets/\1
     upload: assets/(.*)
     secure: always
@@ -37,7 +37,7 @@ handlers:
         img-src 'self';
         style-src 'self';
 
-  - url: /(.*\.(js|css|ico|map|json|xml|webmanifest))
+  - url: woolaroo/(.*\.(js|css|ico|map|json|xml|webmanifest))
     static_files: \1
     upload: (.*\.(js|css|ico|map|json|xml|webmanifest))
     secure: always
@@ -56,7 +56,7 @@ handlers:
         img-src 'self';
         style-src 'self';
 
-  - url: /3rdpartylicenses.txt
+  - url: woolaroo/3rdpartylicenses.txt
     static_files: 3rdpartylicenses.txt
     upload: 3rdpartylicenses.txt
     secure: always
@@ -69,7 +69,7 @@ handlers:
       Content-Security-Policy: >-
         default-src 'self';
 
-  - url: /.*
+  - url: woolaroo/.*
     static_files: index.html
     upload: index.html
     secure: always
