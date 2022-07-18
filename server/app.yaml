@@ -80,14 +80,14 @@ handlers:
       X-Content-Type-Options: "nosniff"
       X-XSS-Protection: "1; mode=block"
       Content-Security-Policy: >-
-        default-src 'self' https://woolaroo-project.ts.r.appspot.com;
-        media-src 'self' https://woolaroo-project.ts.r.appspot.com;
-        img-src 'self' *.googleusercontent.com https://www.google-analytics.com https://woolaroo-project.ts.r.appspot.com;
+        default-src 'self';
+        media-src 'self';
+        img-src 'self' *.googleusercontent.com https://www.google-analytics.com;
         frame-src 'self';
         object-src 'none';
-        script-src-elem 'self' 'unsafe-inline' https://www.googletagmanager.com https://woolaroo-project.ts.r.appspot.com https://www.gstatic.com/ https://www.google-analytics.com https://apis.google.com;
-        script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com https://accounts.google.com https://woolaroo-project.ts.r.appspot.com https://www.googletagmanager.com https://www.gstatic.com https://www.google-analytics.com https://www.googleapis.com;
-        connect-src 'self' https://www.gstatic.com https://www.google-analytics.com https://woolaroo-project.ts.r.appspot.com https://www.googleapis.com https://apis.google.com https://*.googleapis.com https://www.googletagmanager.com https://fonts.googleapis.com;
+        script-src-elem 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.gstatic.com/ https://www.google-analytics.com https://apis.google.com;
+        script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com https://accounts.google.com https://www.googletagmanager.com https://www.gstatic.com https://www.google-analytics.com https://www.googleapis.com;
+        connect-src 'self' https://www.gstatic.com https://www.google-analytics.com https://www.googleapis.com https://apis.google.com https://*.googleapis.com https://www.googletagmanager.com https://fonts.googleapis.com;
         font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com;
-        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://woolaroo-project.ts.r.appspot.com;
-        manifest-src 'self' https://woolaroo-project.ts.r.appspot.com;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        manifest-src 'self';

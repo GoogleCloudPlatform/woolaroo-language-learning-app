@@ -59,6 +59,9 @@ steps:
       - ${_APP_SERVICE}
       - "../server/app.yaml"
       - ${_APP_CACHE}
+      - "../server/dispatch.yaml"
+      - ${_PROD_URL}
+      - ${_STAGING_URL}
     dir: "./deploy"
 
   - id: "deploy_server"
@@ -71,4 +74,13 @@ steps:
       - deploy
       - ../client/dist
       - --appyaml=./app.yaml
+    dir: "server"
+  - id: "set_dispatch"
+    waitFor:
+      - "deploy_server"
+    name: gcr.io/cloud-builders/gcloud
+    args:
+      - app
+      - deploy
+      - dispatch.yaml
     dir: "server"
