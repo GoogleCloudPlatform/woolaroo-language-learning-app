@@ -50,7 +50,7 @@ import { environment } from '../environments/environment';
     BrowserAnimationsModule,
     ServiceWorkerModule.register('service-worker.js', { enabled: environment.production })
   ],
-  providers: [{ provide: APP_BASE_HREF, useValue: environment.assets.baseUrl }],
+  providers: [{ provide: APP_BASE_HREF, useValue: '/woolaroo/' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
