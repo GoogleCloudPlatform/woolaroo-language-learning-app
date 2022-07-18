@@ -31,8 +31,7 @@
               "src/apple-touch-icon.png",
               "src/assets",
               "src/manifest.webmanifest",
-              "src/service-worker.js",
-              "src/ngsw-worker.js"
+              "src/service-worker.js"
             ],
             "styles": [
               "src/style/main.scss"
