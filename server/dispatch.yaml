@@ -19,3 +19,9 @@
 # is not a requirement.
 
 dispatch:
+  # PROD
+  - url: "{{PROD_URL}}"
+    service: default
+  # Staging
+  # - url: "{{STAGING_URL}}"
+  #   service: staging
