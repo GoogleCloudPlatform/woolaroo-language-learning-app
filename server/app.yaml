@@ -87,7 +87,7 @@ handlers:
         object-src 'none';
         script-src-elem 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.gstatic.com/ https://www.google-analytics.com https://apis.google.com;
         script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com https://accounts.google.com https://www.googletagmanager.com https://www.gstatic.com https://www.google-analytics.com https://www.googleapis.com;
-        connect-src 'self' https://www.gstatic.com https://www.google-analytics.com https://www.googleapis.com https://apis.google.com https://*.googleapis.com https://www.googletagmanager.com https://fonts.googleapis.com;
+        connect-src 'self' https://australia-southeast1-woolaroo-project.cloudfunctions.net https://www.gstatic.com https://www.google-analytics.com https://www.googleapis.com https://apis.google.com https://*.googleapis.com https://www.googletagmanager.com https://fonts.googleapis.com;
         font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com;
         style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
         manifest-src 'self';
