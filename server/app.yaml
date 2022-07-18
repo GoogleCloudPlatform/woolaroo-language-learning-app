@@ -82,7 +82,7 @@ handlers:
       Content-Security-Policy: >-
         default-src 'self';
         media-src 'self';
-        img-src 'self' *.googleusercontent.com https://www.google-analytics.com;
+        img-src 'self' blob: *.googleusercontent.com https://www.google-analytics.com;
         frame-src 'self';
         object-src 'none';
         script-src-elem 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.gstatic.com/ https://www.google-analytics.com https://apis.google.com;
