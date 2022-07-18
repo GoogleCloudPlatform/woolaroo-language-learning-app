@@ -32,7 +32,7 @@ handlers:
         default-src 'none';
         object-src 'none';
         script-src 'self';
-        connect-src 'self';
+        connect-src 'self' connect-src 'self';
         font-src 'self';
         img-src 'self';
         style-src 'self';
@@ -51,7 +51,7 @@ handlers:
         default-src 'none';
         object-src 'none';
         script-src 'self';
-        connect-src 'self';
+        connect-src 'self' https://fonts.gstatic.com https://australia-southeast1-woolaroo-project.cloudfunctions.net;
         font-src 'self';
         img-src 'self';
         style-src 'self';
