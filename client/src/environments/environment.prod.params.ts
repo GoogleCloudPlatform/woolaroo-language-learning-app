@@ -1,5 +1,5 @@
 export const params = {
-  assetsBaseUrl: '',
+  assetsBaseUrl: 'woolaroo/',
   googleTrackerId: '',
   apiUrl: '',
   partnerLogoUrl: '',

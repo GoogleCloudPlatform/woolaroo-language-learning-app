@@ -4,14 +4,14 @@
 <video autoplay muted playsinline #video (playing)="onVideoPlaying()" (ended)="onVideoEnded()"
   (timeupdate)="onVideoUpdate($event)" [class.hidden]="!videoStarted || videoComplete" oncanplay="this.play()"
   onloadedmetadata="this.muted=true">
-  <source [src]="'assets/videos/splash.mp4?v=1' | assetUrl" type="video/mp4" />
+  <source [src]="'assets/videos/splash.mp4' | assetUrl" type="video/mp4" />
 </video>
 <div class="logos">
   <app-animation class="app-logo" #logoAnimation [class.hidden]="!logosVisible" [autoplay]="false"
-    [sourcePath]="'assets/animations/logo/data.json?v=1' | assetUrl"></app-animation>
+    [sourcePath]="'assets/animations/logo/data.json' | assetUrl"></app-animation>
 </div>
 <ul class="credits" [class.hidden]="!logosVisible">
-  <li class="arts-culture-logo"><img [src]="'assets/img/google_arts_culture_logo.png?v=1' | assetUrl" alt="" /></li>
+  <li class="arts-culture-logo"><img [src]="'assets/img/google_arts_culture_logo.png' | assetUrl" alt="" /></li>
   <li>Associazione Ellenofona Jalò tu Vua</li>
   <li>Cademia Siciliana</li>
   <li>Congres Mondial Amazigh</li>

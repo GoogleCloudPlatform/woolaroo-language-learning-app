@@ -1,10 +1,10 @@
 ![alt text](logo.png)
 
-## Project Woolaroo - Exploring Indigenous language through photos.
+## Project Woolaroo - Exploring Indigenous language through photos
 
 > ###  “A picture is worth a thousand words.”
-> ### - Old english adage, commonly attributed to copywriter Fred R. Barnard
 
+> ### - Old english adage, commonly attributed to copywriter Fred R. Barnard
 
 Of the 7,000 languages spoken around the globe, 2,680 Indigenous languages - more than one third - are in danger of disappearing.
 
@@ -51,8 +51,15 @@ Our hope is that by enabling more people to share their language, users will be 
 ## Development
 
 * cd to `./client`.
-* Run `ng serve`.
-* Navigate to `http://localhost:4200/`.
+* Run `npm run start`.
+* Navigate to `http://localhost:4200/woolaroo`.
+
+As you can see, the app is set to run at a "woolaroo" path. This is purely for
+consistency with how we at Google serve this on the Google Arts and Culture
+experiments page. It ensures that all environments are consistent. However, there
+is no specific need to do this. If you want to run it at the top level, then
+be sure to us `ng serve` and change the asset BaseURL paramenters in the
+environment config.
 
 ## Localization
 

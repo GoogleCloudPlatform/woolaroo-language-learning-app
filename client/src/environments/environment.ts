@@ -1,11 +1,9 @@
-import { MockAnalyticsService } from 'services/mock/analytics';
-import { APITranslationService } from 'services/api/translation';
-import { LocalProfileService } from 'services/local-profile';
-import { APIFeedbackService } from 'services/api/feedback';
-import { SafeSearchLikelihood } from 'services/google/image-recognition';
-import { APIImageRecognitionService } from 'services/api/image-recognition';
-import { MockTranslationService } from 'services/mock/translation';
-import {MockImageRecognitionService} from 'services/mock/image-recognition';
+import { MockAnalyticsService } from '../services/mock/analytics';
+import { LocalProfileService } from '../services/local-profile';
+import { APIFeedbackService } from '../services/api/feedback';
+import { MockTranslationService } from '../services/mock/translation';
+import { MockImageRecognitionService } from '../services/mock/image-recognition';
+import { params } from './environment.prod.params';
 
 const baseEndpointUrl = '';
 const debugImageUrl = '/assets/debug/IMG_20190920_141505.jpg';
@@ -14,63 +12,63 @@ export const environment = {
   production: false,
   loggingEnabled: true,
   assets: {
-    baseUrl: '/',
+    baseUrl: 'woolaroo/',
   },
   i18n: {
     languages: [
       {
         code: 'en',
         name: 'English',
-        file: './assets/locale/en.json',
+        file: params.assetsBaseUrl + 'assets/locale/en.json',
         direction: 'ltr',
         default: true
       },
       {
         code: 'fr',
         name: 'Français',
-        file: './assets/locale/fr.json',
+        file: params.assetsBaseUrl + 'assets/locale/fr.json',
         direction: 'ltr'
       },
       {
         code: 'es',
         name: 'Español',
-        file: './assets/locale/es.json',
+        file: params.assetsBaseUrl + 'assets/locale/es.json',
         direction: 'ltr'
       },
       /*{
         code: 'hi',
         name: 'हिन्दी',
-        file: './assets/locale/hi.json',
+        file: params.assetsBaseUrl + 'assets/locale/hi.json',
         direction: 'ltr'
       },*/
       {
         code: 'ar',
         name: 'اَلْعَرَبِيَّةُ',
-        file: './assets/locale/ar.json',
+        file: params.assetsBaseUrl + 'assets/locale/ar.json',
         direction: 'rtl'
       },
       {
         code: 'it',
         name: 'Italiano',
-        file: './assets/locale/it.json',
+        file: params.assetsBaseUrl + 'assets/locale/it.json',
         direction: 'ltr'
       },
       /*{
         code: 'pt',
         name: 'Português',
-        file: './assets/locale/pt.json',
+        file: params.assetsBaseUrl + 'assets/locale/pt.json',
         direction: 'ltr'
       },
       {
         code: 'ru',
         name: 'русский',
-        file: './assets/locale/ru.json',
+        file: params.assetsBaseUrl + 'assets/locale/ru.json',
         direction: 'ltr'
       },
       {
         code: 'zh',
         name: '普通话',
-        file: './assets/locale/zh.json',
+        file: params.assetsBaseUrl + 'assets/locale/zh.json',
         direction: 'ltr'
       }*/
     ]
@@ -108,7 +106,7 @@ export const environment = {
     addWordFieldset: {
       maxRecordingDuration: 5000,
       recordingBufferSize: 4096,
-      recordingMimeTypes: [ 'audio/mpeg', 'audio/mp4', 'audio/webm', 'audio/wav', 'audio/x-aiff' ],
+      recordingMimeTypes: ['audio/mpeg', 'audio/mp4', 'audio/webm', 'audio/wav', 'audio/x-aiff'],
       androidGBoardUrl: 'https://play.google.com/store/apps/details?id=com.google.android.inputmethod.latin',
       iosGBoardUrl: 'https://apps.apple.com/us/app/gboard-the-google-keyboard/id1091700242',
       keymanUrl: 'https://keyman.com/',
@@ -220,7 +218,7 @@ export const environment = {
             code: 'yug',
             name: 'Yugambeh',
             default: true,
-            sampleWordImageURL: './assets/img/languages/tree-yug.jpg',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-yug.jpg',
             sampleWordTranslation: 'tullei',
             nativeSpeakers: '100000',
             organizationURL: 'https://www.yugambeh.com/learn-the-language',
@@ -230,7 +228,7 @@ export const environment = {
             code: 'may',
             name: 'Maya',
             default: false,
-            sampleWordImageURL: './assets/img/languages/tree-may.jpg',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-may.jpg',
             sampleWordTranslation: 'Ché',
             nativeSpeakers: '6000000',
             organizationURL: 'http://alin.inali.gob.mx/xmlui/',
@@ -240,7 +238,7 @@ export const environment = {
             code: 'yi',
             name: 'Yiddish',
             default: false,
-            sampleWordImageURL: './assets/img/languages/tree-yi.jpg',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-yi.jpg',
             sampleWordTranslation: 'דער מילגרױם',
             nativeSpeakers: '100000',
             organizationURL: 'https://jewishstudies.rutgers.edu/yiddish/102-department-of-jewish-studies/yiddish/159-yiddish-faqs',
@@ -250,7 +248,7 @@ export const environment = {
             code: 'tzm',
             name: 'Tamazight',
             default: false,
-            sampleWordImageURL: './assets/img/languages/tree-tzm.jpg',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-tzm.jpg',
             sampleWordTranslation: 'Argan',
             nativeSpeakers: '100000',
             organizationURL: 'https://www.congres-mondial-amazigh.org/',
@@ -260,7 +258,7 @@ export const environment = {
             code: 'rap',
             name: 'Rapa Nui',
             default: false,
-            sampleWordImageURL: './assets/img/languages/tree-rap.jpg',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-rap.jpg',
             sampleWordTranslation: 'Toromiro',
             nativeSpeakers: '100000',
             organizationURL: 'https://en.unesco.org/courier/2019-1/rapa-nui-back-brink',
@@ -270,7 +268,7 @@ export const environment = {
             code: 'ppl',
             name: 'Nawat',
             default: false,
-            sampleWordImageURL: './assets/img/languages/tree-ppl.jpg',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-ppl.jpg',
             sampleWordTranslation: 'Puchut',
             nativeSpeakers: '100000',
             organizationURL: 'http://www.tushik.org',
@@ -280,7 +278,7 @@ export const environment = {
             code: 'mi',
             name: 'Māori',
             default: false,
-            sampleWordImageURL: './assets/img/languages/tree-mi.jpg',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-mi.jpg',
             sampleWordTranslation: 'kōwhai',
             nativeSpeakers: '100000',
             organizationURL: 'https://temurumara.org.nz/',
@@ -290,7 +288,7 @@ export const environment = {
             code: 'el-cal',
             name: 'Calabrian Greek',
             default: false,
-            sampleWordImageURL: './assets/img/languages/tree-el-cal.jpg',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-el-cal.jpg',
             sampleWordTranslation: 'Pero selvatico',
             nativeSpeakers: '100000',
             organizationURL: 'https://calabriagreca.it/',
@@ -300,7 +298,7 @@ export const environment = {
             code: 'scn',
             name: 'Sicilian',
             default: false,
-            sampleWordImageURL: './assets/img/languages/tree-scn.jpg',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-scn.jpg',
             sampleWordTranslation: 'Ficu d\'Innia',
             nativeSpeakers: '100000',
             organizationURL: 'https://cademiasiciliana.org',
@@ -310,7 +308,7 @@ export const environment = {
             code: 'lou',
             name: 'Louisiana Creole',
             default: false,
-            sampleWordImageURL: './assets/img/languages/tree-lou.jpg',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-lou.jpg',
             sampleWordTranslation: 'sip',
             nativeSpeakers: '100000',
             organizationURL: 'https://learnlouisianacreole.com/',
@@ -320,7 +318,7 @@ export const environment = {
             code: 'zyg',
             name: 'Yang Zhuang',
             default: false,
-            sampleWordImageURL: './assets/img/languages/tree-zyg.jpg',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-zyg.jpg',
             sampleWordTranslation: 'narb',
             nativeSpeakers: '100000',
             organizationURL: 'https://www.youtube.com/watch?v=WuN43huPnuM',
@@ -330,7 +328,7 @@ export const environment = {
             code: 'kum',
             name: 'Kumeyaay / Diegueño',
             default: false,
-            sampleWordImageURL: './assets/img/languages/tree-kum.jpg',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-kum.jpg',
             sampleWordTranslation: 'ily',
             nativeSpeakers: '500',
             organizationURL: 'https://www.baronamuseum.com/',
@@ -340,7 +338,7 @@ export const environment = {
             code: 'tep',
             name: 'Tepehua',
             default: false,
-            sampleWordImageURL: './assets/img/languages/tree-tep.jpg',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-tep.jpg',
             sampleWordTranslation: 'k\'iu',
             nativeSpeakers: '9000',
             organizationURL: 'http://alin.inali.gob.mx/xmlui/',
@@ -350,7 +348,7 @@ export const environment = {
             code: 'vm',
             name: 'Vurës',
             default: false,
-            sampleWordImageURL: './assets/img/languages/tree-vm.jpg',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-vm.jpg',
             sampleWordTranslation: 'rēntenge',
             nativeSpeakers: '2000',
             organizationURL: 'https://www.newcastle.edu.au/research/centre/endangered-languages-documentation-theory-and-application',
@@ -360,7 +358,7 @@ export const environment = {
             code: 'rom',
             name: 'Serravallese',
             default: false,
-            sampleWordImageURL: './assets/img/languages/tree-rom.jpg',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-rom.jpg',
             sampleWordTranslation: 'öibri',
             nativeSpeakers: '7000',
             organizationURL: 'https://www.dialettoromagnolo.it/',
@@ -370,7 +368,7 @@ export const environment = {
             code: 'san',
             name: 'Sanskrit',
             default: false,
-            sampleWordImageURL: './assets/img/languages/tree-san.jpg',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-san.jpg',
             sampleWordTranslation: 'vr̥kṣaḥ',
             nativeSpeakers: '14135',
             organizationURL: '',
@@ -380,7 +378,7 @@ export const environment = {
             code: 'pot',
             name: 'Potawatomi',
             default: false,
-            sampleWordImageURL: './assets/img/languages/tree-pot.jpg',
+            sampleWordImageURL: params.assetsBaseUrl + 'assets/img/languages/tree-pot.jpg',
             sampleWordTranslation: 'mtek',
             nativeSpeakers: '7000',
             organizationURL: 'https://www.potawatomi.org/',
