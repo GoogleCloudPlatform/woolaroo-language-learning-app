@@ -13,9 +13,9 @@
 # limitations under the License.
 
 runtime: nodejs14
-service: staging
+service: $SERVICE
 
-default_expiration: "1s"
+default_expiration: "$CACHE"
 
 handlers:
   - url: /woolaroo/assets/(.*)
