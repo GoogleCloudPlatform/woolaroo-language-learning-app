@@ -4,7 +4,7 @@ options:
 steps:
   # Client
   - id: "install_client_dependencies"
-    name: node:10.16.3
+    name: node:12
     entrypoint: "npm"
     args: ["install"]
     dir: "./client"
@@ -24,14 +24,14 @@ steps:
     dir: "./client"
   - id: "configure_client"
     waitFor: ["install_client_dependencies", "download_partner_logo"]
-    name: node:10.16.3
+    name: node:12
     entrypoint: "node"
     args:
       [
         "./configure_client.js",
         "../client/src/environments/environment.prod.params.ts",
         "${_API_URL}",
-        "https://storage.googleapis.com/${_BUCKET_NAME}/",
+        "${_APP_URL}",
         "${_GOOGLE_TRACKER_ID}",
         "${_LANGUAGE}",
         "${_ENDANGERED_LANGUAGE}",
@@ -43,7 +43,7 @@ steps:
     dir: "./deploy"
   - id: "build_client"
     waitFor: ["configure_client"]
-    name: node:10.16.3
+    name: node:12
     timeout: 1200s
     entrypoint: "npm"
     args:
@@ -52,51 +52,42 @@ steps:
         "build",
         "--",
         "--output-path=./dist",
-        "--deploy-url=https://storage.googleapis.com/${_BUCKET_NAME}/",
+        "--deploy-url=${_APP_URL}",
+        "--base-href=/woolaroo/",
       ]
     dir: "./client"
-  - id: "fix_client_asset_paths"
-    waitFor: ["build_client"]
-    name: node:10.16.3
+  # Server
+  - id: "configure_server"
+    waitFor: ["download_partner_logo"]
+    name: node:12
     entrypoint: "node"
     args:
-      [
-        "./fix_asset_paths.js",
-        "../client/dist/index.html",
-        "https://storage.googleapis.com/${_BUCKET_NAME}",
-      ]
+      - "./configure_server.js"
+      - ${_APP_SERVICE}
+      - "../server/app.yaml"
+      - ${_APP_CACHE}
+      - "../server/dispatch.yaml"
+      - ${_PROD_URL}
+      - ${_STAGING_URL}
     dir: "./deploy"
-  - id: "deploy_client"
-    waitFor: ["fix_client_asset_paths"]
-    name: gcr.io/cloud-builders/gsutil
-    args: ["-m", "rsync", "-r", "-c", "-d", "./dist", "gs://${_BUCKET_NAME}"]
-    dir: "./client"
-  - id: "fix_client_content_types"
-    waitFor: ["deploy_client"]
-    name: gcr.io/cloud-builders/gsutil
+
+  - id: "deploy_server"
+    waitFor:
+      - "build_client"
+      - "configure_server"
+    name: gcr.io/cloud-builders/gcloud
     args:
-      [
-        "-m",
-        "setmeta",
-        "-h",
-        "Content-Type:text/javascript",
-        "gs://${_BUCKET_NAME}/**/*.js",
-      ]
-  - id: "create_client_cors_config"
-    waitFor: ["deploy_client"]
-    name: node:10.16.3
-    entrypoint: "node"
+      - app
+      - deploy
+      - ../client/dist
+      - --appyaml=./app.yaml
+    dir: "server"
+  - id: "set_dispatch"
+    waitFor:
+      - "deploy_server"
+    name: gcr.io/cloud-builders/gcloud
     args:
-      [
-        "./create_client_cors_config.js",
-        "../client_cors.json",
-        "$PROJECT_ID",
-        "${_APP_SERVICE}",
-        "${_APP_URL}",
-      ]
-    dir: "./deploy"
-  - id: "set_client_cors"
-    waitFor: ["create_client_cors_config"]
-    name: gcr.io/cloud-builders/gsutil
-    args: ["cors", "set", "./client_cors.json", "gs://${_BUCKET_NAME}"]
-    dir: "./"
+      - app
+      - deploy
+      - dispatch.yaml
+    dir: "server"
