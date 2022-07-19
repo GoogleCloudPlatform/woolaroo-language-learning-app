@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --deploy-url=woolaroo",
+    "start": "ng serve --deploy-url=/woolaroo/ --base-href=/woolaroo/",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",

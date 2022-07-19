@@ -12,7 +12,7 @@ export const environment = {
   production: false,
   loggingEnabled: true,
   assets: {
-    baseUrl: 'woolaroo/',
+    baseUrl: '/woolaroo/',
   },
   i18n: {
     languages: [
