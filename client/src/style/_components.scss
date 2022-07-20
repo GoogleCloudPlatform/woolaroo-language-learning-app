@@ -1,4 +1,4 @@
-@import 'dimensions';
+@import './dimensions';
 
 @mixin text-button {
   padding: 0;
@@ -60,7 +60,7 @@
 @mixin form-page {
   @include toolbar-page;
 
-  ::ng-deep mat-toolbar.mat-toolbar-single-row {
+  mat-toolbar.mat-toolbar-single-row {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -95,4 +95,3 @@
     transform: scaleX(-1);
   }
 }
-

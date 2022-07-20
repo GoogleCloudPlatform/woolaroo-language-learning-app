@@ -2,21 +2,21 @@ import { OnInit, Component, Inject, NgZone, OnDestroy, InjectionToken } from '@a
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { WordTranslation } from 'services/entities/translation';
-import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
-import { ITranslationService, TRANSLATION_SERVICE } from 'services/translation';
-import { AppRoutes } from 'app/routes';
-import { ImageRenderingService } from 'services/image-rendering';
-import { downloadFile } from 'util/file';
-import { SessionService } from 'services/session';
-import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
-import { I18nService } from 'i18n/i18n.service';
-import { EndangeredLanguageService } from 'services/endangered-language';
-import { share } from 'util/share';
-import { NotSupportedError } from 'util/errors';
-import { validateImageData, validateImageURL } from 'util/image';
-import { loadCapturePageURL } from 'util/camera';
-import {getLogger} from 'util/logging';
+import { WordTranslation } from '../../services/entities/translation';
+import { IAnalyticsService, ANALYTICS_SERVICE } from '../../services/analytics';
+import { ITranslationService, TRANSLATION_SERVICE } from '../../services/translation';
+import { AppRoutes } from '../../app/routes';
+import { ImageRenderingService } from '../../services/image-rendering';
+import { downloadFile } from '../../util/file';
+import { SessionService } from '../../services/session';
+import { LoadingPopUpComponent } from '../../components/loading-popup/loading-popup';
+import { I18nService } from '../../i18n/i18n.service';
+import { EndangeredLanguageService } from '../../services/endangered-language';
+import { share } from '../../util/share';
+import { NotSupportedError } from '../../util/errors';
+import { validateImageData, validateImageURL } from '../../util/image';
+import { loadCapturePageURL } from '../../util/camera';
+import { getLogger } from '../../util/logging';
 
 const logger = getLogger('TranslatePageComponent');
 
@@ -36,37 +36,37 @@ export const TRANSLATE_PAGE_CONFIG = new InjectionToken<TranslatePageConfig>('Tr
   styleUrls: ['./translate.scss']
 })
 export class TranslatePageComponent implements OnInit, OnDestroy {
-  private _sharedImage: Blob|null = null;
-  public backgroundImageData: Blob|null = null;
-  public backgroundImageURL: string|null = null;
-  public selectedWord: WordTranslation|null = null;
+  private _sharedImage: Blob | null = null;
+  public backgroundImageData: Blob | null = null;
+  public backgroundImageURL: string | null = null;
+  public selectedWord: WordTranslation | null = null;
   public defaultSelectedWordIndex = -1;
-  public translations: WordTranslation[]|null = null;
+  public translations: WordTranslation[] | null = null;
 
   public get currentLanguage(): string {
     return this.endangeredLanguageService.currentLanguage.name;
   }
 
-  constructor( @Inject(TRANSLATE_PAGE_CONFIG) private config: TranslatePageConfig,
-               private http: HttpClient,
-               private dialog: MatDialog,
-               private router: Router,
-               private zone: NgZone,
-               private sessionService: SessionService,
-               private i18n: I18nService,
-               private endangeredLanguageService: EndangeredLanguageService,
-               @Inject(TRANSLATION_SERVICE) private translationService: ITranslationService,
-               @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
-               private imageRenderingService: ImageRenderingService) {
+  constructor(@Inject(TRANSLATE_PAGE_CONFIG) private config: TranslatePageConfig,
+    private http: HttpClient,
+    private dialog: MatDialog,
+    private router: Router,
+    private zone: NgZone,
+    private sessionService: SessionService,
+    private i18n: I18nService,
+    private endangeredLanguageService: EndangeredLanguageService,
+    @Inject(TRANSLATION_SERVICE) private translationService: ITranslationService,
+    @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
+    private imageRenderingService: ImageRenderingService) {
   }
 
   ngOnInit() {
     this.analyticsService.logPageView(this.router.url, 'Translate');
     this.defaultSelectedWordIndex = history.state.selectedWordIndex !== undefined ? history.state.selectedWordIndex : -1;
-    const image: Blob|undefined = history.state.image;
-    const imageURL: string|undefined = history.state.imageURL;
-    const words: string[]|undefined = history.state.words || this.config.debugWords;
-    let loadingPopUp: MatDialogRef<any>|undefined = this.sessionService.currentSession.currentModal;
+    const image: Blob | undefined = history.state.image;
+    const imageURL: string | undefined = history.state.imageURL;
+    const words: string[] | undefined = history.state.words || this.config.debugWords;
+    let loadingPopUp: MatDialogRef<any> | undefined = this.sessionService.currentSession.currentModal;
     if (!loadingPopUp) {
       loadingPopUp = this.dialog.open(LoadingPopUpComponent, { closeOnNavigation: false, disableClose: true, panelClass: 'loading-popup' });
       this.sessionService.currentSession.currentModal = loadingPopUp;
@@ -84,8 +84,8 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
           this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image } });
         } else {
           loadCapturePageURL().then(
-            url => this.router.navigateByUrl(url, {replaceUrl: true}),
-            () => this.router.navigateByUrl(AppRoutes.CaptureImage, {replaceUrl: true}),
+            url => this.router.navigateByUrl(url, { replaceUrl: true }),
+            () => this.router.navigateByUrl(AppRoutes.CaptureImage, { replaceUrl: true }),
           );
         }
       }
@@ -93,13 +93,13 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    const loadingPopUp: MatDialogRef<any>|undefined = this.sessionService.currentSession.currentModal;
+    const loadingPopUp: MatDialogRef<any> | undefined = this.sessionService.currentSession.currentModal;
     if (loadingPopUp) {
       loadingPopUp.close();
     }
   }
 
-  async initImageTranslations(image: Blob|undefined, imageURL: string|undefined, words: string[]|undefined): Promise<void> {
+  async initImageTranslations(image: Blob | undefined, imageURL: string | undefined, words: string[] | undefined): Promise<void> {
     if (!image) {
       const debugImageUrl = this.config.debugImageUrl;
       if (!debugImageUrl) {
@@ -124,7 +124,7 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
     return await this.http.get(url, { responseType: 'blob' }).toPromise();
   }
 
-  async setImageData(image: Blob, imageURL: string|undefined): Promise<void> {
+  async setImageData(image: Blob, imageURL: string | undefined): Promise<void> {
     const valid = await validateImageData(image);
     if (!valid) {
       throw new Error('Invalid image data');
@@ -172,11 +172,11 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 
   onSubmitFeedbackClick() {
     this.router.createUrlTree([], {});
-    this.router.navigateByUrl(AppRoutes.Feedback, { state: { word: this.selectedWord }});
+    this.router.navigateByUrl(AppRoutes.Feedback, { state: { word: this.selectedWord } });
   }
 
   onViewLanguageClick() {
-    this.router.navigate([AppRoutes.ListLanguages, this.endangeredLanguageService.currentLanguage.code ]);
+    this.router.navigate([AppRoutes.ListLanguages, this.endangeredLanguageService.currentLanguage.code]);
   }
 
   onSwitchLanguageClick() {
@@ -196,17 +196,17 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
     this.imageRenderingService.renderImage(this.backgroundImageData, this.selectedWord, language, endangeredLanguage,
       window.innerWidth * window.devicePixelRatio,
       window.innerHeight * window.devicePixelRatio).then(
-      (img) => {
-        this._sharedImage = img;
-      },
-      (err) => {
-        logger.warn('Error rendering image', err);
-        this._sharedImage = null;
-      }
-    );
+        (img) => {
+          this._sharedImage = img;
+        },
+        (err) => {
+          logger.warn('Error rendering image', err);
+          this._sharedImage = null;
+        }
+      );
   }
 
-  onSelectedWordChanged(ev: {index: number, word: WordTranslation|null}) {
+  onSelectedWordChanged(ev: { index: number, word: WordTranslation | null }) {
     if (ev.word) {
       this.selectedWord = ev.word;
     }
@@ -218,24 +218,25 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
 
   onWordShared(word: WordTranslation) {
     const selectedWord = this.selectedWord;
-    const shareTitle = this.i18n.getTranslation('shareTitle' ) || undefined;
+    const shareTitle = this.i18n.getTranslation('shareTitle') || undefined;
     const shareText = selectedWord ? this.i18n.getTranslation('shareText', {
       original: selectedWord.original || selectedWord.english,
       translation: selectedWord.translation,
-      language: this.endangeredLanguageService.currentLanguage.name}) || undefined : undefined;
+      language: this.endangeredLanguageService.currentLanguage.name
+    }) || undefined : undefined;
     const img = this._sharedImage;
     if (!img) {
       // image not rendered - default to sharing text
       logger.warn('Shared image data not found');
-      share({text: shareText, title: shareTitle}).then(
-        () => {},
+      share({ text: shareText, title: shareTitle }).then(
+        () => { },
         ex => logger.warn('Error sharing image', ex)
       );
       return;
     }
     const files: File[] = [new File([img], `woolaroo-translation-${word.original}.jpg`, { type: img.type })];
-    share({text: shareText, title: shareTitle, files}).then(
-      () => {},
+    share({ text: shareText, title: shareTitle, files }).then(
+      () => { },
       ex => {
         logger.warn('Error sharing image', ex);
         if (ex instanceof NotSupportedError) {
@@ -251,14 +252,14 @@ export class TranslatePageComponent implements OnInit, OnDestroy {
   }
 
   onManualEntrySelected() {
-    this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image: this.backgroundImageData }});
+    this.router.navigateByUrl(AppRoutes.CaptionImage, { state: { image: this.backgroundImageData } });
   }
 
   onAddRecording(word: WordTranslation) {
-    this.router.navigateByUrl(AppRoutes.AddWord, { state: { word }});
+    this.router.navigateByUrl(AppRoutes.AddWord, { state: { word } });
   }
 
   onAddTranslation(word: WordTranslation) {
-    this.router.navigateByUrl(AppRoutes.AddWord, { state: { word }});
+    this.router.navigateByUrl(AppRoutes.AddWord, { state: { word } });
   }
 }

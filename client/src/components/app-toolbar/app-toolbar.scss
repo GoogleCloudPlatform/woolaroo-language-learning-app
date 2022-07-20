@@ -1,5 +1,7 @@
-@import 'components';
-@import 'palette';
+@use 'sass:map';
+
+@import '../../style/components';
+@import '../../style/palette';
 
 :host {
   position: fixed;
@@ -35,7 +37,7 @@ mat-toolbar {
       }
 
       .mat-icon {
-        color: map-get(map-get($app-theme, "foreground"), "text");
+        color: map.get(map.get($app-theme, "foreground"), "text");
       }
     }
 
@@ -64,4 +66,3 @@ mat-toolbar {
     }
   }
 }
-

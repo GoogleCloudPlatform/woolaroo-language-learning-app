@@ -1,4 +1,4 @@
-@import 'palette';
+@import '../../style/palette';
 
 :host {
   display: block;
@@ -45,8 +45,8 @@
 
 $sqrt-2: 1.414;
 $child-base-distance: 325%;
-$child-distance: $child-base-distance * $sqrt-2;
-$child-diagonal-distance: $child-base-distance / $sqrt-2;
+$child-distance: calc($child-base-distance * $sqrt-2);
+$child-diagonal-distance: calc($child-base-distance / $sqrt-2);
 
 @keyframes busy-spinner-animation-child-1 {
   50% {

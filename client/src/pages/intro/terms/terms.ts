@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
-import { IProfileService, PROFILE_SERVICE } from 'services/profile';
-import { AppRoutes } from 'app/routes';
+import { IAnalyticsService, ANALYTICS_SERVICE } from '../../../services/analytics';
+import { IProfileService, PROFILE_SERVICE } from '../../../services/profile';
+import { AppRoutes } from '../../../app/routes';
 
 @Component({
   selector: 'app-page-intro-terms',
@@ -11,12 +11,12 @@ import { AppRoutes } from 'app/routes';
 })
 export class IntroTermsPageComponent implements AfterViewInit {
   @ViewChild('agreement', { static: true })
-  private agreement: ElementRef|null = null;
+  private agreement: ElementRef | null = null;
   public termsUrl = AppRoutes.TermsAndConditions;
 
-  constructor( private router: Router,
-               @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
-               @Inject(PROFILE_SERVICE) private profileService: IProfileService ) {
+  constructor(private router: Router,
+    @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
+    @Inject(PROFILE_SERVICE) private profileService: IProfileService) {
   }
 
   ngAfterViewInit() {

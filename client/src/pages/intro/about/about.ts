@@ -1,12 +1,12 @@
 import { AfterViewInit, Component, HostBinding, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppRoutes } from 'app/routes';
-import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
-import { environment } from 'environments/environment';
-import { IProfileService, PROFILE_SERVICE } from 'services/profile';
-import { Profile } from 'services/entities/profile';
-import {getOperatingSystem, isMobileDevice, OperatingSystem} from 'util/platform';
-import {cameraStreamIsAvailable} from 'util/camera';
+import { AppRoutes } from '../../../app/routes';
+import { IAnalyticsService, ANALYTICS_SERVICE } from '../../../services/analytics';
+import { environment } from '../../../environments/environment';
+import { IProfileService, PROFILE_SERVICE } from '../../../services/profile';
+import { Profile } from '../../../services/entities/profile';
+import { getOperatingSystem, isMobileDevice, OperatingSystem } from '../../../util/platform';
+import { cameraStreamIsAvailable } from '../../../util/camera';
 
 @Component({
   selector: 'app-page-intro-about',
@@ -17,9 +17,9 @@ export class IntroAboutPageComponent implements AfterViewInit {
   public get deviceSupported(): boolean { return isMobileDevice(); }
   public get isOldIOSVersion(): boolean { return getOperatingSystem() === OperatingSystem.iOS && !cameraStreamIsAvailable(); }
 
-  constructor( private router: Router,
-               @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
-               @Inject(PROFILE_SERVICE) private profileService: IProfileService ) {
+  constructor(private router: Router,
+    @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
+    @Inject(PROFILE_SERVICE) private profileService: IProfileService) {
   }
 
   ngAfterViewInit() {
@@ -33,7 +33,7 @@ export class IntroAboutPageComponent implements AfterViewInit {
     );
   }
 
-  nextPage(profile: Profile|null = null) {
+  nextPage(profile: Profile | null = null) {
     if ((!profile || !profile.termsAgreed) && environment.pages.termsAndPrivacy.enabled) {
       this.router.navigateByUrl(AppRoutes.IntroTermsAndConditions);
     } else {

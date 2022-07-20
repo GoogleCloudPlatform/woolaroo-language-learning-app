@@ -1,9 +1,10 @@
-@import "~@angular/material/theming";
+@use 'sass:map';
+@use '@angular/material' as mat;
 
 $_primary-pallet: (
   800: #54B883,
-  contrast: map-get($mat-green, contrast)
+  contrast: map.get(mat.$green-pallette, contrast)
 );
 
-$app-primary: mat-palette($_primary-pallet, 800);
-$app-accent:  mat-palette($_primary-pallet, 800);
+$app-primary: mat.define-palette($_primary-pallet, 800);
+$app-accent:  mat.define-palette($_primary-pallet, 800);

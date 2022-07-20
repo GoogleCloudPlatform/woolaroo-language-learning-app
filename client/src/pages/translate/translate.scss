@@ -1,5 +1,6 @@
-@import 'components';
-@import 'palette';
+@use '@angular/material' as mat;
+@import '../../style/components';
+@import '../../style/palette';
 
 :host {
   width: 100%;
@@ -40,7 +41,7 @@ app-translation-selector {
   @include text-button;
   flex: 0 0 auto;
   margin-bottom: 20px;
-  color: mat-contrast($app-inverted, 500);
+  color: mat.get-color-from-palette($app-inverted, '500-contrast');
   font-size: 20px;
 
   span {

@@ -1,4 +1,5 @@
-@import 'palette';
+@use '@angular/material' as mat;
+@import '../../style/palette';
 
 :host {
   display: block;
@@ -6,6 +7,7 @@
   position: relative;
   cursor: pointer;
   overflow: hidden;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -22,7 +24,7 @@ ul {
   li {
     margin: 0 10px;
     padding: 0;
-    color: mat-contrast($app-inverted, 500);
+    color: mat.get-color-from-palette($app-inverted, '500-contrast');
     font-size: 1.2rem;
     text-transform: lowercase;
     display: inline-block;

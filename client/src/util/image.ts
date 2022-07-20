@@ -1,5 +1,5 @@
-import { default as loadImage } from 'blueimp-load-image';
-import {getLogger} from 'util/logging';
+import * as loadImage from 'blueimp-load-image';
+import { getLogger } from './logging';
 
 const logger = getLogger('image');
 
@@ -28,7 +28,7 @@ function dataURItoBlob(dataURI: string): Blob {
   for (let i = 0; i < byteString.length; i++) {
     ia[i] = byteString.charCodeAt(i);
   }
-  return new Blob([ab], {type: mimeString});
+  return new Blob([ab], { type: mimeString });
 }
 
 

@@ -1,6 +1,6 @@
-@import 'components';
-@import 'palette';
-@import 'typography';
+@import '../style/components';
+@import '../style/palette';
+@import '../style/typography';
 
 .mat-typography {
   font-family: $main-font;
@@ -33,7 +33,7 @@ mat-toolbar.mat-toolbar-single-row {
   position: fixed;
   height: 80px;
   padding: 0 20px;
-  box-shadow: 0 0 10px mat-color(map-get($app-theme, shadow), 500);
+  box-shadow: 0 0 10px mat.get-color-from-palette(map.get($app-theme, 'shadow'), '500');
   font-size: 1.7rem;
   font-weight: 400;
   white-space: normal;

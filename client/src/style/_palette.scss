@@ -1,5 +1,6 @@
-@import "~@angular/material/theming";
-@import 'theme-config';
+@use '@angular/material' as mat;
+@use 'sass:map';
+@import './theme-config.scss';
 
 $theme-colors: (
   #EC5547,
@@ -12,7 +13,7 @@ $theme-colors: (
 $_inverted-pallet: (
   100: #000000,
   500: #323232,
-
+  700: #1a1919,
   contrast: (
     200: #A9A9A9,
     300: #b9b9b9,
@@ -20,20 +21,21 @@ $_inverted-pallet: (
   )
 );
 
-$app-warn:    mat-palette($mat-red);
-$app-inverted:  mat-palette($_inverted-pallet);
+$app-warn:    mat.$red-palette;
 
-$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+$app-inverted:  mat.define-palette($_inverted-pallet);
 
-$_foreground: map-merge(map-get($app-theme, "foreground"), (
+$app-theme: mat.define-light-theme($app-primary, $app-accent, $app-warn);
+
+$_foreground: map.merge(map.get($app-theme, "foreground"), (
   "text": #303438
 ));
-$app-theme: map-merge($app-theme, ("foreground": $_foreground));
-$_background: map-merge(map-get($app-theme, "background"), (
+$app-theme: map.merge($app-theme, ("foreground": $_foreground));
+$_background: map.merge(map.get($app-theme, "background"), (
   "app-bar": #FFFFFF
 ));
-$app-theme: map-merge($app-theme, ("background": $_background));
-$app-theme: map-merge($app-theme, ("shadow": (
+$app-theme: map.merge($app-theme, ("background": $_background));
+$app-theme: map.merge($app-theme, ("shadow": (
   100: rgba(0, 0, 0, 0.2),
   500: rgba(0, 0, 0, 0.4))
 ));

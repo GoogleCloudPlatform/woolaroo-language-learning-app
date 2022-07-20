@@ -1,4 +1,5 @@
-@import 'palette';
+@use 'sass:map';
+@import '../../style/palette';
 
 :host {
   display: block;
@@ -23,11 +24,11 @@ ul {
     padding: 0;
     margin: 0;
     font-size: 18px;
-    color: rgba(map-get(map-get($app-theme, "foreground"), "text"), 0.5);
+    color: rgba(map.get(map.get($app-theme, "foreground"), "text"), 0.5);
 
     li {
       font-weight: bold;
-      color: map-get(map-get($app-theme, "foreground"), "text");
+      color: map.get(map.get($app-theme, "foreground"), "text");
     }
 
     a {

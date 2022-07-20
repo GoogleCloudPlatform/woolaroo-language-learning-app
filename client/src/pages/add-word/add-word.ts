@@ -4,17 +4,17 @@ import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ErrorPopUpComponent } from 'components/error-popup/error-popup';
-import { ANALYTICS_SERVICE, IAnalyticsService } from 'services/analytics';
-import { FEEDBACK_SERVICE, IFeedbackService } from 'services/feedback';
-import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
-import { WordTranslation } from 'services/entities/translation';
-import { environment } from 'environments/environment';
-import { DEFAULT_LOCALE } from 'util/locale';
-import { I18nService } from 'i18n/i18n.service';
-import { EndangeredLanguageService } from 'services/endangered-language';
-import { AddedWord } from 'services/entities/feedback';
-import {getLogger} from 'util/logging';
+import { ErrorPopUpComponent } from '../../components/error-popup/error-popup';
+import { ANALYTICS_SERVICE, IAnalyticsService } from '../../services/analytics';
+import { FEEDBACK_SERVICE, IFeedbackService } from '../../services/feedback';
+import { LoadingPopUpComponent } from '../../components/loading-popup/loading-popup';
+import { WordTranslation } from '../../services/entities/translation';
+import { environment } from '../../environments/environment';
+import { DEFAULT_LOCALE } from '../../util/locale';
+import { I18nService } from '../../i18n/i18n.service';
+import { EndangeredLanguageService } from '../../services/endangered-language';
+import { AddedWord } from '../../services/entities/feedback';
+import { getLogger } from '../../util/logging';
 
 const logger = getLogger('AddWordPageComponent');
 
@@ -30,15 +30,15 @@ export class AddWordPageComponent implements AfterViewInit {
 
   public get endangeredLanguage(): string { return this.endangeredLanguageService.currentLanguage.name; }
 
-  constructor( private router: Router,
-               private location: Location,
-               private dialog: MatDialog,
-               private snackBar: MatSnackBar,
-               private zone: NgZone,
-               private i18n: I18nService,
-               private endangeredLanguageService: EndangeredLanguageService,
-               @Inject(FEEDBACK_SERVICE) private feedbackService: IFeedbackService,
-               @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {
+  constructor(private router: Router,
+    private location: Location,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private zone: NgZone,
+    private i18n: I18nService,
+    private endangeredLanguageService: EndangeredLanguageService,
+    @Inject(FEEDBACK_SERVICE) private feedbackService: IFeedbackService,
+    @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService) {
     const word: WordTranslation = history.state.word;
     this.form = new FormGroup({
       word: new FormControl(word ? word.original : '', this.i18n.currentLanguage.code !== DEFAULT_LOCALE ? [

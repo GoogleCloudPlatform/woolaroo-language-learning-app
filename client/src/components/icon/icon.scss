@@ -1,4 +1,7 @@
-@import 'palette';
+
+@use 'sass:map';
+@use '@angular/material' as mat;
+@import '../../style/palette';
 
 :host {
   position: relative;
@@ -17,5 +20,5 @@ mat-icon.shadow {
   top: 1px;
   left: 1px;
   z-index: -1;
-  color: mat-color(map-get($app-theme, shadow), 500);
+  color: mat.get-color-from-palette(map.get($app-theme, shadow), '500');
 }
