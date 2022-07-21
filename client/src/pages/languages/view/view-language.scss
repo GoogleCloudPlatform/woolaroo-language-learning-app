@@ -1,6 +1,7 @@
-@import 'palette';
-@import 'components';
-@import 'typography';
+@use '@angular/material' as mat;
+@import '../../../style/palette';
+@import '../../../style/components';
+@import '../../../style/typography';
 
 .banner {
   height: 310px;
@@ -9,11 +10,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: mat-contrast($app-inverted, 500);
+  color: mat.get-color-from-palette($app-inverted, '500-contrast');
 
   .back {
     @include icon-button;
-    color: mat-contrast($app-inverted, 500);
+    color: mat.get-color-from-palette($app-inverted, '500-contrast');
     position: absolute;
     left: 20px;
     top: 40px;
@@ -89,7 +90,7 @@
     @include text-button;
     font-weight: bold;
     font-size: 18px;
-    color: mat-color($app-accent);
+    color: mat.get-color-from-palette($app-accent);
     text-decoration: underline;
   }
 }
@@ -110,7 +111,7 @@
 
   .label {
     font-weight: bold;
-    color: mat-color($app-secondary);
+    color: mat.get-color-from-palette($app-secondary);
     margin-right: 10px;
   }
 
@@ -159,7 +160,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        color: mat-contrast($app-inverted, 500);
+        color: mat.get-color-from-palette($app-inverted, '500-contrast');
         margin-bottom: 10px;
 
         img {

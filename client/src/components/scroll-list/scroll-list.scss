@@ -1,7 +1,14 @@
+@use '@angular/material' as mat;
+@import '../../style/components';
+@import '../../style/palette';
+
+
 :host {
   display: block;
   position: relative;
   overflow: hidden;
+
+
 
   > ul {
     display: flex;
@@ -12,11 +19,19 @@
     list-style-type: none;
     width: 100%;
 
+
+
     > li {
       margin: 0;
       padding: 0;
       cursor: pointer;
       flex: 0 0 auto;
+
+
     }
+
   }
+
+
+
 }

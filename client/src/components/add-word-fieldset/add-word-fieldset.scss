@@ -1,5 +1,7 @@
-@import 'components';
-@import 'palette';
+@use 'sass:map';
+@use '@angular/material' as mat;
+@import '../../style/components';
+@import '../../style/palette';
 
 mat-form-field.text {
   margin-bottom: 30px;
@@ -17,11 +19,11 @@ mat-form-field.text {
   }
 
   button {
-    @include icon-button;
+    // @include icon-button;
     border-radius: 50%;
     width: 60px;
     height: 60px;
-    box-shadow: 0 3px 3px mat-color(map-get($app-theme, shadow), 100);
+    box-shadow: 0 3px 3px mat.get-color-from-palette(map.get($app-theme, shadow), '100');
     position: relative;
 
     app-icon {
@@ -35,7 +37,7 @@ mat-form-field.text {
       position: absolute;
       top: 0;
       left: 0;
-      fill: mat-color($app-primary);
+      fill: mat.get-color-from-palette($app-primary);
     }
 
     app-icon {

@@ -8,12 +8,12 @@ import {
   ViewChild
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
-import { IProfileService, PROFILE_SERVICE } from 'services/profile';
-import { AppRoutes } from 'app/routes';
-import { AnimationComponent } from 'components/animation/animation';
-import { environment } from 'environments/environment';
-import { loadCapturePageURL } from 'util/camera';
+import { IAnalyticsService, ANALYTICS_SERVICE } from '../../services/analytics';
+import { IProfileService, PROFILE_SERVICE } from '../../services/profile';
+import { AppRoutes } from '../../app/routes';
+import { AnimationComponent } from '../../components/animation/animation';
+import { environment } from '../../environments/environment';
+import { loadCapturePageURL } from '../../util/camera';
 
 interface SplashPageConfig {
   partnerLogoUrl?: string;
@@ -37,15 +37,15 @@ export class SplashPageComponent implements AfterViewInit, OnDestroy {
   public logosVisible = false;
   public spinnerVisible = false;
   @ViewChild('video', { static: true })
-  public video: ElementRef|null = null;
+  public video: ElementRef | null = null;
   @ViewChild('logoAnimation', { static: true })
-  public logoAnimation: AnimationComponent|null = null;
+  public logoAnimation: AnimationComponent | null = null;
   public get isLoading(): boolean { return !this.videoStarted && !this.logosVisible; }
 
-  constructor( @Inject(SPLASH_PAGE_CONFIG) private config: SplashPageConfig,
-               private router: Router,
-               @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
-               @Inject(PROFILE_SERVICE) private profileService: IProfileService) {
+  constructor(@Inject(SPLASH_PAGE_CONFIG) private config: SplashPageConfig,
+    private router: Router,
+    @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService,
+    @Inject(PROFILE_SERVICE) private profileService: IProfileService) {
   }
 
   ngAfterViewInit() {

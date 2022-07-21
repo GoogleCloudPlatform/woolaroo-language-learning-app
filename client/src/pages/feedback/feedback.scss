@@ -1,5 +1,6 @@
-@import 'components';
-@import 'palette';
+@use '@angular/material' as mat;
+@import '../../style/components';
+@import '../../style/palette';
 
 :host {
   @include form-page;
@@ -43,6 +44,6 @@ mat-form-field.textarea {
   padding: 0 30px 30px 30px;
 
   ::ng-deep a {
-    color: mat-color($app-primary);
+    color: mat.get-color-from-palette($app-primary, '500');
   }
 }

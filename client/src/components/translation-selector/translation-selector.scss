@@ -1,16 +1,18 @@
-@import 'components';
-@import 'palette';
+@use '@angular/material' as mat;
+@use 'sass:map';
+@import '../../style/components';
+@import '../../style/palette';
 
 :host {
   display: flex;
   flex-direction: column;
   width: 100%;
-  text-shadow: 1px 1px 2px mat-color(map-get($app-theme, shadow), 500);
+  text-shadow: 1px 1px 2px mat.get-color-from-palette(map.get($app-theme, shadow), '500');
 }
 
 .translation-container {
   flex: 0 0 auto;
-  color: mat-contrast($app-inverted, 500);
+  color: mat.get-color-from-palette($app-inverted, '500-contrast');
   text-align: center;
   margin-bottom: 15px;
   min-height: 160px;
@@ -70,7 +72,7 @@
 
       button {
         @include icon-button;
-        color: mat-contrast($app-inverted, 500);
+        color: mat.get-color-from-palette($app-inverted, '500-contrast');
         width: 32px;
         height: 32px;
       }
@@ -83,19 +85,19 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    color: mat-contrast($app-inverted, 500);
+    color: mat.get-color-from-palette($app-inverted, '500-contrast');
     width: 45px;
     height: 45px;
 
     .loading {
-      stroke: mat-contrast($app-inverted, 500);
+      stroke: mat.get-color-from-palette($app-inverted, '500-contrast');
     }
   }
 }
 
 .translation-not-found {
   flex: 0 0 auto;
-  color: mat-contrast($app-inverted, 500);
+  color: mat.get-color-from-palette($app-inverted, '500-contrast');
   text-align: center;
   margin-bottom: 15px;
   width: 100%;
@@ -120,7 +122,7 @@
 
   .add-translation {
     @include icon-button;
-    color: mat-contrast($app-inverted, 500);
+    color: mat.get-color-from-palette($app-inverted, '500-contrast');
     width: 45px;
     height: 45px;
     display: block;

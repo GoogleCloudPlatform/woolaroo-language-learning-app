@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Inject, InjectionToken } from '@angular/core';
 import { Router } from '@angular/router';
-import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
+import { IAnalyticsService, ANALYTICS_SERVICE } from '../../services/analytics';
 
 interface TermsPageConfig {
   enabled: boolean;
@@ -18,9 +18,9 @@ export const TERMS_PAGE_CONFIG = new InjectionToken<TermsPageConfig>('Terms page
 export class TermsPageComponent implements AfterViewInit {
   public content: string;
 
-  constructor( @Inject(TERMS_PAGE_CONFIG) private config: TermsPageConfig,
-               private router: Router,
-               @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {
+  constructor(@Inject(TERMS_PAGE_CONFIG) private config: TermsPageConfig,
+    private router: Router,
+    @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService) {
     this.content = config.content;
   }
 

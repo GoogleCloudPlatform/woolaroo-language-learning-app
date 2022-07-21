@@ -1,5 +1,6 @@
-@import 'components';
-@import 'palette';
+@use '@angular/material' as mat;
+@import '../../style/components';
+@import '../../style/palette';
 
 :host {
   width: 100%;
@@ -28,10 +29,10 @@ form {
   box-sizing: border-box;
 
   .mat-form-field.text {
-    color: mat-contrast($app-inverted, 500);
+    color: mat.get-color-from-palette($app-inverted, '500-contrast');
 
     input::placeholder {
-      color: mat-contrast($app-inverted, 300);
+      color: mat.get-color-from-palette($app-inverted, '300-contrast');
     }
 
     ::ng-deep .mat-form-field-outline {
@@ -45,7 +46,7 @@ form {
       right: 0;
       top: 0.25em;
       bottom: 0;
-      background-color: mat-color($app-inverted);
+      background-color: mat.get-color-from-palette($app-inverted);
       border-radius: 5px;
     }
   }

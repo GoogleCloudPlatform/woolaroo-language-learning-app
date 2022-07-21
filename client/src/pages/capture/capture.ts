@@ -1,27 +1,27 @@
 import { AfterViewInit, Component, Inject, OnDestroy, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { CameraPreviewComponent, CameraPreviewStatus } from 'components/camera-preview/camera-preview';
-import { CapturePopUpComponent } from 'components/capture-popup/capture-popup';
-import { ErrorPopUpComponent } from 'components/error-popup/error-popup';
-import { ANALYTICS_SERVICE, IAnalyticsService } from 'services/analytics';
-import { IImageRecognitionService, IMAGE_RECOGNITION_SERVICE } from 'services/image-recognition';
-import { AppRoutes } from 'app/routes';
-import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
-import { SessionService } from 'services/session';
-import { addOpenedListener } from 'util/dialog';
-import { I18nService } from 'i18n/i18n.service';
-import { IProfileService, PROFILE_SERVICE } from 'services/profile';
-import {getLogger} from 'util/logging';
+import { CameraPreviewComponent, CameraPreviewStatus } from '../../components/camera-preview/camera-preview';
+import { CapturePopUpComponent } from '../../components/capture-popup/capture-popup';
+import { ErrorPopUpComponent } from '../../components/error-popup/error-popup';
+import { ANALYTICS_SERVICE, IAnalyticsService } from '../../services/analytics';
+import { IImageRecognitionService, IMAGE_RECOGNITION_SERVICE } from '../../services/image-recognition';
+import { AppRoutes } from '../../app/routes';
+import { LoadingPopUpComponent } from '../../components/loading-popup/loading-popup';
+import { SessionService } from '../../services/session';
+import { addOpenedListener } from '../../util/dialog';
+import { I18nService } from '../../i18n/i18n.service';
+import { IProfileService, PROFILE_SERVICE } from '../../services/profile';
+import { getLogger } from '../../util/logging';
 
 const logger = getLogger('CapturePageComponent');
 
 export class ImageLoaderPageBase {
-  constructor( protected router: Router,
-               protected i18n: I18nService,
-               protected dialog: MatDialog,
-               protected sessionService: SessionService,
-               @Inject(IMAGE_RECOGNITION_SERVICE) protected imageRecognitionService: IImageRecognitionService) {
+  constructor(protected router: Router,
+    protected i18n: I18nService,
+    protected dialog: MatDialog,
+    protected sessionService: SessionService,
+    @Inject(IMAGE_RECOGNITION_SERVICE) protected imageRecognitionService: IImageRecognitionService) {
   }
 
   onImageUploaded(image: Blob) {
@@ -38,8 +38,11 @@ export class ImageLoaderPageBase {
     this.imageRecognitionService.loadDescriptions(image).then(
       (descriptions) => {
         if (descriptions.length > 0) {
-          this.router.navigateByUrl(AppRoutes.Translate, { state: {
-            image, imageURL: URL.createObjectURL(image), words: descriptions.map(d => d.description) } }).then(
+          this.router.navigateByUrl(AppRoutes.Translate, {
+            state: {
+              image, imageURL: URL.createObjectURL(image), words: descriptions.map(d => d.description)
+            }
+          }).then(
             (success) => {
               if (!success) {
                 loadingPopUp.close();
@@ -72,23 +75,23 @@ export class ImageLoaderPageBase {
 })
 export class CapturePageComponent extends ImageLoaderPageBase implements AfterViewInit, OnDestroy {
   @ViewChild(CameraPreviewComponent)
-  private cameraPreview: CameraPreviewComponent|null = null;
+  private cameraPreview: CameraPreviewComponent | null = null;
   private modalIsForCameraStartup = true;
   public captureInProgress = false;
   public sidenavOpen = false;
 
-  constructor( router: Router,
-               dialog: MatDialog,
-               sessionService: SessionService,
-               i18n: I18nService,
-               @Inject(PROFILE_SERVICE) private profileService: IProfileService,
-               @Inject(IMAGE_RECOGNITION_SERVICE) imageRecognitionService: IImageRecognitionService,
-               @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService) {
+  constructor(router: Router,
+    dialog: MatDialog,
+    sessionService: SessionService,
+    i18n: I18nService,
+    @Inject(PROFILE_SERVICE) private profileService: IProfileService,
+    @Inject(IMAGE_RECOGNITION_SERVICE) imageRecognitionService: IImageRecognitionService,
+    @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService) {
     super(router, i18n, dialog, sessionService, imageRecognitionService);
   }
 
   ngAfterViewInit() {
-    let loadingPopUp: MatDialogRef<any>|undefined = this.sessionService.currentSession.currentModal;
+    let loadingPopUp: MatDialogRef<any> | undefined = this.sessionService.currentSession.currentModal;
     this.analyticsService.logPageView(this.router.url, 'Capture');
     if (!this.cameraPreview) {
       logger.error('Camera preview not found');
@@ -124,7 +127,7 @@ export class CapturePageComponent extends ImageLoaderPageBase implements AfterVi
   }
 
   ngOnDestroy(): void {
-    const loadingPopUp: MatDialogRef<any>|undefined = this.sessionService.currentSession.currentModal;
+    const loadingPopUp: MatDialogRef<any> | undefined = this.sessionService.currentSession.currentModal;
     if (loadingPopUp && this.modalIsForCameraStartup) {
       loadingPopUp.close();
     }

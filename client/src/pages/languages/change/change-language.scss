@@ -1,5 +1,6 @@
-@import 'palette';
-@import 'components';
+@use '@angular/material' as mat;
+@import '../../../style/palette';
+@import '../../../style/components';
 
 :host {
   display: flex;
@@ -8,7 +9,7 @@
   justify-content: space-between;
   box-sizing: border-box;
   height: 100%;
-  color: mat-contrast($app-inverted, 500);
+  color: mat.get-color-from-palette($app-inverted, '500-contrast');
   overflow: hidden;
   position: relative;
 }
@@ -22,8 +23,8 @@ app-camera-preview {
   left: 0;
   z-index: 0;
   background-color: black;
-
-  ::ng-deep video {
+  // This had ::ng-deep on it but cause compiler issues due to deprecation
+  video {
     filter: brightness(0.5) blur(10px);
     width: calc(100vw + 20px);
     height: calc(100vh + 20px);
@@ -47,30 +48,29 @@ app-camera-preview {
     display: block;
   }
 
-  app-scroll-list ::ng-deep {
-    li {
-      button {
-        @include text-button;
-        color: mat-contrast($app-inverted, 500);
-        font-size: 30px;
-        font-weight: bold;
-        margin: 0 30px;
-        transition: color 0.3s ease-in-out;
-        user-select: none;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        -webkit-tap-highlight-color: transparent;
-      }
 
-      &:not(.current) {
-        button {
-          color: mat-contrast($app-inverted, 200);
-          font-weight: normal;
-        }
-      }
+  button {
+    @include text-button;
+    color: mat.get-color-from-palette($app-inverted, '500-contrast');
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0 30px;
+    transition: color 0.3s ease-in-out;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  &:not(.current) {
+    button {
+      color: mat.get-color-from-palette($app-inverted, '200-contrast');
+      font-weight: normal;
     }
   }
+
+
 
   .description {
     display: block;
@@ -89,8 +89,8 @@ app-camera-preview {
 .endangered-language {
   justify-content: flex-start;
   min-height: 250px;
-
-  app-scroll-list ::ng-deep {
+  // This used to have ::ng-deep on it, now it has been deprecated.
+  app-scroll-list {
     margin-bottom: 40px;
 
     li button {
@@ -103,7 +103,7 @@ app-camera-preview {
 
 .close {
   @include icon-button;
-  color: mat-contrast($app-inverted, 500);
+  color: mat.get-color-from-palette($app-inverted, '500-contrast');
   position: absolute;
   top: 8px;
   right: 8px;

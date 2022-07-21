@@ -1,16 +1,6 @@
-@import "~@angular/material/theming";
-@include mat-core();
+@use '@angular/material' as mat;
+@include mat.core();
 
-@import 'palette';
+@import './palette';
 
-@include mat-core-theme($app-theme);
-@include mat-button-theme($app-theme);
-@include mat-checkbox-theme($app-theme);
-@include mat-dialog-theme($app-theme);
-@include mat-form-field-theme($app-theme);
-@include mat-select-theme($app-theme);
-@include mat-icon-theme($app-theme);
-@include mat-input-theme($app-theme);
-@include mat-sidenav-theme($app-theme);
-@include mat-toolbar-theme($app-theme);
-@include mat-snack-bar-theme($app-theme);
+@include mat.all-component-themes($app-theme);

@@ -1,5 +1,6 @@
-@import 'palette';
-@import 'components';
+@use '@angular/material' as mat;
+@import '../../../style/palette';
+@import '../../../style/components';
 
 :host {
   @include toolbar-page;
@@ -22,7 +23,7 @@
   }
 
   .language {
-    color: mat-contrast($app-inverted, 500);
+    color: mat.get-color-from-palette($app-inverted, '500-contrast');
     max-width: 307px;
     width: 90vw;
     display: flex;
@@ -76,7 +77,7 @@
     .info {
       flex: 1 1 auto;
       border-radius: 8px;
-      background-color: mat-color($app-accent);
+      background-color: mat.get-color-from-palette($app-accent);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -110,11 +111,11 @@
 
   > ul {
     > li:nth-child(3n + 2) .language .info {
-      background-color: mat-color($app-primary) !important;
+      background-color: mat.get-color-from-palette($app-primary, '500') !important;
     }
 
     > li:nth-child(3n + 3) .language .info {
-      background-color: mat-color($app-secondary) !important;
+      background-color: mat.get-color-from-palette($app-secondary, '500') !important;
     }
   }
 }

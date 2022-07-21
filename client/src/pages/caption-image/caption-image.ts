@@ -1,15 +1,15 @@
 import { OnInit, Component, Inject, NgZone, OnDestroy, InjectionToken } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { IAnalyticsService, ANALYTICS_SERVICE } from 'services/analytics';
+import { IAnalyticsService, ANALYTICS_SERVICE } from '../../services/analytics';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AppRoutes } from 'app/routes';
-import { LoadingPopUpComponent } from 'components/loading-popup/loading-popup';
-import { SessionService } from 'services/session';
+import { AppRoutes } from '../../app/routes';
+import { LoadingPopUpComponent } from '../../components/loading-popup/loading-popup';
+import { SessionService } from '../../services/session';
 import { MatDialog } from '@angular/material/dialog';
-import { addOpenedListener } from 'util/dialog';
-import {validateImageURL} from 'util/image';
-import {getLogger} from 'util/logging';
+import { addOpenedListener } from '../../util/dialog';
+import { validateImageURL } from '../../util/image';
+import { getLogger } from '../../util/logging';
 
 const logger = getLogger('CaptionImagePageComponent');
 
@@ -26,16 +26,16 @@ export const CAPTION_IMAGE_PAGE_CONFIG = new InjectionToken<CaptionImagePageConf
 })
 export class CaptionImagePageComponent implements OnInit {
   public readonly form: FormGroup;
-  public backgroundImageURL: string|null = null;
-  public image: Blob|null = null;
+  public backgroundImageURL: string | null = null;
+  public image: Blob | null = null;
 
-  constructor( @Inject(CAPTION_IMAGE_PAGE_CONFIG) private config: CaptionImagePageConfig,
-               private http: HttpClient,
-               private router: Router,
-               private zone: NgZone,
-               private dialog: MatDialog,
-               private sessionService: SessionService,
-               @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService ) {
+  constructor(@Inject(CAPTION_IMAGE_PAGE_CONFIG) private config: CaptionImagePageConfig,
+    private http: HttpClient,
+    private router: Router,
+    private zone: NgZone,
+    private dialog: MatDialog,
+    private sessionService: SessionService,
+    @Inject(ANALYTICS_SERVICE) private analyticsService: IAnalyticsService) {
     this.form = new FormGroup({
       caption: new FormControl('', [
         Validators.required
@@ -45,8 +45,8 @@ export class CaptionImagePageComponent implements OnInit {
 
   ngOnInit() {
     this.analyticsService.logPageView(this.router.url, 'Caption Image');
-    const image: Blob|undefined = history.state.image;
-    const imageURL: string|undefined = history.state.imageURL;
+    const image: Blob | undefined = history.state.image;
+    const imageURL: string | undefined = history.state.imageURL;
     if (!image) {
       const debugImageUrl = this.config.debugImageUrl;
       if (!debugImageUrl) {
@@ -71,7 +71,7 @@ export class CaptionImagePageComponent implements OnInit {
     });
   }
 
-  setImageData(image: Blob, imageURL: string|undefined) {
+  setImageData(image: Blob, imageURL: string | undefined) {
     if (imageURL) {
       validateImageURL(imageURL).then(
         valid => {
@@ -111,8 +111,11 @@ export class CaptionImagePageComponent implements OnInit {
       next: () => this.sessionService.currentSession.currentModal = null
     });
     addOpenedListener(loadingPopUp, () => {
-      this.router.navigateByUrl(AppRoutes.Translate, {state: {
-        image: this.image, imageURL: this.backgroundImageURL, words: [this.form.value.caption]}});
+      this.router.navigateByUrl(AppRoutes.Translate, {
+        state: {
+          image: this.image, imageURL: this.backgroundImageURL, words: [this.form.value.caption]
+        }
+      });
     });
   }
 

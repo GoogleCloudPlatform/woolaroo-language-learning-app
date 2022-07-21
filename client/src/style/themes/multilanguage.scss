@@ -1,21 +1,22 @@
-@import "~@angular/material/theming";
+@use '@angular/material' as mat;
+@use 'sass:map';
 
-$_primary-pallet: (
+$_primary-palette: (
   800: #EA564C,
-  contrast: map-get($mat-red, contrast)
+  contrast: map.get(mat.$red-palette, contrast)
 );
 
-$app-primary: mat-palette($_primary-pallet, 800);
+$app-primary: mat.define-palette(map.merge(mat.$red-palette, $_primary-palette), 800);
 
-$_secondary-pallet: (
+$_secondary-palette: (
   100: #FDEEC3,
   800: #F49131,
-  contrast: map-get($mat-deep-orange, contrast)
+  contrast: map.get(mat.$deep-orange-palette, contrast)
 );
-$app-secondary:  mat-palette($_secondary-pallet, 800);
+$app-secondary:  mat.define-palette(map.merge(mat.$deep-orange-palette, $_secondary-palette), 800);
 
-$_accent-pallet: (
+$_accent-palette: (
   800: #33B575,
-  contrast: map-get($mat-green, contrast)
+  contrast: map.get(mat.$green-palette, contrast)
 );
-$app-accent:  mat-palette($_accent-pallet, 800);
+$app-accent:  mat.define-palette(map.merge(mat.$green-palette, $_accent-palette), 800);

@@ -1,5 +1,6 @@
-@import 'components';
-@import 'palette';
+@use '@angular/material' as mat;
+@import '../../style/components';
+@import '../../style/palette';
 
 :host {
   @include centered-page;
@@ -39,7 +40,7 @@ video,
   transform: translate(-50%, -50%);
 
   mat-progress-spinner {
-    stroke: mat-color($app-accent);
+    stroke: mat.get-color-from-palette($app-accent);
     z-index: 1;
   }
 }

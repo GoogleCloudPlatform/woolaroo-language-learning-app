@@ -1,4 +1,4 @@
-@import "~@angular/material/theming";
+@use '@angular/material' as mat;
 
-$app-primary: mat-palette($mat-pink, 800);
-$app-accent:  mat-palette($mat-pink, 800);
+$app-primary: mat.define-palette(mat.$pink-palette, 800);
+$app-accent:  mat.define-palette(mat.$pink-palette, 800);

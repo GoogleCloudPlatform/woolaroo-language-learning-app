@@ -1,10 +1,13 @@
 import { Component, Inject, InjectionToken, Input, NgZone } from '@angular/core';
-import { audioRecordingIsAvailable, AudioStream, play, RecordingStream, startRecording } from 'util/audio';
-import { getOperatingSystem, OperatingSystem } from 'util/platform';
-import { DEFAULT_LOCALE } from 'util/locale';
+import {
+  audioRecordingIsAvailable,
+  AudioStream, play, RecordingStream, startRecording
+} from '../../util/audio';
+import { getOperatingSystem, OperatingSystem } from '../../util/platform';
+import { DEFAULT_LOCALE } from '../../util/locale';
 import { FormGroup } from '@angular/forms';
-import { I18nService } from 'i18n/i18n.service';
-import {getLogger} from 'util/logging';
+import { I18nService } from '../../i18n/i18n.service';
+import { getLogger } from '../../util/logging';
 
 interface AddWordFieldsetConfig {
   maxRecordingDuration: number;
@@ -33,8 +36,8 @@ const logger = getLogger('AddWordFieldsetComponent');
   styleUrls: ['./add-word-fieldset.scss']
 })
 export class AddWordFieldsetComponent {
-  private audioStream: AudioStream|null = null;
-  private recording: Blob|null = null;
+  private audioStream: AudioStream | null = null;
+  private recording: Blob | null = null;
   public recordingState = RecordingState.Idle;
   public recordingStateValues = RecordingState;
   public audioStreamProgress = 0;
@@ -48,16 +51,16 @@ export class AddWordFieldsetComponent {
   public get primaryLanguageWordAvailable(): boolean { return this.i18n.currentLanguage.code != DEFAULT_LOCALE; }
 
   @Input()
-  public formGroup: FormGroup|undefined = undefined;
+  public formGroup: FormGroup | undefined = undefined;
 
   constructor(
-      @Inject(ADD_WORD_FIELDSET_CONFIG) private config: AddWordFieldsetConfig,
-      private zone: NgZone,
-      private i18n: I18nService) {
+    @Inject(ADD_WORD_FIELDSET_CONFIG) private config: AddWordFieldsetConfig,
+    private zone: NgZone,
+    private i18n: I18nService) {
     this.operatingSystem = getOperatingSystem();
     this.keymanUrl = this.config.keymanUrl;
     this.gboardUrl = this.operatingSystem === OperatingSystem.Android ?
-    this.config.androidGBoardUrl : this.config.iosGBoardUrl;
+      this.config.androidGBoardUrl : this.config.iosGBoardUrl;
   }
 
   public fieldHasError(field: string, error: string): boolean {

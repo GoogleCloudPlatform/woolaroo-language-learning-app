@@ -1,4 +1,6 @@
-@import 'palette';
+@use '@angular/material' as mat;
+@use 'sass:map';
+@import '../../style/palette';
 
 :host {
   display: block;
@@ -9,11 +11,11 @@
 
   hr {
     width: 1px;
-    background-color: mat-contrast($app-inverted, 500);
+    background-color: mat.get-color-from-palette($app-inverted, '500-contrast');
     border-style: none;
     transform: rotate(0deg);
     transform-origin: 50% 0;
     height: 100%;
-    box-shadow: 1px 1px 2px mat-color(map-get($app-theme, shadow), 500);
+    box-shadow: 1px 1px 2px mat.get-color-from-palette(map.get($app-theme, shadow), '500');
   }
 }

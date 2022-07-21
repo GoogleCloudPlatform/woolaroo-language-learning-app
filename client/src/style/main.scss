@@ -1,6 +1,9 @@
-@import 'theme';
-@import 'material';
-@import 'typography';
+@use '@angular/material' as mat;
+@use 'sass:map';
+
+@import './theme.scss';
+@import './material.scss';
+@import './typography';
 
 html {
   height: 100%;
@@ -13,7 +16,7 @@ body {
 }
 
 body {
-  color: mat-color(map-get($app-theme, foreground), text);
+  color: mat.get-color-from-palette(map.get($app-theme, 'foreground'), 'text');
 }
 
 button {

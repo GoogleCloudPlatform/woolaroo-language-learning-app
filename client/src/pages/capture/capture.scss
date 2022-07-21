@@ -1,5 +1,6 @@
-@import 'components';
-@import 'palette';
+@use '@angular/material' as mat;
+@import '../../style/components';
+@import '../../style/palette';
 
 // center error popup within camera frame
 ::ng-deep .capture-camera-error .mat-dialog-container {
@@ -13,7 +14,7 @@
 }
 
 .mat-drawer-container {
-  background-color: mat-color($app-inverted, 100);
+  background-color: mat.get-color-from-palette($app-inverted, '100');
   height: 100%;
 
   .mat-sidenav {
@@ -21,6 +22,7 @@
     max-width: 80%;
   }
 }
+
 
 app-camera-preview {
   width: 100%;
@@ -48,7 +50,7 @@ app-camera-preview {
     text-align: center;
     font-size: 20px;
     line-height: 138.2%;
-    color: mat-contrast($app-inverted, 500);
+    color: mat.get-color-from-palette($app-inverted, '500-contrast');
     width: 180px;
     transition: opacity 0.5s ease-in-out;
     pointer-events: none;
@@ -76,7 +78,7 @@ app-camera-preview {
     }
 
     .mat-icon {
-      color: mat-contrast($app-inverted, 500);
+      color: mat.get-color-from-palette($app-inverted, '500-contrast');
     }
   }
 }
@@ -93,7 +95,7 @@ app-camera-preview {
 
   ::ng-deep {
     .mat-icon {
-      color: mat-contrast($app-inverted, 500);
+      color: mat.get-color-from-palette($app-inverted, '500-contrast');
     }
   }
 }
