@@ -53,7 +53,7 @@ handlers:
         font-src 'self';
         img-src 'self';
         style-src 'self';
-        media-src 'self' https://storage.googleapis.com;
+        media-src 'self' https://storage.googleapis.com https://www.googleapis.com;
 
   - url: /woolaroo/3rdpartylicenses.txt
     static_files: 3rdpartylicenses.txt
@@ -86,5 +86,5 @@ handlers:
         connect-src 'self' https://australia-southeast1-woolaroo-project.cloudfunctions.net https://www.gstatic.com https://www.google-analytics.com https://www.googleapis.com https://apis.google.com https://*.googleapis.com https://www.googletagmanager.com https://fonts.googleapis.com;
         font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com;
         style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-        media-src 'self' https://storage.googleapis.com;
+        media-src 'self' https://storage.googleapis.com https://www.googleapis.com;
         manifest-src 'self';
