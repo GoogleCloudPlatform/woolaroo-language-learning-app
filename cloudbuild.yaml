@@ -47,14 +47,7 @@ steps:
     timeout: 1200s
     entrypoint: "npm"
     args:
-      [
-        "run",
-        "build",
-        "--",
-        "--output-path=./dist",
-        "--deploy-url=${_APP_URL}",
-        "--base-href=/woolaroo/",
-      ]
+      ["run", "build", "--", "--output-path=./dist", "--base-href=/woolaroo/"]
     dir: "./client"
   # Server
   - id: "configure_server"
