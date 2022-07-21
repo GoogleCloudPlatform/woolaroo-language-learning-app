@@ -46,6 +46,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/woolaroo/",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
