@@ -4,7 +4,7 @@ options:
 steps:
   # Client
   - id: "install_client_dependencies"
-    name: node:12
+    name: node:14
     entrypoint: "npm"
     args: ["install"]
     dir: "./client"
@@ -24,7 +24,7 @@ steps:
     dir: "./client"
   - id: "configure_client"
     waitFor: ["install_client_dependencies", "download_partner_logo"]
-    name: node:12
+    name: node:14
     entrypoint: "node"
     args:
       [
@@ -43,7 +43,7 @@ steps:
     dir: "./deploy"
   - id: "build_client"
     waitFor: ["configure_client"]
-    name: node:12
+    name: node:14
     timeout: 1200s
     entrypoint: "npm"
     args:
@@ -52,7 +52,7 @@ steps:
   # Server
   - id: "configure_server"
     waitFor: ["download_partner_logo"]
-    name: node:12
+    name: node:14
     entrypoint: "node"
     args:
       - "./configure_server.js"
