@@ -78,7 +78,6 @@ handlers:
       X-XSS-Protection: "1; mode=block"
       Content-Security-Policy: >-
         default-src 'self';
-        media-src 'self';
         img-src 'self' blob: *.googleusercontent.com https://www.google-analytics.com;
         frame-src 'self';
         object-src 'none';
