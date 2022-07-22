@@ -46,8 +46,7 @@ steps:
     name: node:14
     timeout: 1200s
     entrypoint: "npm"
-    args:
-      ["run", "build", "--", "--output-path=./dist", "--base-href=/woolaroo/"]
+    args: ["run", "build", "--", "--output-path=./dist", "-c production"]
     dir: "./client"
   # Server
   - id: "configure_server"
