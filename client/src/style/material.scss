@@ -162,3 +162,9 @@ form {
     padding: 0;
   }
 }
+
+.mat-progress-spinner.loading {
+  circle {
+    stroke: mat.get-color-from-palette($app-primary, '500-contrast');
+  }
+}
