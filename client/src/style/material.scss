@@ -2,7 +2,9 @@
 @import '../style/palette';
 @import '../style/typography';
 
-.mat-typography {
+
+.mat-body, .mat-body-1, .mat-typography .mat-body,
+.mat-typography .mat-body-1, .mat-typography  {
   font-family: $main-font;
 }
 
@@ -16,7 +18,7 @@ button.mat-button-base {
   letter-spacing: -0.02em;
 }
 
-.mat-body-1 {
+.mat-body-1, .content.mat-body-1 {
   font-family: $main-font;
   font-size: 1.32rem;
   line-height: 2.5rem;
@@ -33,7 +35,7 @@ mat-toolbar.mat-toolbar-single-row {
   position: fixed;
   height: 80px;
   padding: 0 20px;
-  box-shadow: 0 0 10px mat.get-color-from-palette(map.get($app-theme, 'shadow'), '500');
+  box-shadow: 0 0 10px rgb(0 0 0 / 40%);
   font-size: 1.7rem;
   font-weight: 400;
   white-space: normal;
@@ -135,9 +137,11 @@ mat-checkbox {
 
 
 form {
-  .mat-body-1 {
-    font-size: 1.1rem;
-    line-height: 1.75rem;
+  .content {
+    .mat-body-1 {
+      font-size: 1.1rem;
+      line-height: 1.75rem;
+    }
   }
 }
 
