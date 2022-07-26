@@ -51,7 +51,7 @@ handlers:
         script-src 'self';
         connect-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com https://www.googletagmanager.com/ https://australia-southeast1-woolaroo-project.cloudfunctions.net;
         font-src 'self';
-        img-src 'self';
+        img-src 'self' data:;
         style-src 'self';
         media-src 'self' https://storage.googleapis.com https://www.googleapis.com;
 
