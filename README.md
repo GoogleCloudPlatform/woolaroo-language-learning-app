@@ -16,8 +16,8 @@ Our hope is that by enabling more people to share their language, users will be 
 
 ## Requirements
 
-* Node 10.16+
-* Angular 9.0+
+* Node 14+
+* Angular 14.0+
 * Terraform
 
 ## Setup
