@@ -9,7 +9,7 @@ steps:
     args: ["install"]
     dir: "./client"
   - id: "download_partner_logo"
-    name: gcr.io/cloud-builders/gsutil
+    name: gcr.io/cloud-builders/gcloud
     waitFor: ["-"]
     entrypoint: "bash"
     args:
@@ -17,7 +17,7 @@ steps:
       - |
         if [ "${_PARTNER_LOGO_URL}" != "" ]
         then
-          gsutil cp ${_PARTNER_LOGO_URL} ./src/assets/img/partner_logo.png
+          gcloud storage cp ${_PARTNER_LOGO_URL} ./src/assets/img/partner_logo.png
         else
           true
         fi
