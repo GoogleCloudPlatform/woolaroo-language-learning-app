@@ -23,5 +23,5 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID} --member ${BUILD_SERVICE_AC
 gcloud projects add-iam-policy-binding ${PROJECT_ID} --member ${BUILD_SERVICE_ACCOUNT} --role projects/${PROJECT_ID}/roles/woolaroo.appdeployer
 
 # Create a bucket for terraform state
-gsutil mb -c nearline -l ${TERRAFORM_BUCKET_LOCATION} -b on gs://${TERRAFORM_BUCKET_NAME}
-gsutil versioning set on gs://${TERRAFORM_BUCKET_NAME}
+gcloud storage buckets create gs://${TERRAFORM_BUCKET_NAME} --default-storage-class=nearline --location=${TERRAFORM_BUCKET_LOCATION} --uniform-bucket-level-access
+gcloud storage buckets update gs://${TERRAFORM_BUCKET_NAME} --versioning
