@@ -30,8 +30,8 @@
     "zone.js": "~0.11.6"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^14.2.5",
-    "@angular/cli": "~14.2.5",
+    "@angular-devkit/build-angular": "^21.1.0",
+    "@angular/cli": "~21.1.0",
     "@angular/compiler-cli": "~14.2.5",
     "@angular/language-service": "~14.2.5",
     "@types/blueimp-load-image": "^5.14.4",
